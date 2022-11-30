@@ -1,0 +1,194 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tcs_app/CustomWidgets/CustomPercentageBar/custom_percentage_bar.dart';
+import 'package:tcs_app/Provider/Results/results_provider.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/helper_function.dart';
+
+class OverallResult extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Consumer<ResultsProvider>(builder: (context, value, _) {
+      var info = value.resultsResponse.info;
+      return Card(
+          child: Container(
+              padding: EdgeInsets.all(5.0),
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+              child: Column(children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        width: size.width / 3.4,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Overall Grade',
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ClipOval(
+                                child: Container(
+                                    color: AppColors.primaryColor,
+                                    alignment: Alignment.center,
+                                    height: size.width / 5.4,
+                                    width: size.width / 5.4,
+                                    child: Text(
+                                      info.overallGrade,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    )),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                          width: size.width / 1.6,
+                          child: Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Column(children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                          width: size.width / 3.6,
+                                          child: Text('Overall %',
+                                              style: TextStyle(fontSize: 11))),
+                                      SizedBox(
+                                        width: size.width / 4.6,
+                                        child: CustomPercentageBar(
+                                            barHeight: 4.0,
+                                            barValue:
+                                                HelperFunction.numberValue(
+                                                    info.overallPercentage),
+                                            barWidth: size.width / 4.6),
+                                      ),
+                                      SizedBox(
+                                          width: size.width / 10.0,
+                                          child: Text(
+                                              HelperFunction.numberValue(
+                                                  info.overallPercentage),
+                                              style: TextStyle(fontSize: 11)))
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 8.0),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                        width: size.width / 3.6,
+                                        child: Text('Class Highest %',
+                                            style: TextStyle(fontSize: 11))),
+                                    SizedBox(
+                                      width: size.width / 4.6,
+                                      child: CustomPercentageBar(
+                                          barHeight: 4.0,
+                                          barValue: HelperFunction.numberValue(
+                                              info.highestPercentage),
+                                          barWidth: size.width / 4.6),
+                                    ),
+                                    SizedBox(
+                                        width: size.width / 10.0,
+                                        child: Text(
+                                            HelperFunction.numberValue(
+                                                info.highestPercentage),
+                                            style: TextStyle(fontSize: 11)))
+                                  ],
+                                ),
+                                SizedBox(height: 8.0),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                        width: size.width / 3.6,
+                                        child: Text('Class Lowest %',
+                                            style: TextStyle(fontSize: 11))),
+                                    SizedBox(
+                                      width: size.width / 4.6,
+                                      child: CustomPercentageBar(
+                                          barHeight: 4.0,
+                                          barValue: HelperFunction.numberValue(
+                                              info.lowestPercentage),
+                                          barWidth: size.width / 4.6),
+                                    ),
+                                    SizedBox(
+                                        width: size.width / 10.0,
+                                        child: Text(
+                                            HelperFunction.numberValue(
+                                                info.lowestPercentage),
+                                            style: TextStyle(fontSize: 11)))
+                                  ],
+                                ),
+                                SizedBox(height: 8.0),
+                                Row(children: <Widget>[
+                                  Container(
+                                      width: size.width / 3.6,
+                                      child: Text('Class Average %',
+                                          style: TextStyle(fontSize: 11))),
+                                  SizedBox(
+                                    width: size.width / 4.6,
+                                    child: CustomPercentageBar(
+                                        barHeight: 4.0,
+                                        barValue: HelperFunction.numberValue(
+                                            info.average),
+                                        barWidth: size.width / 4.6),
+                                  ),
+                                  SizedBox(
+                                      width: size.width / 10.0,
+                                      child: Text(
+                                          HelperFunction.numberValue(
+                                              info.average),
+                                          style: TextStyle(fontSize: 11))),
+                                  SizedBox(height: 8.0)
+                                ])
+                              ])))
+                    ]),
+                Visibility(
+                    visible: info.teacherComment.isEmpty ? false : true,
+                    child: Padding(
+                        padding: EdgeInsets.all(6.0),
+                        child: Column(children: <Widget>[
+                          Text(
+                            "Teacher's Remarks: ",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Text(info.teacherComment,
+                                  textAlign: TextAlign.center))
+                        ]))),
+                Visibility(
+                    visible: info.term == 1 ? false : true,
+                    child: Padding(
+                        padding: EdgeInsets.only(top: 2.0),
+                        child: Column(children: <Widget>[
+                          Text(
+                            'Promoted To: ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: Text(info.promotedTo),
+                          )
+                        ])))
+              ])));
+    });
+  }
+}

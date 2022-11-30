@@ -1,0 +1,29 @@
+class AppNavRoutes {
+  static const initialRoute = '/';
+  static const loginRoute = '/login';
+  static const authWrapperRoute = '/authWrapper';
+  static const registrationRoute = '/userRegistration';
+  static const forgotPinCodeRoute = '/forgotPincode';
+  static const registrationPinCodeRoute = '/registrationPincode';
+  static const createPasswordRoute = '/createPassword';
+  static const studentDashboardRoute = '/studentDashboard';
+  static const parentDashboardRoute = '/parentDashboard';
+  static const studentProfileRoute = '/studentProfile';
+  static const resultsRoute = '/results';
+  static const academicTermRoute = '/academicTerm';
+  static const libraryRoute = '/library';
+  static const notificationsRoute = '/notifications';
+  static const feeChallansRoute = '/feechallans';
+  static const teacherDashboardRoute = '/teacherDashboard';
+  static const teacherProfileRoute = '/teacherprofile';
+  static const attendanceRoute = '/attendance';
+  static const onlineStdRegRoute = '/onlineStdReg';
+  static const forgotPasswordRoute = '/forgotPassword';
+  static const updatePasswordRoute = '/updatePassword';
+  static const aboutUsRoute = '/aboutUs';
+  static const aboutAppRoute = '/aboutApp';
+  static const appFeedbackRoute = '/appFeedback';
+  static const changePasswordRoute = '/changePassword';
+  static const teacherSectionRoute = '/teacherSection';
+
+}

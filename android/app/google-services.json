@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "603906180654",
+    "firebase_url": "https://thecityschoolapp.firebaseio.com",
+    "project_id": "thecityschoolapp",
+    "storage_bucket": "thecityschoolapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603906180654:android:cd6ba6c31402e325",
+        "android_client_info": {
+          "package_name": "com.tcs.tcsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603906180654-0ft348gqubfm219vntkfarusmd0tpn81.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJjmI7UihyzC4WvSeZ84NLgFX7ilsDcwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603906180654-0ft348gqubfm219vntkfarusmd0tpn81.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

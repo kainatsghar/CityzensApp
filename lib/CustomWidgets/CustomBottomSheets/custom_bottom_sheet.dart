@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
+
+class CustomBottomSheet extends StatelessWidget {
+  final double height;
+  final String title;
+  final Widget child;
+  final EdgeInsets bottomSheetPadding;
+  final EdgeInsets titlePadding;
+  final bool scrollRequired;
+  final String status;
+
+  const CustomBottomSheet(
+      {this.title = '',
+      this.height,
+      @required this.child,
+      this.bottomSheetPadding,
+      this.titlePadding,
+      this.scrollRequired = true,
+      this.status,
+      Key key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(10))),
+      child: Padding(
+          padding: bottomSheetPadding ?? const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                  child: Container(
+                      height: 5,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(20)))),
+              Padding(
+                  padding: titlePadding ??
+                      const EdgeInsets.symmetric(vertical: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800, fontSize: 16)),
+                    ],
+                  )),
+              Flexible(
+                  flex: scrollRequired ? 1 : 0,
+                  child: InkWell(
+                      onTap: () => FocusScope.of(context).unfocus(),
+                      child: child)),
+              const SizedBox(height: 15)
+            ],
+          )),
+    );
+  }
+}

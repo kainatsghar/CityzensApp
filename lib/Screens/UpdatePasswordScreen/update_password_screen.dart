@@ -1,0 +1,104 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/Provider/ForgotPassword/forgot_password_provider.dart';
+
+class UpdatePasswordScreen extends StatefulWidget {
+  UpdatePasswordScreen({Key key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return UpdatePasswordScreenState();
+  }
+}
+
+class UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    double padding = 10.0, imageWidth = 2.5;
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+        appBar: CustomAppBar(title: 'Update Password'),
+        body: LayoutBuilder(builder: (context, boxConstraints) {
+          final mediaQueryData = MediaQuery.of(context);
+          if (boxConstraints.maxWidth <= 320) {
+            padding = 5.0;
+            imageWidth = 2.8;
+          } else if (mediaQueryData.orientation == Orientation.landscape) {
+            imageWidth = 6.0;
+            padding = 5.0;
+          }
+          return Padding(
+              padding: EdgeInsets.all(padding),
+              child: SingleChildScrollView(
+                child: Consumer<ForgotPasswordProvider>(
+                    builder: (context, value, _) {
+                  return Column(children: <Widget>[
+                    Image.asset('images/tcs_logo.png',
+                        height: size.width / imageWidth,
+                        width: size.width / imageWidth),
+                    Padding(
+                        padding: EdgeInsets.only(
+                            left: 5.0, right: 5.0, top: padding),
+                        child: Column(children: <Widget>[
+                          Form(
+                              key: value.updatePasswordFormKey,
+                              child: Column(
+                                children: <Widget>[
+                                  CustomTextFormField(
+                                      isEnable: false,
+                                      labelText:
+                                          '${value.userNameController.text}',
+                                      prefixIcon: Icons.person),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          top: padding + 5)),
+                                  CustomTextFormField(
+                                      controller: value.passwordController,
+                                      obscureText: true,
+                                      inputType: TextInputType.text,
+                                      inputAction: TextInputAction.next,
+                                      labelText: 'Password',
+                                      hintText: 'xxxxxxxx',
+                                      prefixIcon: Icons.vpn_key,
+                                      validator: value.passwordValidator),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          top: padding + 5)),
+                                  CustomTextFormField(
+                                      obscureText: value.obscureText,
+                                      controller:
+                                          value.confirmPasswordController,
+                                      inputType: TextInputType.text,
+                                      inputAction: TextInputAction.done,
+                                      labelText: 'Confirm Password',
+                                      hintText: 'xxxxxxxx',
+                                      prefixIcon: Icons.vpn_key,
+                                      suffixWidget: GestureDetector(
+                                        onTap: () =>
+                                            value.showHidePassword(),
+                                        child: Icon(value.obscureText
+                                            ? Icons.visibility_off
+                                            : Icons.visibility),
+                                      ),
+                                      validator:
+                                          value.confirmPasswordValidator),
+                                ],
+                              )),
+                          Padding(
+                              padding: EdgeInsets.only(top: padding + 5)),
+                          CustomAppButton(
+                              buttonTitle: 'Update Password',
+                              onTap: () => value.updatePassword(context))
+                        ]))
+                  ]);
+                }),
+              ));
+        }));
+  }
+}
