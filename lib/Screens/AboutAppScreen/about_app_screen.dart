@@ -25,48 +25,38 @@ class AboutAppScreenState extends State<AboutAppScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double textFontSize = 18.0;
     return Scaffold(
         appBar: CustomAppBar(title: 'About App'),
-        body: LayoutBuilder(builder: (context, boxConstraints) {
-          if (boxConstraints.maxWidth <= 320.0 ||
-              boxConstraints.maxHeight <= 490.0) {
-            textFontSize = 16.0;
-          }
-          return Container(
+        body: Container(
             margin: EdgeInsets.all(15.0),
-            child: SingleChildScrollView(
-              child: Consumer<DashboardProvider>(builder: (context, value, _) {
-                return Column(
+            child: SingleChildScrollView(child:
+            Consumer<DashboardProvider>(builder: (context, value, _) {
+              return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(padding: EdgeInsets.all(5.0)),
+                    SizedBox(height: 5),
                     Text('App Version',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: textFontSize)),
-                    Padding(padding: EdgeInsets.all(2.0)),
+                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    SizedBox(height: 2),
                     Text(
                       value.projectVersion,
-                      style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontSize: textFontSize - 4),
+                      style: TextStyle(color: AppColors.primaryColor),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 15)),
+                    SizedBox(height: 15),
                     Text(
                       'Update App',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: textFontSize),
+                          fontWeight: FontWeight.bold, fontSize: 18),
                     ),
-                    Padding(padding: EdgeInsets.all(2.0)),
+                    SizedBox(height: 2),
                     InkWell(
                         child: Text(
                           Platform.isAndroid
                               ? 'Check for updates on Google Play Store'
                               : 'Check for updates on App Store',
                           style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: textFontSize - 3),
+                              color: AppColors.primaryColor, fontSize: 15),
                         ),
                         onTap: () => Platform.isAndroid
                             ? value.launchPlayStore()
@@ -76,27 +66,22 @@ class AboutAppScreenState extends State<AboutAppScreen> {
                         child: Divider(color: Colors.black, height: 8.0)),
                     Text('App Modifications',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: textFontSize)),
-                    Padding(padding: EdgeInsets.all(5.0)),
+                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    SizedBox(height: 5),
                     Text(
                         "\u2022 Teacher's Module Added\n"
-                        '\u2022 Online Student Registraion Form(Coming Soon)\n'
-                        '\u2022 Student Attendance\n'
-                        '\u2022 Privacy Policy Dialog Box on Invstr Button\n'
-                        '\u2022 Invstr button enable/disable\n'
-                        '\u2022 App logging\n'
-                        '\u2022 Bug fixes\n'
-                        '\u2022 Layout changes\n'
-                        '\u2022 Student registration\n'
-                        '\u2022 App feedback screen\n',
+                            '\u2022 Online Student Registraion Form(Coming Soon)\n'
+                            '\u2022 Student Attendance\n'
+                            '\u2022 Privacy Policy Dialog Box on Invstr Button\n'
+                            '\u2022 Invstr button enable/disable\n'
+                            '\u2022 App logging\n'
+                            '\u2022 Bug fixes\n'
+                            '\u2022 Layout changes\n'
+                            '\u2022 Student registration\n'
+                            '\u2022 App feedback screen\n',
                         style: TextStyle(color: AppColors.primaryColor)),
                     Divider(color: Colors.black, height: 8.0)
-                  ],
-                );
-              }),
-            ),
-          );
-        }));
+                  ]);
+            }))));
   }
 }

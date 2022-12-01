@@ -68,7 +68,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                               labelText: 'User Type',
                               readOnly: true,
                               onTap: () => value.userTypeBottomSheet(),
-                              suffixWidget: Icon(Icons.arrow_drop_down)),
+                              suffixWidget:  ImageIcon(AssetImage('images/dropdown_icon.png'))),
                           Padding(padding: EdgeInsets.only(top: padding)),
                           CustomTextFormField(
                               controller: value.userNameController,

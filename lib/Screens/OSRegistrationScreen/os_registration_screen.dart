@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tcs_app/Components/OSRegistrationComponents/os_registration_component.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
+import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
+import 'package:tcs_app/Routes/app_navigation.dart';
+
+class OSRegistrationScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new OSRegistrationScreenState();
+  }
+}
+
+class OSRegistrationScreenState extends State<OSRegistrationScreen> {
+  Future _nationalityService, _sessionService, _citiesService;
+
+  var provider = Provider.of<OSRegistrationProvider>(
+      AppNavigation.currentContext,
+      listen: false);
+
+  @override
+  void initState() {
+    provider.initializeData();
+    _nationalityService = provider.loadCountries();
+    _sessionService = provider.loadSessions();
+    _citiesService = provider.loadCities();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: CustomAppBar(title: 'Student Registration'),
+        body: FutureBuilder(
+            future: Future.wait(
+                [_nationalityService, _sessionService, _citiesService]),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const CustomLoader();
+                default:
+                  if (snapshot.hasData) {
+                    return OSRegistrationComponent();
+                  } else {
+                    return ShowError(errorText: '${snapshot.error}');
+                  }
+              }
+            }));
+  }
+}

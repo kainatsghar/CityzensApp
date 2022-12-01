@@ -16,7 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   final int maxLines;
   final FormFieldValidator<String> validator;
 
-  //final AutovalidateMode autoValidateMode;
+  final AutovalidateMode autoValidateMode;
   final String labelText;
   final List<TextInputFormatter> inputFormatter;
   final bool isDense;
@@ -32,12 +32,12 @@ class CustomTextFormField extends StatelessWidget {
       this.node,
       this.validator,
       this.onChange,
-      this.inputAction,
+      this.inputAction = TextInputAction.done,
       this.readOnly = false,
       this.onTap,
       this.prefixIcon,
       this.suffixWidget,
-      // this.autoValidateMode = AutovalidateMode.onUserInteraction,
+      this.autoValidateMode = AutovalidateMode.onUserInteraction,
       this.maxLines = 1,
       this.labelText,
       this.isDense = false,
@@ -49,7 +49,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
         inputFormatters: inputFormatter,
-        // autovalidateMode: autoValidateMode,
+        autovalidateMode: autoValidateMode,
         textCapitalization: textCapitalization ?? TextCapitalization.none,
         keyboardType: inputType ?? TextInputType.text,
         obscureText: obscureText,
@@ -64,10 +64,13 @@ class CustomTextFormField extends StatelessWidget {
                 OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
             isDense: isDense,
             enabled: isEnable,
+            contentPadding: EdgeInsets.only(left: 12, top: 18, bottom: 18),
             errorMaxLines: 5,
             suffixIcon: suffixWidget,
             prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
             hintText: hintText,
+            labelStyle: TextStyle(fontSize: 14.0),
+            hintStyle: TextStyle(fontSize: 14.0),
             labelText: labelText),
         enabled: isEnable,
         validator: validator,

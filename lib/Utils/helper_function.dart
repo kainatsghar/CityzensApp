@@ -23,7 +23,8 @@ class HelperFunction {
     showNotification(message: message);
   }
 
-  static Future<void> showNotification({@required RemoteMessage message}) async {
+  static Future<void> showNotification(
+      {@required RemoteMessage message}) async {
     var response = PushNotificationResponse.fromJson(message.data);
     var android = const AndroidNotificationDetails('id', 'channel ',
         priority: Priority.high, importance: Importance.max, playSound: true);
@@ -35,7 +36,7 @@ class HelperFunction {
 
   static Future<void> initializeLocalNotifications() async {
     var initializationSettingsAndroid =
-    const AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOs = const IOSInitializationSettings();
     var initSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOs);
@@ -79,10 +80,37 @@ class HelperFunction {
         Options(title: 'L', isSelected: false, color: Colors.amber)
       ];
 
-  static String dateFormatter(String date) =>
+  static Future<DateTime> openDatePicker(
+      {@required TextEditingController filterDate}) async {
+    DateTime now = DateTime.now();
+    DateTime initialDate = DateTime(now.year - 3, now.month, now.day);
+    final DateTime picked = await showDatePicker(
+        context: AppNavigation.currentContext,
+        initialDate: initialDate,
+        firstDate: DateTime(1900),
+        lastDate: initialDate,
+        initialEntryMode: DatePickerEntryMode.calendarOnly,
+        builder: (ctx, child) => child);
+    if (picked != null) {
+      filterDate.text = dateFormatter('$picked', format: 'dd-MMM-yyyy');
+    }
+    return picked;
+  }
+
+  static List<Options> genderOptions() => [
+        Options(title: 'Male', value: 1),
+        Options(title: 'Female', value: 2),
+      ];
+
+  static List<Options> previousSchoolOptions() => [
+        Options(title: 'Yes', value: 1),
+        Options(title: 'No', value: 0),
+      ];
+
+  static String dateFormatter(String date, {String format}) =>
       date == null || date == '' || date == 'null'
           ? '-'
-          : DateFormat('MMMM dd, yyyy').format(DateTime.parse(date));
+          : DateFormat(format ?? 'MMMM dd, yyyy').format(DateTime.parse(date));
 
   static imagePickerBottomSheet() {
     showModalBottomSheet(

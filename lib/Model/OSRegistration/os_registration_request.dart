@@ -1,7 +1,7 @@
-class OSRRegistrationModel {
+class OSRegistrationRequest {
   Info info;
 
-  OSRRegistrationModel({this.info});
+  OSRegistrationRequest({this.info});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> registration = new Map<String, dynamic>();

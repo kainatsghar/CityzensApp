@@ -35,7 +35,7 @@ class AcademicTermComponent extends StatelessWidget {
                       onTap: () => value.academicYearBottomSheet(),
                       readOnly: true,
                       validator: HelperFunction.validator,
-                      suffixWidget: Icon(Icons.arrow_drop_down)),
+                      suffixWidget:  ImageIcon(AssetImage('images/dropdown_icon.png'))),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20.0),
                       child: Align(
@@ -52,7 +52,7 @@ class AcademicTermComponent extends StatelessWidget {
                       onTap: () => value.termBottomSheet(),
                       readOnly: true,
                       validator: HelperFunction.validator,
-                      suffixWidget: Icon(Icons.arrow_drop_down)),
+                      suffixWidget: ImageIcon(AssetImage('images/dropdown_icon.png'))),
                   SizedBox(height: size.height * 0.04),
                   CustomAppButton(
                       buttonTitle: 'Next',

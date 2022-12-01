@@ -12,6 +12,7 @@ import 'package:tcs_app/Screens/AboutUsScreen/about_us_screen.dart';
 import 'package:tcs_app/Screens/ChangePasswordScreen/change_password_screen.dart';
 import 'package:tcs_app/Screens/LibraryScreen/library_screen.dart';
 import 'package:tcs_app/Screens/Notifications/notifications_screen.dart';
+import 'package:tcs_app/Screens/OSRegistrationScreen/os_registration_screen.dart';
 import 'package:tcs_app/Screens/ParentDashboardScreen/parent_dashboard_screen.dart';
 import 'package:tcs_app/Screens/RegistrationScreen/registration_screen.dart';
 import 'package:tcs_app/Screens/RegPinCodeScreen/reg_pincode_screen.dart';
@@ -68,8 +69,8 @@ class RouteGenerator {
         return routeScreen(child: TeacherProfileScreen());
       case AppNavRoutes.attendanceRoute:
         return routeScreen(child: AttendanceListScreen());
-      /*case AppNavRoutes.onlineStdRegRoute:
-        return routeScreen(child: OnlineRegistrationForm());*/
+      case AppNavRoutes.onlineStdRegRoute:
+        return routeScreen(child: OSRegistrationScreen());
       case AppNavRoutes.forgotPasswordRoute:
         return routeScreen(child: ForgotPasswordScreen());
       case AppNavRoutes.updatePasswordRoute:

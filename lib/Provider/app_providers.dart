@@ -8,6 +8,7 @@ import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Provider/Login/login_provider.dart';
 import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
 import 'package:tcs_app/Provider/Notifications/notification_provider.dart';
+import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 import 'package:tcs_app/Provider/ParentDashboardProvider/parent_dashboard_provider.dart';
 import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
@@ -28,5 +29,5 @@ List<SingleChildWidget> appProviders = [
   ChangeNotifierProvider(create: (_) => TeacherProfileProvider()),
   ChangeNotifierProvider(create: (_) => MarkAttendanceProvider()),
   ChangeNotifierProvider(create: (_) => ResultsProvider()),
-
+  ChangeNotifierProvider(create: (_) => OSRegistrationProvider()),
 ];

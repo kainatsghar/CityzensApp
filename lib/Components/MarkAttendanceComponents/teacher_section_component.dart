@@ -50,7 +50,7 @@ class TeacherSectionComponent extends StatelessWidget {
                     onTap: () => value.sectionBottomSheet(),
                     readOnly: true,
                     validator: value.validator,
-                    suffixWidget: Icon(Icons.arrow_drop_down)),
+                    suffixWidget:  ImageIcon(AssetImage('images/dropdown_icon.png'))),
               ),
               SizedBox(height: size.height * 0.04),
               CustomAppButton(
