@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tcs_app/CustomWidgets/CustomTitleValue/custom_title_value.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/model/FeeChallan/challan_receipts_response.dart';
-import 'package:tcs_app/model/FeeChallan/outstanding_challan_response.dart';
 
 class SingleReceiptItem extends StatelessWidget {
   final FeechallanHistory record;

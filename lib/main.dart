@@ -9,7 +9,6 @@ import 'package:tcs_app/Utils/helper_function.dart';
 import 'Utils/app_themes.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   HelperFunction.mainInitializer();
   runApp(TCSApp());
 }

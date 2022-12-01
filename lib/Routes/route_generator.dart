@@ -23,7 +23,6 @@ import 'package:tcs_app/Screens/TeacherSectionScreen/teacher_section_screen.dart
 import 'package:tcs_app/Screens/UpdatePasswordScreen/update_password_screen.dart';
 import 'package:tcs_app/Screens/ForgotPinCodeScreen/forgot_pincode_screen.dart';
 import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
-import 'package:tcs_app/Screens/OnlineStudentReg/onlineStudentReg_page.dart';
 import 'package:tcs_app/Screens/SplashScreen/splash_screen_ui.dart';
 import 'package:tcs_app/Screens/AttendanceListScreen/attendance_list_screen.dart';
 import 'package:tcs_app/Screens/TeacherDashboardScreen/teacher_dashboard_screen.dart';
