@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }),
             ),
           ),
-          Container(
+         /* Container(
               color: AppColors.primaryColor,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 10),
@@ -151,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () =>
                       AppNavigation.navigateTo(AppNavRoutes.onlineStdRegRoute),
                 ),
-              ))
+              ))*/
         ],
       ),
     );

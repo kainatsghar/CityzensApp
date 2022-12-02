@@ -30,7 +30,7 @@ class AboutAppScreenState extends State<AboutAppScreen> {
         body: Container(
             margin: EdgeInsets.all(15.0),
             child: SingleChildScrollView(child:
-            Consumer<DashboardProvider>(builder: (context, value, _) {
+                Consumer<DashboardProvider>(builder: (context, value, _) {
               return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -46,8 +46,8 @@ class AboutAppScreenState extends State<AboutAppScreen> {
                     SizedBox(height: 15),
                     Text(
                       'Update App',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     SizedBox(height: 2),
                     InkWell(
@@ -70,15 +70,15 @@ class AboutAppScreenState extends State<AboutAppScreen> {
                     SizedBox(height: 5),
                     Text(
                         "\u2022 Teacher's Module Added\n"
-                            '\u2022 Online Student Registraion Form(Coming Soon)\n'
-                            '\u2022 Student Attendance\n'
-                            '\u2022 Privacy Policy Dialog Box on Invstr Button\n'
-                            '\u2022 Invstr button enable/disable\n'
-                            '\u2022 App logging\n'
-                            '\u2022 Bug fixes\n'
-                            '\u2022 Layout changes\n'
-                            '\u2022 Student registration\n'
-                            '\u2022 App feedback screen\n',
+                        '\u2022 Online Student Registraion Form(Coming Soon)\n'
+                        '\u2022 Student Attendance\n'
+                        '\u2022 Privacy Policy Dialog Box on Invstr Button\n'
+                        '\u2022 Invstr button enable/disable\n'
+                        '\u2022 App logging\n'
+                        '\u2022 Bug fixes\n'
+                        '\u2022 Layout changes\n'
+                        '\u2022 Student registration\n'
+                        '\u2022 App feedback screen\n',
                         style: TextStyle(color: AppColors.primaryColor)),
                     Divider(color: Colors.black, height: 8.0)
                   ]);

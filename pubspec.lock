@@ -127,20 +127,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.8"
-  device_info:
-    dependency: transitive
+  device_info_plus:
+    dependency: "direct main"
     description:
-      name: device_info
+      name: device_info_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
-  device_info_platform_interface:
+    version: "8.0.0"
+  device_info_plus_platform_interface:
     dependency: transitive
     description:
-      name: device_info_platform_interface
+      name: device_info_plus_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "7.0.0"
   equatable:
     dependency: transitive
     description:
@@ -513,48 +513,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
-  platform_device_id:
-    dependency: "direct main"
-    description:
-      name: platform_device_id
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
-  platform_device_id_linux:
-    dependency: transitive
-    description:
-      name: platform_device_id_linux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  platform_device_id_macos:
-    dependency: transitive
-    description:
-      name: platform_device_id_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  platform_device_id_platform_interface:
-    dependency: transitive
-    description:
-      name: platform_device_id_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  platform_device_id_web:
-    dependency: transitive
-    description:
-      name: platform_device_id_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  platform_device_id_windows:
-    dependency: transitive
-    description:
-      name: platform_device_id_windows
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   plugin_platform_interface:
     dependency: transitive
     description:

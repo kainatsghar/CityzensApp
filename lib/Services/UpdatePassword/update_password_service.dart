@@ -1,5 +1,5 @@
-import 'package:platform_device_id/platform_device_id.dart';
 import 'package:tcs_app/Network/api_base_helper.dart';
+import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/model/Registration/registration_request.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 
@@ -9,7 +9,7 @@ class UpdatePasswordService {
       String confirmPassword,
       String userType,
       bool isRegPass = false}) async {
-    String deviceId = await PlatformDeviceId.getDeviceId;
+    String deviceId = await HelperFunction.getId();
     RegistrationRequest _request = RegistrationRequest(
         username: userName,
         password: confirmPassword,

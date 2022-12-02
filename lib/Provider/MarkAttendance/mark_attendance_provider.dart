@@ -76,6 +76,7 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   void setStudentList(StudentListResponse listResponse) {
     studentListResponse = listResponse;
+    saveAttendanceResponse = ResponseMessage();
     notifyListeners();
   }
 

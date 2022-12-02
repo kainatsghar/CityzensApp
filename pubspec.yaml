@@ -32,7 +32,7 @@ dependencies:
   launch_review:
   provider:
   flutter_spinkit:
-  platform_device_id:
+  device_info_plus:
   package_info_plus:
   flutter_local_notifications: ^9.7.1
   fl_chart:

@@ -22,7 +22,7 @@ class AttendanceGraphComponent extends StatelessWidget {
               Text('${value.saveAttendanceResponse.message}',
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600)),
               SizedBox(height: size.height * 0.03),
-              CustomAppButton(buttonTitle: 'Edit Attendance', onTap: () {}),
+              CustomAppButton(buttonTitle: 'Edit Attendance', onTap: () =>value.loadStudentList()),
               Padding(
                 padding: EdgeInsets.symmetric(
                     vertical: size.height * 0.03, horizontal: size.width * 0.05),
