@@ -198,7 +198,7 @@ class RegistrationProvider with ChangeNotifier {
   launchEmail() async {
     const address = 'mailto:appfeedback@csn.edu.pk';
     if (await canLaunchUrl(Uri.parse(address))) {
-      await canLaunchUrl(Uri.parse(address));
+      await launchUrl(Uri.parse(address));
     }
   }
 

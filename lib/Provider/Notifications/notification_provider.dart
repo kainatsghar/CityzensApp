@@ -23,7 +23,7 @@ class NotificationProvider with ChangeNotifier {
 
   Future<void> loadURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
-      await canLaunchUrl(Uri.parse(url));
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }

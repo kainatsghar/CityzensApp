@@ -94,7 +94,7 @@ class DashboardProvider with ChangeNotifier {
     const url =
         'https://play.google.com/store/apps/details?id=' + 'com.tcs.tcsapp';
     if (await canLaunchUrl(Uri.parse(url))) {
-      await canLaunchUrl(Uri.parse(url));
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }
@@ -108,7 +108,7 @@ class DashboardProvider with ChangeNotifier {
     const address = 'mailto:appfeedback@csn.edu.pk';
     try {
       if (await canLaunchUrl(Uri.parse(address))) {
-        await canLaunchUrl(Uri.parse(address));
+        await launchUrl(Uri.parse(address));
       } else {
         throw 'Could not launch $address';
       }
