@@ -40,7 +40,7 @@ class DashboardProvider with ChangeNotifier {
     if (value.isEmpty) {
       return "Required*";
     } else if (value.length < 8) {
-      return "Password must be atleast 8 characters long";
+      return "Password must be at least 8 characters long";
     } else {
       return null;
     }
@@ -101,7 +101,7 @@ class DashboardProvider with ChangeNotifier {
   }
 
   launchAppStore() {
-    LaunchReview.launch(writeReview: false, iOSAppId: '1449936833');
+    LaunchReview.launch(writeReview: false, iOSAppId: '1630070364');
   }
 
   launchEmail() async {
