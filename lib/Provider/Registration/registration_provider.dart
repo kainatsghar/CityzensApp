@@ -9,6 +9,7 @@ import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Services/Registration/registration_service.dart';
 import 'package:tcs_app/Services/UpdatePassword/update_password_service.dart';
 import 'package:tcs_app/Services/VerifyPinCode/verify_pincode_service.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
@@ -56,7 +57,7 @@ class RegistrationProvider with ChangeNotifier {
     if (value.isEmpty) {
       return "Required*";
     } else if (value.length < 8) {
-      return "Password must be atleast 8 characters long";
+      return "Password must be at least 8 characters long";
     } else {
       return null;
     }
@@ -72,7 +73,7 @@ class RegistrationProvider with ChangeNotifier {
     }
   }
 
-  Future<void> userRegistration(BuildContext context) async {
+  Future<void> userRegistration() async {
     DialogBuilder.showLoadingIndicator();
     try {
       if (regFormKey.currentState.validate()) {
@@ -85,7 +86,7 @@ class RegistrationProvider with ChangeNotifier {
         if (responseMessage.isSuccessful) {
           setResponseData(responseMessage);
           Future.delayed(
-              Duration.zero,
+              Duration(milliseconds: 1),
               () => AppNavigation.navigateTo(
                   AppNavRoutes.registrationPinCodeRoute));
         } else {
@@ -95,10 +96,10 @@ class RegistrationProvider with ChangeNotifier {
     } catch (exception) {
       showSnackBar(exception);
     }
-    Future.delayed(Duration.zero, () => DialogBuilder.hideOpenDialog());
+    DialogBuilder.hideOpenDialog();
   }
 
-  Future<void> verifyPinCode(BuildContext context) async {
+  Future<void> verifyPinCode() async {
     DialogBuilder.showLoadingIndicator();
     try {
       if (pinCodeFormKey.currentState.validate()) {
@@ -112,7 +113,7 @@ class RegistrationProvider with ChangeNotifier {
         if (responseMessage.isSuccessful) {
           confirmPasswordController.clear();
           passwordController.clear();
-          Future.delayed(Duration(milliseconds: 10),
+          Future.delayed(Duration(milliseconds: 1),
               () => AppNavigation.navigateTo(AppNavRoutes.createPasswordRoute));
         } else {
           showSnackBar(responseMessage.message);
@@ -136,10 +137,10 @@ class RegistrationProvider with ChangeNotifier {
                 userType: userTypeController.text,
                 isRegPass: true);
         if (responseMessage.isSuccessful) {
-          Future.delayed(Duration(milliseconds: 10),
-              () => AppNavigation.removeAllRoutes());
+          Future.delayed(
+              Duration(milliseconds: 1), () => AppNavigation.removeAllRoutes());
           showSnackBar(
-              'Password for ${userNameController.text} has been created successfully');
+              'Password for ${userNameController.text} has been created successfully',color: AppColors.greenFontColor);
           disposeData();
         } else {
           showSnackBar(responseMessage.message);

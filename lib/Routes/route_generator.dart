@@ -16,8 +16,8 @@ import 'package:tcs_app/Screens/OSRegistrationScreen/os_registration_screen.dart
 import 'package:tcs_app/Screens/ParentDashboardScreen/parent_dashboard_screen.dart';
 import 'package:tcs_app/Screens/RegistrationScreen/registration_screen.dart';
 import 'package:tcs_app/Screens/RegPinCodeScreen/reg_pincode_screen.dart';
-import 'package:tcs_app/Screens/Results/academic_term_screen.dart';
-import 'package:tcs_app/Screens/Results/results_screen.dart';
+import 'package:tcs_app/Screens/ResultScreen/academic_term_screen.dart';
+import 'package:tcs_app/Screens/ResultScreen/results_screen.dart';
 import 'package:tcs_app/Screens/StudentDashboardScreen/student_dashboard_screen.dart';
 import 'package:tcs_app/Screens/StudentProfileScreen/student_profile_screen.dart';
 import 'package:tcs_app/Screens/TeacherSectionScreen/teacher_section_screen.dart';

@@ -20,7 +20,7 @@ class StudentProfileComponent extends StatelessWidget {
             : SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Padding(
-                  padding: EdgeInsets.only(top: size.height * 0.03),
+                  padding: EdgeInsets.symmetric(vertical: size.height * 0.03),
                   child: Column(
                     children: <Widget>[
                       CustomUserImage(
@@ -86,7 +86,8 @@ class StudentProfileComponent extends StatelessWidget {
                       ),
                       SizedBox(height: 5.0),
                       Padding(
-                        padding: EdgeInsets.all(5.0),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: size.width * 0.03),
                         child: CustomProfileItem(
                             width: size.width,
                             title: 'Address',

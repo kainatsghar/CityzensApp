@@ -11,8 +11,7 @@ class AppConstants {
 
   static const String noInternetMsg =
       'No Internet Connection, Connect Your Internet & Try Again';
-  static const String noRecordFound =
-      'No Record Found';
+  static const String noRecordFound = 'No Record Found';
   static const String assetIcons = 'assets/icons/';
   static const String assetImages = 'assets/images/';
   static const String textFont = 'Avenir';
@@ -20,4 +19,8 @@ class AppConstants {
   /// Shared Preferences Keys
   static const String userDataKey = 'userData';
 
+  static const Map<String,String> appHeaders = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json'
+  };
 }

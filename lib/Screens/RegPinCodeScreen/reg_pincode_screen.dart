@@ -64,8 +64,7 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
                             children: <Widget>[
                               CustomTextFormField(
                                   isEnable: false,
-                                  labelText:
-                                      '${/*value.userNameController.text*/ 1223454343}',
+                                  labelText: '${value.userNameController.text}',
                                   prefixIcon: Icons.person),
                               Padding(
                                   padding: EdgeInsets.only(top: padding + 5)),
@@ -82,7 +81,7 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
                         Padding(padding: EdgeInsets.only(top: padding + 5)),
                         CustomAppButton(
                             buttonTitle: 'Next',
-                            onTap: () => value.verifyPinCode(context)),
+                            onTap: () => value.verifyPinCode()),
                         Padding(padding: EdgeInsets.only(top: padding + 5)),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

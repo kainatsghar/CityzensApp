@@ -84,7 +84,7 @@ class ForgotPasswordProvider with ChangeNotifier {
                 userType: userTypeController.text);
         if (responseMessage.isSuccessful) {
           setResponseData(responseMessage);
-          Future.delayed(Duration.zero,
+          Future.delayed(Duration(milliseconds: 1),
               () => AppNavigation.navigateTo(AppNavRoutes.forgotPinCodeRoute));
         } else {
           showSnackBar(responseMessage.message);
@@ -109,7 +109,7 @@ class ForgotPasswordProvider with ChangeNotifier {
         if (responseMessage.isSuccessful) {
           confirmPasswordController.clear();
           passwordController.clear();
-          Future.delayed(Duration.zero,
+          Future.delayed(Duration(milliseconds: 1),
               () => AppNavigation.navigateTo(AppNavRoutes.updatePasswordRoute));
         } else {
           showSnackBar(responseMessage.message);
@@ -132,7 +132,8 @@ class ForgotPasswordProvider with ChangeNotifier {
                 confirmPassword: confirmPasswordController.text,
                 userType: userTypeController.text);
         if (responseMessage.isSuccessful) {
-          Future.delayed(Duration.zero, () => AppNavigation.removeAllRoutes());
+          Future.delayed(
+              Duration(milliseconds: 1), () => AppNavigation.removeAllRoutes());
           showSnackBar(
               'Password for ${userNameController.text} has been updated successfully',
               color: AppColors.graphGreenColor);

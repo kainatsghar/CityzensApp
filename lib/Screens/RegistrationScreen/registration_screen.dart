@@ -58,7 +58,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                     Image.asset('images/tcs_logo.png',
                         height: size.width / imageWidth,
                         width: size.width / imageWidth),
-                    Padding(padding: EdgeInsets.only(top: padding)),
+                    SizedBox(height: padding),
                     Form(
                       key: value.regFormKey,
                       child: Column(
@@ -69,7 +69,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                               readOnly: true,
                               onTap: () => value.userTypeBottomSheet(),
                               suffixWidget:  ImageIcon(AssetImage('images/dropdown_icon.png'))),
-                          Padding(padding: EdgeInsets.only(top: padding)),
+                         SizedBox(height: padding),
                           CustomTextFormField(
                               controller: value.userNameController,
                               inputType: TextInputType.number,
@@ -78,7 +78,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                               hintText: value.userNameHint,
                               prefixIcon: Icons.person,
                               validator: value.validator),
-                          Padding(padding: EdgeInsets.only(top: padding + 5)),
+                          SizedBox(height: padding + 5),
                           CustomTextFormField(
                               controller: value.phoneNumberController,
                               inputType: TextInputType.number,
@@ -90,12 +90,12 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                         ],
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(top: padding + 5)),
+                    SizedBox(height: padding + 5),
                     CustomAppButton(
                       buttonTitle: 'Next',
-                      onTap: () => value.userRegistration(context),
+                      onTap: () => value.userRegistration(),
                     ),
-                    Padding(padding: EdgeInsets.only(top: padding)),
+                    SizedBox(height: padding),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[

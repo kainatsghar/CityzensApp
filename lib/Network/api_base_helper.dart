@@ -6,14 +6,12 @@ import 'package:tcs_app/Utils/app_constants.dart';
 import 'app_exceptions.dart';
 
 class ApiBaseHelper {
-  static Future<dynamic> httpGetRequest(String endPoint,
+  static Future<Map<String,dynamic>> httpGetRequest(String endPoint,
       {String base = AppConstants.apiBaseURL}) async {
     http.Response response;
     try {
-      response = await http.get(Uri.parse('$base$endPoint'), headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json'
-      });
+      response = await http.get(Uri.parse('$base$endPoint'),
+          headers: AppConstants.appHeaders);
     } on SocketException {
       throw FetchDataException(AppConstants.noInternetMsg);
     } on FormatException {
@@ -26,16 +24,12 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  static Future<dynamic> httpPostRequest(String endPoint,
+  static Future<Map<String,dynamic>> httpPostRequest(String endPoint,
       {Object body, String base = AppConstants.apiBaseURL}) async {
     http.Response response;
     try {
       response = await http.post(Uri.parse('$base$endPoint'),
-          body: jsonEncode(body),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-          });
+          headers: AppConstants.appHeaders, body: jsonEncode(body));
     } on SocketException {
       throw FetchDataException(AppConstants.noInternetMsg);
     } on FormatException {
@@ -48,16 +42,12 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  static Future<dynamic> httpPutRequest(String endPoint,
+  static Future<Map<String,dynamic>> httpPutRequest(String endPoint,
       {Object body, String base = AppConstants.apiBaseURL}) async {
     http.Response response;
     try {
       response = await http.put(Uri.parse('$base$endPoint'),
-          body: jsonEncode(body),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-          });
+          headers: AppConstants.appHeaders, body: jsonEncode(body));
     } on SocketException {
       throw FetchDataException(AppConstants.noInternetMsg);
     } on FormatException {
@@ -70,16 +60,13 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  static Future<dynamic> httpPatchRequest(String endPoint, Object body) async {
+  static Future<Map<String,dynamic>> httpPatchRequest(String endPoint, Object body) async {
     http.Response response;
     try {
       response = await http.patch(
           Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
           body: jsonEncode(body),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-          });
+          headers: AppConstants.appHeaders);
     } on SocketException {
       throw FetchDataException(AppConstants.noInternetMsg);
     } on FormatException {
@@ -92,15 +79,13 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  static Future<dynamic> httpDeleteRequest(String endPoint,
+  static Future<Map<String,dynamic>> httpDeleteRequest(String endPoint,
       {Object body}) async {
     http.Response response;
     try {
-      response = await http
-          .delete(Uri.parse('${AppConstants.apiBaseURL}$endPoint'), headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json'
-      });
+      response = await http.delete(
+          Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
+          headers: AppConstants.appHeaders);
     } on SocketException {
       throw FetchDataException(AppConstants.noInternetMsg);
     } on FormatException {
@@ -114,7 +99,7 @@ class ApiBaseHelper {
   }
 }
 
-dynamic _returnResponse(http.Response response) {
+Map<String,dynamic> _returnResponse(http.Response response) {
   final jsonResponse = jsonDecode(response.body);
   switch (response.statusCode) {
     case 200:
