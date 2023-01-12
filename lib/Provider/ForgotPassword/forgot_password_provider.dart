@@ -96,7 +96,7 @@ class ForgotPasswordProvider with ChangeNotifier {
     DialogBuilder.hideOpenDialog();
   }
 
-  Future<void> verifyPinCode(BuildContext context) async {
+  Future<void> verifyPinCode() async {
     DialogBuilder.showLoadingIndicator();
     try {
       if (pinCodeFormKey.currentState.validate()) {
@@ -121,7 +121,7 @@ class ForgotPasswordProvider with ChangeNotifier {
     DialogBuilder.hideOpenDialog();
   }
 
-  Future<void> updatePassword(BuildContext context) async {
+  Future<void> updatePassword() async {
     DialogBuilder.showLoadingIndicator();
     try {
       if (updatePasswordFormKey.currentState.validate()) {

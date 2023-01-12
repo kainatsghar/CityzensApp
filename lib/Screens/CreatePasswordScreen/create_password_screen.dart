@@ -57,7 +57,7 @@ class CreatePasswordScreenState extends State<CreatePasswordScreen> {
                                   CustomTextFormField(
                                       isEnable: false,
                                       labelText:
-                                          '${/*value.userNameController.text*/ 1234}',
+                                          '${value.userNameController.text}',
                                       prefixIcon: Icons.person),
                                   Padding(
                                       padding:

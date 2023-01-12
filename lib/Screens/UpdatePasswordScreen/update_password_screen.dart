@@ -92,7 +92,7 @@ class UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                               padding: EdgeInsets.only(top: padding + 5)),
                           CustomAppButton(
                               buttonTitle: 'Update Password',
-                              onTap: () => value.updatePassword(context))
+                              onTap: () => value.updatePassword())
                         ]))
                   ]);
                 }),

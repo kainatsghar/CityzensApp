@@ -82,7 +82,7 @@ class ForgotPinCodeScreenState extends State<ForgotPinCodeScreen> {
                           Padding(padding: EdgeInsets.only(top: padding + 5)),
                           CustomAppButton(
                               buttonTitle: 'Next',
-                              onTap: () => value.verifyPinCode(context)),
+                              onTap: () => value.verifyPinCode()),
                           Padding(padding: EdgeInsets.only(top: padding + 5)),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
