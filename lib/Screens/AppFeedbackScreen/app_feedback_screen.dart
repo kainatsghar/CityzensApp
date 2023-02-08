@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
-import 'package:tcs_app/Provider/DashboardProvider/dashboard_provider.dart';
+import 'package:tcs_app/Provider/Dashboard/dashboard_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 class AppFeedbackScreen extends StatefulWidget {

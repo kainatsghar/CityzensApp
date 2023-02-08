@@ -22,13 +22,15 @@ class Student {
   int studentId;
   String name;
   String day;
+  int attnTypeId;
 
-  Student({this.studentId, this.name, this.day});
+  Student({this.studentId, this.name, this.day, this.attnTypeId});
 
   factory Student.fromJson(Map json) {
     return Student(
       studentId: json['StudentId'],
       name: json['Name'],
+      attnTypeId: json['AttnType_ID'],
       day: json['Day'] == '-' ? 'P' : json['Day'],
     );
   }

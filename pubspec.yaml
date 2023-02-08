@@ -37,6 +37,7 @@ dependencies:
   flutter_local_notifications: ^9.7.1
   fl_chart:
   flutter_launcher_icons:
+  table_calendar: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

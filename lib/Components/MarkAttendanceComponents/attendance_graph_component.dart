@@ -20,17 +20,18 @@ class AttendanceGraphComponent extends StatelessWidget {
                     height: size.width / 4, width: size.width / 4),
               ),
               Text('${value.saveAttendanceResponse.message}',
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600)),
-              SizedBox(height: size.height * 0.03),
-              CustomAppButton(buttonTitle: 'Edit Attendance', onTap: () =>value.loadStudentList()),
+                  style:
+                      TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600)),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: size.height * 0.03, horizontal: size.width * 0.05),
+                    vertical: size.height * 0.03,
+                    horizontal: size.width * 0.05),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Total Students: ${value.students.length}',
-                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
@@ -52,14 +53,20 @@ class AttendanceGraphComponent extends StatelessWidget {
                                     Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8.0),
-                                        child:
-                                            Text(value.pieData[index].attendance))
+                                        child: Text(
+                                            value.pieData[index].attendance))
                                   ]))),
                       Container(
                           padding: EdgeInsets.only(top: size.height * 0.05),
-                          height: size.height * 0.3,
+                          height: size.height * 0.28,
                           child: PieChart(
                               PieChartData(sections: value.getSections()))),
+                      Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.03),
+                          child: CustomAppButton(
+                              buttonTitle: 'Edit Attendance',
+                              onTap: () => value.reloadStudentList())),
                     ],
                   ))
             ],

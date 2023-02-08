@@ -20,11 +20,15 @@ class TeacherSectionResponse {
 
 class Section {
   int classSectionId;
+  int classId;
   String name;
 
-  Section({this.classSectionId, this.name});
+  Section({this.classSectionId, this.name, this.classId});
 
   factory Section.fromJson(Map json) {
-    return Section(classSectionId: json['ClassSectionId'], name: json['Name']);
+    return Section(
+        classSectionId: json['ClassSectionId'],
+        name: json['Name'],
+        classId: json['ClassId']);
   }
 }

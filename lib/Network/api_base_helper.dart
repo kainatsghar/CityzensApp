@@ -29,7 +29,7 @@ class ApiBaseHelper {
     http.Response response;
     try {
       response = await http.post(Uri.parse('$base$endPoint'),
-          headers: AppConstants.appHeaders, body: jsonEncode(body));
+          headers: AppConstants.appHeaders, body: json.encode(body));
     } on SocketException {
       throw FetchDataException(AppConstants.noInternetMsg);
     } on FormatException {

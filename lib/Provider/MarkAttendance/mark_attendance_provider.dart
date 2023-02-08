@@ -5,14 +5,17 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import 'package:tcs_app/Model/SectionSubject/section_subject_response.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Services/SaveAttendance/save_attendance_service.dart';
+import 'package:tcs_app/Services/SectionSubject/section_subject_service.dart';
 import 'package:tcs_app/Services/StudentList/student_list_service.dart';
 import 'package:tcs_app/Services/TeacherSection/teacher_section_service.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 import 'package:tcs_app/model/StudentAttendance/save_attendance_request.dart';
@@ -21,15 +24,21 @@ import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
 
 class MarkAttendanceProvider with ChangeNotifier {
   final sectionController = TextEditingController();
+  final subjectController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   List<AttendanceGraph> pieData = [];
   List<Options> sections = [];
+  List<Options> subjects = [];
 
-  int selectedId = 0;
-  String formattedDate = DateFormat('M/d/yyyy').format(DateTime.now());
+  int sectionId;
+  int classId;
+  int subjectId;
+
+  String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   TeacherSectionResponse sectionResponse = TeacherSectionResponse();
+  SectionSubjectResponse subjectResponse = SectionSubjectResponse();
 
   StudentListResponse studentListResponse = StudentListResponse();
 
@@ -56,10 +65,21 @@ class MarkAttendanceProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future loadStudentList() async {
+  void setSubjectsData(SectionSubjectResponse response) {
+    subjectResponse = response;
+    subjectController.clear();
+    subjects = List.generate(
+        subjectResponse.sectionSubject.length,
+        (index) => Options(
+            title: subjectResponse.sectionSubject[index].subjectName,
+            value: subjectResponse.sectionSubject[index].subjectId));
+    notifyListeners();
+  }
+
+  Future<void> loadStudentList() async {
     try {
       StudentListResponse response = await StudentListService.stdListRequest(
-          classSectionId: '$selectedId',
+          classSectionId: '$sectionId',
           tokenId: localDataProvider.userData.tokenId,
           attendanceDate: formattedDate);
       setStudentList(response);
@@ -69,8 +89,22 @@ class MarkAttendanceProvider with ChangeNotifier {
     }
   }
 
+  Future<void> reloadStudentList() async {
+    DialogBuilder.showLoadingIndicator();
+    try {
+      await loadStudentList();
+    } catch (e) {
+      throw e;
+    }
+    DialogBuilder.hideOpenDialog();
+  }
+
   void changeStatus(String status, int index) {
     studentListResponse.studentList[index].day = status;
+    studentListResponse.studentList[index].attnTypeId =
+        HelperFunction.attendanceOptions()
+            .singleWhere((e) => e.title == status)
+            .value;
     notifyListeners();
   }
 
@@ -80,9 +114,25 @@ class MarkAttendanceProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedSection(String sectionName) {
-    selectedId = sections.singleWhere((e) => e.title == sectionName).value;
+  Future<void> setSelectedSection(String sectionName) async {
+    AppNavigation.goBack();
+    sectionId = sections.singleWhere((e) => e.title == sectionName).value;
+    classId = sectionResponse.section
+        .singleWhere((e) => e.name == sectionName)
+        .classId;
+    subjectController.clear();
+    subjectId = null;
     sectionController.text = sectionName;
+    if (classId == 19 || classId == 20) {
+      DialogBuilder.showLoadingIndicator();
+      await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
+    }
+    notifyListeners();
+  }
+
+  void setSelectedSubject(String subjectName) {
+    subjectId = subjects.singleWhere((e) => e.title == subjectName).value;
+    subjectController.text = subjectName;
     AppNavigation.goBack();
     notifyListeners();
   }
@@ -100,10 +150,23 @@ class MarkAttendanceProvider with ChangeNotifier {
     }
   }
 
+  Future<SectionSubjectResponse> loadSubjects() async {
+    try {
+      SectionSubjectResponse response =
+          await SectionSubjectService.getSubjectsRequest(
+              userName: localDataProvider.userData.userName,
+              token: localDataProvider.userData.tokenId);
+      setSubjectsData(response);
+      return response;
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
   Future<void> navigateToMarkAttendance() async {
     if (formKey.currentState.validate()) {
       FocusScope.of(AppNavigation.currentContext).requestFocus(FocusNode());
-      AppNavigation.navigateTo(AppNavRoutes.attendanceRoute);
+      AppNavigation.navigateTo(AppNavRoutes.markAttendanceRoute);
     }
   }
 
@@ -115,13 +178,16 @@ class MarkAttendanceProvider with ChangeNotifier {
           (i) => DailyAttendance(
               studentId: students[i].studentId,
               name: students[i].name,
-              day: students[i].day));
+              attnTypeId: HelperFunction.attendanceOptions()
+                  .singleWhere((e) => e.title == students[i].day)
+                  .value));
       ResponseMessage responseMessage =
           await SaveAttendanceService.saveAttendanceRequest(
               SaveAttendanceRequest(
-                  classSectionId: '$selectedId',
+                  classSectionId: '$sectionId',
                   tokenId: localDataProvider.userData.tokenId,
                   attendanceDate: formattedDate,
+                  subjectId: subjectId,
                   dailyAttendance: attendanceList));
 
       if (responseMessage.isSuccessful) {
@@ -157,6 +223,17 @@ class MarkAttendanceProvider with ChangeNotifier {
             onSelect: (v) => setSelectedSection(v)));
   }
 
+  void subjectBottomSheet() {
+    showModalBottomSheet(
+        context: AppNavigation.currentContext,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) => CustomFilterBottomSheet(
+            title: 'Select Subject',
+            controller: subjectController,
+            filterOptions: subjects,
+            onSelect: (v) => setSelectedSubject(v)));
+  }
+
   void generateAttendanceGraph() {
     pieData = [
       AttendanceGraph('Present',
@@ -170,18 +247,22 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   List<PieChartSectionData> getSections() => List.generate(
       pieData.length,
-          (index) => PieChartSectionData(
+      (index) => PieChartSectionData(
           titleStyle: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
-          radius: 40,
+          radius: 30,
           titlePositionPercentageOffset: 1.6,
           color: pieData[index].color,
           value: double.parse('${pieData[index].attendanceCount}'),
-          title: '${pieData[index].attendance}'));
+          title: '${pieData[index].attendanceCount}'));
 
   void clearClassSectionData() {
-    selectedId = 0;
+    sectionId = null;
+    subjectId = null;
+    classId = null;
     sectionController.clear();
+    subjectController.clear();
     sectionResponse = TeacherSectionResponse();
+    subjectResponse = SectionSubjectResponse();
   }
 
   void clearAttendanceData() {

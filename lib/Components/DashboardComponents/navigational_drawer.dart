@@ -5,6 +5,7 @@ import 'package:tcs_app/CustomWidgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Utils/helper_function.dart';
 
 class NavigationalDrawer extends StatelessWidget {
   @override
@@ -21,9 +22,11 @@ class NavigationalDrawer extends StatelessWidget {
                               ? 'CNIC No: ${value.userData.userName}'
                               : 'ERP No: ${value.userData.userName}'),
                       accountEmail: value.userData.userType == 'Student'
-                          ? Text('Name: ${value.userData.info.name}')
+                          ? Text(
+                              'Name: ${HelperFunction.noNullStringText('${value.userData.info.name}')}')
                           : value.userData.userType == 'Teacher'
-                              ? Text('Name: ${value.userData.name}')
+                              ? Text(
+                                  'Name: ${HelperFunction.noNullStringText('${value.userData.name}')}')
                               : SizedBox.shrink(),
                       currentAccountPicture:
                           CustomUserImage(userId: value.userData.userName),

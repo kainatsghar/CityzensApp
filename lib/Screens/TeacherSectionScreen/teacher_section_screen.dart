@@ -15,7 +15,7 @@ class TeacherSectionScreen extends StatefulWidget {
 }
 
 class TeacherSectionScreenState extends State<TeacherSectionScreen> {
-  Future _sections;
+  Future _sections, _subjects;
   var provider = Provider.of<MarkAttendanceProvider>(
       AppNavigation.currentContext,
       listen: false);
@@ -23,6 +23,7 @@ class TeacherSectionScreenState extends State<TeacherSectionScreen> {
   @override
   void initState() {
     _sections = provider.loadSections();
+    _subjects = provider.loadSubjects();
     super.initState();
   }
 
@@ -35,10 +36,10 @@ class TeacherSectionScreenState extends State<TeacherSectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Select Section'),
+        appBar: CustomAppBar(title: 'Attendance'),
         body: RefreshIndicator(
             child: FutureBuilder(
-                future: _sections,
+                future: Future.wait([_sections, _subjects]),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:

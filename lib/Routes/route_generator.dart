@@ -18,6 +18,7 @@ import 'package:tcs_app/Screens/RegistrationScreen/registration_screen.dart';
 import 'package:tcs_app/Screens/RegPinCodeScreen/reg_pincode_screen.dart';
 import 'package:tcs_app/Screens/ResultScreen/academic_term_screen.dart';
 import 'package:tcs_app/Screens/ResultScreen/results_screen.dart';
+import 'package:tcs_app/Screens/StudentAttendanceScreen/student_attendance_screen.dart';
 import 'package:tcs_app/Screens/StudentDashboardScreen/student_dashboard_screen.dart';
 import 'package:tcs_app/Screens/StudentProfileScreen/student_profile_screen.dart';
 import 'package:tcs_app/Screens/TeacherSectionScreen/teacher_section_screen.dart';
@@ -67,7 +68,7 @@ class RouteGenerator {
         return routeScreen(child: TeacherDashboardScreen());
       case AppNavRoutes.teacherProfileRoute:
         return routeScreen(child: TeacherProfileScreen());
-      case AppNavRoutes.attendanceRoute:
+      case AppNavRoutes.markAttendanceRoute:
         return routeScreen(child: AttendanceListScreen());
       case AppNavRoutes.onlineStdRegRoute:
         return routeScreen(child: OSRegistrationScreen());
@@ -85,6 +86,8 @@ class RouteGenerator {
         return routeScreen(child: ChangePasswordScreen());
       case AppNavRoutes.teacherSectionRoute:
         return routeScreen(child: TeacherSectionScreen());
+      case AppNavRoutes.attendanceRoute:
+        return routeScreen(child: StudentAttendanceScreen());
       default:
         return _errorRoute();
     }

@@ -18,12 +18,12 @@ class TeacherSectionComponent extends StatelessWidget {
               Image.asset('images/tcs_logo.png',
                   height: size.width * 0.4, width: size.width * 0.4),
               Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text('Attendance Date',
                         style: TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                   )),
@@ -32,25 +32,58 @@ class TeacherSectionComponent extends StatelessWidget {
                   isEnable: false,
                   readOnly: true,
                   prefixIcon: Icons.date_range),
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Class Section',
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black)),
-                  )),
+              SizedBox(height: size.height * 0.01),
               Form(
                 key: value.formKey,
-                child: CustomTextFormField(
-                    hintText: 'Select',
-                    controller: value.sectionController,
-                    onTap: () => value.sectionBottomSheet(),
-                    readOnly: true,
-                    validator: value.validator,
-                    suffixWidget:  ImageIcon(AssetImage('images/dropdown_icon.png'))),
+                child: Column(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text('Class Section',
+                              style: TextStyle(
+                                  fontSize: 17.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                        )),
+                    CustomTextFormField(
+                        hintText: 'Select',
+                        controller: value.sectionController,
+                        onTap: () => value.sectionBottomSheet(),
+                        readOnly: true,
+                        validator: value.validator,
+                        suffixWidget:
+                            ImageIcon(AssetImage('images/dropdown_icon.png'))),
+                    Visibility(
+                      visible: value.classId == 19 || value.classId == 20,
+                      child: Column(
+                        children: [
+                          SizedBox(height: size.height * 0.02),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text('Section Subjects',
+                                    style: TextStyle(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black)),
+                              )),
+                          CustomTextFormField(
+                              hintText: 'Select',
+                              controller: value.subjectController,
+                              onTap: () => value.subjectBottomSheet(),
+                              readOnly: true,
+                              validator: value.validator,
+                              suffixWidget: ImageIcon(
+                                  AssetImage('images/dropdown_icon.png'))),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: size.height * 0.04),
               CustomAppButton(

@@ -18,18 +18,17 @@ class SingleChallanItem extends StatelessWidget {
         child: Column(
           children: <Widget>[
             CustomTitleValue(title: 'Challan No', value: record.challanNo),
-            CustomTitleValue(title: 'Issue Date', value: HelperFunction.dateFormatter(record.issueDate)),
+            CustomTitleValue(
+                title: 'Issue Date',
+                value: HelperFunction.dateFormatter(record.issueDate)),
             CustomTitleValue(
                 title: 'Due Date',
                 value: HelperFunction.dateFormatter(record.dueDate)),
             CustomTitleValue(
                 title: 'Validity Date',
                 value: HelperFunction.dateFormatter(record.validityDate)),
-            CustomTitleValue(
-                title: 'Challan Type',
-                value: record.challanType),
-            CustomTitleValue(
-                title: 'Period Name', value: record.periodName),
+            CustomTitleValue(title: 'Challan Type', value: record.challanType),
+            CustomTitleValue(title: 'Period Name', value: record.periodName),
             CustomTitleValue(
                 title: 'Original Fee', value: 'PKR ${record.originalFee}'),
           ],

@@ -16,6 +16,7 @@ class AppNavRoutes {
   static const feeChallansRoute = '/feechallans';
   static const teacherDashboardRoute = '/teacherDashboard';
   static const teacherProfileRoute = '/teacherprofile';
+  static const markAttendanceRoute = '/markAttendance';
   static const attendanceRoute = '/attendance';
   static const onlineStdRegRoute = '/onlineStdReg';
   static const forgotPasswordRoute = '/forgotPassword';
@@ -25,5 +26,4 @@ class AppNavRoutes {
   static const appFeedbackRoute = '/appFeedback';
   static const changePasswordRoute = '/changePassword';
   static const teacherSectionRoute = '/teacherSection';
-
 }

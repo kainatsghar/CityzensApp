@@ -7,6 +7,8 @@ import 'package:tcs_app/Provider/Login/login_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/Utils/helper_function.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -93,15 +95,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           InkWell(
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                  color: AppColors.primaryColor,
-                                  decoration: TextDecoration.underline),
-                            ),
-                            onTap: () => AppNavigation.navigateTo(
-                                AppNavRoutes.forgotPasswordRoute),
-                          ),
+                              child: Text(
+                                'Forgot Password?',
+                                style: TextStyle(
+                                    color: AppColors.primaryColor,
+                                    decoration: TextDecoration.underline),
+                              ),
+                              onTap: () => AppNavigation.navigateTo(
+                                  AppNavRoutes.forgotPasswordRoute)),
                         ],
                       ),
                       SizedBox(height: 20),
@@ -125,8 +126,45 @@ class _LoginScreenState extends State<LoginScreen> {
                                     decoration: TextDecoration.underline,
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.w500)),
-                          )
+                          ),
                         ],
+                      ),
+                      SizedBox(height: size.height * 0.04),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'TCS Alumni App:',
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                              SizedBox(height: size.height * 0.01),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: InkWell(
+                                  onTap: () => HelperFunction.launchURL(
+                                      AppConstants.alumniAppURL),
+                                  child: Text(
+                                    AppConstants.alumniAppURL,
+                                    style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.primaryColor,
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       Padding(
                           padding: EdgeInsets.only(
@@ -137,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
               }),
             ),
           ),
-         /* Container(
+          /* Container(
               color: AppColors.primaryColor,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 10),

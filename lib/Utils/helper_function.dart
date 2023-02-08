@@ -11,6 +11,7 @@ import 'package:tcs_app/CustomWidgets/CustomBottomSheets/imagepicker_bottom_shee
 import 'package:tcs_app/Model/PushNotification/push_notification_response.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/model/Options/options.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelperFunction {
   static List<Options> userTypes() => [
@@ -76,10 +77,18 @@ class HelperFunction {
   }
 
   static List<Options> attendanceOptions() => [
-        Options(title: 'P', isSelected: true, color: Colors.green),
-        Options(title: 'A', isSelected: false, color: Colors.red),
-        Options(title: 'L', isSelected: false, color: Colors.amber)
+        Options(title: 'P', isSelected: true, color: Colors.green, value: 1),
+        Options(title: 'A', isSelected: false, color: Colors.red, value: 2),
+        Options(title: 'L', isSelected: false, color: Colors.amber, value: 3)
       ];
+
+  static launchURL(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   static Future<DateTime> openDatePicker(
       {@required TextEditingController filterDate}) async {
@@ -154,5 +163,13 @@ class HelperFunction {
       string = string.substring(0, string.length - 1);
     }
     return string;
+  }
+
+  static String noNullStringText(String value) {
+    if (value == 'null' || value == null || value.isEmpty || value == '-') {
+      return '-';
+    } else {
+      return value;
+    }
   }
 }

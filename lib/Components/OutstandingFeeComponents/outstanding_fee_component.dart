@@ -12,7 +12,7 @@ class OutstandingFeeComponent extends StatelessWidget {
     return SafeArea(
       child: Consumer<FeeChallanProvider>(builder: (context, value, _) {
         var responseData = value.outstandingChallans.outstandingList;
-        return responseData.isEmpty
+        return responseData == null || responseData.isEmpty
             ? ShowCustomMessage(message: AppConstants.noRecordFound)
             : ListView.builder(
                 itemCount: value.outstandingChallans.outstandingList.length + 1,

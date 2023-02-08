@@ -6,7 +6,7 @@ import 'package:tcs_app/Components/ParentDashboardComponents/multi_child_compone
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/ParentDashboardProvider/parent_dashboard_provider.dart';
+import 'package:tcs_app/Provider/ParentDashboard/parent_dashboard_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class ParentDashboardScreen extends StatefulWidget {
@@ -35,21 +35,20 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
         appBar: CustomAppBar(title: 'Cityzens'),
         drawer: NavigationalDrawer(),
         body: RefreshIndicator(
-          child: FutureBuilder(
-              future: _multiChild,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return const CustomLoader();
-                  default:
-                    if (snapshot.hasData) {
-                      return MultiChildComponent();
-                    } else {
-                      return ShowError(errorText: '${snapshot.error}');
-                    }
-                }
-              }),
-          onRefresh: () => provider.loadMultiChildData()
-        ));
+            child: FutureBuilder(
+                future: _multiChild,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const CustomLoader();
+                    default:
+                      if (snapshot.hasData) {
+                        return MultiChildComponent();
+                      } else {
+                        return ShowError(errorText: '${snapshot.error}');
+                      }
+                  }
+                }),
+            onRefresh: () => provider.loadMultiChildData()));
   }
 }

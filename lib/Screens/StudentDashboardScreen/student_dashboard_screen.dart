@@ -31,32 +31,37 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
               mainAxisSpacing: 15.0,
               crossAxisCount: 2,
               children: <Widget>[
-            CustomDashboardButton(
-                buttonTitle: 'Profile',
-                onTap: () => AppNavigation.navigateTo(
-                    AppNavRoutes.studentProfileRoute),
-                imageName: 'profile.png'),
-            CustomDashboardButton(
-                buttonTitle: 'Results',
-                onTap: () =>
-                    AppNavigation.navigateTo(AppNavRoutes.academicTermRoute),
-                imageName: 'result.png'),
-            CustomDashboardButton(
-                buttonTitle: 'library',
-                onTap: () =>
-                    AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
-                imageName: 'library.png'),
-            CustomDashboardButton(
-                buttonTitle: 'Notifications',
-                onTap: () => AppNavigation.navigateTo(
-                    AppNavRoutes.notificationsRoute),
-                imageName: 'notification.png'),
-            CustomDashboardButton(
-                buttonTitle: 'Fee Challans',
-                onTap: () =>
-                    AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
-                imageName: 'feechallan.png')
-          ]));
+                CustomDashboardButton(
+                    buttonTitle: 'Profile',
+                    onTap: () => AppNavigation.navigateTo(
+                        AppNavRoutes.studentProfileRoute),
+                    imageName: 'profile.png'),
+                CustomDashboardButton(
+                    buttonTitle: 'Results',
+                    onTap: () => AppNavigation.navigateTo(
+                        AppNavRoutes.academicTermRoute),
+                    imageName: 'result.png'),
+                CustomDashboardButton(
+                    buttonTitle: 'library',
+                    onTap: () =>
+                        AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
+                    imageName: 'library.png'),
+                CustomDashboardButton(
+                    buttonTitle: 'Notifications',
+                    onTap: () => AppNavigation.navigateTo(
+                        AppNavRoutes.notificationsRoute),
+                    imageName: 'notification.png'),
+                CustomDashboardButton(
+                    buttonTitle: 'Fee Challans',
+                    onTap: () =>
+                        AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
+                    imageName: 'feechallan.png'),
+                CustomDashboardButton(
+                    buttonTitle: 'Attendance',
+                    onTap: () =>
+                        AppNavigation.navigateTo(AppNavRoutes.attendanceRoute),
+                    imageName: 'result.png')
+              ]));
     });
   }
 }

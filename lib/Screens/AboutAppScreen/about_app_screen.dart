@@ -2,9 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
-import 'package:tcs_app/Provider/DashboardProvider/dashboard_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+
+import '../../Provider/Dashboard/dashboard_provider.dart';
 
 class AboutAppScreen extends StatefulWidget {
   @override

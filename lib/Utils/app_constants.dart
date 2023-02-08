@@ -15,12 +15,14 @@ class AppConstants {
   static const String assetIcons = 'assets/icons/';
   static const String assetImages = 'assets/images/';
   static const String textFont = 'Avenir';
+  static const String alumniAppURL = "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
+
 
   /// Shared Preferences Keys
   static const String userDataKey = 'userData';
 
   static const Map<String,String> appHeaders = {
-    'Content-type': 'application/json',
+  'Content-Type': 'application/json; charset=UTF-8',
     'Accept': 'application/json'
   };
 }
