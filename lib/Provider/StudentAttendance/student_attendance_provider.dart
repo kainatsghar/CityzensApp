@@ -86,7 +86,7 @@ class StudentAttendanceProvider with ChangeNotifier {
               tokenId: localDataProvider.userData.tokenId,
               attendanceDate:
                   DateFormat('yyyyMM').format(date ?? DateTime.now()),
-              userName: localDataProvider.userData.userName);
+              userName: localDataProvider.studentId);
       setAttendanceData(response);
       return response;
     } catch (ex) {

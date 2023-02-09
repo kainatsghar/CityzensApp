@@ -6,7 +6,6 @@ import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.d
 import '../../Components/StudentAttendanceComponents/student_attendance_component.dart';
 import '../../CustomWidgets/CustomLoader/custom_loader.dart';
 import '../../CustomWidgets/ShowError/show_error.dart';
-import '../../Provider/Library/library_provider.dart';
 import '../../Routes/app_navigation.dart';
 
 class StudentAttendanceScreen extends StatefulWidget {
@@ -18,16 +17,13 @@ class StudentAttendanceScreen extends StatefulWidget {
 }
 
 class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
-  Future studentInfo, attendanceData;
-  var provider =
-      Provider.of<LibraryProvider>(AppNavigation.currentContext, listen: false);
+  Future attendanceData;
   var attendanceProvider = Provider.of<StudentAttendanceProvider>(
       AppNavigation.currentContext,
       listen: false);
 
   @override
   void initState() {
-    studentInfo = provider.loadLibraryRecords();
     attendanceData = attendanceProvider.loadAttendance();
     super.initState();
   }
@@ -42,21 +38,19 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(title: "Attendance"),
-        body: RefreshIndicator(
-            child: FutureBuilder(
-                future: Future.wait([studentInfo, attendanceData]),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const CustomLoader();
-                    default:
-                      if (snapshot.hasData) {
-                        return StudentAttendanceComponent();
-                      } else {
-                        return ShowError(errorText: '${snapshot.error}');
-                      }
+        body: FutureBuilder(
+            future: attendanceData,
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const CustomLoader();
+                default:
+                  if (snapshot.hasData) {
+                    return StudentAttendanceComponent();
+                  } else {
+                    return ShowError(errorText: '${snapshot.error}');
                   }
-                }),
-            onRefresh: () => provider.loadLibraryRecords()));
+              }
+            }));
   }
 }
