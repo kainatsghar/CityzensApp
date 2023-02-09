@@ -57,6 +57,7 @@ class MarkAttendanceProvider with ChangeNotifier {
   void setSectionData(TeacherSectionResponse response) {
     sectionResponse = response;
     sectionController.clear();
+    sectionId = null;
     sections = List.generate(
         sectionResponse.section.length,
         (index) => Options(
@@ -154,7 +155,8 @@ class MarkAttendanceProvider with ChangeNotifier {
     try {
       SectionSubjectResponse response =
           await SectionSubjectService.getSubjectsRequest(
-              userName: localDataProvider.userData.userName,
+              classSectionId: '$sectionId',
+              teacherId: localDataProvider.userData.userName,
               token: localDataProvider.userData.tokenId);
       setSubjectsData(response);
       return response;
