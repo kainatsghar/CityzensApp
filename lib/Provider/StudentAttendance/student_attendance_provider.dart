@@ -1,9 +1,11 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/Model/StudentAttendance/student_attendance_response.dart';
 
+import '../../Model/StudentAttendance/save_attendance_request.dart';
 import '../../Routes/app_navigation.dart';
 import '../../Services/StudentAttendance/student_attendance_service.dart';
 import '../LocalData/local_data_provider.dart';
@@ -21,6 +23,8 @@ class StudentAttendanceProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  List<AttendanceGraph> pieData = [];
+
   DateTime selectedDate = DateTime.now();
 
   List<MonthlyAttendance> absentDates = [];
@@ -31,6 +35,7 @@ class StudentAttendanceProvider with ChangeNotifier {
 
   setEventsOnCalender() {
     studentAttendance.clear();
+    final sets = Set();
     presentDates = studentAttendanceResponse.monthlyAttendance
         .where((e) => e.attnTypeId == 1)
         .toList();
@@ -47,7 +52,6 @@ class StudentAttendanceProvider with ChangeNotifier {
     absentDates = studentAttendanceResponse.monthlyAttendance
         .where((e) => e.attnTypeId == 2)
         .toList();
-
     absentDates.forEach(
         (data) => studentAttendance[DateTime.parse('${data.attnDate}Z')] = [
               Event(
@@ -58,7 +62,6 @@ class StudentAttendanceProvider with ChangeNotifier {
                   studentId: localDataProvider.studentId,
                   studentName: localDataProvider.userData.name)
             ]);
-
     leaveDates = studentAttendanceResponse.monthlyAttendance
         .where((e) => e.attnTypeId == 3)
         .toList();
@@ -72,6 +75,10 @@ class StudentAttendanceProvider with ChangeNotifier {
                   studentId: localDataProvider.studentId,
                   studentName: localDataProvider.userData.name)
             ]);
+    presentDates.retainWhere((e) => sets.add(e.attnDate));
+    absentDates.retainWhere((e) => sets.add(e.attnDate));
+    leaveDates.retainWhere((e) => sets.add(e.attnDate));
+    generateAttendanceGraph();
   }
 
   List<Event> getAttendance(DateTime dateTime) =>
@@ -105,6 +112,33 @@ class StudentAttendanceProvider with ChangeNotifier {
         .whenComplete(() => DialogBuilder.hideOpenDialog());
     setSelectedDate(dateTime);
   }
+
+  void generateAttendanceGraph() {
+    pieData = [
+      AttendanceGraph(
+          'Present',
+          presentDates.where((e) => e.attnTypeId == 1).toList().length,
+          Colors.green),
+      AttendanceGraph(
+          'Absent',
+          absentDates.where((e) => e.attnTypeId == 2).toList().length,
+          Colors.red),
+      AttendanceGraph(
+          'Leave',
+          leaveDates.where((e) => e.attnTypeId == 3).toList().length,
+          Colors.amber),
+    ];
+  }
+
+  List<PieChartSectionData> getSections() => List.generate(
+      pieData.length,
+      (index) => PieChartSectionData(
+          titleStyle: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
+          radius: 25,
+          titlePositionPercentageOffset: 1.6,
+          color: pieData[index].color,
+          value: double.parse('${pieData[index].attendanceCount}'),
+          title: '${pieData[index].attendanceCount}'));
 
   void clearDate() {
     selectedDate = DateTime.now();
