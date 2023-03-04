@@ -77,9 +77,10 @@ class HelperFunction {
   }
 
   static List<Options> attendanceOptions() => [
-        Options(title: 'P', isSelected: true, color: Colors.green, value: 1),
-        Options(title: 'A', isSelected: false, color: Colors.red, value: 2),
-        Options(title: 'L', isSelected: false, color: Colors.amber, value: 3)
+        Options(title: 'Present', isSelected: true, color: Colors.green, value: 1),
+        Options(title: 'Absent', isSelected: false, color: Colors.red, value: 2),
+        Options(title: 'Leave', isSelected: false, color: Colors.amber, value: 3),
+        Options(title: 'Unreconciled', isSelected: false, color: Colors.grey, value: 35)
       ];
 
   static launchURL(String url) async {

@@ -23,8 +23,8 @@ class CustomToggleButton extends StatelessWidget {
                   : Colors.transparent,
               shape: BoxShape.circle,
               border: Border.all(color: color, width: 2.0)),
-          height: size.width / 10,
-          width: size.width / 10,
+          height: size.width / 12,
+          width: size.width / 12,
           child: Center(
             child: Text(title,
                 textAlign: TextAlign.center,

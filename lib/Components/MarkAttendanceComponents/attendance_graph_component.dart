@@ -43,19 +43,19 @@ class AttendanceGraphComponent extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: List.generate(
                               value.pieData.length,
-                              (index) => Row(children: [
+                              (index) => SingleChildScrollView(
+                                      child: Row(children: [
                                     ClipOval(
-                                      child: Container(
-                                          height: 15,
-                                          width: 15,
-                                          color: value.pieData[index].color),
-                                    ),
+                                        child: Container(
+                                            height: 12,
+                                            width: 12,
+                                            color: value.pieData[index].color)),
                                     Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
+                                            horizontal: 5.0),
                                         child: Text(
                                             value.pieData[index].attendance))
-                                  ]))),
+                                  ])))),
                       Container(
                           padding: EdgeInsets.only(top: size.height * 0.05),
                           height: size.height * 0.28,

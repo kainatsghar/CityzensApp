@@ -102,10 +102,9 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   void changeStatus(String status, int index) {
     studentListResponse.studentList[index].day = status;
-    studentListResponse.studentList[index].attnTypeId =
-        HelperFunction.attendanceOptions()
-            .singleWhere((e) => e.title == status)
-            .value;
+    studentListResponse.studentList[index].attnTypeId = attendanceOptions
+        .singleWhere((e) => e.title.characters.first == status)
+        .value;
     notifyListeners();
   }
 
@@ -180,8 +179,10 @@ class MarkAttendanceProvider with ChangeNotifier {
           (i) => DailyAttendance(
               studentId: students[i].studentId,
               name: students[i].name,
-              attnTypeId: HelperFunction.attendanceOptions()
-                  .singleWhere((e) => e.title == students[i].day)
+              day: students[i].day,
+              attnTypeId: attendanceOptions
+                  .singleWhere(
+                      (e) => e.title.characters.first == students[i].day)
                   .value));
       ResponseMessage responseMessage =
           await SaveAttendanceService.saveAttendanceRequest(
@@ -236,15 +237,19 @@ class MarkAttendanceProvider with ChangeNotifier {
             onSelect: (v) => setSelectedSubject(v)));
   }
 
+  List<Options> attendanceOptions = HelperFunction.attendanceOptions();
+
   void generateAttendanceGraph() {
-    pieData = [
-      AttendanceGraph('Present',
-          students.where((e) => e.day == 'P').toList().length, Colors.green),
-      AttendanceGraph('Absent',
-          students.where((e) => e.day == 'A').toList().length, Colors.red),
-      AttendanceGraph('Leave',
-          students.where((e) => e.day == 'L').toList().length, Colors.amber),
-    ];
+    pieData = List.generate(
+        attendanceOptions.length,
+        (index) => AttendanceGraph(
+            attendanceOptions[index].title,
+            students
+                .where((e) =>
+                    e.day == attendanceOptions[index].title.characters.first)
+                .toList()
+                .length,
+            attendanceOptions[index].color));
   }
 
   List<PieChartSectionData> getSections() => List.generate(
