@@ -2,33 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Screens/AppFeedbackScreen/app_feedback_screen.dart';
 import 'package:tcs_app/Screens/AuthWrapper/auth_wrapper.dart';
-import 'package:tcs_app/Screens/Feechallans/fee_challans_screen.dart';
-import 'package:tcs_app/Screens/ForgotPasswordScreen/forgot_password_screen.dart';
-import 'package:tcs_app/Screens/CreatePasswordScreen/create_password_screen.dart';
-import 'package:tcs_app/Screens/AboutAppScreen/about_app_screen.dart';
-import 'package:tcs_app/Screens/AboutUsScreen/about_us_screen.dart';
-import 'package:tcs_app/Screens/ChangePasswordScreen/change_password_screen.dart';
-import 'package:tcs_app/Screens/LibraryScreen/library_screen.dart';
-import 'package:tcs_app/Screens/Notifications/notifications_screen.dart';
-import 'package:tcs_app/Screens/OSRegistrationScreen/os_registration_screen.dart';
-import 'package:tcs_app/Screens/ParentDashboardScreen/parent_dashboard_screen.dart';
-import 'package:tcs_app/Screens/RegistrationScreen/registration_screen.dart';
-import 'package:tcs_app/Screens/RegPinCodeScreen/reg_pincode_screen.dart';
-import 'package:tcs_app/Screens/ResultScreen/academic_term_screen.dart';
-import 'package:tcs_app/Screens/ResultScreen/results_screen.dart';
-import 'package:tcs_app/Screens/StudentAttendanceScreen/student_attendance_screen.dart';
-import 'package:tcs_app/Screens/StudentDashboardScreen/student_dashboard_screen.dart';
-import 'package:tcs_app/Screens/StudentProfileScreen/student_profile_screen.dart';
-import 'package:tcs_app/Screens/TeacherSectionScreen/teacher_section_screen.dart';
-import 'package:tcs_app/Screens/UpdatePasswordScreen/update_password_screen.dart';
-import 'package:tcs_app/Screens/ForgotPinCodeScreen/forgot_pincode_screen.dart';
 import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
 import 'package:tcs_app/Screens/SplashScreen/splash_screen_ui.dart';
-import 'package:tcs_app/Screens/AttendanceListScreen/attendance_list_screen.dart';
-import 'package:tcs_app/Screens/TeacherDashboardScreen/teacher_dashboard_screen.dart';
-import 'package:tcs_app/Screens/TeacherProfileScreen/teacher_profile_screen.dart';
+import 'package:tcs_app/Screens/Teacher/AddDiaryScreen/add_diary_screen.dart';
+import 'package:tcs_app/Screens/Teacher/MarkUnverifiedScreen/mark_unverified_screen.dart';
+import 'package:tcs_app/Screens/Teacher/TeacherDiaryScreen/teacher_diary_screen.dart';
+import '../Screens/ForgotPassword/ForgotPasswordScreen/forgot_password_screen.dart';
+import '../Screens/ForgotPassword/ForgotPinCodeScreen/forgot_pincode_screen.dart';
+import '../Screens/ForgotPassword/UpdatePasswordScreen/update_password_screen.dart';
+import '../Screens/NavigationalDrawer/AboutAppScreen/about_app_screen.dart';
+import '../Screens/NavigationalDrawer/AboutUsScreen/about_us_screen.dart';
+import '../Screens/NavigationalDrawer/AppFeedbackScreen/app_feedback_screen.dart';
+import '../Screens/NavigationalDrawer/ChangePasswordScreen/change_password_screen.dart';
+import '../Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
+import '../Screens/Registration/CreatePasswordScreen/create_password_screen.dart';
+import '../Screens/Registration/RegPinCodeScreen/reg_pincode_screen.dart';
+import '../Screens/Registration/RegistrationScreen/registration_screen.dart';
+import '../Screens/Student/Feechallans/fee_challans_screen.dart';
+import '../Screens/Student/LibraryScreen/library_screen.dart';
+import '../Screens/Student/Notifications/notifications_screen.dart';
+import '../Screens/Student/OSRegistrationScreen/os_registration_screen.dart';
+import '../Screens/Student/ResultScreen/academic_term_screen.dart';
+import '../Screens/Student/ResultScreen/results_screen.dart';
+import '../Screens/Student/StudentAttendanceScreen/student_attendance_screen.dart';
+import '../Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
+import '../Screens/Student/StudentProfileScreen/student_profile_screen.dart';
+import '../Screens/Teacher/AttendanceListScreen/attendance_list_screen.dart';
+import '../Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart';
+import '../Screens/Teacher/TeacherProfileScreen/teacher_profile_screen.dart';
+import '../Screens/Teacher/TeacherSectionScreen/teacher_section_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -88,6 +91,12 @@ class RouteGenerator {
         return routeScreen(child: TeacherSectionScreen());
       case AppNavRoutes.attendanceRoute:
         return routeScreen(child: StudentAttendanceScreen());
+      case AppNavRoutes.markUnverifiedRoute:
+        return routeScreen(child: MarkUnverifiedScreen());
+      case AppNavRoutes.addDiaryRoute:
+        return routeScreen(child: AddDiaryScreen());
+      case AppNavRoutes.teacherDiaryRoute:
+        return routeScreen(child: TeacherDiaryScreen());
       default:
         return _errorRoute();
     }

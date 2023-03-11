@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomTabBar/custom_tab_bar.dart';
 import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Screens/Feechallans/outstanding_fee_screen.dart';
-import 'package:tcs_app/Screens/Feechallans/receipt_fee_screen.dart';
+import 'package:tcs_app/Screens/Student/Feechallans/receipt_fee_screen.dart';
+
+import 'outstanding_fee_screen.dart';
 
 class FeeChallanScreen extends StatefulWidget {
   FeeChallanScreen({Key key}) : super(key: key);

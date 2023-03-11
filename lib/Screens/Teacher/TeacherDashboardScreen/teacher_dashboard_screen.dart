@@ -34,8 +34,19 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                     imageName: 'profile.png'),
                 CustomDashboardButton(
                     buttonTitle: 'Attendance',
-                    onTap: () =>AppNavigation.navigateTo(AppNavRoutes.teacherSectionRoute),
-                    imageName: 'result.png')
+                    onTap: () => AppNavigation.navigateTo(
+                        AppNavRoutes.teacherSectionRoute),
+                    imageName: 'result.png'),
+                CustomDashboardButton(
+                    buttonTitle: 'Diary',
+                    onTap: () => AppNavigation.navigateTo(
+                        AppNavRoutes.teacherDiaryRoute),
+                    imageName: 'library.png'),
+                CustomDashboardButton(
+                    buttonTitle: 'Mark\nUnverified',
+                    onTap: () => AppNavigation.navigateTo(
+                        AppNavRoutes.markUnverifiedRoute),
+                    imageName: 'feechallan.png')
               ],
             )));
   }

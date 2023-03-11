@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
-import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
 
-import '../../Components/StudentAttendanceComponents/student_attendance_component.dart';
-import '../../CustomWidgets/CustomLoader/custom_loader.dart';
-import '../../CustomWidgets/ShowError/show_error.dart';
-import '../../Routes/app_navigation.dart';
+import '../../../Components/StudentAttendanceComponents/student_attendance_component.dart';
+import '../../../CustomWidgets/CustomAppbar/custom_appbar.dart';
+import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
+import '../../../CustomWidgets/ShowError/show_error.dart';
+import '../../../Provider/StudentAttendance/student_attendance_provider.dart';
+import '../../../Routes/app_navigation.dart';
+
 
 class StudentAttendanceScreen extends StatefulWidget {
   const StudentAttendanceScreen({Key key}) : super(key: key);

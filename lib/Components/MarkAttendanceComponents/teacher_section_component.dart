@@ -52,7 +52,7 @@ class TeacherSectionComponent extends StatelessWidget {
                         controller: value.sectionController,
                         onTap: () => value.sectionBottomSheet(),
                         readOnly: true,
-                        validator: value.validator,
+                        validator: HelperFunction.validator,
                         suffixWidget:
                             ImageIcon(AssetImage('images/dropdown_icon.png'))),
                     Visibility(
@@ -76,7 +76,7 @@ class TeacherSectionComponent extends StatelessWidget {
                               controller: value.subjectController,
                               onTap: () => value.subjectBottomSheet(),
                               readOnly: true,
-                              validator: value.validator,
+                              validator: HelperFunction.validator,
                               suffixWidget: ImageIcon(
                                   AssetImage('images/dropdown_icon.png'))),
                         ],

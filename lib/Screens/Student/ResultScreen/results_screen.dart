@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomTabBar/custom_tab_bar.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Screens/ResultScreen/detail_result_screen.dart';
-import 'package:tcs_app/Screens/ResultScreen/overall_result_screen.dart';
+
+import 'detail_result_screen.dart';
+import 'overall_result_screen.dart';
 
 class ResultsScreen extends StatefulWidget {
   ResultsScreen({Key key}) : super(key: key);

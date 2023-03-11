@@ -38,6 +38,7 @@ dependencies:
   fl_chart:
   flutter_launcher_icons:
   table_calendar: ^3.0.0
+  grouped_list:
 dev_dependencies:
   flutter_test:
     sdk: flutter

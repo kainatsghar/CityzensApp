@@ -9,14 +9,15 @@ import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
-import 'package:tcs_app/Screens/ParentDashboardScreen/parent_dashboard_screen.dart';
-import 'package:tcs_app/Screens/StudentDashboardScreen/student_dashboard_screen.dart';
-import 'package:tcs_app/Screens/TeacherDashboardScreen/teacher_dashboard_screen.dart';
 import 'package:tcs_app/Services/Logout/logout_service.dart';
 import 'package:tcs_app/SharedPreference/shared_preference.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
+
+import '../../Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
+import '../../Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
+import '../../Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart';
 
 class LocalDataProvider with ChangeNotifier {
   LoginResponse userData = LoginResponse();

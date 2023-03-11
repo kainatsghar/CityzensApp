@@ -21,13 +21,11 @@ class CustomDashboardButton extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset(
-                  'images/$imageName',
-                  height: size.width * 0.22,
-                  width: size.width * 0.22,
-                ),
+                Image.asset('images/$imageName',
+                    height: size.width * 0.22, width: size.width * 0.22),
                 Padding(padding: EdgeInsets.all(5.0)),
                 Text('$buttonTitle',
+                    textAlign: TextAlign.center,
                     style:
                         TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600))
               ]),

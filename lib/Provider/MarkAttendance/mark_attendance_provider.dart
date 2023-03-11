@@ -42,13 +42,6 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   StudentListResponse studentListResponse = StudentListResponse();
 
-  String validator(String value) {
-    if (value.isNotEmpty) {
-      return null;
-    } else {
-      return "Required*";
-    }
-  }
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
       AppNavigation.currentContext,

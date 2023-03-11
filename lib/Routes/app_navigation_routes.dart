@@ -3,8 +3,8 @@ class AppNavRoutes {
   static const loginRoute = '/login';
   static const authWrapperRoute = '/authWrapper';
   static const registrationRoute = '/userRegistration';
-  static const forgotPinCodeRoute = '/forgotPincode';
-  static const registrationPinCodeRoute = '/registrationPincode';
+  static const forgotPinCodeRoute = '/forgotPinCode';
+  static const registrationPinCodeRoute = '/registrationPinCode';
   static const createPasswordRoute = '/createPassword';
   static const studentDashboardRoute = '/studentDashboard';
   static const parentDashboardRoute = '/parentDashboard';
@@ -13,9 +13,9 @@ class AppNavRoutes {
   static const academicTermRoute = '/academicTerm';
   static const libraryRoute = '/library';
   static const notificationsRoute = '/notifications';
-  static const feeChallansRoute = '/feechallans';
+  static const feeChallansRoute = '/feeChallans';
   static const teacherDashboardRoute = '/teacherDashboard';
-  static const teacherProfileRoute = '/teacherprofile';
+  static const teacherProfileRoute = '/teacherProfile';
   static const markAttendanceRoute = '/markAttendance';
   static const attendanceRoute = '/attendance';
   static const onlineStdRegRoute = '/onlineStdReg';
@@ -26,4 +26,7 @@ class AppNavRoutes {
   static const appFeedbackRoute = '/appFeedback';
   static const changePasswordRoute = '/changePassword';
   static const teacherSectionRoute = '/teacherSection';
+  static const markUnverifiedRoute = '/markUnverified';
+  static const addDiaryRoute = '/addDiary';
+  static const teacherDiaryRoute = '/teacherDiary';
 }

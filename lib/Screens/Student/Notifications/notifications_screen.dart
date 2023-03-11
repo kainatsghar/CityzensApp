@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomTabBar/custom_tab_bar.dart';
 import 'package:tcs_app/Provider/Notifications/notification_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Screens/Notifications/challan_notification_screen.dart';
-import 'package:tcs_app/Screens/Notifications/library_notification_screen.dart';
-import 'package:tcs_app/Screens/Notifications/message_screen.dart';
+
+import 'challan_notification_screen.dart';
+import 'library_notification_screen.dart';
+import 'message_screen.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
