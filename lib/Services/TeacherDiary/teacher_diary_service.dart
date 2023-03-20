@@ -1,14 +1,16 @@
-import 'package:tcs_app/Model/TeacherDiary/teacher_diary_request.dart';
-import 'package:tcs_app/Model/TeacherDiary/teacher_diary_response.dart';
 import 'package:tcs_app/Network/api_base_helper.dart';
 
+import '../../Model/Diary/diary_request.dart';
+import '../../Model/Diary/diary_response.dart';
+
 class TeacherDiaryService {
-  static Future<TeacherDiaryResponse> getDiaryRecords({String userName}) async {
-    TeacherDiaryRequest _request =
-        TeacherDiaryRequest(classTeacherId: userName);
+  static Future<DiaryResponse> getDiaryRecords(
+      {String userName, String tokenId}) async {
+    DiaryRequest _request =
+        DiaryRequest(classTeacherId: userName, tokenId: tokenId);
     var response = await ApiBaseHelper.httpPostRequest(
         "GetDiaryDetailsOfTeacher",
         body: _request.toJson());
-    return TeacherDiaryResponse.fromJson(response);
+    return DiaryResponse.fromJson(response);
   }
 }

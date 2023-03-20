@@ -5,7 +5,7 @@ import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import '../../../Components/AddDiaryComponents/add_diary_component.dart';
 import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
 import '../../../CustomWidgets/ShowError/show_error.dart';
-import '../../../Provider/TeacherDiary/teacher_diary_provider.dart';
+import '../../../Provider/Diary/diary_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
 class AddDiaryScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class AddDiaryScreen extends StatefulWidget {
 
 class _AddDiaryScreenState extends State<AddDiaryScreen> {
   Future _sections;
-  var provider = Provider.of<TeacherDiaryProvider>(AppNavigation.currentContext,
+  var provider = Provider.of<DiaryProvider>(AppNavigation.currentContext,
       listen: false);
 
   @override

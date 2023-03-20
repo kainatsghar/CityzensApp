@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/TeacherDiary/teacher_diary_provider.dart';
-
 import '../../CustomWidgets/CustomAppButton/custom_app_button.dart';
 import '../../CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import '../../Provider/Diary/diary_provider.dart';
 import '../../Utils/helper_function.dart';
 
 class AddDiaryComponent extends StatelessWidget {
@@ -14,7 +13,7 @@ class AddDiaryComponent extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Consumer<TeacherDiaryProvider>(builder: (context, value, _) {
+        child: Consumer<DiaryProvider>(builder: (context, value, _) {
           return SingleChildScrollView(
             child: Form(
               key: value.formKey,
@@ -40,8 +39,8 @@ class AddDiaryComponent extends StatelessWidget {
                       onTap: () => value.subjectBottomSheet(),
                       readOnly: true,
                       validator: HelperFunction.validator,
-                      suffixWidget: ImageIcon(
-                          AssetImage('images/dropdown_icon.png'))),
+                      suffixWidget:
+                          ImageIcon(AssetImage('images/dropdown_icon.png'))),
                   SizedBox(height: size.height * 0.02),
                   CustomTextFormField(
                       controller: value.descriptionController,

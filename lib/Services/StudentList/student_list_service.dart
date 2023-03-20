@@ -11,6 +11,7 @@ class StudentListService {
         tokenId: tokenId);
     var response = await ApiBaseHelper.httpPostRequest("AttendanceList",
         body: _request.toJson());
+    print(response);
     return StudentListResponse.fromJson(response);
   }
 }

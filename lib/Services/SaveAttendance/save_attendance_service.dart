@@ -8,6 +8,7 @@ class SaveAttendanceService {
     print(saveAttendanceRequest.toJson());
     var response = await ApiBaseHelper.httpPostRequest("SaveAttendance",
         body: saveAttendanceRequest.toJson());
+    print(saveAttendanceRequest.toJson());
     return ResponseMessage.fromJson(response);
   }
 }

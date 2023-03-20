@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Model/TeacherDiary/teacher_diary_response.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Services/AddDiary/add_diary_service.dart';
+import 'package:tcs_app/Services/StudentDiary/student_diary_service.dart';
 import 'package:tcs_app/Services/TeacherDiary/teacher_diary_service.dart';
 
 import '../../CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddDiary/add_diary_request.dart';
+import '../../Model/Diary/diary_response.dart';
 import '../../Model/ResponseMessage/response_message.dart';
 import '../../Model/SectionSubject/section_subject_response.dart';
 import '../../Services/SectionSubject/section_subject_service.dart';
@@ -20,8 +21,8 @@ import '../../Utils/app_constants.dart';
 import '../../model/Options/options.dart';
 import '../../model/TeacherSection/teacher_section_response.dart';
 
-class TeacherDiaryProvider with ChangeNotifier {
-  TeacherDiaryResponse teacherDiaryResponse;
+class DiaryProvider with ChangeNotifier {
+  DiaryResponse diaryResponse;
   final sectionController = TextEditingController();
   final subjectController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -92,8 +93,8 @@ class TeacherDiaryProvider with ChangeNotifier {
       AppNavigation.currentContext,
       listen: false);
 
-  void setDiaryRecords(TeacherDiaryResponse response) {
-    teacherDiaryResponse = response;
+  void setDiaryRecords(DiaryResponse response) {
+    diaryResponse = response;
     notifyListeners();
   }
 
@@ -118,9 +119,10 @@ class TeacherDiaryProvider with ChangeNotifier {
                 sectionId: sectionId,
                 classTeacherId: localDataProvider.userData.userName,
                 diaryDate: formattedDate,
-                description: descriptionController.text));
+                description: descriptionController.text,
+                tokenId: localDataProvider.userData.tokenId));
         if (response.isSuccess) {
-          await loadDiaryRecords();
+          await loadTeacherDiary();
           Future.delayed(Duration(seconds: 1), () => AppNavigation.goBack());
           showSnackBar('Diary Added Successfully',
               color: AppColors.greenFontColor);
@@ -162,10 +164,23 @@ class TeacherDiaryProvider with ChangeNotifier {
             onSelect: (v) => setSelectedSubject(v)));
   }
 
-  Future<TeacherDiaryResponse> loadDiaryRecords() async {
+  Future<DiaryResponse> loadTeacherDiary() async {
     try {
-      TeacherDiaryResponse response = await TeacherDiaryService.getDiaryRecords(
-          userName: localDataProvider.userData.userName);
+      DiaryResponse response = await TeacherDiaryService.getDiaryRecords(
+          userName: localDataProvider.userData.userName,
+          tokenId: localDataProvider.userData.tokenId);
+      setDiaryRecords(response);
+      return response;
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  Future<DiaryResponse> loadStudentDiary() async {
+    try {
+      DiaryResponse response = await StudentDiaryService.getDiaryRecords(
+          userName: localDataProvider.userData.userName,
+          tokenId: localDataProvider.userData.tokenId);
       setDiaryRecords(response);
       return response;
     } catch (ex) {
@@ -182,5 +197,9 @@ class TeacherDiaryProvider with ChangeNotifier {
     subjects = [];
     subjectResponse = SectionSubjectResponse();
     sectionResponse = TeacherSectionResponse();
+  }
+
+  void clearLibraryData() {
+    diaryResponse = null;
   }
 }

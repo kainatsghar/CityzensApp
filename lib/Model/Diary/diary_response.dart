@@ -1,12 +1,12 @@
-class TeacherDiaryResponse {
+class DiaryResponse {
   List<DiaryRecords> diaryRecords;
   String message;
   bool isSuccess;
 
-  TeacherDiaryResponse(
+  DiaryResponse(
       {this.diaryRecords, this.message, this.isSuccess});
 
-  TeacherDiaryResponse.fromJson(Map<String, dynamic> json) {
+  DiaryResponse.fromJson(Map<String, dynamic> json) {
     if (json['Data'] != null) {
       diaryRecords = <DiaryRecords>[];
       json['Data'].forEach((v) {

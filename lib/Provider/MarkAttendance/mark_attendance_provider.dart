@@ -42,7 +42,6 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   StudentListResponse studentListResponse = StudentListResponse();
 
-
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
       AppNavigation.currentContext,
       listen: false);
@@ -167,15 +166,17 @@ class MarkAttendanceProvider with ChangeNotifier {
   Future<void> saveAttendance() async {
     DialogBuilder.showLoadingIndicator();
     try {
+      List<Student> markedList =
+          students.where((e) => e.attnTypeId != 0).toList();
       List<DailyAttendance> attendanceList = List.generate(
-          students.length,
+          markedList.length,
           (i) => DailyAttendance(
-              studentId: students[i].studentId,
-              name: students[i].name,
-              day: students[i].day,
+              studentId: markedList[i].studentId,
+              name: markedList[i].name,
+              day: markedList[i].day,
               attnTypeId: attendanceOptions
                   .singleWhere(
-                      (e) => e.title.characters.first == students[i].day)
+                      (e) => e.title.characters.first == markedList[i].day)
                   .value));
       ResponseMessage responseMessage =
           await SaveAttendanceService.saveAttendanceRequest(

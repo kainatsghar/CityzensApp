@@ -132,29 +132,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: size.height * 0.04),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'TCS Alumni App:',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic),
-                              ),
-                              SizedBox(height: size.height * 0.01),
-                              Padding(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset('images/alumni_icon.png',
+                                width: size.width * 0.2),
+                            Flexible(
+                              child: Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: InkWell(
                                   onTap: () => HelperFunction.launchURL(
                                       AppConstants.alumniAppURL),
                                   child: Text(
                                     AppConstants.alumniAppURL,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.fade,
                                     style: TextStyle(
-                                        fontSize: 15.0,
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w500,
                                         color: AppColors.primaryColor,
@@ -162,8 +156,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(

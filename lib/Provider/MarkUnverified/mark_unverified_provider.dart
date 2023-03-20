@@ -99,7 +99,8 @@ class MarkUnverifiedProvider with ChangeNotifier {
   Future<UnverifiedReasonsResponse> loadReasons() async {
     try {
       UnverifiedReasonsResponse response =
-          await UnverifiedReasonsService.getReasons();
+          await UnverifiedReasonsService.getReasons(
+              tokenId: localDataProvider.userData.tokenId);
       setReasonsData(response);
       return response;
     } catch (ex) {
@@ -119,7 +120,8 @@ class MarkUnverifiedProvider with ChangeNotifier {
                 reasonId: reasonId,
                 studentName: studentNameController.text,
                 studentId: studentIdController.text,
-                teacherRemarks: remarksController.text));
+                teacherRemarks: remarksController.text,
+                tokenId: localDataProvider.userData.tokenId));
         if (response.isSuccess) {
           Future.delayed(Duration(seconds: 1), () => AppNavigation.goBack());
           showSnackBar('Unverified Student Added Successfully',
@@ -129,7 +131,6 @@ class MarkUnverifiedProvider with ChangeNotifier {
         }
       }
     } catch (ex) {
-      print(ex);
       showSnackBar(AppConstants.exceptionMessage);
     }
     DialogBuilder.hideOpenDialog();

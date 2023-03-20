@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 import 'package:tcs_app/Utils/helper_function.dart';
 
@@ -23,28 +24,49 @@ class CustomUserImage extends StatelessWidget {
         height: imageSize ?? size.width * 0.32,
         width: imageSize ?? size.width * 0.32,
         child: Consumer<LocalDataProvider>(
-            builder: (context, value, _) => GestureDetector(
-                onTap: disableUploadImage
-                    ? null
-                    : () => HelperFunction.imagePickerBottomSheet(),
-                child: ClipOval(
-                  child: FutureBuilder(
-                      future: value.loadImagePath(userId),
-                      builder: (context, snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return const CustomLoader();
-                          default:
-                            if (snapshot.hasData) {
-                              return snapshot.data != null
-                                  ? Image.file(File(snapshot.data),
-                                      fit: BoxFit.cover)
-                                  : Image.asset('images/profile_avatar.png');
-                            } else {
-                              return Image.asset('images/profile_avatar.png');
+            builder: (context, value, _) => Stack(
+                  children: [
+                    ClipOval(
+                      child: FutureBuilder(
+                          future: value.loadImagePath(userId),
+                          builder: (context, snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return const CustomLoader();
+                              default:
+                                if (snapshot.hasData) {
+                                  return snapshot.data != null
+                                      ? Image.file(File(snapshot.data),
+                                          fit: BoxFit.cover)
+                                      : Image.asset(
+                                          'images/profile_avatar.png');
+                                } else {
+                                  return Image.asset(
+                                      'images/profile_avatar.png');
+                                }
                             }
-                        }
-                      }),
-                ))));
+                          }),
+                    ),
+                    Visibility(
+                      visible: disableUploadImage ? false : true,
+                      child: Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: ClipOval(
+                            child: Container(
+                              height: 35,
+                              width: 35,
+                              color: AppColors.primaryColor,
+                              child: GestureDetector(
+                                onTap: () =>
+                                    HelperFunction.imagePickerBottomSheet(),
+                                child: Icon(Icons.camera_alt,
+                                    color: AppColors.whiteColor, size: 20.0),
+                              ),
+                            ),
+                          )),
+                    )
+                  ],
+                )));
   }
 }

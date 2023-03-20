@@ -29,4 +29,6 @@ class AppNavRoutes {
   static const markUnverifiedRoute = '/markUnverified';
   static const addDiaryRoute = '/addDiary';
   static const teacherDiaryRoute = '/teacherDiary';
+  static const studentDiaryRoute = '/studentDiary';
+
 }

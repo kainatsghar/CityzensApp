@@ -33,7 +33,7 @@ class Student {
       name: json['Name'],
       attnTypeId: json['AttnType_ID'],
       status: json['Status'],
-      day: json['Day'] == '-' ? 'P' : json['Day'],
+      day: json['Day'],
     );
   }
 }

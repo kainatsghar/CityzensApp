@@ -5,6 +5,7 @@ class MarkUnverifiedRequest {
   String teacherRemarks;
   int sectionId;
   String employeeId;
+  String tokenId;
 
   MarkUnverifiedRequest(
       {this.studentId,
@@ -12,7 +13,8 @@ class MarkUnverifiedRequest {
       this.reasonId,
       this.teacherRemarks,
       this.sectionId,
-      this.employeeId});
+      this.employeeId,
+      this.tokenId});
 
   MarkUnverifiedRequest.fromJson(Map<String, dynamic> json) {
     studentId = json['studentId'];
@@ -21,6 +23,7 @@ class MarkUnverifiedRequest {
     teacherRemarks = json['teacherRemarks'];
     sectionId = json['Section_Id'];
     employeeId = json['Employee_Id'];
+    tokenId = json['tokenId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +34,7 @@ class MarkUnverifiedRequest {
     data['teacherRemarks'] = this.teacherRemarks;
     data['Section_Id'] = this.sectionId;
     data['Employee_Id'] = this.employeeId;
+    data['tokenId'] = this.tokenId;
     return data;
   }
 }

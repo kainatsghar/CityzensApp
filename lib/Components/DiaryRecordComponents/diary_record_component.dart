@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Model/TeacherDiary/teacher_diary_response.dart';
-import 'package:tcs_app/Provider/TeacherDiary/teacher_diary_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 
 import '../../CustomWidgets/ShowCustomMessage/show_custom_message.dart';
+import '../../Model/Diary/diary_response.dart';
+import '../../Provider/Diary/diary_provider.dart';
 
-class TeacherDiaryRecordComponent extends StatelessWidget {
-  const TeacherDiaryRecordComponent({Key key}) : super(key: key);
+class DiaryRecordComponent extends StatelessWidget {
+  const DiaryRecordComponent({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TeacherDiaryProvider>(builder: (context, value, _) {
-      List<DiaryRecords> diaryRecords = value.teacherDiaryResponse.diaryRecords;
+    return Consumer<DiaryProvider>(builder: (context, value, _) {
+      List<DiaryRecords> diaryRecords = value.diaryResponse.diaryRecords;
       return Padding(
         padding: EdgeInsets.all(10),
-        child: diaryRecords.isEmpty
+        child: diaryRecords == null || diaryRecords.isEmpty
             ? ShowCustomMessage(message: AppConstants.noRecordFound)
             : GroupedListView<DiaryRecords, String>(
                 elements: diaryRecords,
@@ -34,19 +34,17 @@ class TeacherDiaryRecordComponent extends StatelessWidget {
                               fontWeight: FontWeight.w600)),
                     ),
                 itemBuilder: (context, DiaryRecords element) => Card(
-                      child: Theme(
+                    child: Theme(
                         data: Theme.of(context)
                             .copyWith(dividerColor: Colors.transparent),
                         child: ExpansionTile(
-                          title: Text(element.subject,
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.w600)),
-                          children: <Widget>[
-                            ListTile(title: Text(element.description))
-                          ],
-                        ),
-                      ),
-                    ),
+                            title: Text(element.subject,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600)),
+                            children: <Widget>[
+                              ListTile(title: Text(element.description))
+                            ]))),
                 order: GroupedListOrder.ASC),
       );
     });
