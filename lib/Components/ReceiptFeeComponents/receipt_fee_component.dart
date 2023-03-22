@@ -18,8 +18,10 @@ class ReceiptFeeComponent extends StatelessWidget {
                 itemCount: responseData.length + 1,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
-                    return CustomStudentInfo(
-                        info: value.outstandingChallans.info);
+                    return value.challanReceiptResponse.info == null
+                        ? SizedBox.shrink()
+                        : CustomStudentInfo(
+                            info: value.challanReceiptResponse.info);
                   } else {
                     index -= 1;
                     return SingleReceiptItem(record: responseData[index]);

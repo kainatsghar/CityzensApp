@@ -28,6 +28,7 @@ class ApiBaseHelper {
       {Object body, String base = AppConstants.apiBaseURL}) async {
     http.Response response;
     try {
+      print('$base$endPoint');
       print(json.encode(body));
       response = await http.post(Uri.parse('$base$endPoint'),
           headers: AppConstants.appHeaders, body: json.encode(body));

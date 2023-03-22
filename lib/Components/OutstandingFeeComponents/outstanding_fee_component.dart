@@ -18,8 +18,10 @@ class OutstandingFeeComponent extends StatelessWidget {
                 itemCount: value.outstandingChallans.outstandingList.length + 1,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
-                    return CustomStudentInfo(
-                        info: value.outstandingChallans.info);
+                    return value.outstandingChallans.info == null
+                        ? SizedBox.shrink()
+                        : CustomStudentInfo(
+                            info: value.outstandingChallans.info);
                   } else {
                     index -= 1;
                     return SingleChallanItem(record: responseData[index]);

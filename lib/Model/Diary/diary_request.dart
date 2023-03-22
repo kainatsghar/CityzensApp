@@ -8,15 +8,15 @@ class DiaryRequest {
   DiaryRequest.fromJson(Map<String, dynamic> json) {
     classTeacherId = json['classTeacherId'];
     tokenId = json['tokenId'];
-    studentId = json['sectionId'];
+    studentId = json['StudentId'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.classTeacherId != null)
       data['classTeacherId'] = this.classTeacherId;
-    data['tokenId'] = this.tokenId;
-    data['sectionId'] = this.studentId;
+    if (this.tokenId != null) data['tokenId'] = this.tokenId;
+    if (this.studentId != null) data['StudentId'] = this.studentId;
     return data;
   }
 }
