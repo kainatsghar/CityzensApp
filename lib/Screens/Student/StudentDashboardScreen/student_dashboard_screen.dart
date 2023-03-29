@@ -60,12 +60,12 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                     buttonTitle: 'Attendance',
                     onTap: () =>
                         AppNavigation.navigateTo(AppNavRoutes.attendanceRoute),
-                    imageName: 'result.png'),
+                    imageName: 'attendance.png'),
                 CustomDashboardButton(
                     buttonTitle: 'Diary',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.studentDiaryRoute),
-                    imageName: 'library.png')
+                    imageName: 'diary.png')
               ]));
     });
   }
