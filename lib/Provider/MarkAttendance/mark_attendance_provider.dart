@@ -33,7 +33,7 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   int sectionId;
   int classId;
-  int subjectId;
+  int subjectId = 0;
 
   String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
@@ -113,7 +113,7 @@ class MarkAttendanceProvider with ChangeNotifier {
         .singleWhere((e) => e.name == sectionName)
         .classId;
     subjectController.clear();
-    subjectId = null;
+    subjectId = 0;
     sectionController.text = sectionName;
     if (classId == 19 || classId == 20) {
       DialogBuilder.showLoadingIndicator();
@@ -168,30 +168,34 @@ class MarkAttendanceProvider with ChangeNotifier {
     try {
       List<Student> markedList =
           students.where((e) => e.attnTypeId != 0).toList();
-      List<DailyAttendance> attendanceList = List.generate(
-          markedList.length,
-          (i) => DailyAttendance(
-              studentId: markedList[i].studentId,
-              name: markedList[i].name,
-              day: markedList[i].day,
-              attnTypeId: attendanceOptions
-                  .singleWhere(
-                      (e) => e.title.characters.first == markedList[i].day)
-                  .value));
-      ResponseMessage responseMessage =
-          await SaveAttendanceService.saveAttendanceRequest(
-              SaveAttendanceRequest(
-                  classSectionId: '$sectionId',
-                  tokenId: localDataProvider.userData.tokenId,
-                  attendanceDate: formattedDate,
-                  subjectId: subjectId,
-                  dailyAttendance: attendanceList));
-
-      if (responseMessage.isSuccessful) {
-        setSaveAttendanceResponse(responseMessage);
-        showSnackBar(responseMessage.message, color: AppColors.greenFontColor);
+      if (markedList.length == students.length) {
+        List<DailyAttendance> attendanceList = List.generate(
+            markedList.length,
+            (i) => DailyAttendance(
+                studentId: markedList[i].studentId,
+                name: markedList[i].name,
+                day: markedList[i].day,
+                attnTypeId: attendanceOptions
+                    .singleWhere(
+                        (e) => e.title.characters.first == markedList[i].day)
+                    .value));
+        ResponseMessage responseMessage =
+            await SaveAttendanceService.saveAttendanceRequest(
+                SaveAttendanceRequest(
+                    classSectionId: '$sectionId',
+                    tokenId: localDataProvider.userData.tokenId,
+                    attendanceDate: formattedDate,
+                    subjectId: subjectId,
+                    dailyAttendance: attendanceList));
+        if (responseMessage.isSuccessful) {
+          setSaveAttendanceResponse(responseMessage);
+          showSnackBar(responseMessage.message,
+              color: AppColors.greenFontColor);
+        } else {
+          showSnackBar(responseMessage.message);
+        }
       } else {
-        showSnackBar(responseMessage.message);
+        showSnackBar(AppConstants.markAttendanceMessage);
       }
     } catch (ex) {
       showSnackBar(AppConstants.exceptionMessage);
@@ -258,7 +262,7 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   void clearClassSectionData() {
     sectionId = null;
-    subjectId = null;
+    subjectId = 0;
     classId = null;
     sectionController.clear();
     subjectController.clear();

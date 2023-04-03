@@ -7,7 +7,7 @@ import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
 import 'package:tcs_app/Screens/SplashScreen/splash_screen_ui.dart';
 import 'package:tcs_app/Screens/Student/StudentDiaryScreen/student_diary_screen.dart';
 import 'package:tcs_app/Screens/Teacher/AddDiaryScreen/add_diary_screen.dart';
-import 'package:tcs_app/Screens/Teacher/MarkUnverifiedScreen/mark_unverified_screen.dart';
+import 'package:tcs_app/Screens/Teacher/MarkUnidentifiedScreen/mark_unidentified_screen.dart';
 import 'package:tcs_app/Screens/Teacher/TeacherDiaryScreen/teacher_diary_screen.dart';
 import '../Screens/ForgotPassword/ForgotPasswordScreen/forgot_password_screen.dart';
 import '../Screens/ForgotPassword/ForgotPinCodeScreen/forgot_pincode_screen.dart';
@@ -92,8 +92,8 @@ class RouteGenerator {
         return routeScreen(child: TeacherSectionScreen());
       case AppNavRoutes.attendanceRoute:
         return routeScreen(child: StudentAttendanceScreen());
-      case AppNavRoutes.markUnverifiedRoute:
-        return routeScreen(child: MarkUnverifiedScreen());
+      case AppNavRoutes.markUnidentifiedRoute:
+        return routeScreen(child: MarkUnidentifiedScreen());
       case AppNavRoutes.addDiaryRoute:
         return routeScreen(child: AddDiaryScreen());
       case AppNavRoutes.teacherDiaryRoute:

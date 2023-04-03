@@ -26,7 +26,7 @@ class AppNavRoutes {
   static const appFeedbackRoute = '/appFeedback';
   static const changePasswordRoute = '/changePassword';
   static const teacherSectionRoute = '/teacherSection';
-  static const markUnverifiedRoute = '/markUnverified';
+  static const markUnidentifiedRoute = '/markUnidentified';
   static const addDiaryRoute = '/addDiary';
   static const teacherDiaryRoute = '/teacherDiary';
   static const studentDiaryRoute = '/studentDiary';

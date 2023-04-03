@@ -7,14 +7,14 @@ import '../../../CustomWidgets/ShowError/show_error.dart';
 import '../../../Provider/MarkUnverified/mark_unverified_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
-class MarkUnverifiedScreen extends StatefulWidget {
-  const MarkUnverifiedScreen({Key key}) : super(key: key);
+class MarkUnidentifiedScreen extends StatefulWidget {
+  const MarkUnidentifiedScreen({Key key}) : super(key: key);
 
   @override
-  State<MarkUnverifiedScreen> createState() => _MarkUnverifiedScreenState();
+  State<MarkUnidentifiedScreen> createState() => _MarkUnidentifiedScreenState();
 }
 
-class _MarkUnverifiedScreenState extends State<MarkUnverifiedScreen> {
+class _MarkUnidentifiedScreenState extends State<MarkUnidentifiedScreen> {
   Future _sections, _reasons;
   var provider = Provider.of<MarkUnverifiedProvider>(
       AppNavigation.currentContext,
@@ -36,7 +36,7 @@ class _MarkUnverifiedScreenState extends State<MarkUnverifiedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Mark Unverified'),
+        appBar: CustomAppBar(title: 'Mark Unidentified'),
         body: FutureBuilder(
             future: Future.wait([_sections,_reasons]),
             builder: (context, snapshot) {

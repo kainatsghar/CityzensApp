@@ -43,9 +43,9 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         AppNavRoutes.teacherDiaryRoute),
                     imageName: 'diary.png'),
                 CustomDashboardButton(
-                    buttonTitle: 'Mark\nUnverified',
+                    buttonTitle: 'Mark\nUnidentified',
                     onTap: () => AppNavigation.navigateTo(
-                        AppNavRoutes.markUnverifiedRoute),
+                        AppNavRoutes.markUnidentifiedRoute),
                     imageName: 'unverified.png')
               ],
             )));

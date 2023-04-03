@@ -2,6 +2,8 @@ class AppConstants {
   static const String apiBaseURL = "http://app.csn.edu.pk:8080/api/";
   static const String exceptionMessage =
       "Something Went Wrong, Please Try Again Later";
+  static const String markAttendanceMessage =
+      "Please Mark Complete Attendance";
   static const String serverExceptionMessage =
       "Server Not Responding, Please Try Again Later";
   static const String feedExceptionMessage =
