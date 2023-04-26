@@ -66,6 +66,7 @@ class DiaryProvider with ChangeNotifier {
     try {
       TeacherSectionResponse response =
           await TeacherSectionService.sectionRequest(
+              isDiary: true,
               userName: localDataProvider.userData.userName,
               token: localDataProvider.userData.tokenId);
       setSectionData(response);
@@ -79,6 +80,7 @@ class DiaryProvider with ChangeNotifier {
     try {
       SectionSubjectResponse response =
           await SectionSubjectService.getSubjectsRequest(
+              isDiary: true,
               classSectionId: '$sectionId',
               teacherId: localDataProvider.userData.userName,
               token: localDataProvider.userData.tokenId);

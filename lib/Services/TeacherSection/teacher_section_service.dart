@@ -4,10 +4,9 @@ import 'package:tcs_app/model/UserData/user_data_request.dart';
 
 class TeacherSectionService {
   static Future<TeacherSectionResponse> sectionRequest(
-      {String userName, String token, }) async {
-    UserDataRequest _request = UserDataRequest(
-        userName: userName,
-        tokenId: token);
+      {String userName, String token, bool isDiary = false}) async {
+    UserDataRequest _request =
+        UserDataRequest(userName: userName, tokenId: token, isDiary: isDiary);
     var response = await ApiBaseHelper.httpPostRequest("GetSections",
         body: _request.toJson());
     return TeacherSectionResponse.fromJson(response);

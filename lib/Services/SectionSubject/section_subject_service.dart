@@ -5,9 +5,9 @@ import '../../Network/api_base_helper.dart';
 
 class SectionSubjectService {
   static Future<SectionSubjectResponse> getSubjectsRequest(
-      {String classSectionId, String token, String teacherId}) async {
+      {String classSectionId, String token, String teacherId,bool isDiary=false}) async {
     SectionSubjectRequest _request = SectionSubjectRequest(
-        id: classSectionId, tokenId: token, teacherId: teacherId);
+        id: classSectionId, tokenId: token, teacherId: teacherId,isDiary: isDiary);
     var response = await ApiBaseHelper.httpPostRequest("GetSubjects",
         body: _request.toJson());
     return SectionSubjectResponse.fromJson(response);
