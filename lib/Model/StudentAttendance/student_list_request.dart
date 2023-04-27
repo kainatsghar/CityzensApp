@@ -19,7 +19,7 @@ class StudentListRequest {
     data['ClassSectionId'] = classSectionId ?? '';
     data['TokenId'] = tokenId ?? '';
     data['AttendanceDate'] = attendanceData ?? '';
-    data['SubjectId'] = subjectId ?? '';
+    data['SubjectId'] = subjectId ?? '0';
     data['PMonth'] = pMonth ?? '';
     data['StudentId'] = studentId ?? '';
     return data;

@@ -73,6 +73,7 @@ class MarkAttendanceProvider with ChangeNotifier {
     try {
       StudentListResponse response = await StudentListService.stdListRequest(
           classSectionId: '$sectionId',
+          subjectId: subjectId,
           tokenId: localDataProvider.userData.tokenId,
           attendanceDate: formattedDate);
       setStudentList(response);
@@ -108,9 +109,9 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   Future<void> setSelectedSection(String sectionName) async {
     AppNavigation.goBack();
-    sectionId = sections.singleWhere((e) => e.title == sectionName).value;
+    sectionId = sections.firstWhere((e) => e.title == sectionName).value;
     classId = sectionResponse.section
-        .singleWhere((e) => e.name == sectionName)
+        .firstWhere((e) => e.name == sectionName)
         .classId;
     subjectController.clear();
     subjectId = 0;
