@@ -6,6 +6,7 @@ import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_but
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   @override
@@ -16,6 +17,16 @@ class StudentDashboardScreen extends StatefulWidget {
 
 class StudentDashboardScreenState extends State<StudentDashboardScreen>
     with WidgetsBindingObserver {
+  var localData = Provider.of<LocalDataProvider>(AppNavigation.currentContext,
+      listen: false);
+
+  @override
+  void initState() {
+    if (localData.userData.userType != 'Parent')
+      FcmTokenRefreshService.refreshToken();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LocalDataProvider>(builder: (context, value, _) {

@@ -70,7 +70,7 @@ class DashboardProvider with ChangeNotifier {
           Future.delayed(Duration.zero, () => AppNavigation.goBack());
           showSnackBar(
               'Password for ${userNameController.text} has been changed successfully',
-              color: AppColors.graphGreenColor);
+              color: AppColors.successGreenColor);
           disposeData();
         } else {
           showSnackBar(responseMessage.message);

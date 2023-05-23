@@ -140,7 +140,7 @@ class RegistrationProvider with ChangeNotifier {
           Future.delayed(
               Duration(milliseconds: 1), () => AppNavigation.removeAllRoutes());
           showSnackBar(
-              'Password for ${userNameController.text} has been created successfully',color: AppColors.greenFontColor);
+              'Password for ${userNameController.text} has been created successfully',color: AppColors.successGreenColor);
           disposeData();
         } else {
           showSnackBar(responseMessage.message);

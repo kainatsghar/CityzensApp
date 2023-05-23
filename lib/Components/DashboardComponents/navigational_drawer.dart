@@ -65,6 +65,13 @@ class NavigationalDrawer extends StatelessWidget {
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.changePasswordRoute))
                         : SizedBox.shrink(),
+                    value.userData.userType == 'Parent'
+                        ? CustomListTile(
+                            title: 'Challan Payment',
+                            icon: Icons.payment,
+                            onTap: () => AppNavigation.navigateTo(
+                                AppNavRoutes.challanPaymentRoute))
+                        : SizedBox.shrink(),
                     CustomListTile(
                         title: 'Logout',
                         icon: Icons.lock,

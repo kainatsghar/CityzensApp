@@ -39,6 +39,7 @@ dependencies:
   flutter_launcher_icons:
   table_calendar: ^3.0.0
   grouped_list:
+  webview_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter

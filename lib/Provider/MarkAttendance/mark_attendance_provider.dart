@@ -191,7 +191,7 @@ class MarkAttendanceProvider with ChangeNotifier {
         if (responseMessage.isSuccessful) {
           setSaveAttendanceResponse(responseMessage);
           showSnackBar(responseMessage.message,
-              color: AppColors.greenFontColor);
+              color: AppColors.successGreenColor);
         } else {
           showSnackBar(responseMessage.message);
         }

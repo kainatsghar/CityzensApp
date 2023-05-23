@@ -57,10 +57,7 @@ class HelperFunction {
           alert: true, sound: true, badge: true);
     }
     await _firebaseMessaging.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+        alert: true, badge: true, sound: true);
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       showNotification(message: message);
     });
@@ -77,10 +74,17 @@ class HelperFunction {
   }
 
   static List<Options> attendanceOptions() => [
-        Options(title: 'Present', isSelected: true, color: Colors.green, value: 1),
-        Options(title: 'Absent', isSelected: false, color: Colors.red, value: 2),
-        Options(title: 'Leave', isSelected: false, color: Colors.amber, value: 3),
-        Options(title: 'Unreconciled', isSelected: false, color: Colors.grey, value: 35)
+        Options(
+            title: 'Present', isSelected: true, color: Colors.green, value: 1),
+        Options(
+            title: 'Absent', isSelected: false, color: Colors.red, value: 2),
+        Options(
+            title: 'Leave', isSelected: false, color: Colors.amber, value: 3),
+        Options(
+            title: 'Unreconciled',
+            isSelected: false,
+            color: Colors.grey,
+            value: 35)
       ];
 
   static launchURL(String url) async {
@@ -108,15 +112,11 @@ class HelperFunction {
     return picked;
   }
 
-  static List<Options> genderOptions() => [
-        Options(title: 'Male', value: 1),
-        Options(title: 'Female', value: 2),
-      ];
+  static List<Options> genderOptions() =>
+      [Options(title: 'Male', value: 1), Options(title: 'Female', value: 2)];
 
-  static List<Options> previousSchoolOptions() => [
-        Options(title: 'Yes', value: 1),
-        Options(title: 'No', value: 0),
-      ];
+  static List<Options> previousSchoolOptions() =>
+      [Options(title: 'Yes', value: 1), Options(title: 'No', value: 0)];
 
   static String dateFormatter(String date, {String format}) =>
       date == null || date == '' || date == 'null'

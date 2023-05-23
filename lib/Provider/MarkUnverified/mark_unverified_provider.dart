@@ -125,7 +125,7 @@ class MarkUnverifiedProvider with ChangeNotifier {
         if (response.isSuccess) {
           Future.delayed(Duration(seconds: 1), () => AppNavigation.goBack());
           showSnackBar('Unverified Student Added Successfully',
-              color: AppColors.greenFontColor);
+              color: AppColors.successGreenColor);
         } else {
           showSnackBar(response.message);
         }

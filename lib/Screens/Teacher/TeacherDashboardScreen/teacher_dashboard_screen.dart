@@ -4,6 +4,7 @@ import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_button.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 
 class TeacherDashboardScreen extends StatefulWidget {
   @override
@@ -13,6 +14,12 @@ class TeacherDashboardScreen extends StatefulWidget {
 }
 
 class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
+  @override
+  void initState() {
+    FcmTokenRefreshService.refreshToken();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

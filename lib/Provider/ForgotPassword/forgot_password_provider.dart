@@ -136,7 +136,7 @@ class ForgotPasswordProvider with ChangeNotifier {
               Duration(milliseconds: 1), () => AppNavigation.removeAllRoutes());
           showSnackBar(
               'Password for ${userNameController.text} has been updated successfully',
-              color: AppColors.graphGreenColor);
+              color: AppColors.successGreenColor);
           disposeData();
         } else {
           showSnackBar(responseMessage.message);

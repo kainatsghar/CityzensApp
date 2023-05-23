@@ -1,0 +1,53 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+class ChallanPaymentScreen extends StatefulWidget {
+  const ChallanPaymentScreen({Key key}) : super(key: key);
+
+  @override
+  State<ChallanPaymentScreen> createState() => _ChallanPaymentScreenState();
+}
+
+class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
+  int loadingPercentage = 0;
+  WebViewController controller;
+
+  onProgressChange(int value) => setState(() => loadingPercentage = value);
+
+  @override
+  void initState() {
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+            onProgress: (int progress) => onProgressChange(progress),
+            onPageStarted: (String url) => onProgressChange(loadingPercentage),
+            onPageFinished: (String url) =>
+                onProgressChange(loadingPercentage)),
+      )
+      ..loadRequest(Uri.parse('https://billing.thecityschool.edu.pk/challan'));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(title: 'Challan Payment'),
+      body: Column(
+        children: [
+          if (loadingPercentage < 100)
+            LinearProgressIndicator(
+                value: loadingPercentage / 100.0,
+                color: AppColors.lightRedColor),
+          Expanded(
+            child: WebViewWidget(controller: controller),
+          ),
+        ],
+      ),
+    );
+  }
+}

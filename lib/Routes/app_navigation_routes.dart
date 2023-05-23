@@ -30,5 +30,6 @@ class AppNavRoutes {
   static const addDiaryRoute = '/addDiary';
   static const teacherDiaryRoute = '/teacherDiary';
   static const studentDiaryRoute = '/studentDiary';
+  static const challanPaymentRoute = '/challanPayment';
 
 }

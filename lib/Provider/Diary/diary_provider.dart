@@ -127,7 +127,7 @@ class DiaryProvider with ChangeNotifier {
           await loadTeacherDiary();
           Future.delayed(Duration(seconds: 1), () => AppNavigation.goBack());
           showSnackBar('Diary Added Successfully',
-              color: AppColors.greenFontColor);
+              color: AppColors.successGreenColor);
         } else {
           showSnackBar(response.message);
         }
