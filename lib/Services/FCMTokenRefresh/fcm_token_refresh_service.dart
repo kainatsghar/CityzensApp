@@ -6,7 +6,7 @@ import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/model/Login/login_request.dart';
 
 class FcmTokenRefreshService {
-  static Future<dynamic> refreshToken() async {
+  static Future<bool> refreshToken() async {
     String fcmToken = await FirebaseMessaging.instance.getToken();
     var localData = Provider.of<LocalDataProvider>(AppNavigation.currentContext,
         listen: false);
@@ -16,6 +16,6 @@ class FcmTokenRefreshService {
         fcmToken: fcmToken);
     var response = await ApiBaseHelper.httpPostRequest("RefreshToken",
         body: _request.toJson());
-    return response;
+    return response['Status'] ?? false;
   }
 }

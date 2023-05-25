@@ -30,6 +30,13 @@
             {
               "client_id": "603906180654-0ft348gqubfm219vntkfarusmd0tpn81.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "603906180654-1ubegsc5htosn3dt0kd8r4am60plusie.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thecityschool.tcsapp"
+              }
             }
           ]
         }

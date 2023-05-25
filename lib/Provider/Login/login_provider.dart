@@ -59,8 +59,8 @@ class LoginProvider extends ChangeNotifier {
           showSnackBar(loginResponse.message);
         }
       }
-    } catch (exception) {
-      showSnackBar(exception);
+    } catch (ex) {
+      showSnackBar('$ex');
     }
     DialogBuilder.hideOpenDialog();
   }

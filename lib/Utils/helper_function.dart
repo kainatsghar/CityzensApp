@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/imagepicker_bottom_sheet.dart';
-import 'package:tcs_app/Model/PushNotification/push_notification_response.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,13 +27,15 @@ class HelperFunction {
 
   static Future<void> showNotification(
       {@required RemoteMessage message}) async {
-    var response = PushNotificationResponse.fromJson(message.data);
     var android = const AndroidNotificationDetails('id', 'channel ',
         priority: Priority.high, importance: Importance.max, playSound: true);
     var iOS = const IOSNotificationDetails();
     var notificationDetails = NotificationDetails(android: android, iOS: iOS);
-    await FlutterLocalNotificationsPlugin()
-        .show(0, '${response.title}', '${response.body}', notificationDetails);
+    await FlutterLocalNotificationsPlugin().show(
+        Random().nextInt(1000),
+        '${message.notification.title}',
+        '${message.notification.body}',
+        notificationDetails);
   }
 
   static Future<void> initializeLocalNotifications() async {

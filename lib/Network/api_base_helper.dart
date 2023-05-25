@@ -6,7 +6,7 @@ import 'package:tcs_app/Utils/app_constants.dart';
 import 'app_exceptions.dart';
 
 class ApiBaseHelper {
-  static Future<dynamic> httpGetRequest(String endPoint,
+  static Future<Map<String, dynamic>> httpGetRequest(String endPoint,
       {String base = AppConstants.apiBaseURL}) async {
     http.Response response;
     try {
@@ -24,7 +24,7 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  static Future<dynamic> httpPostRequest(String endPoint,
+  static Future<Map<String, dynamic>> httpPostRequest(String endPoint,
       {Object body, String base = AppConstants.apiBaseURL}) async {
     http.Response response;
     try {
@@ -42,7 +42,7 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  static Future<dynamic> httpPutRequest(String endPoint,
+  static Future<Map<String, dynamic>> httpPutRequest(String endPoint,
       {Object body, String base = AppConstants.apiBaseURL}) async {
     http.Response response;
     try {
@@ -60,7 +60,8 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  static Future<dynamic> httpPatchRequest(String endPoint, Object body) async {
+  static Future<Map<String, dynamic>> httpPatchRequest(
+      String endPoint, Object body) async {
     http.Response response;
     try {
       response = await http.patch(
@@ -79,7 +80,7 @@ class ApiBaseHelper {
     return _returnResponse(response);
   }
 
-  static Future<dynamic> httpDeleteRequest(String endPoint,
+  static Future<Map<String, dynamic>> httpDeleteRequest(String endPoint,
       {Object body}) async {
     http.Response response;
     try {
@@ -99,7 +100,7 @@ class ApiBaseHelper {
   }
 }
 
-dynamic _returnResponse(http.Response response) {
+Map<String, dynamic> _returnResponse(http.Response response) {
   final jsonResponse = jsonDecode(response.body);
   switch (response.statusCode) {
     case 200:
