@@ -11,7 +11,6 @@ class LoginService {
         username: username, password: password, userType: userType,fcmToken:fcmToken);
     var response = await ApiBaseHelper.httpPostRequest("Auth",
         body: _loginRequest.toJson());
-    print(_loginRequest.toJson());
     var loginResponse = LoginResponse.fromJson(response);
     return loginResponse;
   }
