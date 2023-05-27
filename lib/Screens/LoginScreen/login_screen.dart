@@ -44,49 +44,60 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SingleChildScrollView(
               child: Consumer<LoginProvider>(builder: (context, value, _) {
                 return Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: Column(
                     children: <Widget>[
-                      Image.asset('images/tcs_logo.png',
-                          height: size.width / 3, width: size.width / 3),
-                      SizedBox(height: 10),
-                      Form(
-                        key: value.formKey,
-                        child: Column(
-                          children: <Widget>[
-                            CustomTextFormField(
-                                controller: value.userTypeController,
-                                labelText: 'User Type',
-                                readOnly: true,
-                                onTap: () => value.userTypeBottomSheet(),
-                                suffixWidget: ImageIcon(
-                                    AssetImage('images/dropdown_icon.png'))),
-                            SizedBox(height: 10),
-                            CustomTextFormField(
-                                controller: value.userNameController,
-                                inputType: TextInputType.number,
-                                inputAction: TextInputAction.next,
-                                labelText: value.userNameLabel,
-                                hintText: value.userNameHint,
-                                prefixIcon: Icons.person,
-                                validator: value.validator),
-                            SizedBox(height: 15),
-                            CustomTextFormField(
-                                controller: value.passwordController,
-                                obscureText: value.obscureText,
-                                inputType: TextInputType.text,
-                                labelText: 'Password',
-                                hintText: 'xxxxxxx',
-                                prefixIcon: Icons.vpn_key,
-                                inputAction: TextInputAction.done,
-                                suffixWidget: GestureDetector(
-                                  onTap: () => value.showHidePassword(),
-                                  child: Icon(value.obscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility),
-                                ),
-                                validator: value.validator),
-                          ],
+                      Image.asset('images/logo_cover.png',
+                          fit: BoxFit.fitWidth,
+                          height: size.height * 0.18,
+                          width: size.width * 0.5),
+                      SizedBox(height: size.height * 0.03),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 25.0),
+                        decoration: BoxDecoration(
+                            color: AppColors.secondaryColor,
+                            borderRadius: BorderRadius.circular(20.0)),
+                        child: Form(
+                          key: value.formKey,
+                          child: Column(
+                            children: <Widget>[
+                              CustomTextFormField(
+                                  controller: value.userTypeController,
+                                  labelText: 'User Type',
+                                  readOnly: true,
+                                  onTap: () => value.userTypeBottomSheet(),
+                                  suffixWidget: ImageIcon(
+                                      AssetImage('images/dropdown_icon.png'),
+                                      color: AppColors.whiteColor)),
+                              SizedBox(height: 10),
+                              CustomTextFormField(
+                                  controller: value.userNameController,
+                                  inputType: TextInputType.number,
+                                  inputAction: TextInputAction.next,
+                                  labelText: value.userNameLabel,
+                                  hintText: value.userNameLabel,
+                                  prefixIcon: Icons.person,
+                                  validator: value.validator),
+                              SizedBox(height: 15),
+                              CustomTextFormField(
+                                  controller: value.passwordController,
+                                  obscureText: value.obscureText,
+                                  inputType: TextInputType.text,
+                                  hintText: 'Password',
+                                  prefixIcon: Icons.vpn_key,
+                                  inputAction: TextInputAction.done,
+                                  suffixWidget: GestureDetector(
+                                    onTap: () => value.showHidePassword(),
+                                    child: Icon(
+                                        value.obscureText
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: AppColors.whiteColor),
+                                  ),
+                                  validator: value.validator),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(height: 10),
@@ -99,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 'Forgot Password?',
                                 style: TextStyle(
                                     color: AppColors.primaryColor,
+                                    fontStyle: FontStyle.italic,
                                     decoration: TextDecoration.underline),
                               ),
                               onTap: () => AppNavigation.navigateTo(
@@ -123,43 +135,42 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text('Register here',
                                 style: TextStyle(
                                     fontSize: textFontSize,
+                                    fontStyle: FontStyle.italic,
                                     decoration: TextDecoration.underline,
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.w500)),
                           ),
                         ],
                       ),
-                      SizedBox(height: size.height * 0.04),
+                      SizedBox(height: size.height * 0.025),
                       Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset('images/alumni_icon.png',
-                                width: size.width * 0.2),
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: InkWell(
-                                  onTap: () => HelperFunction.launchURL(
-                                      AppConstants.alumniAppURL),
-                                  child: Text(
-                                    AppConstants.alumniAppURL,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.fade,
-                                    style: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.primaryColor,
-                                        decoration: TextDecoration.underline),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset('images/alumni_icon.png',
+                                    width: size.width * 0.2),
+                                Flexible(
+                                    child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: InkWell(
+                                            onTap: () =>
+                                                HelperFunction.launchURL(
+                                                    AppConstants.alumniAppURL),
+                                            child: Text(
+                                                'The City School ALUMNI App',
+                                                maxLines: 2,
+                                                overflow: TextOverflow.fade,
+                                                style: TextStyle(
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        AppColors.primaryColor,
+                                                    decoration: TextDecoration
+                                                        .underline)))))
+                              ])),
                       Padding(
                           padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom))

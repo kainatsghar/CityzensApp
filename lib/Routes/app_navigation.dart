@@ -33,8 +33,8 @@ class AppNavigation {
     return navigatorKey.currentState.pop();
   }
 
-  static bool canPop(BuildContext context) {
-    return ModalRoute.of(context).canPop;
+  static bool canPop() {
+    return navigatorKey.currentState.canPop();
   }
 
   static BuildContext get currentContext =>

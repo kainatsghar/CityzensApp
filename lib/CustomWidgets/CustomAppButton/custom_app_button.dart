@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomAppButton extends StatelessWidget {
@@ -10,14 +11,15 @@ class CustomAppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-        color: AppColors.primaryColor,
-        pressedOpacity: 0.8,
+    Size size = MediaQuery.of(context).size;
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primaryColor,
+            minimumSize: Size(size.width * 0.85, 45.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0))),
         child: Text('$buttonTitle',
-            style: TextStyle(
-                fontSize: 20,
-                fontStyle: FontStyle.italic,
-                color: AppColors.whiteColor)),
+            style: TextStyle(fontSize: 20, color: AppColors.whiteColor)),
         onPressed: onTap);
   }
 }

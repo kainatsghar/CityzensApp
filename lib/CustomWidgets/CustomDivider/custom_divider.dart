@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+
+import '../../Utils/app_colors.dart';
+
+class CustomDivider extends StatelessWidget {
+  final double horizontalPadding;
+  final Color color;
+
+  const CustomDivider({Key key, this.horizontalPadding, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding ?? size.width * 0.15),
+        child: Divider(
+            height: 2.0,
+            thickness: 3.0,
+            color: color ?? AppColors.primaryDarkColor));
+  }
+}

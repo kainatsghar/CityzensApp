@@ -20,14 +20,14 @@ class CustomUserImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SizedBox(
-        height: imageSize ?? size.width * 0.32,
-        width: imageSize ?? size.width * 0.32,
-        child: Consumer<LocalDataProvider>(
-            builder: (context, value, _) => Stack(
-                  children: [
-                    ClipOval(
-                      child: FutureBuilder(
+    return ClipOval(
+      child: SizedBox(
+          height: imageSize ?? size.width * 0.32,
+          width: imageSize ?? size.width * 0.32,
+          child: Consumer<LocalDataProvider>(
+              builder: (context, value, _) => Stack(
+                    children: [
+                      FutureBuilder(
                           future: value.loadImagePath(userId),
                           builder: (context, snapshot) {
                             switch (snapshot.connectionState) {
@@ -39,34 +39,37 @@ class CustomUserImage extends StatelessWidget {
                                       ? Image.file(File(snapshot.data),
                                           fit: BoxFit.cover)
                                       : Image.asset(
-                                          'images/profile_avatar.png');
+                                          'images/profile_avatar.png',
+                                          fit: BoxFit.cover,
+                                        );
                                 } else {
                                   return Image.asset(
-                                      'images/profile_avatar.png');
+                                      'images/profile_avatar.png',
+                                      fit: BoxFit.cover);
                                 }
                             }
                           }),
-                    ),
-                    Visibility(
-                      visible: disableUploadImage ? false : true,
-                      child: Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: ClipOval(
-                            child: Container(
-                              height: 35,
-                              width: 35,
-                              color: AppColors.primaryColor,
-                              child: GestureDetector(
-                                onTap: () =>
-                                    HelperFunction.imagePickerBottomSheet(),
-                                child: Icon(Icons.camera_alt,
-                                    color: AppColors.whiteColor, size: 20.0),
+                      Visibility(
+                        visible: disableUploadImage ? false : true,
+                        child: Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: ClipOval(
+                              child: Container(
+                                height: 35,
+                                width: 35,
+                                color: AppColors.primaryColor,
+                                child: GestureDetector(
+                                  onTap: () =>
+                                      HelperFunction.imagePickerBottomSheet(),
+                                  child: Icon(Icons.camera_alt,
+                                      color: AppColors.whiteColor, size: 20.0),
+                                ),
                               ),
-                            ),
-                          )),
-                    )
-                  ],
-                )));
+                            )),
+                      )
+                    ],
+                  ))),
+    );
   }
 }

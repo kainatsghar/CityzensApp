@@ -13,7 +13,6 @@ class OverallResult extends StatelessWidget {
       var info = value.resultsResponse.info;
       return Card(
           child: Container(
-              padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
               child: Column(children: <Widget>[
                 Row(
@@ -22,34 +21,32 @@ class OverallResult extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         width: size.width / 3.4,
+                        color: AppColors.secondaryColor,
+                        padding: EdgeInsets.all(5.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              'Overall Grade',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                            Text('Overall Grade',
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center),
                             Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: ClipOval(
-                                child: Container(
-                                    color: AppColors.primaryColor,
-                                    alignment: Alignment.center,
-                                    height: size.width / 5.4,
-                                    width: size.width / 5.4,
-                                    child: Text(
-                                      info.overallGrade,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    )),
-                              ),
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  height: size.width / 5.4,
+                                  width: size.width / 5.4,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(8.0)),
+                                  child: Text(
+                                    info.overallGrade,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30),
+                                  )),
                             ),
                           ],
                         ),

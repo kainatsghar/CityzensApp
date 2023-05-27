@@ -37,102 +37,92 @@ class RegistrationScreenState extends State<RegistrationScreen> {
     double textFontSize = 16.0, padding = 10.0, imageWidth = 3.0;
     return Scaffold(
         appBar: CustomAppBar(title: 'User Registration'),
-        body: LayoutBuilder(builder: (context, boxConstraints) {
-          final mediaQueryData = MediaQuery.of(context);
-          if (boxConstraints.maxWidth <= 320) {
-            padding = 5.0;
-            imageWidth = 3.2;
-            textFontSize = 14.0;
-          } else if (mediaQueryData.orientation == Orientation.landscape) {
-            imageWidth = 6.0;
-            textFontSize = 16;
-            padding = 5.0;
-          }
-          return Padding(
-            padding: EdgeInsets.all(padding),
-            child: SingleChildScrollView(
-              child:
-                  Consumer<RegistrationProvider>(builder: (context, value, _) {
-                return Column(
-                  children: <Widget>[
-                    Image.asset('images/tcs_logo.png',
-                        height: size.width / imageWidth,
-                        width: size.width / imageWidth),
-                    SizedBox(height: padding),
-                    Form(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: SingleChildScrollView(
+            child: Consumer<RegistrationProvider>(builder: (context, value, _) {
+              return Column(
+                children: <Widget>[
+                  Image.asset('images/logo_cover.png',
+                      fit: BoxFit.fitWidth,
+                      height: size.height * 0.18,
+                      width: size.width * 0.5),
+                  SizedBox(height: size.height * 0.02),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                    decoration: BoxDecoration(
+                        color: AppColors.secondaryColor,
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: Form(
                       key: value.regFormKey,
                       child: Column(
                         children: <Widget>[
                           CustomTextFormField(
                               controller: value.userTypeController,
-                              labelText: 'User Type',
                               readOnly: true,
                               onTap: () => value.userTypeBottomSheet(),
-                              suffixWidget:  ImageIcon(AssetImage('images/dropdown_icon.png'))),
-                         SizedBox(height: padding),
+                              suffixWidget: ImageIcon(
+                                  AssetImage('images/dropdown_icon.png'),
+                                  color: AppColors.whiteColor)),
+                          SizedBox(height: size.height * 0.02),
                           CustomTextFormField(
                               controller: value.userNameController,
                               inputType: TextInputType.number,
                               inputAction: TextInputAction.next,
-                              labelText: value.userNameLabel,
-                              hintText: value.userNameHint,
+                              hintText: value.userNameLabel,
                               prefixIcon: Icons.person,
                               validator: value.validator),
-                          SizedBox(height: padding + 5),
+                          SizedBox(height: size.height * 0.02),
                           CustomTextFormField(
                               controller: value.phoneNumberController,
                               inputType: TextInputType.number,
                               inputAction: TextInputAction.done,
-                              labelText: 'Mobile Number',
-                              hintText: '03XXXXXXXXX',
+                              hintText: 'Mobile Number',
                               prefixIcon: Icons.phone_iphone,
                               validator: value.validator),
                         ],
                       ),
                     ),
-                    SizedBox(height: padding + 5),
-                    CustomAppButton(
-                      buttonTitle: 'Next',
-                      onTap: () => value.userRegistration(),
-                    ),
-                    SizedBox(height: padding),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Note:',
-                          style: TextStyle(
-                              fontSize: textFontSize,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "\u2022 Please use the mobile number registered as 'Primary Number' with your respective TCS Branch.",
-                          style: TextStyle(
-                              fontSize: textFontSize - 2.0, height: 1.5),
-                        ),
-                        Text(
-                          '\u2022 For assistance, please reach out to your respective School Administrator or email us on:',
-                          style: TextStyle(
-                              fontSize: textFontSize - 2.0, height: 1.5),
-                        ),
-                      ],
-                    ),
-                    InkWell(
-                      onTap: value.launchEmail,
-                      child: Text(
-                        'appfeedback@csn.edu.pk',
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  CustomAppButton(
+                    buttonTitle: 'Next',
+                    onTap: () => value.userRegistration(),
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Note:',
                         style: TextStyle(
-                            fontSize: textFontSize,
-                            fontStyle: FontStyle.italic,
-                            color: AppColors.primaryColor,
-                            decoration: TextDecoration.underline),
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
+                      Text(
+                          "\u2022 Please use the mobile number registered as 'Primary Number' with your respective TCS Branch.",
+                          style: TextStyle(height: 1.5)),
+                      Text(
+                          '\u2022 For assistance, please reach out to your respective School Administrator or email us on:',
+                          style: TextStyle(height: 1.5)),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                  InkWell(
+                    onTap: value.launchEmail,
+                    child: Text(
+                      'appfeedback@csn.edu.pk',
+                      style: TextStyle(
+                          fontSize: textFontSize,
+                          fontStyle: FontStyle.italic,
+                          color: AppColors.primaryColor,
+                          decoration: TextDecoration.underline),
                     ),
-                  ],
-                );
-              }),
-            ),
-          );
-        }));
+                  ),
+                ],
+              );
+            }),
+          ),
+        ));
   }
 }

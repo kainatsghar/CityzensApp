@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final IconData prefixIcon;
@@ -60,18 +61,47 @@ class CustomTextFormField extends StatelessWidget {
         onTap: onTap,
         readOnly: readOnly,
         decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+            fillColor: AppColors.whiteColor,
+            filled: true,
+            focusColor: AppColors.whiteColor,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: AppColors.whiteColor)),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: AppColors.whiteColor)),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: AppColors.whiteColor)),
             isDense: isDense,
             enabled: isEnable,
-            contentPadding: EdgeInsets.only(left: 12, top: 18, bottom: 18),
+            contentPadding: EdgeInsets.only(left: 10),
             errorMaxLines: 5,
-            suffixIcon: suffixWidget,
-            prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+            suffixIcon: suffixWidget == null
+                ? null
+                : Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(8.0),
+                            bottomRight: Radius.circular(8.0))),
+                    child: suffixWidget),
+            prefixIcon: prefixIcon != null
+                ? Container(
+                    margin: EdgeInsets.only(right: 3.0),
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.0),
+                            bottomLeft: Radius.circular(8.0))),
+                    child: Icon(prefixIcon, color: AppColors.whiteColor))
+                : null,
             hintText: hintText,
             labelStyle: TextStyle(fontSize: 14.0),
-            hintStyle: TextStyle(fontSize: 14.0),
-            labelText: labelText),
+            hintStyle:
+                TextStyle(fontSize: 14.0) /*,
+            labelText: labelText*/
+            ),
         enabled: isEnable,
         validator: validator,
         onChanged: onChange);

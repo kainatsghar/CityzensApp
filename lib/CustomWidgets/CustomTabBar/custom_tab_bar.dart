@@ -28,26 +28,27 @@ class CustomTabBar extends StatelessWidget {
                   forceElevated: boxIsScrolled,
                   centerTitle: true,
                   elevation: 0.0,
-                  backgroundColor: AppColors.primaryColor,
+                  backgroundColor: AppColors.whiteColor,
                   title: Text(appBarTitle,
                       style: TextStyle(
-                          fontSize: 22.0, fontStyle: FontStyle.italic)),
+                          fontSize: 22.0, color: AppColors.primaryColor)),
                   actions: <Widget>[
                     Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.asset('images/logo_appbar.png'))
                   ],
                   bottom: TabBar(
+                      labelColor: AppColors.primaryColor,
                       controller: controller,
                       tabs: tabs,
-                      indicatorColor: Colors.amber))
+                      indicatorColor: AppColors.secondaryColor))
             ],
         body: MediaQuery.removePadding(
-          removeTop: true,
-          child: TabBarView(
-              controller: controller,
-              children: widgets,
-              physics: NeverScrollableScrollPhysics()), context: context
-        ));
+            removeTop: true,
+            child: TabBarView(
+                controller: controller,
+                children: widgets,
+                physics: NeverScrollableScrollPhysics()),
+            context: context));
   }
 }

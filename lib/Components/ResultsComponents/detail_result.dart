@@ -18,49 +18,54 @@ class DetailResult extends StatelessWidget {
       var info = value.resultsResponse.info;
       return Card(
           child: Container(
-              padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(
+                    Container(
                         width: size.width / 3.0,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(detail.subject,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center),
-                              Padding(padding: EdgeInsets.all(5.0)),
-                              ClipOval(
-                                child: Container(
+                        color: AppColors.secondaryColor,
+                        padding: EdgeInsets.all(5.0),
+                        child: Column(children: <Widget>[
+                          Text(detail.subject,
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center),
+                          SizedBox(height: 10.0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                RotatedBox(
+                                  quarterTurns: -1,
+                                  child: Text('GRADE',
+                                      style: TextStyle(
+                                          color: AppColors.primaryDarkColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                ),
+                                SizedBox(width: 3.0),
+                                Container(
                                     height: size.width / 5.4,
                                     width: size.width / 5.4,
-                                    color: AppColors.primaryColor,
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            'Grade',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            detail.grade,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
-                                          )
-                                        ])),
-                              )
-                            ])),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0)),
+                                    child: Text(
+                                      detail.grade,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 30),
+                                    )),
+                              ],
+                            ),
+                          )
+                        ])),
                     SizedBox(
                         width: size.width / 1.75,
                         child: Column(children: <Widget>[

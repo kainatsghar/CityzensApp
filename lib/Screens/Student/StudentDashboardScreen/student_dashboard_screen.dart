@@ -31,7 +31,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   Widget build(BuildContext context) {
     return Consumer<LocalDataProvider>(builder: (context, value, _) {
       return Scaffold(
-          appBar: CustomAppBar(title: 'Cityzens'),
+          appBar: CustomAppBar(title: 'Cityzens',isDrawer: true),
           drawer:
               value.userData.userType == 'Parent' ? null : NavigationalDrawer(),
           body: GridView.count(

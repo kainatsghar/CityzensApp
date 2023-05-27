@@ -6,6 +6,8 @@ import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field
 import 'package:tcs_app/Provider/ForgotPassword/forgot_password_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
+import '../../../Utils/app_colors.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -32,95 +34,77 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double textFontSize = 16.0, padding = 10.0, imageWidth = 2.5;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: CustomAppBar(title: 'Forgot Password'),
-        body: LayoutBuilder(builder: (context, boxConstraints) {
-          final mediaQueryData = MediaQuery.of(context);
-          if (boxConstraints.maxWidth <= 320) {
-            padding = 5.0;
-            imageWidth = 2.8;
-            textFontSize = 14.0;
-          } else if (mediaQueryData.orientation == Orientation.landscape) {
-            imageWidth = 6.0;
-            textFontSize = 16;
-            padding = 5.0;
-          }
-          return Padding(
-            padding: EdgeInsets.all(padding),
-            child: SingleChildScrollView(
-              child: Consumer<ForgotPasswordProvider>(
-                  builder: (context, value, _) {
-                return Column(children: <Widget>[
-                  Image.asset('images/tcs_logo.png',
-                      height: size.width / imageWidth,
-                      width: size.width / imageWidth),
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 5.0, right: 5.0, top: padding),
+        body: SingleChildScrollView(
+          child: Consumer<ForgotPasswordProvider>(builder: (context, value, _) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Column(children: <Widget>[
+                Image.asset('images/logo_cover.png',
+                    fit: BoxFit.fitWidth,
+                    height: size.height * 0.18,
+                    width: size.width * 0.5),
+                SizedBox(height: size.height * 0.02),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                  decoration: BoxDecoration(
+                      color: AppColors.secondaryColor,
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: Form(
+                    key: value.forgotFormKey,
                     child: Column(
                       children: <Widget>[
-                        Form(
-                          key: value.forgotFormKey,
-                          child: Column(
-                            children: <Widget>[
-                              CustomTextFormField(
-                                  controller: value.userTypeController,
-                                  labelText: 'User Type',
-                                  readOnly: true,
-                                  onTap: () => value.userTypeBottomSheet(),
-                                  suffixWidget:  ImageIcon(AssetImage('images/dropdown_icon.png'))),
-                              Padding(padding: EdgeInsets.only(top: padding)),
-                              CustomTextFormField(
-                                  controller: value.userNameController,
-                                  inputType: TextInputType.number,
-                                  inputAction: TextInputAction.next,
-                                  labelText: value.userNameLabel,
-                                  hintText: value.userNameHint,
-                                  prefixIcon: Icons.person,
-                                  validator: value.validator),
-                              Padding(
-                                  padding: EdgeInsets.only(top: padding + 5)),
-                              CustomTextFormField(
-                                  controller: value.phoneNumberController,
-                                  inputType: TextInputType.number,
-                                  inputAction: TextInputAction.done,
-                                  labelText: 'Mobile Number',
-                                  hintText: '03XXXXXXXXX',
-                                  prefixIcon: Icons.phone_iphone,
-                                  validator: value.validator),
-                            ],
-                          ),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: padding + 5)),
-                        CustomAppButton(
-                          buttonTitle: 'Next',
-                          onTap: () => value.forgotPassword(),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: padding + 5)),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Note:',
-                              style: TextStyle(
-                                  fontSize: textFontSize,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              '\u2022 Provided Mobile Number needs to be same used for TCS Mobile App registration.',
-                              style: TextStyle(fontSize: textFontSize - 2.0),
-                            ),
-                          ],
-                        )
+                        CustomTextFormField(
+                            controller: value.userTypeController,
+                            readOnly: true,
+                            onTap: () => value.userTypeBottomSheet(),
+                            suffixWidget: ImageIcon(
+                                AssetImage('images/dropdown_icon.png'),
+                                color: AppColors.whiteColor)),
+                        SizedBox(height: 10),
+                        CustomTextFormField(
+                            controller: value.userNameController,
+                            inputType: TextInputType.number,
+                            inputAction: TextInputAction.next,
+                            hintText: value.userNameLabel,
+                            prefixIcon: Icons.person,
+                            validator: value.validator),
+                        SizedBox(height: 10),
+                        CustomTextFormField(
+                            controller: value.phoneNumberController,
+                            inputType: TextInputType.number,
+                            inputAction: TextInputAction.done,
+                            hintText: 'Mobile Number',
+                            prefixIcon: Icons.phone_iphone,
+                            validator: value.validator),
                       ],
                     ),
                   ),
-                ]);
-              }),
-            ),
-          );
-        }));
+                ),
+                SizedBox(height: size.height * 0.03),
+                CustomAppButton(
+                  buttonTitle: 'Next',
+                  onTap: () => value.forgotPassword(),
+                ),
+                SizedBox(height: size.height * 0.02),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Note:',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 5.0),
+                    Text(
+                        '\u2022 Provided Mobile Number needs to be same used for TCS Mobile App registration.')
+                  ],
+                ),
+              ]),
+            );
+          }),
+        ));
   }
 }

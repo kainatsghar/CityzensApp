@@ -20,31 +20,25 @@ class ResultCardInfo extends StatelessWidget {
         margin: EdgeInsets.all(5.0),
         child: Column(
           children: <Widget>[
-            Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                    height: size.width * 0.25,
-                    width: size.width * 0.25,
-                    child: CustomUserImage(userId: '${stdInfo.rollNo}'))),
             Padding(
               padding: const EdgeInsets.only(top: 4.0, bottom: 2.0),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('${stdInfo.name}',
-                      style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13.0))),
+              child: Text('${stdInfo.name}',
+                  style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13.0)),
             ),
+            SizedBox(
+                height: size.width * 0.25,
+                width: size.width * 0.25,
+                child: CustomUserImage(userId: '${stdInfo.rollNo}')),
             Padding(
               padding: const EdgeInsets.only(top: 2.0, bottom: 6.0),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('${stdInfo.centerName}',
-                      style: TextStyle(
-                          color: AppColors.blackColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13.0))),
+              child: Text('${stdInfo.centerName}',
+                  style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13.0)),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

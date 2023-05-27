@@ -17,7 +17,7 @@ class LoginProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   bool obscureText = true;
   List<Options> userTypeList;
-  String userNameLabel = 'Roll Number', userNameHint = 'xxxxxxxx';
+  String userNameLabel = 'Roll Number';
   String controllerMask = '00000000';
   TextEditingController passwordController = TextEditingController();
   TextEditingController userTypeController =
@@ -89,11 +89,6 @@ class LoginProvider extends ChangeNotifier {
         : v == 'Parent'
             ? 'CNIC Number'
             : 'Roll Number';
-    userNameHint = v == 'Teacher'
-        ? 'xxxxxxxx'
-        : v == 'Parent'
-            ? 'xxxxx-xxxxxxx-x'
-            : 'xxxxxxxx';
   }
 
   void userTypeBottomSheet() {

@@ -20,7 +20,7 @@ class StudentAttendance extends StatelessWidget {
           calendarStyle: CalendarStyle(
               isTodayHighlighted: true,
               selectedDecoration: BoxDecoration(
-                  color: AppColors.purpleColor.withOpacity(0.4),
+                  color: AppColors.primaryColor.withOpacity(0.4),
                   shape: BoxShape.circle)),
           onPageChanged: (v) => value.reloadAttendance(v),
           selectedDayPredicate: (day) => isSameDay(day, DateTime.now()),
