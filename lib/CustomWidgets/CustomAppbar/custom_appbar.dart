@@ -27,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         title: new Text('$title',
             style: TextStyle(
-                fontSize: 22.0,
+                fontSize: 20.0,
                 color: AppColors.primaryColor,
                 fontWeight: FontWeight.w600)),
         leading: isDrawer
@@ -39,9 +39,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 : null,
         actions: actions ??
             [
-              !AppNavigation.canPop()
-                  ? SizedBox.shrink()
-                  : Padding(
+              Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Image.asset('images/tcs_logo.png'))
             ]);

@@ -34,7 +34,7 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Academic Year & Term'),
+        appBar: CustomAppBar(title: 'ACADEMIC YEAR & TERM'),
         body: RefreshIndicator(
             child: FutureBuilder(
                 future: _academicTermService,

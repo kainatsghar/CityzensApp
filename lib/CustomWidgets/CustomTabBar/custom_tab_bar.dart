@@ -40,6 +40,7 @@ class CustomTabBar extends StatelessWidget {
                   bottom: TabBar(
                       labelColor: AppColors.primaryColor,
                       controller: controller,
+                      unselectedLabelColor: AppColors.primaryColor,
                       tabs: tabs,
                       indicatorColor: AppColors.secondaryColor))
             ],

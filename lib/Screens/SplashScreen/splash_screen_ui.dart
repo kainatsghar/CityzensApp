@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 class SplashScreenUI extends StatefulWidget {
   @override
@@ -38,7 +39,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return new Scaffold(
-        backgroundColor: Color.fromRGBO(48, 63, 159, 1.0),
+        backgroundColor: AppColors.primaryColor,
         body: new Stack(
           fit: StackFit.expand,
           children: <Widget>[

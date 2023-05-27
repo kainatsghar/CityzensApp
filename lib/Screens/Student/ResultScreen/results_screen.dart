@@ -34,10 +34,10 @@ class ResultsScreenState extends State<ResultsScreen>
       body: Consumer<ResultsProvider>(builder: (context, value, _) {
       return CustomTabBar(
           scrollController: value.scrollController,
-          appBarTitle: 'Results',
+          appBarTitle: 'RESULTS',
           tabs: [
-            Tab(child: Text('Detail Result')),
-            Tab(child: Text('Overall Result'))
+            Tab(child: Text('DETAILS RESULT')),
+            Tab(child: Text('OVERALL RESULT'))
           ],
           widgets: <Widget>[DetailResultScreen(), OverallResultScreen()],
           controller: value.controller);

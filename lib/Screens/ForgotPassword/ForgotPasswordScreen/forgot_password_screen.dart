@@ -5,6 +5,7 @@ import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/ForgotPassword/forgot_password_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Routes/app_navigation_routes.dart';
 
 import '../../../Utils/app_colors.dart';
 
@@ -36,7 +37,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: CustomAppBar(title: 'Forgot Password'),
+        appBar: CustomAppBar(title: 'FORGOT PASSWORD'),
         body: SingleChildScrollView(
           child: Consumer<ForgotPasswordProvider>(builder: (context, value, _) {
             return Padding(
@@ -85,18 +86,14 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 SizedBox(height: size.height * 0.03),
                 CustomAppButton(
-                  buttonTitle: 'Next',
-                  onTap: () => value.forgotPassword(),
-                ),
+                    buttonTitle: 'Next', onTap: () => value.forgotPassword()),
                 SizedBox(height: size.height * 0.02),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      'Note:',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    Text('Note:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     SizedBox(height: 5.0),
                     Text(
                         '\u2022 Provided Mobile Number needs to be same used for TCS Mobile App registration.')

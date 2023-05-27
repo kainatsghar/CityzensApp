@@ -32,18 +32,8 @@ class AcademicTermComponent extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.0)),
                     child: Column(
                       children: [
-                        Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text('Select Academic Year',
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryDarkColor)),
-                            )),
                         CustomTextFormField(
-                            hintText: 'Select',
+                            hintText: 'Academic Year',
                             controller: value.academicYearController,
                             onTap: () => value.academicYearBottomSheet(),
                             readOnly: true,
@@ -51,18 +41,9 @@ class AcademicTermComponent extends StatelessWidget {
                             suffixWidget: ImageIcon(
                                 AssetImage('images/dropdown_icon.png'),
                                 color: AppColors.whiteColor)),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text('Select Term',
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryDarkColor)),
-                            )),
+                        SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
-                            hintText: 'Select',
+                            hintText: 'Term',
                             controller: value.termController,
                             onTap: () => value.termBottomSheet(),
                             readOnly: true,

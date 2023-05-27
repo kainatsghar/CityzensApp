@@ -86,8 +86,10 @@ class DashboardProvider with ChangeNotifier {
     var localProvider = Provider.of<LocalDataProvider>(
         AppNavigation.currentContext,
         listen: false);
-    userNameController.text = localProvider.userData.userName;
     userTypeController.text = localProvider.userData.userType;
+    userNameController.text = localProvider.userData.userType == 'Student'
+        ? '${localProvider.studentId}'
+        : '${localProvider.userData.userName}';
   }
 
   launchPlayStore() async {

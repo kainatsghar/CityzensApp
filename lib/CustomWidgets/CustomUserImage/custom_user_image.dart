@@ -20,56 +20,54 @@ class CustomUserImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return ClipOval(
-      child: SizedBox(
-          height: imageSize ?? size.width * 0.32,
-          width: imageSize ?? size.width * 0.32,
-          child: Consumer<LocalDataProvider>(
-              builder: (context, value, _) => Stack(
-                    children: [
-                      FutureBuilder(
-                          future: value.loadImagePath(userId),
-                          builder: (context, snapshot) {
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
-                                return const CustomLoader();
-                              default:
-                                if (snapshot.hasData) {
-                                  return snapshot.data != null
-                                      ? Image.file(File(snapshot.data),
-                                          fit: BoxFit.cover)
-                                      : Image.asset(
-                                          'images/profile_avatar.png',
-                                          fit: BoxFit.cover,
-                                        );
-                                } else {
-                                  return Image.asset(
-                                      'images/profile_avatar.png',
-                                      fit: BoxFit.cover);
-                                }
+    return Stack(
+      children: [
+        ClipOval(
+          child: Container(
+              height: imageSize ?? size.width * 0.32,
+              width: imageSize ?? size.width * 0.32,
+              child: Consumer<LocalDataProvider>(
+                  builder: (context, value, _) => FutureBuilder(
+                      future: value.loadImagePath(userId),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return const CustomLoader();
+                          default:
+                            if (snapshot.hasData) {
+                              return snapshot.data != null
+                                  ? Image.file(File(snapshot.data),
+                                      fit: BoxFit.cover)
+                                  : Image.asset(
+                                      'images/profile_avatar_yellow.png',
+                                      fit: BoxFit.cover,
+                                    );
+                            } else {
+                              return Image.asset(
+                                  'images/profile_avatar_yellow.png',
+                                  fit: BoxFit.cover);
                             }
-                          }),
-                      Visibility(
-                        visible: disableUploadImage ? false : true,
-                        child: Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: ClipOval(
-                              child: Container(
-                                height: 35,
-                                width: 35,
-                                color: AppColors.primaryColor,
-                                child: GestureDetector(
-                                  onTap: () =>
-                                      HelperFunction.imagePickerBottomSheet(),
-                                  child: Icon(Icons.camera_alt,
-                                      color: AppColors.whiteColor, size: 20.0),
-                                ),
-                              ),
-                            )),
-                      )
-                    ],
-                  ))),
+                        }
+                      }))),
+        ),
+        FractionalTranslation(
+            translation: Offset(2.6, 2.6),
+            child: Visibility(
+              visible: disableUploadImage ? false : true,
+              child: ClipOval(
+                child: Container(
+                  height: 35,
+                  width: 35,
+                  color: AppColors.primaryColor,
+                  child: GestureDetector(
+                    onTap: () => HelperFunction.imagePickerBottomSheet(),
+                    child: Icon(Icons.camera_alt,
+                        color: AppColors.whiteColor, size: 20.0),
+                  ),
+                ),
+              ),
+            ))
+      ],
     );
   }
 }

@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(title: 'Login'),
+      appBar: CustomAppBar(title: 'LOGIN'),
       body: Column(
         children: [
           Expanded(
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: <Widget>[
                               CustomTextFormField(
                                   controller: value.userTypeController,
-                                  labelText: 'User Type',
+                                  hintText: 'User Type',
                                   readOnly: true,
                                   onTap: () => value.userTypeBottomSheet(),
                                   suffixWidget: ImageIcon(
@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   obscureText: value.obscureText,
                                   inputType: TextInputType.text,
                                   hintText: 'Password',
-                                  prefixIcon: Icons.vpn_key,
+                                  prefixIcon: Icons.lock,
                                   inputAction: TextInputAction.done,
                                   suffixWidget: GestureDetector(
                                     onTap: () => value.showHidePassword(),

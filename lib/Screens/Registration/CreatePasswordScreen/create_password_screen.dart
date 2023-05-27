@@ -5,6 +5,8 @@ import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 
+import '../../../Utils/app_colors.dart';
+
 class CreatePasswordScreen extends StatefulWidget {
   final String userType;
 
@@ -17,37 +19,30 @@ class CreatePasswordScreen extends StatefulWidget {
 }
 
 class CreatePasswordScreenState extends State<CreatePasswordScreen> {
-
   @override
   Widget build(BuildContext context) {
-    double padding = 10.0, imageWidth = 2.5;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: CustomAppBar(title: 'Create Password'),
+        appBar: CustomAppBar(title: 'CREATE PASSWORD'),
         body: LayoutBuilder(builder: (context, boxConstraints) {
-          final mediaQueryData = MediaQuery.of(context);
-          if (boxConstraints.maxWidth <= 320) {
-            padding = 5.0;
-            imageWidth = 2.8;
-          } else if (mediaQueryData.orientation == Orientation.landscape) {
-            imageWidth = 6.0;
-            padding = 5.0;
-          }
           return Padding(
-            padding: EdgeInsets.all(padding),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: SingleChildScrollView(
               child:
                   Consumer<RegistrationProvider>(builder: (context, value, _) {
                 return Column(
                   children: <Widget>[
-                    Image.asset(
-                      'images/tcs_logo.png',
-                      height: size.width / imageWidth,
-                      width: size.width / imageWidth,
-                    ),
-                    Padding(
+                    Image.asset('images/logo_cover.png',
+                        fit: BoxFit.fitWidth,
+                        height: size.height * 0.18,
+                        width: size.width * 0.5),
+                    SizedBox(height: size.height * 0.02),
+                    Container(
                       padding:
-                          EdgeInsets.only(left: 5.0, right: 5.0, top: padding),
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                      decoration: BoxDecoration(
+                          color: AppColors.secondaryColor,
+                          borderRadius: BorderRadius.circular(20.0)),
                       child: Column(
                         children: <Widget>[
                           Form(
@@ -56,50 +51,45 @@ class CreatePasswordScreenState extends State<CreatePasswordScreen> {
                                 children: <Widget>[
                                   CustomTextFormField(
                                       isEnable: false,
-                                      labelText:
+                                      hintText:
                                           '${value.userNameController.text}',
                                       prefixIcon: Icons.person),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(top: padding + 5)),
+                                  SizedBox(height: size.height * 0.02),
                                   CustomTextFormField(
                                       controller: value.passwordController,
                                       obscureText: true,
                                       inputType: TextInputType.text,
                                       inputAction: TextInputAction.next,
-                                      labelText: 'Password',
-                                      hintText: 'xxxxxxxx',
-                                      prefixIcon: Icons.vpn_key,
+                                      hintText: 'Password',
+                                      prefixIcon: Icons.lock,
                                       validator: value.passwordValidator),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(top: padding + 5)),
+                                  SizedBox(height: size.height * 0.02),
                                   CustomTextFormField(
                                       obscureText: value.obscureText,
                                       controller:
                                           value.confirmPasswordController,
                                       inputType: TextInputType.text,
                                       inputAction: TextInputAction.done,
-                                      labelText: 'Confirm Password',
-                                      hintText: 'xxxxxxxx',
-                                      prefixIcon: Icons.vpn_key,
+                                      hintText: 'Confirm Password',
+                                      prefixIcon: Icons.lock,
                                       suffixWidget: GestureDetector(
-                                        onTap: () => value.showHidePassword(),
-                                        child: Icon(value.obscureText
-                                            ? Icons.visibility_off
-                                            : Icons.visibility),
-                                      ),
+                                          onTap: () => value.showHidePassword(),
+                                          child: Icon(
+                                              value.obscureText
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                              color: AppColors.whiteColor)),
                                       validator:
                                           value.confirmPasswordValidator),
                                 ],
                               )),
-                          Padding(padding: EdgeInsets.only(top: padding + 5)),
-                          CustomAppButton(
-                              buttonTitle: 'Create Password',
-                              onTap: () => value.createPassword())
                         ],
                       ),
                     ),
+                    SizedBox(height: size.height * 0.02),
+                    CustomAppButton(
+                        buttonTitle: 'Save',
+                        onTap: () => value.createPassword())
                   ],
                 );
               }),
