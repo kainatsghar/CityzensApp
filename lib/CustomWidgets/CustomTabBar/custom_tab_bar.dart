@@ -31,16 +31,16 @@ class CustomTabBar extends StatelessWidget {
                   backgroundColor: AppColors.whiteColor,
                   title: Text(appBarTitle,
                       style: TextStyle(
-                          fontSize: 22.0, color: AppColors.primaryColor)),
+                          fontSize: 22.0, color: AppColors.primaryTitleColor)),
                   actions: <Widget>[
                     Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Image.asset('images/logo_appbar.png'))
+                        child: Image.asset('images/tcs_logo.png'))
                   ],
                   bottom: TabBar(
-                      labelColor: AppColors.primaryColor,
+                      labelColor: AppColors.primaryTitleColor,
                       controller: controller,
-                      unselectedLabelColor: AppColors.primaryColor,
+                      unselectedLabelColor: AppColors.primaryTitleColor,
                       tabs: tabs,
                       indicatorColor: AppColors.secondaryColor))
             ],

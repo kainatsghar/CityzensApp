@@ -31,52 +31,46 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   Widget build(BuildContext context) {
     return Consumer<LocalDataProvider>(builder: (context, value, _) {
       return Scaffold(
-          appBar: CustomAppBar(title: 'Cityzens',isDrawer: true),
+          appBar: CustomAppBar(title: 'CITYZENS', isDrawer: true),
           drawer:
               value.userData.userType == 'Parent' ? null : NavigationalDrawer(),
           body: GridView.count(
               shrinkWrap: true,
               primary: false,
-              padding: const EdgeInsets.all(30.0),
-              crossAxisSpacing: 15.0,
-              mainAxisSpacing: 15.0,
+              padding: const EdgeInsets.all(10.0),
               crossAxisCount: 2,
+              childAspectRatio: 1.5,
               children: <Widget>[
                 CustomDashboardButton(
-                    buttonTitle: 'Profile',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.studentProfileRoute),
-                    imageName: 'profile.png'),
+                    imageName: 'profile_icon.png'),
                 CustomDashboardButton(
-                    buttonTitle: 'Results',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.academicTermRoute),
-                    imageName: 'result.png'),
+                    imageName: 'result_icon.png'),
                 CustomDashboardButton(
-                    buttonTitle: 'library',
                     onTap: () =>
                         AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
-                    imageName: 'library.png'),
+                    imageName: 'diary_icon.png'),
                 CustomDashboardButton(
-                    buttonTitle: 'Notifications',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.notificationsRoute),
-                    imageName: 'notification.png'),
+                    imageName: 'notification_icon.png'),
+
                 CustomDashboardButton(
-                    buttonTitle: 'Fee Challans',
-                    onTap: () =>
-                        AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
-                    imageName: 'feechallan.png'),
-                CustomDashboardButton(
-                    buttonTitle: 'Attendance',
-                    onTap: () =>
-                        AppNavigation.navigateTo(AppNavRoutes.attendanceRoute),
-                    imageName: 'attendance.png'),
-                CustomDashboardButton(
-                    buttonTitle: 'Diary',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.studentDiaryRoute),
-                    imageName: 'diary.png')
+                    imageName: 'diary_icon.png'),
+
+                CustomDashboardButton(
+                    onTap: () =>
+                        AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
+                    imageName: 'feechallan_icon.png'),
+                CustomDashboardButton(
+                    onTap: () =>
+                        AppNavigation.navigateTo(AppNavRoutes.attendanceRoute),
+                    imageName: 'attendance_icon.png'),
               ]));
     });
   }

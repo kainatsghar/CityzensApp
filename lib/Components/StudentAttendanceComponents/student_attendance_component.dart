@@ -44,12 +44,12 @@ class StudentAttendanceComponent extends StatelessWidget {
                       ),
                       Row(children: [
                         Flexible(
-                          child: Container(
-                              padding: EdgeInsets.only(top: size.height * 0.02),
-                              height: size.height * 0.2,
-                              child: PieChart(
-                                  PieChartData(sections: value.getSections()))),
-                        ),
+                            child: Container(
+                                padding:
+                                    EdgeInsets.only(top: size.height * 0.02),
+                                height: size.height * 0.2,
+                                child: PieChart(PieChartData(
+                                    sections: value.getSections())))),
                         Container(width: size.width * 0.25)
                       ]),
                     ],

@@ -33,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double textFontSize = 16.0;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -134,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 AppNavRoutes.registrationRoute),
                             child: Text('Register here',
                                 style: TextStyle(
-                                    fontSize: textFontSize,
+                                    fontSize: 16.0,
                                     fontStyle: FontStyle.italic,
                                     decoration: TextDecoration.underline,
                                     color: AppColors.primaryColor,

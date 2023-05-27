@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: new Text('$title',
             style: TextStyle(
                 fontSize: 20.0,
-                color: AppColors.primaryColor,
+                color: AppColors.primaryTitleColor,
                 fontWeight: FontWeight.w600)),
         leading: isDrawer
             ? null

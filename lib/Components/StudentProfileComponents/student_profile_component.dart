@@ -20,98 +20,116 @@ class StudentProfileComponent extends StatelessWidget {
             : SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: size.height * 0.03),
-                  child: Column(
-                    children: <Widget>[
-                      CustomUserImage(
-                          userId: '${profile.first.studentId}',
-                          disableUploadImage: false),
+                    padding: EdgeInsets.symmetric(
+                        vertical: size.height * 0.03, horizontal: 12.0),
+                    child: Column(children: <Widget>[
                       Padding(
                           padding: EdgeInsets.only(top: 15.0),
                           child: Text(profile.first.name,
                               style: TextStyle(
-                                  color: AppColors.blackColor,
+                                  color: AppColors.primaryTitleColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16.0))),
+                      CustomUserImage(
+                          userId: '${profile.first.studentId}',
+                          disableUploadImage: false),
                       Padding(
                           padding: EdgeInsets.only(top: 5.0),
-                          child: Text(profile.first.center,
-                              style: TextStyle(color: Colors.black54))),
-                      SizedBox(height: 10),
-                      Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            CustomProfileItem(
-                                width: size.width / 2.5,
-                                title: 'Roll Number',
+                          child: CustomProfileItem(
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  topLeft: Radius.circular(10)),
+                              title: 'CAMPUS NAME',
+                              value: '${profile.first.center}')),
+                      SizedBox(height: 5.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Expanded(
+                            child: CustomProfileItem(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10)),
+                                title: 'ROLL NUMBER',
                                 value: '${profile.first.studentId}'),
-                            SizedBox(
-                                height: 30,
-                                child: VerticalDivider(
-                                    width: 1.0,
-                                    color: AppColors.blackColor,
-                                    thickness: 1)),
-                            CustomProfileItem(
-                                width: size.width / 2.5,
-                                title: 'Class Name',
+                          ),
+                          SizedBox(
+                              height: 30,
+                              child: VerticalDivider(
+                                  width: 15.0,
+                                  color: AppColors.blackColor,
+                                  thickness: 1)),
+                          Expanded(
+                            child: CustomProfileItem(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10)),
+                                title: 'CLASS NAME',
                                 value: '${profile.first.className}'),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 10),
-                      Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            CustomProfileItem(
-                                width: size.width / 2.5,
-                                title: 'Region Name',
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Expanded(
+                            child: CustomProfileItem(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10)),
+                                title: 'REGION NAME',
                                 value: '${profile.first.region}'),
-                            SizedBox(
-                                height: 30,
-                                child: VerticalDivider(
-                                    width: 1.0,
-                                    color: AppColors.blackColor,
-                                    thickness: 1)),
-                            CustomProfileItem(
-                                width: size.width / 2.5,
-                                title: 'Date of Birth',
+                          ),
+                          SizedBox(
+                              height: 30,
+                              child: VerticalDivider(
+                                  width: 15.0,
+                                  color: AppColors.blackColor,
+                                  thickness: 1)),
+                          Expanded(
+                            child: CustomProfileItem(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10)),
+                                title: 'DATE OF BIRTH',
                                 value: HelperFunction.dateFormatter(
                                     '${profile.first.dateOfBirth}')),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 5.0),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: size.width * 0.03),
-                        child: CustomProfileItem(
-                            width: size.width,
-                            title: 'Address',
-                            value: '${profile.first.address}'),
-                      ),
-                      SizedBox(height: 5.0),
-                      Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: CustomProfileItem(
-                            width: size.width,
-                            title: 'City Name',
-                            value: '${profile.first.city}'),
-                      ),
-                      SizedBox(height: 5.0),
-                      Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: CustomProfileItem(
-                            width: size.width,
-                            title: 'Contact Number',
-                            value: '${profile.first.contactNo}'),
-                      ),
-                    ],
-                  ),
-                ));
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          decoration: BoxDecoration(
+                              color: AppColors.secondaryColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(children: [
+                            CustomProfileItem(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10)),
+                                width: size.width,
+                                title: 'ADDRESS',
+                                maxLines: 3,
+                                value: '${profile.first.address}'),
+                            SizedBox(height: 2.0),
+                            CustomProfileItem(
+                                width: size.width,
+                                title: 'CITY NAME',
+                                maxLines: 2,
+                                value: '${profile.first.city}'),
+                            SizedBox(height: 2.0),
+                            CustomProfileItem(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10)),
+                                width: size.width,
+                                title: 'CONTACT NUMBER',
+                                maxLines: 2,
+                                value: '${profile.first.contactNo}')
+                          ]))
+                    ])));
       }),
     );
   }

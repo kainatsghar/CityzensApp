@@ -35,22 +35,22 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
               crossAxisCount: 2,
               children: <Widget>[
                 CustomDashboardButton(
-                    buttonTitle: 'Profile',
+                  //  buttonTitle: 'Profile',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.teacherProfileRoute),
                     imageName: 'profile.png'),
                 CustomDashboardButton(
-                    buttonTitle: 'Attendance',
+                //    buttonTitle: 'Attendance',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.teacherSectionRoute),
                     imageName: 'result.png'),
                 CustomDashboardButton(
-                    buttonTitle: 'Diary',
+                 //   buttonTitle: 'Diary',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.teacherDiaryRoute),
                     imageName: 'diary.png'),
                 CustomDashboardButton(
-                    buttonTitle: 'Mark\nUnidentified',
+                  //  buttonTitle: 'Mark\nUnidentified',
                     onTap: () => AppNavigation.navigateTo(
                         AppNavRoutes.markUnidentifiedRoute),
                     imageName: 'unverified.png')
