@@ -26,7 +26,7 @@ dependencies:
   flutter_linkify:
   fluttertoast:
   flutter_masked_text:
-  firebase_messaging:
+  firebase_messaging: ^14.6.1
   firebase_core:
   firebase_crashlytics:
   launch_review:
@@ -34,7 +34,7 @@ dependencies:
   flutter_spinkit:
   device_info_plus:
   package_info_plus:
-  flutter_local_notifications: ^9.7.1
+  flutter_local_notifications: ^10.0.0
   fl_chart:
   flutter_launcher_icons:
   table_calendar: ^3.0.0

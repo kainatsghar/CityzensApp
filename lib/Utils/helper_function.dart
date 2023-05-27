@@ -29,7 +29,7 @@ class HelperFunction {
       {@required RemoteMessage message}) async {
     var android = const AndroidNotificationDetails('id', 'channel ',
         priority: Priority.high, importance: Importance.max, playSound: true);
-    var iOS = const IOSNotificationDetails();
+    var iOS = const DarwinNotificationDetails();
     var notificationDetails = NotificationDetails(android: android, iOS: iOS);
     await FlutterLocalNotificationsPlugin().show(
         Random().nextInt(1000),
@@ -40,8 +40,8 @@ class HelperFunction {
 
   static Future<void> initializeLocalNotifications() async {
     var initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOs = const IOSInitializationSettings();
+        const AndroidInitializationSettings('@mipmap/ic_notification');
+    var initializationSettingsIOs = const DarwinInitializationSettings();
     var initSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOs);
     await FlutterLocalNotificationsPlugin().initialize(initSettings);
