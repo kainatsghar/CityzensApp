@@ -10,18 +10,35 @@ class StudentAttendance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<StudentAttendanceProvider>(builder: (context, value, _) {
-      return TableCalendar(
+      return Container(
+        margin: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(15.0)),
+        child: TableCalendar(
           eventLoader: (v) => value.getAttendance(v),
-          headerStyle:
-              HeaderStyle(formatButtonVisible: false, titleCentered: true),
+          headerStyle: HeaderStyle(
+              formatButtonVisible: false,
+              leftChevronIcon:
+                  Icon(Icons.chevron_left, color: AppColors.whiteColor),
+              rightChevronIcon:
+                  Icon(Icons.chevron_right, color: AppColors.whiteColor),
+              titleCentered: true,
+              titleTextStyle:
+                  TextStyle(color: AppColors.whiteColor, fontSize: 17.0)),
           focusedDay: value.selectedDate,
           firstDay: DateTime.utc(2022, 01, 01),
           lastDay: DateTime.now(),
+          daysOfWeekStyle: DaysOfWeekStyle(
+              weekdayStyle: TextStyle(color: AppColors.blackColor,fontWeight: FontWeight.w600),
+              weekendStyle: TextStyle(color: Colors.orange,fontWeight: FontWeight.w600)),
           calendarStyle: CalendarStyle(
               isTodayHighlighted: true,
+              defaultTextStyle: TextStyle(color: AppColors.whiteColor),
+              weekendTextStyle: TextStyle(color: Colors.orange),
+              selectedTextStyle: TextStyle(color: AppColors.blackColor),
               selectedDecoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.4),
-                  shape: BoxShape.circle)),
+                  color: AppColors.secondaryColor, shape: BoxShape.circle)),
           onPageChanged: (v) => value.reloadAttendance(v),
           selectedDayPredicate: (day) => isSameDay(day, DateTime.now()),
           calendarBuilders: CalendarBuilders(
@@ -32,7 +49,9 @@ class StudentAttendance extends StatelessWidget {
                         child: ColoredBox(color: event.color)),
                   )),
           startingDayOfWeek: StartingDayOfWeek.monday,
-          calendarFormat: CalendarFormat.month);
+          calendarFormat: CalendarFormat.month,
+        ),
+      );
     });
   }
 }

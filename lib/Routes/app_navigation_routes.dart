@@ -22,7 +22,6 @@ class AppNavRoutes {
   static const forgotPasswordRoute = '/forgotPassword';
   static const updatePasswordRoute = '/updatePassword';
   static const aboutUsRoute = '/aboutUs';
-  static const aboutAppRoute = '/aboutApp';
   static const appFeedbackRoute = '/appFeedback';
   static const changePasswordRoute = '/changePassword';
   static const teacherSectionRoute = '/teacherSection';

@@ -29,7 +29,7 @@ class LibraryScreenState extends State<LibraryScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Library Records'),
+        appBar: CustomAppBar(title: 'LIBRARY DETAILS'),
         body: RefreshIndicator(
             child: FutureBuilder(
                 future: _libraryRecords,

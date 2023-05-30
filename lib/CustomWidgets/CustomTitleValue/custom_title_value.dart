@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomTitleValue extends StatelessWidget {
   final String value;
   final String title;
+  final bool showDivider;
 
-  const CustomTitleValue({Key key, this.value, this.title}) : super(key: key);
+  const CustomTitleValue(
+      {Key key, this.value, this.title, this.showDivider = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +24,21 @@ class CustomTitleValue extends StatelessWidget {
                 child: Text(
                   '$title: ',
                   style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                      color: AppColors.primaryTitleColor, fontWeight: FontWeight.bold),
                 ),
               ),
               Expanded(
                   child: Text(value,
-                      style: TextStyle(color: Colors.blueGrey, fontSize: 13)))
+                      style: TextStyle(color: Colors.black, fontSize: 13)))
             ],
           ),
         ),
-        Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.0),
-            child: Divider(height: 0.0, color: Colors.black))
+        Visibility(
+          visible: showDivider,
+          child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2.0),
+              child: Divider(height: 0.0, color: Colors.black)),
+        )
       ],
     );
   }

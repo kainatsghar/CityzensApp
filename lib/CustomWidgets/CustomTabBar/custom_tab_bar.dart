@@ -31,7 +31,7 @@ class CustomTabBar extends StatelessWidget {
                   backgroundColor: AppColors.whiteColor,
                   title: Text(appBarTitle,
                       style: TextStyle(
-                          fontSize: 22.0, color: AppColors.primaryTitleColor)),
+                          fontSize: 18.0, color: AppColors.primaryTitleColor)),
                   actions: <Widget>[
                     Padding(
                         padding: const EdgeInsets.all(8.0),

@@ -63,11 +63,6 @@ class NavigationalDrawer extends StatelessWidget {
                         onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.appFeedbackRoute)),
                     CustomDivider(),
-                    CustomListTile(
-                        title: 'About App',
-                        onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.aboutAppRoute)),
-                    CustomDivider(),
                     value.userData.userType != 'Teacher'
                         ? Column(
                             children: [

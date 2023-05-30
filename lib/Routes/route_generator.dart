@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Screens/AuthWrapper/auth_wrapper.dart';
@@ -13,7 +14,6 @@ import 'package:tcs_app/Screens/Teacher/TeacherDiaryScreen/teacher_diary_screen.
 import '../Screens/ForgotPassword/ForgotPasswordScreen/forgot_password_screen.dart';
 import '../Screens/ForgotPassword/ForgotPinCodeScreen/forgot_pincode_screen.dart';
 import '../Screens/ForgotPassword/UpdatePasswordScreen/update_password_screen.dart';
-import '../Screens/NavigationalDrawer/AboutAppScreen/about_app_screen.dart';
 import '../Screens/NavigationalDrawer/AboutUsScreen/about_us_screen.dart';
 import '../Screens/NavigationalDrawer/AppFeedbackScreen/app_feedback_screen.dart';
 import '../Screens/NavigationalDrawer/ChangePasswordScreen/change_password_screen.dart';
@@ -85,8 +85,6 @@ class RouteGenerator {
         return routeScreen(child: AboutUsScreen());
       case AppNavRoutes.appFeedbackRoute:
         return routeScreen(child: AppFeedbackScreen());
-      case AppNavRoutes.aboutAppRoute:
-        return routeScreen(child: AboutAppScreen());
       case AppNavRoutes.changePasswordRoute:
         return routeScreen(child: ChangePasswordScreen());
       case AppNavRoutes.teacherSectionRoute:
@@ -110,9 +108,7 @@ class RouteGenerator {
 
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(builder: (_) {
-      return Scaffold(
-          appBar: CustomAppBar(title: 'Error'),
-          body: Center(child: Text('ERROR')));
+      return Scaffold(appBar: CustomAppBar(title: 'ERROR'), body: ShowError());
     });
   }
 

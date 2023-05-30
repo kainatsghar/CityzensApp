@@ -6,14 +6,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget> actions;
   final String title;
   final double appBarHeight;
-  final bool isDrawer;
 
   const CustomAppBar(
       {Key key,
       this.actions,
       this.title = '',
-      this.appBarHeight = 56.0,
-      this.isDrawer = false})
+      this.appBarHeight = 56.0})
       : super(key: key);
 
   @override
@@ -27,16 +25,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         title: new Text('$title',
             style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 18.0,
                 color: AppColors.primaryTitleColor,
                 fontWeight: FontWeight.w600)),
-        leading: isDrawer
-            ? null
-            : !AppNavigation.canPop()
-                ? Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Image.asset('images/tcs_logo.png'))
-                : null,
         actions: actions ??
             [
               Padding(

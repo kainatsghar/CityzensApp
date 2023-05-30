@@ -10,7 +10,9 @@ class AppThemes {
     brightness: Brightness.light,
     primaryColor: AppColors.primaryColor,
     drawerTheme: DrawerThemeData(backgroundColor: AppColors.primaryColor),
-    appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: AppColors.primaryTitleColor)),
-    colorScheme: ColorScheme.light(primary: AppColors.primaryColor),
+    appBarTheme: AppBarTheme(
+        iconTheme: IconThemeData(color: AppColors.primaryTitleColor)),
+    colorScheme: ColorScheme.light(
+        primary: AppColors.primaryColor, secondary: AppColors.primaryColor),
   );
 }

@@ -33,10 +33,10 @@ class FeeChallanScreenState extends State<FeeChallanScreen>
       body: Consumer<FeeChallanProvider>(builder: (context, value, _) {
         return CustomTabBar(
             scrollController: value.scrollController,
-            appBarTitle: 'Fee Challans',
+            appBarTitle: 'FEE CHALLANS',
             tabs: [
-              Tab(child: Text('Outstanding')),
-              Tab(child: Text('Receipts'))
+              Tab(child: Text('OUTSTANDING')),
+              Tab(child: Text('RECEIPTS'))
             ],
             widgets: <Widget>[OutstandingFeeScreen(), ReceiptFeeScreen()],
             controller: value.controller);
