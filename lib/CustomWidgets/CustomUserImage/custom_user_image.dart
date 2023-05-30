@@ -32,7 +32,9 @@ class CustomUserImage extends StatelessWidget {
                       builder: (context, snapshot) {
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
-                            return const CustomLoader();
+                            return Image.asset(
+                                'images/profile_avatar_yellow.png',
+                                fit: BoxFit.cover);
                           default:
                             if (snapshot.hasData) {
                               return snapshot.data != null
@@ -40,8 +42,7 @@ class CustomUserImage extends StatelessWidget {
                                       fit: BoxFit.cover)
                                   : Image.asset(
                                       'images/profile_avatar_yellow.png',
-                                      fit: BoxFit.cover,
-                                    );
+                                      fit: BoxFit.cover);
                             } else {
                               return Image.asset(
                                   'images/profile_avatar_yellow.png',

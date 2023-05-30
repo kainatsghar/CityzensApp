@@ -32,8 +32,7 @@ class NotificationScreenState extends State<NotificationScreen>
       body: Consumer<NotificationProvider>(builder: (context, value, _) {
         return CustomTabBar(
             scrollController: value.scrollController,
-            appBarTitle: 'NOTIFICATIONS',
-
+            appBarTitle: 'ALERTS',
             tabs: [
               Tab(child: Text('MESSAGE')),
               Tab(child: Text('LIBRARY')),

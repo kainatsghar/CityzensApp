@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Text(
                                 'Forgot Password?',
                                 style: TextStyle(
-                                    color: AppColors.primaryColor,
+                                    color: AppColors.primaryTitleColor,
                                     fontStyle: FontStyle.italic,
                                     decoration: TextDecoration.underline),
                               ),
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontSize: 16.0,
                                     fontStyle: FontStyle.italic,
                                     decoration: TextDecoration.underline,
-                                    color: AppColors.primaryColor,
+                                    color: AppColors.primaryTitleColor,
                                     fontWeight: FontWeight.w500)),
                           ),
                         ],
@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     fontStyle: FontStyle.italic,
                                                     fontWeight: FontWeight.w500,
                                                     color:
-                                                        AppColors.primaryColor,
+                                                        AppColors.primaryTitleColor,
                                                     decoration: TextDecoration
                                                         .underline)))))
                               ])),

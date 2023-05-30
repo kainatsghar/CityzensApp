@@ -7,12 +7,17 @@ import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_but
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../Utils/app_colors.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
+  final ScreenArguments args;
+
+  const StudentDashboardScreen({Key key, this.args}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return StudentDashboardScreenState();
@@ -36,7 +41,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     Size size = MediaQuery.of(context).size;
     return Consumer<LocalDataProvider>(builder: (context, value, _) {
       return Scaffold(
-          appBar: CustomAppBar(title: 'CITYZENS'),
+          appBar: CustomAppBar(
+              title: localData.userData.userType == 'Parent'
+                  ? '${widget.args.userName}'
+                  : 'CITYZENS'),
           drawer:
               value.userData.userType == 'Parent' ? null : NavigationalDrawer(),
           body: Padding(
@@ -120,7 +128,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                 AppNavRoutes.libraryRoute),
                             imageName: 'library_icon.png'),
                         CustomDashboardButton(
-                            title: 'NOTIFICATIONS',
+                            title: 'ALERTS',
                             leftAlign: 3.0,
                             bottomAlign: -3,
                             imageHeight: size.height * 0.1,

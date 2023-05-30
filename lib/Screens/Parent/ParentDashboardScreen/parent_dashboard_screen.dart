@@ -34,7 +34,7 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Cityzens'),
+        appBar: CustomAppBar(title: 'CITYZENS'),
         drawer: NavigationalDrawer(),
         body: RefreshIndicator(
             child: FutureBuilder(

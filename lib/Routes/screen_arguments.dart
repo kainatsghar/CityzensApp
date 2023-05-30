@@ -1,5 +1,5 @@
 class ScreenArguments {
-  final String message;
+  final String userName;
 
-  const ScreenArguments({this.message});
+  const ScreenArguments({this.userName});
 }

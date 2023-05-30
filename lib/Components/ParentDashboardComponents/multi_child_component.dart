@@ -4,6 +4,8 @@ import 'package:tcs_app/CustomWidgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Routes/screen_arguments.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 import '../../Provider/ParentDashboard/parent_dashboard_provider.dart';
 
@@ -15,34 +17,55 @@ class MultiChildComponent extends StatelessWidget {
         Consumer2<ParentDashboardProvider, LocalDataProvider>(
             builder: (context, value, localData, _) {
       var children = value.multiChildResponse.children;
-      return ListView.builder(
-          itemCount: children.length,
-          physics: AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(vertical: 10),
-          itemBuilder: (BuildContext context, int index) => Card(
-              child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  child: ListTile(
-                      leading: CustomUserImage(
-                          imageSize: size.width * 0.15,
-                          userId: '${children[index].studentId}'),
-                      title: Text(children[index].studentName.toUpperCase(),
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5.0),
-                                child: Text('${children[index].studentId}')),
-                            Text(children[index].className)
-                          ]),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        localData.setStudentId('${children[index].studentId}');
-                        AppNavigation.navigateTo(
-                            AppNavRoutes.studentDashboardRoute);
-                      }))));
+      return Column(
+        children: [
+          Image.asset('images/logo_cover.png',
+              fit: BoxFit.fitWidth,
+              height: size.height * 0.18,
+              width: size.width * 0.5),
+          SizedBox(height: size.height * 0.02),
+          Flexible(
+            child: ListView.builder(
+                itemCount: children.length,
+                physics: AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                itemBuilder: (BuildContext context, int index) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 8.0),
+                    child: Container(
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),border: Border.all(color: AppColors.primaryColor)),
+                      child: ListTile(
+                          leading: CustomUserImage(
+                              imageSize: size.width * 0.15,
+                              userId: '${children[index].studentId}'),
+                          title: Text(
+                              children[index].studentName.toUpperCase(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryTitleColor)),
+                          subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5.0),
+                                    child:
+                                        Text('${children[index].studentId}')),
+                                Text(children[index].className)
+                              ]),
+                          trailing: const Icon(Icons.arrow_forward_ios,
+                              color: AppColors.secondaryColor),
+                          onTap: () {
+                            localData
+                                .setStudentId('${children[index].studentId}');
+                            AppNavigation.navigateTo(
+                                AppNavRoutes.studentDashboardRoute,
+                                arguments: ScreenArguments(
+                                    userName: children[index].studentName));
+                          }),
+                    ))),
+          ),
+        ],
+      );
     }));
   }
 }

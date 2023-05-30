@@ -3,6 +3,7 @@ import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Screens/AuthWrapper/auth_wrapper.dart';
 import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
 import 'package:tcs_app/Screens/Parent/ChallanPaymentScreen/challan_payment_screen.dart';
@@ -54,7 +55,9 @@ class RouteGenerator {
       case AppNavRoutes.createPasswordRoute:
         return routeScreen(child: CreatePasswordScreen());
       case AppNavRoutes.studentDashboardRoute:
-        return routeScreen(child: StudentDashboardScreen());
+        return routeScreen(
+            child: StudentDashboardScreen(
+                args: settings.arguments as ScreenArguments));
       case AppNavRoutes.parentDashboardRoute:
         return routeScreen(child: ParentDashboardScreen());
       case AppNavRoutes.studentProfileRoute:
