@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/NotificationComponents/notification_item.dart';
 import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_custom_message.dart';
 import 'package:tcs_app/Provider/Notifications/notification_provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 
 import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';

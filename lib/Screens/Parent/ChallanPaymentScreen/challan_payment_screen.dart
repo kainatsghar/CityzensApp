@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
