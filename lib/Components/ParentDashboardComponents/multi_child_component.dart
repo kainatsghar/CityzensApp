@@ -7,6 +7,7 @@ import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
+import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../Provider/ParentDashboard/parent_dashboard_provider.dart';
 
 class MultiChildComponent extends StatelessWidget {
@@ -19,10 +20,7 @@ class MultiChildComponent extends StatelessWidget {
       var children = value.multiChildResponse.children;
       return Column(
         children: [
-          Image.asset('images/logo_cover.png',
-              fit: BoxFit.fitWidth,
-              height: size.height * 0.18,
-              width: size.width * 0.5),
+          CustomLogoCover(),
           SizedBox(height: size.height * 0.02),
           Flexible(
             child: ListView.builder(
@@ -30,15 +28,17 @@ class MultiChildComponent extends StatelessWidget {
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 itemBuilder: (BuildContext context, int index) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 8.0),
                     child: Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),border: Border.all(color: AppColors.primaryColor)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(color: AppColors.primaryColor)),
                       child: ListTile(
                           leading: CustomUserImage(
                               imageSize: size.width * 0.15,
                               userId: '${children[index].studentId}'),
-                          title: Text(
-                              children[index].studentName.toUpperCase(),
+                          title: Text(children[index].studentName.toUpperCase(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.primaryTitleColor)),

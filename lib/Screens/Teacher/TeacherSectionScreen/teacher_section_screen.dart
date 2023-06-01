@@ -35,7 +35,7 @@ class TeacherSectionScreenState extends State<TeacherSectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Attendance'),
+        appBar: CustomAppBar(title: 'ATTENDANCE'),
         body: RefreshIndicator(
             child: FutureBuilder(
                 future: _sections,

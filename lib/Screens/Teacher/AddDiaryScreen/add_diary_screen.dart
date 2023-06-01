@@ -35,7 +35,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Add Diary'),
+        appBar: CustomAppBar(title: 'ADD HOMEWORK'),
         body: FutureBuilder(
             future: _sections,
             builder: (context, snapshot) {

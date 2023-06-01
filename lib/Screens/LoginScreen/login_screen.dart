@@ -10,6 +10,8 @@ import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
+import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -46,10 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: Column(
                     children: <Widget>[
-                      Image.asset('images/logo_cover.png',
-                          fit: BoxFit.fitWidth,
-                          height: size.height * 0.18,
-                          width: size.width * 0.5),
+                      CustomLogoCover(),
                       SizedBox(height: size.height * 0.03),
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -165,8 +164,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 style: TextStyle(
                                                     fontStyle: FontStyle.italic,
                                                     fontWeight: FontWeight.w500,
-                                                    color:
-                                                        AppColors.primaryTitleColor,
+                                                    color: AppColors
+                                                        .primaryTitleColor,
                                                     decoration: TextDecoration
                                                         .underline)))))
                               ])),

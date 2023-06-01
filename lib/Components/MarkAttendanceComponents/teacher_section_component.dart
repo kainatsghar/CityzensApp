@@ -5,6 +5,9 @@ import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field
 import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
+import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+import '../../Utils/app_colors.dart';
+
 class TeacherSectionComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,77 +18,55 @@ class TeacherSectionComponent extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              Image.asset('images/tcs_logo.png',
-                  height: size.width * 0.4, width: size.width * 0.4),
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Attendance Date',
-                        style: TextStyle(
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black)),
-                  )),
-              CustomTextFormField(
-                  labelText: HelperFunction.dateFormatter('${DateTime.now()}'),
-                  isEnable: false,
-                  readOnly: true,
-                  prefixIcon: Icons.date_range),
-              SizedBox(height: size.height * 0.01),
-              Form(
-                key: value.formKey,
-                child: Column(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text('Class Section',
-                              style: TextStyle(
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                        )),
-                    CustomTextFormField(
-                        hintText: 'Select',
-                        controller: value.sectionController,
-                        onTap: () => value.sectionBottomSheet(),
-                        readOnly: true,
-                        validator: HelperFunction.validator,
-                        suffixWidget:
-                            ImageIcon(AssetImage('images/dropdown_icon.png'))),
-                    Visibility(
-                      visible: value.classId == 19 || value.classId == 20,
-                      child: Column(
-                        children: [
-                          SizedBox(height: size.height * 0.02),
-                          Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text('Section Subjects',
-                                    style: TextStyle(
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black)),
-                              )),
-                          CustomTextFormField(
-                              hintText: 'Select',
-                              controller: value.subjectController,
-                              onTap: () => value.subjectBottomSheet(),
-                              readOnly: true,
-                              validator: HelperFunction.validator,
-                              suffixWidget: ImageIcon(
-                                  AssetImage('images/dropdown_icon.png'))),
-                        ],
+              CustomLogoCover(),
+              SizedBox(height: size.height * 0.03),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                decoration: BoxDecoration(
+                    color: AppColors.secondaryColor,
+                    borderRadius: BorderRadius.circular(20.0)),
+                child: Form(
+                  key: value.formKey,
+                  child: Column(
+                    children: [
+                      CustomTextFormField(
+                          hintText:
+                              HelperFunction.dateFormatter('${DateTime.now()}'),
+                          isEnable: false,
+                          readOnly: true,
+                          prefixIcon: Icons.date_range),
+                      SizedBox(height: size.height * 0.02),
+                      CustomTextFormField(
+                          hintText: 'Select Section',
+                          controller: value.sectionController,
+                          onTap: () => value.sectionBottomSheet(),
+                          readOnly: true,
+                          validator: HelperFunction.validator,
+                          suffixWidget: ImageIcon(
+                              AssetImage('images/dropdown_icon.png'),
+                              color: AppColors.whiteColor)),
+                      Visibility(
+                        visible: value.classId == 19 || value.classId == 20,
+                        child: Column(
+                          children: [
+                            SizedBox(height: size.height * 0.02),
+                            CustomTextFormField(
+                                hintText: 'Select Subject',
+                                controller: value.subjectController,
+                                onTap: () => value.subjectBottomSheet(),
+                                readOnly: true,
+                                validator: HelperFunction.validator,
+                                suffixWidget: ImageIcon(
+                                    AssetImage('images/dropdown_icon.png'),
+                                    color: AppColors.whiteColor)),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: size.height * 0.04),
+              SizedBox(height: size.height * 0.03),
               CustomAppButton(
                   buttonTitle: 'Next',
                   onTap: () => value.navigateToMarkAttendance())

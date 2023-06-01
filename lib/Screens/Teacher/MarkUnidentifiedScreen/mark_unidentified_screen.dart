@@ -36,7 +36,7 @@ class _MarkUnidentifiedScreenState extends State<MarkUnidentifiedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Mark Unidentified'),
+        appBar: CustomAppBar(title: 'MARK UNIDENTIFIED'),
         body: FutureBuilder(
             future: Future.wait([_sections,_reasons]),
             builder: (context, snapshot) {

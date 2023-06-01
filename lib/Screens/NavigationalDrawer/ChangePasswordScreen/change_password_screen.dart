@@ -6,6 +6,7 @@ import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field
 import 'package:tcs_app/Provider/Dashboard/dashboard_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
+import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -42,10 +43,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Image.asset('images/logo_cover.png',
-                      fit: BoxFit.fitWidth,
-                      height: size.height * 0.18,
-                      width: size.width * 0.5),
+                  CustomLogoCover(),
                   SizedBox(height: size.height * 0.03),
                   Container(
                     padding:

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
+import '../../Utils/helper_function.dart';
+
 class CustomProfileItem extends StatelessWidget {
   final double width;
   final String title;
@@ -31,7 +33,7 @@ class CustomProfileItem extends StatelessWidget {
                   color: AppColors.primaryTitleColor),
               textAlign: TextAlign.center),
           Padding(padding: EdgeInsets.only(top: 5.0)),
-          Text(value == 'null' || value == null ? '-' : '$value',
+          Text(HelperFunction.noNullStringText(value),
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.black54),
               maxLines: maxLines ?? 1,

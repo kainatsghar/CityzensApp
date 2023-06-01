@@ -36,7 +36,7 @@ class CustomDashboardButton extends StatelessWidget {
                       child: Text(title ?? 'HOMEWORK\nDIARY',
                           textAlign: TextAlign.end,
                           style: TextStyle(
-                              fontSize: 18.0,
+                              fontSize: 17.0,
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryTitleColor)))),
               Positioned(

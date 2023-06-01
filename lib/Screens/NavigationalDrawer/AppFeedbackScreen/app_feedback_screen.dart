@@ -4,6 +4,8 @@ import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/Provider/Dashboard/dashboard_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
+import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+
 class AppFeedbackScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -20,10 +22,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen> {
         body: Container(
             margin: EdgeInsets.all(15.0),
             child: Column(children: <Widget>[
-              Image.asset('images/logo_cover.png',
-                  fit: BoxFit.fitWidth,
-                  height: size.height * 0.18,
-                  width: size.width * 0.5),
+              CustomLogoCover(),
               SizedBox(height: size.height * 0.03),
               Column(children: <Widget>[
                 Text(

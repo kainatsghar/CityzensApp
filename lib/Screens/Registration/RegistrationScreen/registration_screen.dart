@@ -7,6 +7,8 @@ import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
+import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+
 class RegistrationScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -41,10 +43,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
             child: SingleChildScrollView(child:
                 Consumer<RegistrationProvider>(builder: (context, value, _) {
               return Column(children: <Widget>[
-                Image.asset('images/logo_cover.png',
-                    fit: BoxFit.fitWidth,
-                    height: size.height * 0.18,
-                    width: size.width * 0.5),
+                CustomLogoCover(),
                 SizedBox(height: size.height * 0.02),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),

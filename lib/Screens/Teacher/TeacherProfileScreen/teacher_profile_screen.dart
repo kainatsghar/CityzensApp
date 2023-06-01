@@ -29,7 +29,7 @@ class TeacherProfileScreenState extends State<TeacherProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Profile'),
+      appBar: CustomAppBar(title: 'PROFILE'),
       body: RefreshIndicator(
           child: FutureBuilder(
               future: _teacherProfile,

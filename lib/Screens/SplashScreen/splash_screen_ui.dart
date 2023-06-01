@@ -38,34 +38,30 @@ class SplashScreenUIState extends State<SplashScreenUI>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return new Scaffold(
+    return Scaffold(
         backgroundColor: AppColors.primaryColor,
-        body: new Stack(
+        body: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            new Container(
-              child: new Center(
-                  child: new Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Image.asset(
-                    'images/logo.png',
-                    width: _iconAnimation.value * size.width / 2.2,
-                    height: _iconAnimation.value * size.width / 2.2,
-                  ),
-                  new Text(
-                    ' W E L C O M E ',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w500),
-                  )
-                ],
-              )),
-            ),
+            Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Image.asset('images/tcs_logo_45.png',
+                    height: _iconAnimation.value * size.height / 3),
+                SizedBox(height: size.height * 0.02),
+                Text(
+                  ' W E L C O M E ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w500),
+                )
+              ],
+            )),
           ],
         ));
   }

@@ -8,7 +8,7 @@ class CustomExpansionTile extends StatelessWidget {
   final List<Widget> children;
 
   const CustomExpansionTile(
-      {Key key, this.title, this.detailMsg, this.children})
+      {Key key, this.title, this.detailMsg, this.children = const []})
       : super(key: key);
 
   @override

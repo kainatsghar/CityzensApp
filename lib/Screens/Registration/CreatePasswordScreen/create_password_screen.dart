@@ -5,6 +5,7 @@ import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 
+import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
@@ -32,10 +33,7 @@ class CreatePasswordScreenState extends State<CreatePasswordScreen> {
                   Consumer<RegistrationProvider>(builder: (context, value, _) {
                 return Column(
                   children: <Widget>[
-                    Image.asset('images/logo_cover.png',
-                        fit: BoxFit.fitWidth,
-                        height: size.height * 0.18,
-                        width: size.width * 0.5),
+                    CustomLogoCover(),
                     SizedBox(height: size.height * 0.02),
                     Container(
                       padding:

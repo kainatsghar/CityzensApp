@@ -3,6 +3,7 @@ import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 import '../../../CustomWidgets/CustomExpansionTile/custom_expansion_tile.dart';
+import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 
 class AboutUsScreen extends StatefulWidget {
   @override
@@ -22,10 +23,7 @@ class AboutUsScreenState extends State<AboutUsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Column(
               children: <Widget>[
-                Image.asset('images/logo_cover.png',
-                    fit: BoxFit.fitWidth,
-                    height: size.height * 0.18,
-                    width: size.width * 0.5),
+                CustomLogoCover(),
                 SizedBox(height: size.height * 0.03),
                 CustomExpansionTile(
                     title: 'Overview',

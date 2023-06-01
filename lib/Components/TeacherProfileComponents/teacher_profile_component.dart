@@ -18,128 +18,148 @@ class TeacherProfileComponent extends StatelessWidget {
           ? ShowError(errorText: AppConstants.noRecordFound)
           : SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(top: size.height * 0.03),
+                padding: EdgeInsets.symmetric(
+                    vertical: size.height * 0.03,
+                    horizontal: size.width * 0.035),
                 child: Column(children: <Widget>[
-                  CustomUserImage(
-                      userId: '${value.profileResponse.employeeCode}',
-                      disableUploadImage: false),
                   Padding(
                       padding: EdgeInsets.only(top: 15.0),
                       child: Text(
                           HelperFunction.noNullStringText(
-                              '${value.profileResponse.teacherName}'),
+                              '${value.profileResponse.teacherName}'.toUpperCase()),
                           style: TextStyle(
-                              color: AppColors.blackColor,
+                              color: AppColors.primaryTitleColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0))),
+                  CustomUserImage(
+                      userId: '${value.profileResponse.employeeCode}',
+                      disableUploadImage: false),
                   Padding(
                       padding: EdgeInsets.only(top: 5.0),
-                      child: Text(
-                          HelperFunction.noNullStringText(
-                              '${value.profileResponse.branch}'),
-                          style: TextStyle(color: Colors.black54))),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        CustomProfileItem(
-                            width: size.width / 2.5,
-                            title: 'ERP Number',
-                            value: HelperFunction.noNullStringText(
-                                '${value.profileResponse.employeeCode}')),
-                        SizedBox(
-                            height: 30,
-                            child: VerticalDivider(
-                                width: 1.0,
-                                color: AppColors.blackColor,
-                                thickness: 1)),
-                        CustomProfileItem(
-                            width: size.width / 2.5,
-                            title: 'Designation',
-                            value: '${value.profileResponse.designation}'),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        CustomProfileItem(
-                            width: size.width / 2.5,
-                            title: 'Marital Status',
-                            value:
-                                '${value.profileResponse.maritalStatus == 'M' ? 'Married' : 'Single'}'),
-                        SizedBox(
-                            height: 30,
-                            child: VerticalDivider(
-                                width: 1.0,
-                                color: AppColors.blackColor,
-                                thickness: 1)),
-                        CustomProfileItem(
-                            width: size.width / 2.5,
-                            title: 'Religion',
-                            value: value.profileResponse.religion),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        CustomProfileItem(
-                            width: size.width / 2.5,
-                            title: 'Region',
-                            value: '${value.profileResponse.region}'),
-                        SizedBox(
-                            height: 30,
-                            child: VerticalDivider(
-                                width: 1.0,
-                                color: AppColors.blackColor,
-                                thickness: 1)),
-                        CustomProfileItem(
-                            width: size.width / 2.5,
-                            title: 'City',
-                            value: value.profileResponse.city),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 5.0),
-                  Padding(
-                      padding: EdgeInsets.all(5.0),
                       child: CustomProfileItem(
                           width: size.width,
-                          title: 'Address',
-                          value: '${value.profileResponse.address}')),
-                  SizedBox(height: 5.0),
-                  Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: CustomProfileItem(
-                        width: size.width,
-                        title: 'CNIC Number',
-                        value: '${value.profileResponse.cnicNumber}'),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10)),
+                          title: 'BRANCH NAME',
+                          value: '${value.profileResponse.branch}')),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: CustomProfileItem(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10)),
+                            title: 'ERP NUMBER',
+                            value: '${value.profileResponse.employeeCode}'),
+                      ),
+                      SizedBox(
+                          height: 30,
+                          child: VerticalDivider(
+                              width: 15.0,
+                              color: AppColors.blackColor,
+                              thickness: 1)),
+                      Expanded(
+                        child: CustomProfileItem(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10)),
+                            title: 'DESIGNATION',
+                            value: '${value.profileResponse.designation}'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: CustomProfileItem(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10)),
+                            title: 'MARITAL STATUS',
+                            value:
+                                '${value.profileResponse.maritalStatus == 'M' ? 'Married' : 'Single'}'),
+                      ),
+                      SizedBox(
+                          height: 30,
+                          child: VerticalDivider(
+                              width: 15.0,
+                              color: AppColors.blackColor,
+                              thickness: 1)),
+                      Expanded(
+                        child: CustomProfileItem(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10)),
+                            title: 'RELIGION',
+                            value: value.profileResponse.religion),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: CustomProfileItem(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10)),
+                            title: 'REGION',
+                            value: '${value.profileResponse.region}'),
+                      ),
+                      SizedBox(
+                          height: 30,
+                          child: VerticalDivider(
+                              width: 15.0,
+                              color: AppColors.blackColor,
+                              thickness: 1)),
+                      Expanded(
+                        child: CustomProfileItem(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10)),
+                            title: 'CITY',
+                            value: value.profileResponse.city),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 5.0),
-                  Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: CustomProfileItem(
-                        width: size.width,
-                        title: 'Email Address',
-                        value: '${value.profileResponse.email}'),
-                  ),
+                  CustomProfileItem(
+                      width: size.width,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10)),
+                      title: 'ADDRESS',
+                      value: '${value.profileResponse.address}'),
                   SizedBox(height: 5.0),
-                  Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: CustomProfileItem(
-                        width: size.width,
-                        title: 'Contact Number',
-                        value: '${value.profileResponse.employeeCell}'),
-                  ),
+                  CustomProfileItem(
+                      width: size.width,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                      title: 'CNIC NUMBER',
+                      value: '${value.profileResponse.cnicNumber}'),
+                  SizedBox(height: 5.0),
+                  CustomProfileItem(
+                      width: size.width,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10)),
+                      title: 'EMAIL ADDRESS',
+                      value: '${value.profileResponse.email}'),
+                  SizedBox(height: 5.0),
+                  CustomProfileItem(
+                      width: size.width,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                      title: 'CONTACT NUMBER',
+                      value: '${value.profileResponse.employeeCell}'),
                 ]),
               ),
             );

@@ -40,7 +40,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Mark Attendance'),
+        appBar: CustomAppBar(title: 'MARK ATTENDANCE'),
         body: FutureBuilder(
             future: _studentListService,
             builder: (context, snapshot) {

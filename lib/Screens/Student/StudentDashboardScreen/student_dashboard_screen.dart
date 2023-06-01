@@ -121,8 +121,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                 AppNavRoutes.academicTermRoute),
                             imageName: 'result_icon.png'),
                         CustomDashboardButton(
-                            title: 'LIBRARY\nDETAILS',
-                            bottomAlign: -28,
+                            title: 'LIBRARY',
+                            bottomAlign: -38,
                             imageHeight: size.height * 0.14,
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.libraryRoute),
@@ -143,7 +143,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                 AppNavRoutes.studentDiaryRoute),
                             imageName: 'diary_icon.png'),
                         CustomDashboardButton(
-                            title: 'FEE\nCHALLANS',
+                            title: 'FEE CHALLANS',
                             bottomAlign: -22,
                             leftAlign: -12,
                             onTap: () => AppNavigation.navigateTo(
