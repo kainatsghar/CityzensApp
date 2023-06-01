@@ -31,7 +31,7 @@ class LocalDataProvider with ChangeNotifier {
       userData = LoginResponse.fromJson(jsonDecode(localData));
       if (userData.userType == 'Student') {
         setStudentId(userData.userName);
-      } else {}
+      }
       notifyListeners();
     } else {
       userData = LoginResponse();

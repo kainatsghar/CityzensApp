@@ -30,17 +30,20 @@ class NavigationalDrawer extends StatelessWidget {
                                 ? 'CNIC No: ${value.userData.userName}'
                                 : 'ERP No: ${value.userData.userName}',
                         style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: 15.0,
                             color: AppColors.whiteColor,
                             fontWeight: FontWeight.w600)),
                     SizedBox(height: size.height * 0.01),
                     value.userData.userType == 'Student'
-                        ? Text(
-                            '${HelperFunction.noNullStringText('${value.userData.info.name}')}',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                color: AppColors.whiteColor,
-                                fontWeight: FontWeight.w600))
+                        ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 3.0),
+                          child: Text(
+                              '${HelperFunction.noNullStringText('${value.userData.info.name}')}',
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: AppColors.whiteColor,
+                                  fontWeight: FontWeight.w600)),
+                        )
                         : value.userData.userType == 'Teacher'
                             ? Text(
                                 '${HelperFunction.noNullStringText('${value.userData.name}')}',

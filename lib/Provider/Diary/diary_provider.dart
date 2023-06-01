@@ -181,7 +181,7 @@ class DiaryProvider with ChangeNotifier {
   Future<DiaryResponse> loadStudentDiary() async {
     try {
       DiaryResponse response = await StudentDiaryService.getDiaryRecords(
-          userName: localDataProvider.userData.userName,
+          userName: localDataProvider.studentId,
           tokenId: localDataProvider.userData.tokenId);
       setDiaryRecords(response);
       return response;

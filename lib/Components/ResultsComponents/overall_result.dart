@@ -5,6 +5,8 @@ import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
+import '../../CustomWidgets/CustomSubjectGrade/custom_subject_grade.dart';
+
 class OverallResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,199 +16,194 @@ class OverallResult extends StatelessWidget {
       return Column(
         children: [
           Card(
-              child: Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.grey)),
-                  child: Column(children: <Widget>[
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            width: size.width / 3.4,
-                            color: AppColors.secondaryColor,
-                            padding: EdgeInsets.all(5.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text('Overall Grade',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center),
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Container(
-                                      alignment: Alignment.center,
-                                      height: size.width / 5.4,
-                                      width: size.width / 5.4,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0)),
-                                      child: Text(
-                                        info.overallGrade,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30),
-                                      )),
-                                ),
-                              ],
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(15.0)),
+              child: Column(children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        width: size.width / 3.4,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15.0),
+                                bottomLeft: Radius.circular(15.0)),
+                            color: AppColors.secondaryColor),
+                        padding: EdgeInsets.all(5.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Overall Grade',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  height: size.width / 5.4,
+                                  width: size.width / 5.4,
+                                  child: CustomSubjectGrade(
+                                      grade: info.overallGrade)),
                             ),
-                          ),
-                          SizedBox(
-                              width: size.width / 1.6,
-                              child: Padding(
-                                  padding: const EdgeInsets.only(left: 10.0),
-                                  child: Column(children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 8.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                              width: size.width / 3.6,
-                                              child: Text('Overall %',
-                                                  style:
-                                                      TextStyle(fontSize: 11))),
-                                          SizedBox(
-                                            width: size.width / 4.6,
-                                            child: CustomPercentageBar(
-                                                barHeight: 4.0,
-                                                barValue:
-                                                    HelperFunction.numberValue(
-                                                        info.overallPercentage),
-                                                barWidth: size.width / 4.6),
-                                          ),
-                                          SizedBox(
-                                              width: size.width / 10.0,
-                                              child: Text(
-                                                  HelperFunction.numberValue(
-                                                      info.overallPercentage),
-                                                  style:
-                                                      TextStyle(fontSize: 11)))
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                            width: size.width / 3.6,
-                                            child: Text('Class Highest %',
-                                                style:
-                                                    TextStyle(fontSize: 11))),
-                                        SizedBox(
-                                          width: size.width / 4.6,
-                                          child: CustomPercentageBar(
-                                              barHeight: 4.0,
-                                              barValue:
-                                                  HelperFunction.numberValue(
-                                                      info.highestPercentage),
-                                              barWidth: size.width / 4.6),
-                                        ),
-                                        SizedBox(
-                                            width: size.width / 10.0,
-                                            child: Text(
-                                                HelperFunction.numberValue(
-                                                    info.highestPercentage),
-                                                style: TextStyle(fontSize: 11)))
-                                      ],
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                            width: size.width / 3.6,
-                                            child: Text('Class Lowest %',
-                                                style:
-                                                    TextStyle(fontSize: 11))),
-                                        SizedBox(
-                                          width: size.width / 4.6,
-                                          child: CustomPercentageBar(
-                                              barHeight: 4.0,
-                                              barValue:
-                                                  HelperFunction.numberValue(
-                                                      info.lowestPercentage),
-                                              barWidth: size.width / 4.6),
-                                        ),
-                                        SizedBox(
-                                            width: size.width / 10.0,
-                                            child: Text(
-                                                HelperFunction.numberValue(
-                                                    info.lowestPercentage),
-                                                style: TextStyle(fontSize: 11)))
-                                      ],
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Row(children: <Widget>[
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                          width: size.width / 1.6,
+                          child: Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Column(children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: Row(
+                                    children: <Widget>[
                                       Container(
                                           width: size.width / 3.6,
-                                          child: Text('Class Average %',
-                                              style: TextStyle(fontSize: 11))),
+                                          child: Text('Overall %',
+                                              style:
+                                                  TextStyle(fontSize: 11))),
                                       SizedBox(
                                         width: size.width / 4.6,
                                         child: CustomPercentageBar(
                                             barHeight: 4.0,
                                             barValue:
                                                 HelperFunction.numberValue(
-                                                    info.average),
+                                                    info.overallPercentage),
                                             barWidth: size.width / 4.6),
                                       ),
                                       SizedBox(
                                           width: size.width / 10.0,
                                           child: Text(
                                               HelperFunction.numberValue(
-                                                  info.average),
-                                              style: TextStyle(fontSize: 11))),
-                                      SizedBox(height: 8.0)
-                                    ])
-                                  ])))
-                        ]),
-                  ]))),
+                                                  info.overallPercentage),
+                                              style:
+                                                  TextStyle(fontSize: 11)))
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 8.0),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                        width: size.width / 3.6,
+                                        child: Text('Class Highest %',
+                                            style:
+                                                TextStyle(fontSize: 11))),
+                                    SizedBox(
+                                      width: size.width / 4.6,
+                                      child: CustomPercentageBar(
+                                          barHeight: 4.0,
+                                          barValue:
+                                              HelperFunction.numberValue(
+                                                  info.highestPercentage),
+                                          barWidth: size.width / 4.6),
+                                    ),
+                                    SizedBox(
+                                        width: size.width / 10.0,
+                                        child: Text(
+                                            HelperFunction.numberValue(
+                                                info.highestPercentage),
+                                            style: TextStyle(fontSize: 11)))
+                                  ],
+                                ),
+                                SizedBox(height: 8.0),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                        width: size.width / 3.6,
+                                        child: Text('Class Lowest %',
+                                            style:
+                                                TextStyle(fontSize: 11))),
+                                    SizedBox(
+                                      width: size.width / 4.6,
+                                      child: CustomPercentageBar(
+                                          barHeight: 4.0,
+                                          barValue:
+                                              HelperFunction.numberValue(
+                                                  info.lowestPercentage),
+                                          barWidth: size.width / 4.6),
+                                    ),
+                                    SizedBox(
+                                        width: size.width / 10.0,
+                                        child: Text(
+                                            HelperFunction.numberValue(
+                                                info.lowestPercentage),
+                                            style: TextStyle(fontSize: 11)))
+                                  ],
+                                ),
+                                SizedBox(height: 8.0),
+                                Row(children: <Widget>[
+                                  Container(
+                                      width: size.width / 3.6,
+                                      child: Text('Class Average %',
+                                          style: TextStyle(fontSize: 11))),
+                                  SizedBox(
+                                    width: size.width / 4.6,
+                                    child: CustomPercentageBar(
+                                        barHeight: 4.0,
+                                        barValue:
+                                            HelperFunction.numberValue(
+                                                info.average),
+                                        barWidth: size.width / 4.6),
+                                  ),
+                                  SizedBox(
+                                      width: size.width / 10.0,
+                                      child: Text(
+                                          HelperFunction.numberValue(
+                                              info.average),
+                                          style: TextStyle(fontSize: 11))),
+                                  SizedBox(height: 8.0)
+                                ])
+                              ])))
+                    ]),
+              ])),
           SizedBox(height: 5.0),
           Card(
-            child: Container(
-              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-              child: Column(
-                children: [
-                  Visibility(
-                      visible: info.teacherComment.isEmpty ? false : true,
-                      child: Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: Column(children: <Widget>[
-                            Text(
-                              "Teacher's Remarks: ",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: Text(info.teacherComment,
-                                    textAlign: TextAlign.center))
-                          ]))),
-                  Visibility(
-                      visible: info.term == 1 ? false : true,
-                      child: Padding(
-                          padding: EdgeInsets.only(top: 2.0),
-                          child: Column(children: <Widget>[
-                            Text(
-                              'Promoted To: ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Padding(
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(15.0)),
+            child: Column(
+              children: [
+                Visibility(
+                    visible: info.teacherComment.isEmpty ? false : true,
+                    child: Padding(
+                        padding: EdgeInsets.all(6.0),
+                        child: Column(children: <Widget>[
+                          Text(
+                            "Teacher's Remarks: ",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Text(info.promotedTo),
-                            )
-                          ]))),
-                ],
-              ),
+                              child: Text(info.teacherComment,
+                                  textAlign: TextAlign.center))
+                        ]))),
+                Visibility(
+                    visible: info.term == 1 ? false : true,
+                    child: Padding(
+                        padding: EdgeInsets.only(top: 2.0),
+                        child: Column(children: <Widget>[
+                          Text(
+                            'Promoted To: ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(vertical: 4.0),
+                            child: Text(info.promotedTo),
+                          )
+                        ]))),
+              ],
             ),
           )
         ],

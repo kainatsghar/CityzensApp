@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ChallanPaymentScreen extends StatefulWidget {
@@ -27,14 +28,14 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
             onPageFinished: (String url) =>
                 onProgressChange(loadingPercentage)),
       )
-      ..loadRequest(Uri.parse('https://billing.thecityschool.edu.pk/challan'));
+      ..loadRequest(Uri.parse(AppConstants.paymentGatewayURL));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Challan Payment'),
+      appBar: CustomAppBar(title: 'CHALLAN PAYMENT'),
       body: Column(
         children: [
           if (loadingPercentage < 100)
