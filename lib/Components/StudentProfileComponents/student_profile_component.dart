@@ -25,13 +25,17 @@ class StudentProfileComponent extends StatelessWidget {
                     child: Column(children: <Widget>[
                       Padding(
                           padding: EdgeInsets.only(top: 15.0),
-                          child: Text(profile.first.name,
+                          child: Text(
+                              HelperFunction.noNullStringText(
+                                      profile.first.name)
+                                  .toUpperCase(),
                               style: TextStyle(
                                   color: AppColors.primaryTitleColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16.0))),
                       CustomUserImage(
-                          userId: '${profile.first.studentId}',
+                          userId: HelperFunction.noNullStringText(
+                              '${profile.first.studentId}'),
                           disableUploadImage: false),
                       Padding(
                           padding: EdgeInsets.only(top: 5.0),

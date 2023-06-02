@@ -48,10 +48,10 @@ class OverallResult extends StatelessWidget {
                                   height: size.width / 5.4,
                                   width: size.width / 5.4,
                                   child: CustomSubjectGrade(
-                                      grade: info.overallGrade)),
-                            ),
-                          ],
-                        ),
+                                      grade: info.overallGrade))
+                            )
+                          ]
+                        )
                       ),
                       SizedBox(
                           width: size.width / 1.6,

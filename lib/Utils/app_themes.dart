@@ -9,6 +9,7 @@ class AppThemes {
     scaffoldBackgroundColor: AppColors.whiteColor,
     brightness: Brightness.light,
     primaryColor: AppColors.primaryColor,
+   // fontFamily: AppConstants.textFontFamily,
     drawerTheme: DrawerThemeData(backgroundColor: AppColors.primaryColor),
     appBarTheme: AppBarTheme(
         iconTheme: IconThemeData(color: AppColors.primaryTitleColor)),

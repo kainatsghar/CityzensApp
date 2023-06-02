@@ -1,25 +1,66 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'dart:io';
+import 'dart:math';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class PushNotificationsManager extends StatefulWidget {
-  final Widget child;
+enum AppState { Foreground, Background, Terminated }
 
-  const PushNotificationsManager({@required this.child, Key key})
-      : super(key: key);
+class PushNotificationsManager {
+  PushNotificationsManager._();
 
-  @override
-  _PushNotificationsManagerState createState() =>
-      _PushNotificationsManagerState();
-}
+  factory PushNotificationsManager() => _instance;
 
-class _PushNotificationsManagerState extends State<PushNotificationsManager> {
-  @override
-  void initState() {
-    HelperFunction.initializePushNotification();
-    super.initState();
+  static final PushNotificationsManager _instance =
+      PushNotificationsManager._();
+
+  static Future<void> init() async {
+    await _initializePushNotification();
   }
 
-  @override
-  Widget build(BuildContext context) => widget.child;
+  static Future<void> _showNotification({RemoteMessage message}) async {
+    var android = const AndroidNotificationDetails('id', 'channel ',
+        priority: Priority.high, importance: Importance.max, playSound: true);
+    var iOS = const DarwinNotificationDetails();
+    var notificationDetails = NotificationDetails(android: android, iOS: iOS);
+    await FlutterLocalNotificationsPlugin().show(
+        Random().nextInt(1000),
+        '${message.notification.title}',
+        '${message.notification.body}',
+        notificationDetails);
+  }
+
+  static Future<void> _initializeLocalNotifications() async {
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('@mipmap/ic_notification');
+    var initializationSettingsIOs = const DarwinInitializationSettings();
+    var initSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOs);
+    await FlutterLocalNotificationsPlugin().initialize(initSettings);
+  }
+
+  static Future<void> _initializePushNotification() async {
+    _initializeLocalNotifications();
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    if (Platform.isIOS) {
+      _firebaseMessaging.requestPermission(
+          alert: true, sound: true, badge: true);
+      _firebaseMessaging.getNotificationSettings();
+    } else {
+      _firebaseMessaging.requestPermission(
+          alert: true, sound: true, badge: true);
+    }
+    await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+        alert: true, badge: true, sound: true);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      //  _showNotification(message: message);
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      _showNotification(message: message);
+    });
+  }
+
+  static Future<void> firebaseMessagingBackgroundHandler(
+      RemoteMessage message) async {
+    // _showNotification(message: message);
+  }
 }

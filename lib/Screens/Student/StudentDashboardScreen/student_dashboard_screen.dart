@@ -5,13 +5,16 @@ import 'package:tcs_app/Components/DashboardComponents/navigational_drawer.dart'
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_button.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
 import '../../../Utils/app_colors.dart';
+import '../../../Utils/helper_function.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   final ScreenArguments args;
@@ -28,11 +31,16 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     with WidgetsBindingObserver {
   var localData = Provider.of<LocalDataProvider>(AppNavigation.currentContext,
       listen: false);
+  var attendance = Provider.of<StudentAttendanceProvider>(
+      AppNavigation.currentContext,
+      listen: false);
+  Future attendanceService;
 
   @override
   void initState() {
     if (localData.userData.userType != 'Parent')
       FcmTokenRefreshService.refreshToken();
+    attendanceService = attendance.getAttendancePercentage();
     super.initState();
   }
 
@@ -44,7 +52,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
           appBar: CustomAppBar(
               title: localData.userData.userType == 'Parent'
                   ? '${widget.args.userName}'
-                  : 'CITYZENS'),
+                  : HelperFunction.noNullStringText(
+                      '${localData.userData.info.name}')),
           drawer:
               value.userData.userType == 'Parent' ? null : NavigationalDrawer(),
           body: Padding(
@@ -85,18 +94,48 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                       fontWeight: FontWeight.w600))
                             ],
                           ),
-                          CircularPercentIndicator(
-                              radius: size.width * 0.15,
-                              lineWidth: 10.0,
-                              percent: 0.75,
-                              progressColor: Colors.green,
-                              center: Text("75%",
-                                  style: TextStyle(
-                                      color: AppColors.whiteColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 22.0)),
-                              rotateLinearGradient: true,
-                              circularStrokeCap: CircularStrokeCap.round)
+                          FutureBuilder(
+                              future: attendanceService,
+                              builder: (context, snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: const CustomLoader(
+                                            color: AppColors.whiteColor));
+                                  default:
+                                    if (snapshot.hasData) {
+                                      return Consumer<
+                                              StudentAttendanceProvider>(
+                                          builder: (context, value, _) {
+                                        num data = value.attendancePercentage
+                                            .data.attendancePercentage;
+                                        return CircularPercentIndicator(
+                                            radius: size.width * 0.15,
+                                            lineWidth: 10.0,
+                                            percent: data,
+                                            progressColor: Colors.green,
+                                            center: Text("$data%",
+                                                style: TextStyle(
+                                                    color: AppColors.whiteColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 22.0)),
+                                            rotateLinearGradient: true,
+                                            circularStrokeCap:
+                                                CircularStrokeCap.round);
+                                      });
+                                    } else {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Icon(Icons.error_outline,
+                                            color: AppColors.lightRedColor,
+                                            size: 50),
+                                      );
+                                    }
+                                }
+                              })
                         ])),
                 SizedBox(height: size.height * 0.02),
                 Expanded(

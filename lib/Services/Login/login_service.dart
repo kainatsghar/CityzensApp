@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tcs_app/Network/api_base_helper.dart';
 import 'package:tcs_app/model/Login/login_request.dart';
@@ -8,10 +9,13 @@ class LoginService {
       String username, String password, String userType) async {
     String fcmToken = await FirebaseMessaging.instance.getToken();
     LoginRequest _loginRequest = LoginRequest(
-        username: username, password: password, userType: userType,fcmToken:fcmToken);
+        username: username,
+        password: password,
+        userType: userType,
+        fcmToken: fcmToken,
+        isIOS: Platform.isIOS);
     var response = await ApiBaseHelper.httpPostRequest("Auth",
         body: _loginRequest.toJson());
-    print(_loginRequest.toJson());
     var loginResponse = LoginResponse.fromJson(response);
     return loginResponse;
   }

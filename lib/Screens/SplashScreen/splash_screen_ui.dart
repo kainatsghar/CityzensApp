@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
@@ -25,8 +26,10 @@ class SplashScreenUIState extends State<SplashScreenUI>
         parent: _iconAnimationController, curve: Curves.linear);
     _iconAnimation.addListener(() => this.setState(() {}));
     _iconAnimationController.forward();
-    Future.delayed(Duration(seconds: 3),
-        () => AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute));
+    Future.delayed(Duration(seconds: 3), () {
+      AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
+      PushNotificationsManager.init();
+    });
   }
 
   @override

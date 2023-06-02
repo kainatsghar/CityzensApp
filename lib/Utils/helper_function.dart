@@ -1,14 +1,13 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/imagepicker_bottom_sheet.dart';
+import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,60 +19,14 @@ class HelperFunction {
         Options(title: 'Teacher', value: 3)
       ];
 
-  static Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
-    showNotification(message: message);
-  }
-
-  static Future<void> showNotification(
-      {@required RemoteMessage message}) async {
-    var android = const AndroidNotificationDetails('id', 'channel ',
-        priority: Priority.high, importance: Importance.max, playSound: true);
-    var iOS = const DarwinNotificationDetails();
-    var notificationDetails = NotificationDetails(android: android, iOS: iOS);
-    await FlutterLocalNotificationsPlugin().show(
-        Random().nextInt(1000),
-        '${message.notification.title}',
-        '${message.notification.body}',
-        notificationDetails);
-  }
-
-  static Future<void> initializeLocalNotifications() async {
-    var initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/ic_notification');
-    var initializationSettingsIOs = const DarwinInitializationSettings();
-    var initSettings = InitializationSettings(
-        android: initializationSettingsAndroid, iOS: initializationSettingsIOs);
-    await FlutterLocalNotificationsPlugin().initialize(initSettings);
-  }
-
-  static Future<void> initializePushNotification() async {
-    initializeLocalNotifications();
-    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-    if (Platform.isIOS) {
-      _firebaseMessaging.requestPermission(
-          alert: true, sound: true, badge: true);
-      _firebaseMessaging.getNotificationSettings();
-    } else {
-      _firebaseMessaging.requestPermission(
-          alert: true, sound: true, badge: true);
-    }
-    await _firebaseMessaging.setForegroundNotificationPresentationOptions(
-        alert: true, badge: true, sound: true);
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      showNotification(message: message);
-    });
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      showNotification(message: message);
-    });
-  }
-
   static Future<void> mainInitializer() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onBackgroundMessage(PushNotificationsManager.firebaseMessagingBackgroundHandler);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   }
+
+
 
   static List<Options> attendanceOptions() => [
         Options(

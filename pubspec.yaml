@@ -78,9 +78,23 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Arenski
+    - family: NexaText
       fonts:
-        - asset: fonts/Arenski-Regular.ttf
+        - asset: fonts/NexaText-Regular.ttf
+          weight: 500
+        - asset: fonts/NexaText-Light.ttf
+          weight: 400
+        - asset: fonts/NexaText-Bold.ttf
+          weight: 700
+    - family: Axiforma
+      fonts:
+        - asset: fonts/Axiforma-Regular.ttf
+          weight: 500
+        - asset: fonts/Axiforma-Light.ttf
+          weight: 400
+        - asset: fonts/Axiforma-Bold.ttf
+          weight: 700
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

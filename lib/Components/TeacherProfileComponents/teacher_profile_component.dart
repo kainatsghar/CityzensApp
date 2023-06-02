@@ -26,7 +26,7 @@ class TeacherProfileComponent extends StatelessWidget {
                       padding: EdgeInsets.only(top: 15.0),
                       child: Text(
                           HelperFunction.noNullStringText(
-                              '${value.profileResponse.teacherName}'.toUpperCase()),
+                              '${value.profileResponse.teacherName}').toUpperCase(),
                           style: TextStyle(
                               color: AppColors.primaryTitleColor,
                               fontWeight: FontWeight.bold,

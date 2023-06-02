@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
-import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Screens/AuthWrapper/auth_wrapper.dart';
@@ -44,8 +43,7 @@ class RouteGenerator {
       case AppNavRoutes.loginRoute:
         return routeScreen(child: LoginScreen());
       case AppNavRoutes.authWrapperRoute:
-        return routeScreen(
-            child: PushNotificationsManager(child: AuthWrapper()));
+        return routeScreen(child: AuthWrapper());
       case AppNavRoutes.registrationRoute:
         return routeScreen(child: RegistrationScreen());
       case AppNavRoutes.forgotPinCodeRoute:

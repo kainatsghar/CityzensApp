@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomLoadingWidget extends StatelessWidget {
   const CustomLoadingWidget({Key key}) : super(key: key);
@@ -10,13 +11,7 @@ class CustomLoadingWidget extends StatelessWidget {
       const Opacity(
           opacity: 0.2,
           child: ModalBarrier(dismissible: false, color: Colors.transparent)),
-      Center(
-          child: SpinKitWave(
-              size: 30,
-              itemBuilder: (BuildContext context, int index) {
-                return DecoratedBox(
-                    decoration: BoxDecoration(color: Colors.amber));
-              }))
+      Center(child: SpinKitWave(size: 30, color: AppColors.secondaryColor))
     ]);
   }
 }

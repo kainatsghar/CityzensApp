@@ -14,8 +14,8 @@ class AppConstants {
   static const String noInternetMsg =
       'No Internet Connection, Connect Your Internet & Try Again';
   static const String noRecordFound = 'No Record Found';
-  static const String assetImages = 'assets/images/';
-  static const String textFont = 'Avenir';
+  static const String imagesPath = 'images/';
+  static const String textFontFamily = 'NexaText';
   static const String alumniAppURL = "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
 static const String paymentGatewayURL = 'https://billing.thecityschool.edu.pk/challan';
 
