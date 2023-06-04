@@ -23,8 +23,7 @@ class CustomExpansionTile extends StatelessWidget {
               style: TextStyle(
                   color: AppColors.primaryTitleColor,
                   fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FontStyle.italic)),
+                  fontWeight: FontWeight.w600)),
           children: children.isEmpty
               ? <Widget>[
                   Padding(

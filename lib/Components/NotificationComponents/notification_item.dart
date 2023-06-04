@@ -16,7 +16,7 @@ class NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: CustomExpansionTile(
-        title: '${'$index'.padLeft(2, '0')}  ${notification.notifySubject}',
+        title: '${'$index'.padLeft(2, '0')} - ${notification.notifySubject}',
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),

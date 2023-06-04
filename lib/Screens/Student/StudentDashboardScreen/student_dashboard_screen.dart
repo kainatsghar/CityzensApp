@@ -47,6 +47,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 6;
+    final double itemWidth = size.width / 2;
     return Consumer<LocalDataProvider>(builder: (context, value, _) {
       return Scaffold(
           appBar: CustomAppBar(
@@ -145,7 +147,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       crossAxisCount: 2,
-                      childAspectRatio: 1.65,
+                      childAspectRatio: (itemWidth / itemHeight),
                       children: <Widget>[
                         CustomDashboardButton(
                             title: 'PROFILE',
@@ -161,7 +163,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                             imageName: 'result_icon.png'),
                         CustomDashboardButton(
                             title: 'LIBRARY',
-                            bottomAlign: -38,
+                            bottomAlign: -45,
                             imageHeight: size.height * 0.14,
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.libraryRoute),
@@ -183,14 +185,14 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                             imageName: 'diary_icon.png'),
                         CustomDashboardButton(
                             title: 'FEE CHALLANS',
-                            bottomAlign: -22,
+                            bottomAlign: -25,
                             leftAlign: -12,
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.feeChallansRoute),
                             imageName: 'fee_challan_icon.png'),
                         CustomDashboardButton(
                             title: 'ATTENDANCE',
-                            bottomAlign: -22,
+                            bottomAlign: -25,
                             imageHeight: size.height * 0.13,
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.attendanceRoute),

@@ -24,121 +24,164 @@ class ResultCardInfo extends StatelessWidget {
               padding: const EdgeInsets.only(top: 4.0, bottom: 2.0),
               child: Text('${stdInfo.name}',
                   style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13.0)),
+                      color: AppColors.primaryTitleColor,
+                      fontWeight: FontWeight.bold)),
             ),
             SizedBox(
                 height: size.width * 0.25,
                 width: size.width * 0.25,
                 child: CustomUserImage(userId: '${stdInfo.rollNo}')),
             Padding(
-              padding: const EdgeInsets.only(top: 2.0, bottom: 6.0),
+              padding: const EdgeInsets.only(top: 2.0, bottom: 8.0),
               child: Text('${stdInfo.centerName}',
                   style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13.0)),
+                      color: AppColors.primaryTitleColor,
+                      fontWeight: FontWeight.bold)),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                    width: size.width / 7.5,
-                    child: Text('Region: ',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11))),
+                  width: size.width * 0.43,
+                  child: Column(
+                    children: [
+                      Text('REGION',
+                          style: TextStyle(
+                              color: AppColors.primaryTitleColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12)),
+                      SizedBox(height: 2.0),
+                      Text('${stdInfo.regionName}',
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(color: Colors.black54, fontSize: 12)),
+                    ],
+                  ),
+                ),
                 SizedBox(
-                    width: size.width / 2.5,
-                    child: Text('${stdInfo.regionName}',
-                        style: TextStyle(color: Colors.black54, fontSize: 11))),
+                    height: 30,
+                    child: VerticalDivider(
+                        width: 15.0,
+                        color: AppColors.blackColor,
+                        thickness: 1)),
                 SizedBox(
-                    width: size.width / 7.5,
-                    child: Text('Roll No: ',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11))),
-                SizedBox(
-                    width: size.width / 4.2,
-                    child: Text(
-                      '${stdInfo.rollNo}',
-                      style: TextStyle(color: Colors.black54, fontSize: 11),
-                    ))
+                  width: size.width * 0.43,
+                  child: Column(
+                    children: [
+                      Text('ROLL NUMBER',
+                          style: TextStyle(
+                              color: AppColors.primaryTitleColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12)),
+                      SizedBox(height: 2.0),
+                      Text(
+                        '${stdInfo.rollNo}',
+                        style: TextStyle(color: Colors.black54, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 2.0),
+              padding: const EdgeInsets.only(top: 8.0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: size.width / 7.5,
-                      child: Text(
-                        'Class: ',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11),
-                      ),
-                    ),
                     SizedBox(
-                      width: size.width / 2.5,
-                      child: Text(
-                        '${stdInfo.className}',
-                        style: TextStyle(color: Colors.black54, fontSize: 11),
-                      ),
-                    ),
-                    SizedBox(
-                        width: size.width / 7.5,
-                        child: Text('Section: ',
+                      width: size.width * 0.43,
+                      child: Column(
+                        children: [
+                          Text(
+                            'CLASS',
                             style: TextStyle(
-                                color: Colors.black,
+                                color: AppColors.primaryTitleColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 11))),
-                    SizedBox(
-                        width: size.width / 4.2,
-                        child: Text('${stdInfo.section}',
+                                fontSize: 12),
+                          ),
+                          SizedBox(height: 2.0),
+                          Text(
+                            '${stdInfo.className}',
                             style:
-                                TextStyle(color: Colors.black54, fontSize: 11)))
+                                TextStyle(color: Colors.black54, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                        height: 30,
+                        child: VerticalDivider(
+                            width: 15.0,
+                            color: AppColors.blackColor,
+                            thickness: 1)),
+                    SizedBox(
+                      width: size.width * 0.43,
+                      child: Column(
+                        children: [
+                          Text('SECTION',
+                              style: TextStyle(
+                                  color: AppColors.primaryTitleColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12)),
+                          SizedBox(height: 2.0),
+                          Text('${stdInfo.section}',
+                              style: TextStyle(
+                                  color: Colors.black54, fontSize: 12)),
+                        ],
+                      ),
+                    )
                   ]),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 2.0),
+              padding: const EdgeInsets.only(top: 8.0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: size.width / 7.5,
-                      child: Text(
-                        'Session: ',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11),
-                      ),
-                    ),
                     SizedBox(
-                      width: size.width / 2.5,
-                      child: Text(
-                        '$session',
-                        style: TextStyle(color: Colors.black54, fontSize: 11),
-                      ),
-                    ),
-                    SizedBox(
-                        width: size.width / 7.5,
-                        child: Text('Term: ',
+                      width: size.width * 0.43,
+                      child: Column(
+                        children: [
+                          Text(
+                            'SESSION',
                             style: TextStyle(
-                                color: Colors.black,
+                                color: AppColors.primaryTitleColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 11))),
-                    SizedBox(
-                        width: size.width / 4.2,
-                        child: Text('$term',
+                                fontSize: 12),
+                          ),
+                          SizedBox(height: 2.0),
+                          Text(
+                            '$session',
                             style:
-                                TextStyle(color: Colors.black54, fontSize: 11)))
+                                TextStyle(color: Colors.black54, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                        height: 30,
+                        child: VerticalDivider(
+                            width: 15.0,
+                            color: AppColors.blackColor,
+                            thickness: 1)),
+                    SizedBox(
+                      width: size.width * 0.43,
+                      child: Column(
+                        children: [
+                          Text('TERM',
+                              style: TextStyle(
+                                  color: AppColors.primaryTitleColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12)),
+                          SizedBox(height: 2.0),
+                          Text('$term',
+                              style: TextStyle(
+                                  color: Colors.black54, fontSize: 12)),
+                        ],
+                      ),
+                    )
                   ]),
             ),
           ],

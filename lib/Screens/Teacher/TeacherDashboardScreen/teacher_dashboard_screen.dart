@@ -28,6 +28,8 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 6;
+    final double itemWidth = size.width / 2;
     return Consumer<LocalDataProvider>(builder: (context, value, _) {
       return Scaffold(
           appBar: CustomAppBar(
@@ -47,7 +49,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       crossAxisCount: 2,
-                      childAspectRatio: 1.65,
+                      childAspectRatio: (itemWidth / itemHeight),
                       children: <Widget>[
                         CustomDashboardButton(
                             title: 'PROFILE',
@@ -57,7 +59,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                             imageName: 'profile_icon.png'),
                         CustomDashboardButton(
                             title: 'ATTENDANCE',
-                            bottomAlign: -22,
+                            bottomAlign: -30,
                             imageHeight: size.height * 0.13,
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.teacherSectionRoute),
@@ -71,7 +73,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                             imageName: 'diary_icon.png'),
                         CustomDashboardButton(
                             title: 'MARK\nUNIDENTIFIED',
-                            bottomAlign: -30,
+                            bottomAlign: -38,
                             leftAlign: -15,
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.markUnidentifiedRoute),
