@@ -116,7 +116,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                         return CircularPercentIndicator(
                                             radius: size.width * 0.15,
                                             lineWidth: 10.0,
-                                            percent: data,
+                                            percent: data/100,
                                             progressColor: Colors.green,
                                             center: Text("$data%",
                                                 style: TextStyle(
