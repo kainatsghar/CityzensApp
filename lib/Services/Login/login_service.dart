@@ -13,7 +13,7 @@ class LoginService {
         password: password,
         userType: userType,
         fcmToken: fcmToken,
-        isIOS: Platform.isIOS);
+        isIOSDevice: Platform.isIOS);
     var response = await ApiBaseHelper.httpPostRequest("Auth",
         body: _loginRequest.toJson());
     var loginResponse = LoginResponse.fromJson(response);

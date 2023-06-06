@@ -116,7 +116,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                         return CircularPercentIndicator(
                                             radius: size.width * 0.15,
                                             lineWidth: 10.0,
-                                            percent: data/100,
+                                            percent: data / 100,
                                             progressColor: Colors.green,
                                             center: Text("$data%",
                                                 style: TextStyle(
@@ -184,19 +184,31 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                 AppNavRoutes.studentDiaryRoute),
                             imageName: 'diary_icon.png'),
                         CustomDashboardButton(
-                            title: 'FEE CHALLANS',
-                            bottomAlign: -25,
-                            leftAlign: -12,
-                            onTap: () => AppNavigation.navigateTo(
-                                AppNavRoutes.feeChallansRoute),
-                            imageName: 'fee_challan_icon.png'),
-                        CustomDashboardButton(
                             title: 'ATTENDANCE',
                             bottomAlign: -25,
                             imageHeight: size.height * 0.13,
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.attendanceRoute),
                             imageName: 'attendance_icon.png'),
+                        CustomDashboardButton(
+                            title: 'FEE CHALLANS',
+                            bottomAlign: -25,
+                            leftAlign: -12,
+                            onTap: () => AppNavigation.navigateTo(
+                                AppNavRoutes.feeChallansRoute),
+                            imageName: 'fee_challan_icon.png'),
+                        Visibility(
+                          visible: value.userData.userType == 'Parent'
+                              ? true
+                              : false,
+                          child: CustomDashboardButton(
+                              title: 'CHALLAN\nPAYMENT',
+                              bottomAlign: -25,
+                              leftAlign: -10,
+                              onTap: () => AppNavigation.navigateTo(
+                                  AppNavRoutes.challanPaymentRoute),
+                              imageName: 'challan_payment_icon.png'),
+                        ),
                       ]),
                 ),
               ],

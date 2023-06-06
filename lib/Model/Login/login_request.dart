@@ -3,10 +3,10 @@ class LoginRequest {
   String password;
   String userType;
   String fcmToken;
-  bool isIOS;
+  bool isIOSDevice;
 
   LoginRequest(
-      {this.username, this.password, this.userType, this.fcmToken, this.isIOS});
+      {this.username, this.password, this.userType, this.fcmToken, this.isIOSDevice});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -14,7 +14,7 @@ class LoginRequest {
     data['Password'] = password ?? '';
     data['UserType'] = userType;
     data['FcmToken'] = fcmToken;
-    //data["IsIOS"] = isiOSPhone ?? false;
+    data["IsIOSDevice"] = isIOSDevice??false;
     return data;
   }
 }

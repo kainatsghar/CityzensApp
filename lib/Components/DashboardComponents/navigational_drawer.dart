@@ -77,17 +77,6 @@ class NavigationalDrawer extends StatelessWidget {
                             ],
                           )
                         : SizedBox.shrink(),
-                    value.userData.userType == 'Parent'
-                        ? Column(
-                            children: [
-                              CustomListTile(
-                                  title: 'Challan Payment',
-                                  onTap: () => AppNavigation.navigateTo(
-                                      AppNavRoutes.challanPaymentRoute)),
-                              CustomDivider(),
-                            ],
-                          )
-                        : SizedBox.shrink(),
                     CustomListTile(
                         title: 'Logout', onTap: () => value.logout(context)),
                   ],
