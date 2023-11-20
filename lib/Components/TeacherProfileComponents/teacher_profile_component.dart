@@ -52,7 +52,7 @@ class TeacherProfileComponent extends StatelessWidget {
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
                                 topLeft: Radius.circular(10)),
-                            title: 'ERP NUMBER',
+                            title: 'Employee Number',
                             value: '${value.profileResponse.employeeCode}'),
                       ),
                       SizedBox(

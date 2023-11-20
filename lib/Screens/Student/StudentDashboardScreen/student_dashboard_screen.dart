@@ -191,7 +191,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                 AppNavRoutes.attendanceRoute),
                             imageName: 'attendance_icon.png'),
                         CustomDashboardButton(
-                            title: 'FEE CHALLANS',
+                            title: 'FEE BILL',
                             bottomAlign: -25,
                             leftAlign: -12,
                             onTap: () => AppNavigation.navigateTo(
@@ -202,7 +202,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               ? true
                               : false,
                           child: CustomDashboardButton(
-                              title: 'CHALLAN\nPAYMENT',
+                              title: 'BILL\nPAYMENT',
                               bottomAlign: -25,
                               leftAlign: -10,
                               onTap: () => AppNavigation.navigateTo(

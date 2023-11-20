@@ -85,7 +85,7 @@ class LoginProvider extends ChangeNotifier {
             : '00000000';
     userNameController = new MaskedTextController(mask: controllerMask);
     userNameLabel = v == 'Teacher'
-        ? 'ERP Number'
+        ? 'Employee Number'
         : v == 'Parent'
             ? 'CNIC Number'
             : 'Roll Number';

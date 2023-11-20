@@ -35,7 +35,7 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'CHALLAN PAYMENT'),
+      appBar: CustomAppBar(title: 'CHALLAN BILL'),
       body: Column(
         children: [
           if (loadingPercentage < 100)
