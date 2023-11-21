@@ -58,7 +58,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                                 AppNavRoutes.teacherProfileRoute),
                             imageName: 'profile_icon.png'),
                         CustomDashboardButton(
-                            title: 'ATTENDANCE',
+                            title: 'MARK STUDENT\nATTENDANCE',
                             bottomAlign: -30,
                             imageHeight: size.height * 0.13,
                             onTap: () => AppNavigation.navigateTo(
