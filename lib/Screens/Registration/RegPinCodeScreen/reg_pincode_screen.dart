@@ -78,7 +78,7 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold)),
                       Text(
-                          '\u2022 TCS app will send you a message containing 4-digit PIN code you will use to verify your number.',
+                          '\u2022 TCS app will send you a message containing 6-digit PIN code you will use to verify your number.',
                           style: TextStyle(height: 1.5)),
                       Text(
                           '\u2022 Verification message might not reach you if promotional message are blocked from your service provider.',

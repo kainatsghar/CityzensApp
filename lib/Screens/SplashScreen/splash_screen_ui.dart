@@ -51,7 +51,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Image.asset('images/tcs_logo_45.png',
+                Image.asset('images/tcs_logo_white.png',
                     height: _iconAnimation.value * size.height / 3),
                 SizedBox(height: size.height * 0.02),
                 Text(
