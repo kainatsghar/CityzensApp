@@ -1,9 +1,8 @@
 class AppConstants {
-  static const String apiBaseURL = "http://app.csn.edu.pk:8080/api/";
+  static const String apiBaseURL = "https://app.csn.edu.pk:8090/api/";
   static const String exceptionMessage =
       "Something Went Wrong, Please Try Again Later";
-  static const String markAttendanceMessage =
-      "Please Mark Complete Attendance";
+  static const String markAttendanceMessage = "Please Mark Complete Attendance";
   static const String serverExceptionMessage =
       "Server Not Responding, Please Try Again Later";
   static const String feedExceptionMessage =
@@ -16,14 +15,16 @@ class AppConstants {
   static const String noRecordFound = 'No Record Found';
   static const String imagesPath = 'images/';
   static const String textFontFamily = 'NexaText';
-  static const String alumniAppURL = "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
-static const String paymentGatewayURL = 'https://billing.thecityschool.edu.pk/challan';
+  static const String alumniAppURL =
+      "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
+  static const String paymentGatewayURL =
+      'https://billing.thecityschool.edu.pk/challan';
 
   /// Shared Preferences Keys
   static const String userDataKey = 'userData';
 
-  static const Map<String,String> appHeaders = {
-  'Content-Type': 'application/json; charset=UTF-8',
+  static const Map<String, String> appHeaders = {
+    'Content-Type': 'application/json; charset=UTF-8',
     'Accept': 'application/json'
   };
 }

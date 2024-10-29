@@ -4,11 +4,11 @@ import 'package:tcs_app/model/AcademicTerm/academic_term_response.dart';
 
 class AcademicTermService {
   static Future<AcademicTermResponse> academicTermRequest(
-      {String userName, String token}) async {
-    UserDataRequest _request =
-    UserDataRequest(userName: userName, tokenId: token);
+      {required String userName, required String token}) async {
+    UserDataRequest request =
+        UserDataRequest(userName: userName, tokenId: token);
     var response =
-    await ApiBaseHelper.httpPostRequest("DropDown", body: _request.toJson());
+        await ApiBaseHelper.httpPostRequest("DropDown", body: request.toJson());
     return AcademicTermResponse.fromJson(response);
   }
 }

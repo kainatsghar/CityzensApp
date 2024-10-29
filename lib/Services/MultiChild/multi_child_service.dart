@@ -4,12 +4,11 @@ import 'package:tcs_app/model/UserData/user_data_request.dart';
 
 class MultiChildService {
   static Future<MultiChildResponse> multiChildRequest(
-      {String userName, String token, }) async {
-    UserDataRequest _request = UserDataRequest(
-        userName: userName,
-        tokenId: token);
+      {required String userName, required String token}) async {
+    UserDataRequest request =
+        UserDataRequest(userName: userName, tokenId: token);
     var response = await ApiBaseHelper.httpPostRequest("ChildrenList",
-        body: _request.toJson());
+        body: request.toJson());
     return MultiChildResponse.fromJson(response);
   }
 }

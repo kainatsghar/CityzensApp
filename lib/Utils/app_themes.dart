@@ -10,11 +10,11 @@ class AppThemes {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     brightness: Brightness.light,
     primaryColor: AppColors.primaryColor,
-   // fontFamily: AppConstants.textFontFamily,
-    drawerTheme: DrawerThemeData(backgroundColor: AppColors.primaryColor),
-    appBarTheme: AppBarTheme(
+    // fontFamily: AppConstants.textFontFamily,
+    drawerTheme: const DrawerThemeData(backgroundColor: AppColors.primaryColor),
+    appBarTheme: const AppBarTheme(
         iconTheme: IconThemeData(color: AppColors.primaryTitleColor)),
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
         primary: AppColors.primaryColor, secondary: AppColors.primaryColor),
   );
 }

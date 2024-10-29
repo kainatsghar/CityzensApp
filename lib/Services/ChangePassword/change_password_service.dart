@@ -4,17 +4,16 @@ import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 
 class ChangePasswordService {
   static Future<ResponseMessage> changePasswordRequest(
-      {String userName,
-      String oldPassword,
-      String newPassword,
-      String userType}) async {
-    ChangePasswordRequest _request = ChangePasswordRequest(
+      {required String userName,
+      required String oldPassword,
+      // String newPassword,
+      required String userType}) async {
+    ChangePasswordRequest request = ChangePasswordRequest(
         username: userName,
         oldPassword: oldPassword,
-        newPassword: newPassword,
+        // newPassword: newPassword,
         userType: userType);
-    var response = await ApiBaseHelper.httpPostRequest("ChangePassword",
-        body: _request.toJson());
+    var response = await ApiBaseHelper.httpPostRequest("ChangePassword", body: request.toJson());
     return ResponseMessage.fromJson(response);
   }
 }

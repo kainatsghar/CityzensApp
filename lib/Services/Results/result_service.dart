@@ -3,14 +3,17 @@ import 'package:tcs_app/model/Results/results_request.dart';
 
 class ResultService {
   static Future<dynamic> resultsRequest(
-      {String userName, String token, int termId, int academicYearId}) async {
-    ResultsRequest _request = ResultsRequest(
+      {required String userName,
+      required String token,
+      required int termId,
+      required int academicYearId}) async {
+    ResultsRequest request = ResultsRequest(
         userName: userName,
         tokenId: token,
         termId: termId,
         academicYearId: academicYearId);
-    var response =
-        await ApiBaseHelper.httpPostRequest("Results", body: _request.toJson());
+    var response = await ApiBaseHelper.httpPostRequest("PDFResults",
+        body: request.toJson());
     return response;
   }
 }
