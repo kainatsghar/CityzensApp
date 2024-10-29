@@ -9,12 +9,14 @@ import 'package:tcs_app/Utils/helper_function.dart';
 
 class CustomUserImage extends StatelessWidget {
   final bool disableUploadImage;
-  final double imageSize;
+  final double? imageSize;
   final String userId;
 
   const CustomUserImage(
-      {Key key, this.disableUploadImage = true, this.imageSize, this.userId})
-      : super(key: key);
+      {super.key,
+      this.disableUploadImage = true,
+      this.imageSize,
+      required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class CustomUserImage extends StatelessWidget {
     return Stack(
       children: [
         ClipOval(
-          child: Container(
+          child: SizedBox(
               height: imageSize ?? size.width * 0.32,
               width: imageSize ?? size.width * 0.32,
               child: Consumer<LocalDataProvider>(
@@ -37,7 +39,7 @@ class CustomUserImage extends StatelessWidget {
                           default:
                             if (snapshot.hasData) {
                               return snapshot.data != null
-                                  ? Image.file(File(snapshot.data),
+                                  ? Image.file(File('${snapshot.data}'),
                                       fit: BoxFit.cover)
                                   : Image.asset(
                                       'images/profile_avatar_yellow.png',
@@ -51,7 +53,7 @@ class CustomUserImage extends StatelessWidget {
                       }))),
         ),
         FractionalTranslation(
-            translation: Offset(2.6, 2.6),
+            translation: const Offset(2.6, 2.6),
             child: Visibility(
               visible: disableUploadImage ? false : true,
               child: ClipOval(
@@ -61,7 +63,7 @@ class CustomUserImage extends StatelessWidget {
                   color: AppColors.primaryColor,
                   child: GestureDetector(
                     onTap: () => HelperFunction.imagePickerBottomSheet(),
-                    child: Icon(Icons.camera_alt,
+                    child: const Icon(Icons.camera_alt,
                         color: AppColors.whiteColor, size: 20.0),
                   ),
                 ),

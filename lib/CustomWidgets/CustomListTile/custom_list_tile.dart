@@ -5,14 +5,14 @@ class CustomListTile extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const CustomListTile({Key key, this.title, this.onTap}) : super(key: key);
+  const CustomListTile({super.key, required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text('$title',
+        title: Text(title,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
                 color: AppColors.whiteColor,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600)),

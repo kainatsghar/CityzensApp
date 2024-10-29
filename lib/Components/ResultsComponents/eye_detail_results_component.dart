@@ -7,18 +7,20 @@ import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 
 class EyeDetailResultsComponent extends StatelessWidget {
+  const EyeDetailResultsComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Consumer<ResultsProvider>(builder: (context, value, _) {
         return value.eyeResult.isEmpty
-            ? ShowCustomMessage(message: AppConstants.noRecordFound)
+            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
             : ListView.builder(
                 itemCount: value.eyeResult.length + 1,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return ResultCardInfo(
-                        stdInfo: value.resultsResponse.info,
+                        stdInfo: value.resultsResponse.info!,
                         term: value.termController.text,
                         session: value.academicYearController.text);
                   } else {

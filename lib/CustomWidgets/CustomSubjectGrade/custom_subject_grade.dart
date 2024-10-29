@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomSubjectGrade extends StatelessWidget {
   final String grade;
 
-  const CustomSubjectGrade({Key key, this.grade}) : super(key: key);
+  const CustomSubjectGrade({super.key, required this.grade});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CustomSubjectGrade extends StatelessWidget {
                           ? 'images/d_grade.png'
                           : subjectGrade == 'e'
                               ? 'images/e_grade.png'
-                              : 'images/u_grade.png'),
+                              : 'images/no_grade.png'),
     );
   }
 }

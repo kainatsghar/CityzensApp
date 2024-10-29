@@ -6,7 +6,7 @@ import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 class GuardianInfoForm extends StatelessWidget {
-  const GuardianInfoForm({Key key}) : super(key: key);
+  const GuardianInfoForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class GuardianInfoForm extends StatelessWidget {
                       validator: HelperFunction.validator,
                       inputAction: TextInputAction.next,
                       textCapitalization: TextCapitalization.words)),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.fatherCNICController,
@@ -30,7 +30,7 @@ class GuardianInfoForm extends StatelessWidget {
                   validator: HelperFunction.validator,
                   inputAction: TextInputAction.next,
                   textCapitalization: TextCapitalization.words),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.fatherOccupationController,
@@ -38,7 +38,7 @@ class GuardianInfoForm extends StatelessWidget {
                   validator: HelperFunction.validator,
                   inputAction: TextInputAction.next,
                   textCapitalization: TextCapitalization.words),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.mobileNumberController,
@@ -49,7 +49,7 @@ class GuardianInfoForm extends StatelessWidget {
                     FilteringTextInputFormatter.allow(RegExp('[0-9]'))
                   ],
                   inputType: TextInputType.number),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.emailAddressController,

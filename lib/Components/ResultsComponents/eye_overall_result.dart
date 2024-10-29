@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
 
 class EyeOverallResult extends StatelessWidget {
+  const EyeOverallResult({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ResultsProvider>(builder: (context, value, _) {
@@ -10,22 +12,22 @@ class EyeOverallResult extends StatelessWidget {
           child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(5.0),
             child: ListTile(
-              title: Text(
+              title: const Text(
                 "Teacher's Comments:",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(value.resultsResponse.info.teacherComment),
+              subtitle: Text(value.resultsResponse.info!.teacherComment!),
             ),
           ),
-          Padding(
+          const Padding(
               padding: EdgeInsets.all(5.0),
               child: Text(
                 'PERFORMANCE INDICATORS',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               )),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(2.0),
             child: ListTile(
               title: Text(
@@ -35,7 +37,7 @@ class EyeOverallResult extends StatelessWidget {
               subtitle: Text('Working above the expected level'),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(2.0),
             child: ListTile(
               title: Text(
@@ -45,7 +47,7 @@ class EyeOverallResult extends StatelessWidget {
               subtitle: Text('Working at the expected level'),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(2.0),
             child: ListTile(
               title: Text(
@@ -57,7 +59,7 @@ class EyeOverallResult extends StatelessWidget {
           ),
           Visibility(
               visible: value.selectAcademicYear >= 11 ? false : true,
-              child: Padding(
+              child: const Padding(
                   padding: EdgeInsets.all(2.0),
                   child: ListTile(
                       title: Text(

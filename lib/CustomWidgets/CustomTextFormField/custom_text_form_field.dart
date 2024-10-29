@@ -3,28 +3,28 @@ import 'package:flutter/services.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final IconData prefixIcon;
-  final Widget suffixWidget;
+  final IconData? prefixIcon;
+  final Widget? suffixWidget;
   final String hintText;
   final bool isEnable, obscureText;
-  final TextInputType inputType;
-  final TextEditingController controller;
-  final FocusNode node;
-  final ValueChanged<String> onChange;
-  final TextInputAction inputAction;
+  final TextInputType? inputType;
+  final TextEditingController? controller;
+  final FocusNode? node;
+  final ValueChanged<String>? onChange;
+  final TextInputAction? inputAction;
   final bool readOnly;
-  final Function() onTap;
+  final Function()? onTap;
   final int maxLines;
-  final FormFieldValidator<String> validator;
+  final FormFieldValidator<String>? validator;
 
   final AutovalidateMode autoValidateMode;
-  final String labelText;
+  final String? labelText;
   final List<TextInputFormatter> inputFormatter;
   final bool isDense;
-  final TextCapitalization textCapitalization;
+  final TextCapitalization? textCapitalization;
 
   const CustomTextFormField(
-      {Key key,
+      {super.key,
       this.hintText = "",
       this.obscureText = false,
       this.isEnable = true,
@@ -43,8 +43,7 @@ class CustomTextFormField extends StatelessWidget {
       this.labelText,
       this.isDense = false,
       this.inputFormatter = const [],
-      this.textCapitalization})
-      : super(key: key);
+      this.textCapitalization});
 
   @override
   Widget build(BuildContext context) {
@@ -66,21 +65,21 @@ class CustomTextFormField extends StatelessWidget {
             focusColor: AppColors.whiteColor,
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide(color: AppColors.whiteColor)),
+                borderSide: const BorderSide(color: AppColors.whiteColor)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide(color: AppColors.whiteColor)),
+                borderSide: const BorderSide(color: AppColors.whiteColor)),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide(color: AppColors.whiteColor)),
+                borderSide: const BorderSide(color: AppColors.whiteColor)),
             isDense: isDense,
             enabled: isEnable,
-            contentPadding: EdgeInsets.only(left: 10),
+            contentPadding: const EdgeInsets.only(left: 10),
             errorMaxLines: 5,
             suffixIcon: suffixWidget == null
                 ? null
                 : Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: AppColors.primaryColor,
                         borderRadius: BorderRadius.only(
                             topRight: Radius.circular(8.0),
@@ -88,8 +87,8 @@ class CustomTextFormField extends StatelessWidget {
                     child: suffixWidget),
             prefixIcon: prefixIcon != null
                 ? Container(
-                    margin: EdgeInsets.only(right: 3.0),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.only(right: 3.0),
+                    decoration: const BoxDecoration(
                         color: AppColors.primaryColor,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(8.0),
@@ -97,9 +96,9 @@ class CustomTextFormField extends StatelessWidget {
                     child: Icon(prefixIcon, color: AppColors.whiteColor))
                 : null,
             hintText: hintText,
-            labelStyle: TextStyle(fontSize: 14.0),
-            hintStyle:
-                TextStyle(fontSize: 14.0) /*,
+            labelStyle: const TextStyle(fontSize: 14.0),
+            hintStyle: const TextStyle(
+                fontSize: 14.0) /*,
             labelText: labelText*/
             ),
         enabled: isEnable,

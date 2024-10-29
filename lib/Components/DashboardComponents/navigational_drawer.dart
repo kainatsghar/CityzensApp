@@ -11,6 +11,8 @@ import 'package:tcs_app/Utils/helper_function.dart';
 import '../../CustomWidgets/CustomDivider/custom_divider.dart';
 
 class NavigationalDrawer extends StatelessWidget {
+  const NavigationalDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,37 +23,40 @@ class NavigationalDrawer extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: size.height * 0.1),
                     CustomUserImage(
-                        userId: value.userData.userName, imageSize: 110),
+                        userId: value.userData!.userName!, imageSize: 110),
                     SizedBox(height: size.height * 0.01),
                     Text(
-                        value.userData.userType == 'Student'
+                        value.userData!.userType == 'Student'
                             ? 'Roll No: ${value.studentId}'
-                            : value.userData.userType == 'Parent'
-                                ? 'CNIC No: ${value.userData.userName}'
-                                : 'ERP No: ${value.userData.userName}',
-                        style: TextStyle(
+                            : value.userData!.userType == 'Parent'
+                                ? 'CNIC No: ${value.userData!.userName}'
+                                : 'ERP No: ${value.userData!.userName}',
+                        style: const TextStyle(
                             fontSize: 15.0,
                             color: AppColors.whiteColor,
                             fontWeight: FontWeight.w600)),
                     SizedBox(height: size.height * 0.01),
-                    value.userData.userType == 'Student'
+                    value.userData!.userType == 'Student'
                         ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 3.0),
-                          child: Text(
-                              '${HelperFunction.noNullStringText('${value.userData.info.name}')}',
-                              style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: AppColors.whiteColor,
-                                  fontWeight: FontWeight.w600)),
-                        )
-                        : value.userData.userType == 'Teacher'
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 3.0),
+                            child: Text(
+                                HelperFunction.noNullStringText(
+                                    '${value.userData!.info!.name}'),
+                                style: const TextStyle(
+                                    fontSize: 15.0,
+                                    color: AppColors.whiteColor,
+                                    fontWeight: FontWeight.w600)),
+                          )
+                        : value.userData!.userType == 'Teacher'
                             ? Text(
-                                '${HelperFunction.noNullStringText('${value.userData.name}')}',
-                                style: TextStyle(
+                                HelperFunction.noNullStringText(
+                                    '${value.userData!.name}'),
+                                style: const TextStyle(
                                     fontSize: 16.0,
                                     color: AppColors.whiteColor,
                                     fontWeight: FontWeight.w600))
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                     SizedBox(height: size.height * 0.01),
                     CustomDivider(
                         horizontalPadding: size.width * 0.05,
@@ -60,23 +65,23 @@ class NavigationalDrawer extends StatelessWidget {
                         title: 'About Us',
                         onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.aboutUsRoute)),
-                    CustomDivider(),
+                    const CustomDivider(),
                     CustomListTile(
                         title: 'App Feedback',
                         onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.appFeedbackRoute)),
-                    CustomDivider(),
-                    value.userData.userType != 'Teacher'
+                    const CustomDivider(),
+                    value.userData!.userType != 'Teacher'
                         ? Column(
                             children: [
                               CustomListTile(
                                   title: 'Change Password',
                                   onTap: () => AppNavigation.navigateTo(
                                       AppNavRoutes.changePasswordRoute)),
-                              CustomDivider()
+                              const CustomDivider()
                             ],
                           )
-                        : SizedBox.shrink(),
+                        : const SizedBox.shrink(),
                     CustomListTile(
                         title: 'Logout', onTap: () => value.logout(context)),
                   ],

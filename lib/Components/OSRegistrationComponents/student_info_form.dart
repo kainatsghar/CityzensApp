@@ -6,7 +6,7 @@ import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 class StudentInfoForm extends StatelessWidget {
-  const StudentInfoForm({Key key}) : super(key: key);
+  const StudentInfoForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class StudentInfoForm extends StatelessWidget {
                 textCapitalization: TextCapitalization.words,
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             CustomTextFormField(
               isDense: true,
               controller: value.lastNameController,
@@ -41,7 +41,7 @@ class StudentInfoForm extends StatelessWidget {
               inputAction: TextInputAction.next,
               textCapitalization: TextCapitalization.words,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             CustomTextFormField(
                 isDense: true,
                 controller: value.genderController,
@@ -50,8 +50,8 @@ class StudentInfoForm extends StatelessWidget {
                 validator: HelperFunction.validator,
                 onTap: () => value.genderBottomSheet(),
                 suffixWidget:
-                    ImageIcon(AssetImage('images/dropdown_icon.png'))),
-            SizedBox(height: 12),
+                    const ImageIcon(AssetImage('images/dropdown_icon.png'))),
+            const SizedBox(height: 12),
             CustomTextFormField(
                 controller: value.dobController,
                 hintText: 'Date of Birth',
@@ -60,8 +60,8 @@ class StudentInfoForm extends StatelessWidget {
                 onTap: () => HelperFunction.openDatePicker(
                     filterDate: value.dobController),
                 validator: HelperFunction.validator,
-                suffixWidget: Icon(Icons.calendar_month, size: 25)),
-            SizedBox(height: 12),
+                suffixWidget: const Icon(Icons.calendar_month, size: 25)),
+            const SizedBox(height: 12),
             CustomTextFormField(
                 controller: value.nationalityController,
                 hintText: 'Nationality',
@@ -70,7 +70,7 @@ class StudentInfoForm extends StatelessWidget {
                 onTap: () => value.nationalityBottomSheet(),
                 validator: HelperFunction.validator,
                 suffixWidget:
-                    ImageIcon(AssetImage('images/dropdown_icon.png'))),
+                    const ImageIcon(AssetImage('images/dropdown_icon.png'))),
           ]));
     });
   }

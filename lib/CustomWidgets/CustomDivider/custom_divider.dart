@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import '../../Utils/app_colors.dart';
 
 class CustomDivider extends StatelessWidget {
-  final double horizontalPadding;
-  final Color color;
+  final double? horizontalPadding;
+  final Color? color;
 
-  const CustomDivider({Key key, this.horizontalPadding, this.color})
-      : super(key: key);
+  const CustomDivider({super.key, this.horizontalPadding, this.color});
 
   @override
   Widget build(BuildContext context) {

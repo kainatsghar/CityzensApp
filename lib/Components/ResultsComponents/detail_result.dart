@@ -10,17 +10,17 @@ import '../../CustomWidgets/CustomSubjectGrade/custom_subject_grade.dart';
 class DetailResult extends StatelessWidget {
   final int index;
 
-  const DetailResult({Key key, this.index}) : super(key: key);
+  const DetailResult({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Consumer<ResultsProvider>(builder: (context, value, _) {
-      var detail = value.resultsResponse.listDetail[index];
+      var detail = value.resultsResponse.listDetail![index];
       var info = value.resultsResponse.info;
       return Card(
           shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.grey),
+              side: const BorderSide(color: Colors.grey),
               borderRadius: BorderRadius.circular(15.0)),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,24 +28,24 @@ class DetailResult extends StatelessWidget {
               children: <Widget>[
                 Container(
                     width: size.width / 3.0,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15.0),
                             bottomLeft: Radius.circular(15.0)),
                         color: AppColors.secondaryColor),
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
-                      Text(detail.subject,
-                          style: TextStyle(
+                      Text(detail.subject!,
+                          style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            RotatedBox(
+                            const RotatedBox(
                               quarterTurns: -1,
                               child: Text('GRADE',
                                   style: TextStyle(
@@ -53,11 +53,12 @@ class DetailResult extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16)),
                             ),
-                            SizedBox(width: 3.0),
-                            Container(
+                            const SizedBox(width: 3.0),
+                            SizedBox(
                                 height: size.width / 5.4,
                                 width: size.width / 5.4,
-                                child: CustomSubjectGrade(grade: detail.grade)),
+                                child:
+                                    CustomSubjectGrade(grade: detail.grade!)),
                           ],
                         ),
                       )
@@ -65,14 +66,14 @@ class DetailResult extends StatelessWidget {
                 SizedBox(
                     width: size.width / 1.75,
                     child: Column(children: <Widget>[
-                      SizedBox(height: 20.0),
-                      info.term == 1
-                          ? SizedBox.shrink()
+                      const SizedBox(height: 20.0),
+                      info!.term == 1
+                          ? const SizedBox.shrink()
                           : Row(children: <Widget>[
                               Container(
-                                padding: EdgeInsets.only(left: 4.0),
+                                padding: const EdgeInsets.only(left: 4.0),
                                 width: size.width / 4.7,
-                                child: Text('Mid Year',
+                                child: const Text('Mid Year',
                                     style: TextStyle(fontSize: 11)),
                               ),
                               SizedBox(
@@ -88,14 +89,14 @@ class DetailResult extends StatelessWidget {
                                   child: Text(
                                       HelperFunction.numberValue(
                                           detail.midYear),
-                                      style: TextStyle(fontSize: 11)))
+                                      style: const TextStyle(fontSize: 11)))
                             ]),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                       Row(children: <Widget>[
                         Container(
-                          padding: EdgeInsets.only(left: 4.0),
+                          padding: const EdgeInsets.only(left: 4.0),
                           width: size.width / 4.7,
-                          child: Text('Coursework',
+                          child: const Text('Coursework',
                               style: TextStyle(fontSize: 11)),
                         ),
                         SizedBox(
@@ -110,14 +111,15 @@ class DetailResult extends StatelessWidget {
                             width: size.width / 10.0,
                             child: Text(
                                 HelperFunction.numberValue(detail.courseWork),
-                                style: TextStyle(fontSize: 11)))
+                                style: const TextStyle(fontSize: 11)))
                       ]),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                       Row(children: <Widget>[
                         Container(
-                          padding: EdgeInsets.only(left: 4.0),
+                          padding: const EdgeInsets.only(left: 4.0),
                           width: size.width / 4.7,
-                          child: Text('Exam', style: TextStyle(fontSize: 11)),
+                          child: const Text('Exam',
+                              style: TextStyle(fontSize: 11)),
                         ),
                         SizedBox(
                           width: size.width / 4.6,
@@ -131,18 +133,18 @@ class DetailResult extends StatelessWidget {
                             width: size.width / 10.0,
                             child: Text(
                                 HelperFunction.numberValue(detail.theoryExam),
-                                style: TextStyle(fontSize: 11)))
+                                style: const TextStyle(fontSize: 11)))
                       ]),
                       Visibility(
                           visible:
                               value.selectAcademicYear >= 11 ? false : true,
                           child: Padding(
-                              padding: EdgeInsets.only(top: 10.0),
+                              padding: const EdgeInsets.only(top: 10.0),
                               child: Row(children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.only(left: 4.0),
+                                  padding: const EdgeInsets.only(left: 4.0),
                                   width: size.width / 4.7,
-                                  child: Text('Average',
+                                  child: const Text('Average',
                                       style: TextStyle(fontSize: 11)),
                                 ),
                                 SizedBox(
@@ -158,9 +160,9 @@ class DetailResult extends StatelessWidget {
                                     child: Text(
                                         HelperFunction.numberValue(
                                             detail.marks),
-                                        style: TextStyle(fontSize: 11)))
+                                        style: const TextStyle(fontSize: 11)))
                               ]))),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                     ]))
               ]));
     });

@@ -9,6 +9,8 @@ import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../Utils/app_colors.dart';
 
 class TeacherSectionComponent extends StatelessWidget {
+  const TeacherSectionComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -18,10 +20,11 @@ class TeacherSectionComponent extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              CustomLogoCover(),
+              const CustomLogoCover(),
               SizedBox(height: size.height * 0.03),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
                 decoration: BoxDecoration(
                     color: AppColors.secondaryColor,
                     borderRadius: BorderRadius.circular(20.0)),
@@ -42,7 +45,7 @@ class TeacherSectionComponent extends StatelessWidget {
                           onTap: () => value.sectionBottomSheet(),
                           readOnly: true,
                           validator: HelperFunction.validator,
-                          suffixWidget: ImageIcon(
+                          suffixWidget: const ImageIcon(
                               AssetImage('images/dropdown_icon.png'),
                               color: AppColors.whiteColor)),
                       Visibility(
@@ -56,7 +59,7 @@ class TeacherSectionComponent extends StatelessWidget {
                                 onTap: () => value.subjectBottomSheet(),
                                 readOnly: true,
                                 validator: HelperFunction.validator,
-                                suffixWidget: ImageIcon(
+                                suffixWidget: const ImageIcon(
                                     AssetImage('images/dropdown_icon.png'),
                                     color: AppColors.whiteColor)),
                           ],

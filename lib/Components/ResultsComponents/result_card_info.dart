@@ -8,22 +8,25 @@ class ResultCardInfo extends StatelessWidget {
   final String session;
   final String term;
 
-  const ResultCardInfo({Key key, this.stdInfo, this.term, this.session})
-      : super(key: key);
+  const ResultCardInfo(
+      {super.key,
+      required this.stdInfo,
+      required this.term,
+      required this.session});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Card(
       child: Container(
-        padding: EdgeInsets.all(5.0),
-        margin: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
+        margin: const EdgeInsets.all(5.0),
         child: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 4.0, bottom: 2.0),
               child: Text('${stdInfo.name}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: AppColors.primaryTitleColor,
                       fontWeight: FontWeight.bold)),
             ),
@@ -34,7 +37,7 @@ class ResultCardInfo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2.0, bottom: 8.0),
               child: Text('${stdInfo.centerName}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: AppColors.primaryTitleColor,
                       fontWeight: FontWeight.bold)),
             ),
@@ -46,20 +49,20 @@ class ResultCardInfo extends StatelessWidget {
                   width: size.width * 0.43,
                   child: Column(
                     children: [
-                      Text('REGION',
+                      const Text('REGION',
                           style: TextStyle(
                               color: AppColors.primaryTitleColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 12)),
-                      SizedBox(height: 2.0),
+                      const SizedBox(height: 2.0),
                       Text('${stdInfo.regionName}',
                           textAlign: TextAlign.center,
-                          style:
-                              TextStyle(color: Colors.black54, fontSize: 12)),
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 12)),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                     height: 30,
                     child: VerticalDivider(
                         width: 15.0,
@@ -69,15 +72,16 @@ class ResultCardInfo extends StatelessWidget {
                   width: size.width * 0.43,
                   child: Column(
                     children: [
-                      Text('ROLL NUMBER',
+                      const Text('ROLL NUMBER',
                           style: TextStyle(
                               color: AppColors.primaryTitleColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 12)),
-                      SizedBox(height: 2.0),
+                      const SizedBox(height: 2.0),
                       Text(
                         '${stdInfo.rollNo}',
-                        style: TextStyle(color: Colors.black54, fontSize: 12),
+                        style: const TextStyle(
+                            color: Colors.black54, fontSize: 12),
                       ),
                     ],
                   ),
@@ -94,23 +98,23 @@ class ResultCardInfo extends StatelessWidget {
                       width: size.width * 0.43,
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'CLASS',
                             style: TextStyle(
                                 color: AppColors.primaryTitleColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12),
                           ),
-                          SizedBox(height: 2.0),
+                          const SizedBox(height: 2.0),
                           Text(
                             '${stdInfo.className}',
-                            style:
-                                TextStyle(color: Colors.black54, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.black54, fontSize: 12),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                         height: 30,
                         child: VerticalDivider(
                             width: 15.0,
@@ -120,14 +124,14 @@ class ResultCardInfo extends StatelessWidget {
                       width: size.width * 0.43,
                       child: Column(
                         children: [
-                          Text('SECTION',
+                          const Text('SECTION',
                               style: TextStyle(
                                   color: AppColors.primaryTitleColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12)),
-                          SizedBox(height: 2.0),
+                          const SizedBox(height: 2.0),
                           Text('${stdInfo.section}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.black54, fontSize: 12)),
                         ],
                       ),
@@ -144,23 +148,23 @@ class ResultCardInfo extends StatelessWidget {
                       width: size.width * 0.43,
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'SESSION',
                             style: TextStyle(
                                 color: AppColors.primaryTitleColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12),
                           ),
-                          SizedBox(height: 2.0),
+                          const SizedBox(height: 2.0),
                           Text(
-                            '$session',
-                            style:
-                                TextStyle(color: Colors.black54, fontSize: 12),
+                            session,
+                            style: const TextStyle(
+                                color: Colors.black54, fontSize: 12),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                         height: 30,
                         child: VerticalDivider(
                             width: 15.0,
@@ -170,14 +174,14 @@ class ResultCardInfo extends StatelessWidget {
                       width: size.width * 0.43,
                       child: Column(
                         children: [
-                          Text('TERM',
+                          const Text('TERM',
                               style: TextStyle(
                                   color: AppColors.primaryTitleColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12)),
-                          SizedBox(height: 2.0),
-                          Text('$term',
-                              style: TextStyle(
+                          const SizedBox(height: 2.0),
+                          Text(term,
+                              style: const TextStyle(
                                   color: Colors.black54, fontSize: 12)),
                         ],
                       ),

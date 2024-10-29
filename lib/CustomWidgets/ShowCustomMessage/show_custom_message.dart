@@ -4,8 +4,8 @@ class ShowCustomMessage extends StatelessWidget {
   final String message;
   final bool showMsg;
 
-  const ShowCustomMessage({Key key, this.message, this.showMsg = false})
-      : super(key: key);
+  const ShowCustomMessage(
+      {super.key, required this.message, this.showMsg = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ShowCustomMessage extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(message,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.w600))),
             )
           ]),

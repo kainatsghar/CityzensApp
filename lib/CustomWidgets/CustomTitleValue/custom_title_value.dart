@@ -7,8 +7,10 @@ class CustomTitleValue extends StatelessWidget {
   final bool showDivider;
 
   const CustomTitleValue(
-      {Key key, this.value, this.title, this.showDivider = true})
-      : super(key: key);
+      {super.key,
+      required this.value,
+      required this.title,
+      this.showDivider = true});
 
   @override
   Widget build(BuildContext context) {
@@ -19,24 +21,26 @@ class CustomTitleValue extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: Row(
             children: <Widget>[
-              Container(
+              SizedBox(
                 width: size.width / 3.4,
                 child: Text(
                   '$title: ',
-                  style: TextStyle(
-                      color: AppColors.primaryTitleColor, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: AppColors.primaryTitleColor,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Expanded(
                   child: Text(value,
-                      style: TextStyle(color: Colors.black, fontSize: 13)))
+                      style:
+                          const TextStyle(color: Colors.black, fontSize: 13)))
             ],
           ),
         ),
         Visibility(
           visible: showDivider,
-          child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 2.0),
               child: Divider(height: 0.0, color: Colors.black)),
         )
       ],

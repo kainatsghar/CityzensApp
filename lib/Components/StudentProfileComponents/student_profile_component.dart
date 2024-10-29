@@ -9,27 +9,30 @@ import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 class StudentProfileComponent extends StatelessWidget {
+  const StudentProfileComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Consumer<StudentProfileProvider>(builder: (context, value, _) {
-        var profile = value.profileResponse.profile;
-        return profile.isEmpty || profile == null
-            ? ShowCustomMessage(message: AppConstants.noRecordFound)
+        var profile = value.profileResponse!.profile;
+        // return profile.isEmpty || profile == null
+        return profile!.isEmpty
+            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
             : SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: size.height * 0.03, horizontal: 12.0),
                     child: Column(children: <Widget>[
                       Padding(
-                          padding: EdgeInsets.only(top: 15.0),
+                          padding: const EdgeInsets.only(top: 15.0),
                           child: Text(
                               HelperFunction.noNullStringText(
                                       profile.first.name)
                                   .toUpperCase(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: AppColors.primaryTitleColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16.0))),
@@ -38,26 +41,26 @@ class StudentProfileComponent extends StatelessWidget {
                               '${profile.first.studentId}'),
                           disableUploadImage: false),
                       Padding(
-                          padding: EdgeInsets.only(top: 5.0),
+                          padding: const EdgeInsets.only(top: 5.0),
                           child: CustomProfileItem(
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(10),
                                   topLeft: Radius.circular(10)),
                               title: 'CAMPUS NAME',
                               value: '${profile.first.center}')),
-                      SizedBox(height: 5.0),
+                      const SizedBox(height: 5.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Expanded(
                             child: CustomProfileItem(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(10),
                                     topLeft: Radius.circular(10)),
                                 title: 'ROLL NUMBER',
                                 value: '${profile.first.studentId}'),
                           ),
-                          SizedBox(
+                          const SizedBox(
                               height: 30,
                               child: VerticalDivider(
                                   width: 15.0,
@@ -65,7 +68,7 @@ class StudentProfileComponent extends StatelessWidget {
                                   thickness: 1)),
                           Expanded(
                             child: CustomProfileItem(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(10),
                                     topLeft: Radius.circular(10)),
                                 title: 'CLASS NAME',
@@ -73,19 +76,19 @@ class StudentProfileComponent extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Expanded(
                             child: CustomProfileItem(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     bottomRight: Radius.circular(10),
                                     bottomLeft: Radius.circular(10)),
                                 title: 'REGION NAME',
                                 value: '${profile.first.region}'),
                           ),
-                          SizedBox(
+                          const SizedBox(
                               height: 30,
                               child: VerticalDivider(
                                   width: 15.0,
@@ -93,7 +96,7 @@ class StudentProfileComponent extends StatelessWidget {
                                   thickness: 1)),
                           Expanded(
                             child: CustomProfileItem(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     bottomRight: Radius.circular(10),
                                     bottomLeft: Radius.circular(10)),
                                 title: 'DATE OF BIRTH',
@@ -102,30 +105,30 @@ class StudentProfileComponent extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5.0),
+                      const SizedBox(height: 5.0),
                       Container(
-                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
                           decoration: BoxDecoration(
                               color: AppColors.secondaryColor,
                               borderRadius: BorderRadius.circular(10)),
                           child: Column(children: [
                             CustomProfileItem(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(10),
                                     topLeft: Radius.circular(10)),
                                 width: size.width,
                                 title: 'ADDRESS',
                                 maxLines: 3,
                                 value: '${profile.first.address}'),
-                            SizedBox(height: 2.0),
+                            const SizedBox(height: 2.0),
                             CustomProfileItem(
                                 width: size.width,
                                 title: 'CITY NAME',
                                 maxLines: 2,
                                 value: '${profile.first.city}'),
-                            SizedBox(height: 2.0),
+                            const SizedBox(height: 2.0),
                             CustomProfileItem(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     bottomRight: Radius.circular(10),
                                     bottomLeft: Radius.circular(10)),
                                 width: size.width,

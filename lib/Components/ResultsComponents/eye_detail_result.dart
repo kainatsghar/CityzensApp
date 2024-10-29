@@ -6,44 +6,44 @@ import 'package:tcs_app/Provider/Results/results_provider.dart';
 class EyeDetailResult extends StatelessWidget {
   final int index;
 
-  const EyeDetailResult({Key key, this.index = 0}) : super(key: key);
+  const EyeDetailResult({super.key, this.index = 0});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ResultsProvider>(builder: (context, value, _) {
       return Padding(
-        padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
         child: CustomExpansionTile(
-          title: '${value.eyeResult[index].subjectName}',
+          title: value.eyeResult[index].subjectName,
           children: List.generate(
               value.eyeResult[index].details.length,
               (i) => ListTile(
-                    title: Text(value.eyeResult[index].details[i].kLO,
+                    title: Text(value.eyeResult[index].details[i].kLO!,
                         textAlign: TextAlign.center),
                     subtitle: Padding(
-                      padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                      padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
                       child: Table(
                           border:
                               TableBorder.all(width: 1.0, color: Colors.black),
                           children: [
                             TableRow(children: [
-                              TableCell(
+                              const TableCell(
                                   child: Text(
                                 'Exceeding \n Dev.',
                                 textAlign: TextAlign.center,
                               )),
-                              TableCell(
+                              const TableCell(
                                   child: Text(
                                 'Expected \n Dev.',
                                 textAlign: TextAlign.center,
                               )),
-                              TableCell(
+                              const TableCell(
                                   child: Text(
                                 'Emerging \n Dev.',
                                 textAlign: TextAlign.center,
                               )),
                               if (value.selectAcademicYear < 11) ...[
-                                TableCell(
+                                const TableCell(
                                     child: Text(
                                   'Needs \n Imp.',
                                   textAlign: TextAlign.center,

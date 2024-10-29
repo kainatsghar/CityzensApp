@@ -2,32 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  final double height;
+  final double? height;
   final String title;
   final Widget child;
-  final EdgeInsets bottomSheetPadding;
-  final EdgeInsets titlePadding;
+  final EdgeInsets? bottomSheetPadding;
+  final EdgeInsets? titlePadding;
   final bool scrollRequired;
-  final String status;
+  // final String status;
 
   const CustomBottomSheet(
       {this.title = '',
       this.height,
-      @required this.child,
+      required this.child,
       this.bottomSheetPadding,
       this.titlePadding,
       this.scrollRequired = true,
-      this.status,
-      Key key})
-      : super(key: key);
+      // this.status,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: AppColors.whiteColor,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(10))),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -35,7 +34,7 @@ class CustomBottomSheet extends StatelessWidget {
           Container(
             padding: bottomSheetPadding ??
                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: AppColors.primaryColor,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
@@ -56,7 +55,7 @@ class CustomBottomSheet extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w800,
                                   fontSize: 16,
                                   color: AppColors.whiteColor))

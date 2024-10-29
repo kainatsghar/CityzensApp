@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomTabBar extends StatelessWidget {
-  final ScrollController scrollController;
-  final List<Tab> tabs;
-  final TabController controller;
-  final List<Widget> widgets;
-  final String appBarTitle;
+  final ScrollController? scrollController;
+  final List<Tab>? tabs;
+  final TabController? controller;
+  final List<Widget>? widgets;
+  final String? appBarTitle;
 
   const CustomTabBar(
-      {Key key,
+      {super.key,
       this.appBarTitle,
       this.scrollController,
       this.tabs,
       this.controller,
-      this.widgets})
-      : super(key: key);
+      this.widgets});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +28,8 @@ class CustomTabBar extends StatelessWidget {
                   centerTitle: true,
                   elevation: 0.0,
                   backgroundColor: AppColors.whiteColor,
-                  title: Text(appBarTitle,
-                      style: TextStyle(
+                  title: Text(appBarTitle!,
+                      style: const TextStyle(
                           fontSize: 18.0, color: AppColors.primaryTitleColor)),
                   actions: <Widget>[
                     Padding(
@@ -41,15 +40,15 @@ class CustomTabBar extends StatelessWidget {
                       labelColor: AppColors.primaryTitleColor,
                       controller: controller,
                       unselectedLabelColor: AppColors.primaryTitleColor,
-                      tabs: tabs,
+                      tabs: tabs!,
                       indicatorColor: AppColors.secondaryColor))
             ],
         body: MediaQuery.removePadding(
             removeTop: true,
+            context: context,
             child: TabBarView(
                 controller: controller,
-                children: widgets,
-                physics: NeverScrollableScrollPhysics()),
-            context: context));
+                physics: const NeverScrollableScrollPhysics(),
+                children: widgets!)));
   }
 }

@@ -8,6 +8,8 @@ import 'package:tcs_app/Utils/helper_function.dart';
 import '../../CustomWidgets/CustomSubjectGrade/custom_subject_grade.dart';
 
 class OverallResult extends StatelessWidget {
+  const OverallResult({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -17,7 +19,7 @@ class OverallResult extends StatelessWidget {
         children: [
           Card(
               shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.grey),
+                  side: const BorderSide(color: Colors.grey),
                   borderRadius: BorderRadius.circular(15.0)),
               child: Column(children: <Widget>[
                 Row(
@@ -26,17 +28,17 @@ class OverallResult extends StatelessWidget {
                     children: <Widget>[
                       Container(
                           width: size.width / 3.4,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(15.0),
                                   bottomLeft: Radius.circular(15.0)),
                               color: AppColors.secondaryColor),
-                          padding: EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.all(5.0),
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Text('Overall Grade',
+                                const Text('Overall Grade',
                                     style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold),
@@ -48,7 +50,7 @@ class OverallResult extends StatelessWidget {
                                         height: size.width / 5.4,
                                         width: size.width / 5.4,
                                         child: CustomSubjectGrade(
-                                            grade: info.overallGrade)))
+                                            grade: info!.overallGrade!)))
                               ])),
                       SizedBox(
                           width: size.width / 1.6,
@@ -56,12 +58,12 @@ class OverallResult extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Column(children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.only(top: 8.0),
+                                  padding: const EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     children: <Widget>[
-                                      Container(
+                                      SizedBox(
                                           width: size.width / 3.6,
-                                          child: Text('Overall %',
+                                          child: const Text('Overall %',
                                               style: TextStyle(fontSize: 11))),
                                       SizedBox(
                                         width: size.width / 4.6,
@@ -77,16 +79,17 @@ class OverallResult extends StatelessWidget {
                                           child: Text(
                                               HelperFunction.numberValue(
                                                   info.overallPercentage),
-                                              style: TextStyle(fontSize: 11)))
+                                              style: const TextStyle(
+                                                  fontSize: 11)))
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 8.0),
+                                const SizedBox(height: 8.0),
                                 Row(
                                   children: <Widget>[
-                                    Container(
+                                    SizedBox(
                                         width: size.width / 3.6,
-                                        child: Text('Class Highest %',
+                                        child: const Text('Class Highest %',
                                             style: TextStyle(fontSize: 11))),
                                     SizedBox(
                                       width: size.width / 4.6,
@@ -101,15 +104,16 @@ class OverallResult extends StatelessWidget {
                                         child: Text(
                                             HelperFunction.numberValue(
                                                 info.highestPercentage),
-                                            style: TextStyle(fontSize: 11)))
+                                            style:
+                                                const TextStyle(fontSize: 11)))
                                   ],
                                 ),
-                                SizedBox(height: 8.0),
+                                const SizedBox(height: 8.0),
                                 Row(
                                   children: <Widget>[
-                                    Container(
+                                    SizedBox(
                                         width: size.width / 3.6,
-                                        child: Text('Class Lowest %',
+                                        child: const Text('Class Lowest %',
                                             style: TextStyle(fontSize: 11))),
                                     SizedBox(
                                       width: size.width / 4.6,
@@ -124,14 +128,15 @@ class OverallResult extends StatelessWidget {
                                         child: Text(
                                             HelperFunction.numberValue(
                                                 info.lowestPercentage),
-                                            style: TextStyle(fontSize: 11)))
+                                            style:
+                                                const TextStyle(fontSize: 11)))
                                   ],
                                 ),
-                                SizedBox(height: 8.0),
+                                const SizedBox(height: 8.0),
                                 Row(children: <Widget>[
-                                  Container(
+                                  SizedBox(
                                       width: size.width / 3.6,
-                                      child: Text('Class Average %',
+                                      child: const Text('Class Average %',
                                           style: TextStyle(fontSize: 11))),
                                   SizedBox(
                                     width: size.width / 4.6,
@@ -146,28 +151,29 @@ class OverallResult extends StatelessWidget {
                                       child: Text(
                                           HelperFunction.numberValue(
                                               info.average),
-                                          style: TextStyle(fontSize: 11))),
-                                  SizedBox(height: 8.0)
+                                          style:
+                                              const TextStyle(fontSize: 11))),
+                                  const SizedBox(height: 8.0)
                                 ])
                               ])))
                     ]),
               ])),
-          SizedBox(height: 5.0),
+          const SizedBox(height: 5.0),
           Card(
             shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey),
+                side: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(15.0)),
             child: Container(
               width: size.width,
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   Visibility(
-                      visible: info.teacherComment.isEmpty ? false : true,
+                      visible: info.teacherComment!.isEmpty ? false : true,
                       child: Padding(
-                          padding: EdgeInsets.all(6.0),
+                          padding: const EdgeInsets.all(6.0),
                           child: Column(children: <Widget>[
-                            Text(
+                            const Text(
                               "Teacher's Remarks: ",
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
@@ -175,15 +181,15 @@ class OverallResult extends StatelessWidget {
                             Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 4.0),
-                                child: Text(info.teacherComment,
+                                child: Text(info.teacherComment!,
                                     textAlign: TextAlign.center))
                           ]))),
                   Visibility(
                       visible: info.term == 1 ? false : true,
                       child: Padding(
-                          padding: EdgeInsets.only(top: 2.0),
+                          padding: const EdgeInsets.only(top: 2.0),
                           child: Column(children: <Widget>[
-                            Text(
+                            const Text(
                               'Promoted To: ',
                               style: TextStyle(
                                 fontSize: 16,
@@ -193,7 +199,7 @@ class OverallResult extends StatelessWidget {
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Text(info.promotedTo),
+                              child: Text(info.promotedTo!),
                             )
                           ]))),
                 ],

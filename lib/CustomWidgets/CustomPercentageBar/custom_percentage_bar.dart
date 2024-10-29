@@ -6,7 +6,11 @@ class CustomPercentageBar extends StatelessWidget {
   final double barHeight;
   final String barValue;
 
-  const CustomPercentageBar({Key key, this.barWidth, this.barHeight, this.barValue}) : super(key: key);
+  const CustomPercentageBar(
+      {super.key,
+      required this.barWidth,
+      required this.barHeight,
+      required this.barValue});
 
   @override
   Widget build(BuildContext context) {

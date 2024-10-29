@@ -2,11 +2,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/StudentAttendanceComponents/student_attendance.dart';
+// import 'package:tcs_app/Provider/StudentAttendance/student_alevel_attendance_provider.dart';
 
 import '../../Provider/StudentAttendance/student_attendance_provider.dart';
 
 class StudentAttendanceComponent extends StatelessWidget {
-  const StudentAttendanceComponent({Key key}) : super(key: key);
+  const StudentAttendanceComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class StudentAttendanceComponent extends StatelessWidget {
             child: Column(
               children: [
                 Visibility(
-                  visible: !value.presentDates.isEmpty,
+                  visible: value.presentDates.isNotEmpty,
                   child: Column(
                     children: [
                       Padding(
@@ -55,7 +56,7 @@ class StudentAttendanceComponent extends StatelessWidget {
                     ],
                   ),
                 ),
-                StudentAttendance()
+                const StudentAttendance()
               ],
             ));
       })),

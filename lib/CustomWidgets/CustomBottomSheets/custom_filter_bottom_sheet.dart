@@ -5,12 +5,11 @@ import 'package:tcs_app/model/Options/options.dart';
 
 class CustomFilterBottomSheet extends StatelessWidget {
   const CustomFilterBottomSheet(
-      {Key key,
-      @required this.controller,
-      @required this.filterOptions,
-      @required this.onSelect,
-      this.title = 'User Type'})
-      : super(key: key);
+      {super.key,
+      required this.controller,
+      required this.filterOptions,
+      required this.onSelect,
+      this.title = 'User Type'});
   final TextEditingController controller;
   final List<Options> filterOptions;
   final ValueChanged<String> onSelect;
@@ -29,11 +28,12 @@ class CustomFilterBottomSheet extends StatelessWidget {
                   return Column(
                     children: [
                       ListTile(
-                          onTap: () => onSelect(item.title),
+                          onTap: () => onSelect(item.title!),
+                          //  onTap: () => onSelect(item.title),
                           dense: true,
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 5.0),
-                          title: Text(item.title,
+                          title: Text(item.title!,
                               style: TextStyle(
                                   color: controller.text == item.title
                                       ? AppColors.primaryColor

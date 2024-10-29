@@ -7,15 +7,17 @@ import 'package:tcs_app/Provider/Library/library_provider.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 
 class LibraryComponent extends StatelessWidget {
+  const LibraryComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Consumer<LibraryProvider>(builder: (context, value, _) {
         var responseData = value.libraryResponse.listLibrary;
-        return responseData.isEmpty
-            ? ShowCustomMessage(message: AppConstants.noRecordFound)
+        return responseData!.isEmpty
+            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
             : ListView.builder(
-                itemCount: value.libraryResponse.listLibrary.length + 1,
+                itemCount: value.libraryResponse.listLibrary!.length + 1,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return CustomStudentInfo(info: value.libraryResponse.info);

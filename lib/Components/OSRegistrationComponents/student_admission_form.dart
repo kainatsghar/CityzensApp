@@ -6,24 +6,24 @@ import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 class StudentAdmissionForm extends StatelessWidget {
-  const StudentAdmissionForm({Key key}) : super(key: key);
+  const StudentAdmissionForm({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<OSRegistrationProvider>(
         builder: (context, value, child) => Form(
                 child: Column(children: <Widget>[
-              Align(
+              const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Text('When is admission required?',
                         style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.black54)),
                   )),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.sessionController,
@@ -32,8 +32,8 @@ class StudentAdmissionForm extends StatelessWidget {
                   validator: HelperFunction.validator,
                   onTap: () => value.sessionBottomSheet(),
                   suffixWidget:
-                      ImageIcon(AssetImage('images/dropdown_icon.png'))),
-              SizedBox(height: 12),
+                      const ImageIcon(AssetImage('images/dropdown_icon.png'))),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.cityController,
@@ -42,9 +42,9 @@ class StudentAdmissionForm extends StatelessWidget {
                   validator: HelperFunction.validator,
                   onTap: () => value.citiesBottomSheet(),
                   suffixWidget:
-                      ImageIcon(AssetImage('images/dropdown_icon.png'))),
-              SizedBox(height: 12),
-              Align(
+                      const ImageIcon(AssetImage('images/dropdown_icon.png'))),
+              const SizedBox(height: 12),
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text('Select your desired campus',
                     style: TextStyle(
@@ -52,7 +52,7 @@ class StudentAdmissionForm extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black54)),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.campusController,
@@ -62,16 +62,16 @@ class StudentAdmissionForm extends StatelessWidget {
                   validator: HelperFunction.validator,
                   onTap: () => value.loadCityCampus(),
                   suffixWidget:
-                      ImageIcon(AssetImage('images/dropdown_icon.png'))),
-              SizedBox(height: 12),
-              Align(
+                      const ImageIcon(AssetImage('images/dropdown_icon.png'))),
+              const SizedBox(height: 12),
+              const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('To which class admission is required?',
                       style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.black54))),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.classController,
@@ -81,12 +81,12 @@ class StudentAdmissionForm extends StatelessWidget {
                   validator: HelperFunction.validator,
                   onTap: () => value.loadCampusClass(),
                   suffixWidget:
-                      ImageIcon(AssetImage('images/dropdown_icon.png'))),
-              SizedBox(height: 12),
+                      const ImageIcon(AssetImage('images/dropdown_icon.png'))),
+              const SizedBox(height: 12),
               Align(
                   alignment: Alignment.centerLeft,
                   child: RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       style: TextStyle(fontSize: 16.0, color: Colors.black),
                       children: <TextSpan>[
                         TextSpan(
@@ -100,15 +100,15 @@ class StudentAdmissionForm extends StatelessWidget {
                       ],
                     ),
                   )),
-              SizedBox(height: 12),
-              Align(
+              const SizedBox(height: 12),
+              const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Has the child attended any school before?',
                       style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.black54))),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.previousSchoolController,
@@ -117,7 +117,7 @@ class StudentAdmissionForm extends StatelessWidget {
                   validator: HelperFunction.validator,
                   onTap: () => value.previousSchoolBottomSheet(),
                   suffixWidget:
-                      ImageIcon(AssetImage('images/dropdown_icon.png'))),
+                      const ImageIcon(AssetImage('images/dropdown_icon.png'))),
             ])));
   }
 }

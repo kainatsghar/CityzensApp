@@ -8,16 +8,19 @@ import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 
 class StudentListComponent extends StatelessWidget {
+  const StudentListComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Consumer<MarkAttendanceProvider>(builder: (context, value, _) {
         var studentList = value.studentListResponse.studentList;
-        return studentList.isEmpty
-            ? ShowCustomMessage(message: AppConstants.noRecordFound)
-            : value.saveAttendanceResponse.isSuccessful != null &&
-                    value.saveAttendanceResponse.isSuccessful
-                ? AttendanceGraphComponent()
+        return studentList!.isEmpty
+            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+            : value.saveAttendanceResponse!.isSuccessful != null &&
+                    value.saveAttendanceResponse!.isSuccessful!
+                // : value.saveAttendanceResponse!.isSuccessful!
+                ? const AttendanceGraphComponent()
                 : ListView.builder(
                     itemCount: studentList.length + 1,
                     itemBuilder: (BuildContext context, int index) {

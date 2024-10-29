@@ -7,19 +7,21 @@ import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 
 class EyeOverallResultsComponent extends StatelessWidget {
+  const EyeOverallResultsComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Consumer<ResultsProvider>(builder: (context, value, _) {
         return value.eyeResult.isEmpty
-            ? ShowCustomMessage(message: AppConstants.noRecordFound)
+            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
             : SingleChildScrollView(
                 child: Column(children: <Widget>[
                 ResultCardInfo(
-                    stdInfo: value.resultsResponse.info,
+                    stdInfo: value.resultsResponse.info!,
                     term: value.termController.text,
                     session: value.academicYearController.text),
-                EyeOverallResult()
+                const EyeOverallResult()
               ]));
       }),
     );

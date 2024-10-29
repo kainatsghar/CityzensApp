@@ -9,13 +9,15 @@ import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 class TeacherProfileComponent extends StatelessWidget {
+  const TeacherProfileComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Consumer<TeacherProfileProvider>(builder: (context, value, _) {
       return value.profileResponse == null
-          ? ShowError(errorText: AppConstants.noRecordFound)
+          ? const ShowError(errorText: AppConstants.noRecordFound)
           : SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -23,39 +25,40 @@ class TeacherProfileComponent extends StatelessWidget {
                     horizontal: size.width * 0.035),
                 child: Column(children: <Widget>[
                   Padding(
-                      padding: EdgeInsets.only(top: 15.0),
+                      padding: const EdgeInsets.only(top: 15.0),
                       child: Text(
                           HelperFunction.noNullStringText(
-                              '${value.profileResponse.teacherName}').toUpperCase(),
-                          style: TextStyle(
+                                  '${value.profileResponse!.teacherName}')
+                              .toUpperCase(),
+                          style: const TextStyle(
                               color: AppColors.primaryTitleColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0))),
                   CustomUserImage(
-                      userId: '${value.profileResponse.employeeCode}',
+                      userId: '${value.profileResponse!.employeeCode}',
                       disableUploadImage: false),
                   Padding(
-                      padding: EdgeInsets.only(top: 5.0),
+                      padding: const EdgeInsets.only(top: 5.0),
                       child: CustomProfileItem(
                           width: size.width,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10)),
                           title: 'BRANCH NAME',
-                          value: '${value.profileResponse.branch}')),
-                  SizedBox(height: 10),
+                          value: '${value.profileResponse!.branch}')),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Expanded(
                         child: CustomProfileItem(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(10),
                                 topLeft: Radius.circular(10)),
                             title: 'Employee Number',
-                            value: '${value.profileResponse.employeeCode}'),
+                            value: '${value.profileResponse!.employeeCode}'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           height: 30,
                           child: VerticalDivider(
                               width: 15.0,
@@ -63,28 +66,29 @@ class TeacherProfileComponent extends StatelessWidget {
                               thickness: 1)),
                       Expanded(
                         child: CustomProfileItem(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(10),
                                 topLeft: Radius.circular(10)),
                             title: 'DESIGNATION',
-                            value: '${value.profileResponse.designation}'),
+                            value: '${value.profileResponse!.designation}'),
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Expanded(
                         child: CustomProfileItem(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 bottomRight: Radius.circular(10),
                                 bottomLeft: Radius.circular(10)),
                             title: 'MARITAL STATUS',
-                            value:
-                                '${value.profileResponse.maritalStatus == 'M' ? 'Married' : 'Single'}'),
+                            value: value.profileResponse!.maritalStatus == 'M'
+                                ? 'Married'
+                                : 'Single'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           height: 30,
                           child: VerticalDivider(
                               width: 15.0,
@@ -92,27 +96,27 @@ class TeacherProfileComponent extends StatelessWidget {
                               thickness: 1)),
                       Expanded(
                         child: CustomProfileItem(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 bottomRight: Radius.circular(10),
                                 bottomLeft: Radius.circular(10)),
                             title: 'RELIGION',
-                            value: value.profileResponse.religion),
+                            value: value.profileResponse!.religion),
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Expanded(
                         child: CustomProfileItem(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(10),
                                 topLeft: Radius.circular(10)),
                             title: 'REGION',
-                            value: '${value.profileResponse.region}'),
+                            value: '${value.profileResponse!.region}'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           height: 30,
                           child: VerticalDivider(
                               width: 15.0,
@@ -120,46 +124,46 @@ class TeacherProfileComponent extends StatelessWidget {
                               thickness: 1)),
                       Expanded(
                         child: CustomProfileItem(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(10),
                                 topLeft: Radius.circular(10)),
                             title: 'CITY',
-                            value: value.profileResponse.city),
+                            value: value.profileResponse!.city),
                       ),
                     ],
                   ),
-                  SizedBox(height: 5.0),
+                  const SizedBox(height: 5.0),
                   CustomProfileItem(
                       width: size.width,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10)),
                       title: 'ADDRESS',
-                      value: '${value.profileResponse.address}'),
-                  SizedBox(height: 5.0),
+                      value: '${value.profileResponse!.address}'),
+                  const SizedBox(height: 5.0),
                   CustomProfileItem(
                       width: size.width,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10)),
                       title: 'CNIC NUMBER',
-                      value: '${value.profileResponse.cnicNumber}'),
-                  SizedBox(height: 5.0),
+                      value: '${value.profileResponse!.cnicNumber}'),
+                  const SizedBox(height: 5.0),
                   CustomProfileItem(
                       width: size.width,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10)),
                       title: 'EMAIL ADDRESS',
-                      value: '${value.profileResponse.email}'),
-                  SizedBox(height: 5.0),
+                      value: '${value.profileResponse!.email}'),
+                  const SizedBox(height: 5.0),
                   CustomProfileItem(
                       width: size.width,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10)),
                       title: 'CONTACT NUMBER',
-                      value: '${value.profileResponse.employeeCell}'),
+                      value: '${value.profileResponse!.employeeCell}'),
                 ]),
               ),
             );

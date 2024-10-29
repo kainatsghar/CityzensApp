@@ -3,16 +3,18 @@ import 'package:tcs_app/Routes/app_navigation.dart';
 
 class SuccessDialogBox extends StatefulWidget {
   final String title, description, buttonText;
-  final Image image;
+  final Image? image;
 
-  SuccessDialogBox({
-    @required this.title,
-    @required this.description,
-    @required this.buttonText,
+  const SuccessDialogBox({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.buttonText,
     this.image,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _SuccessDialogBoxState createState() => _SuccessDialogBoxState();
 }
 
@@ -23,22 +25,22 @@ class _SuccessDialogBoxState extends State<SuccessDialogBox> {
       return Stack(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: Const.avatarRadius + Const.padding,
               bottom: Const.padding,
               left: Const.padding,
               right: Const.padding,
             ),
-            margin: EdgeInsets.only(top: Const.avatarRadius),
-            decoration: new BoxDecoration(
+            margin: const EdgeInsets.only(top: Const.avatarRadius),
+            decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(Const.padding),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 10.0,
-                  offset: const Offset(0.0, 10.0),
+                  offset: Offset(0.0, 10.0),
                 ),
               ],
             ),
@@ -47,27 +49,27 @@ class _SuccessDialogBoxState extends State<SuccessDialogBox> {
               children: <Widget>[
                 Text(
                   widget.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Text(
                   widget.description,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 24.0),
+                const SizedBox(height: 24.0),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: TextButton(
                     onPressed: () => AppNavigation.goBack(),
                     child: Text(
                       widget.buttonText,
-                      style: TextStyle(fontSize: 16.0),
+                      style: const TextStyle(fontSize: 16.0),
                     ),
                   ),
                 ),

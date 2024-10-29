@@ -4,12 +4,14 @@ import '../../Utils/app_colors.dart';
 
 class CustomExpansionTile extends StatelessWidget {
   final String title;
-  final String detailMsg;
+  final String? detailMsg;
   final List<Widget> children;
 
   const CustomExpansionTile(
-      {Key key, this.title, this.detailMsg, this.children = const []})
-      : super(key: key);
+      {super.key,
+      required this.title,
+      this.detailMsg,
+      this.children = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +22,16 @@ class CustomExpansionTile extends StatelessWidget {
         child: ExpansionTile(
           collapsedBackgroundColor: AppColors.secondaryColor,
           title: Text(title,
-              style: TextStyle(
+              style: const TextStyle(
                   color: AppColors.primaryTitleColor,
                   fontSize: 17,
                   fontWeight: FontWeight.w600)),
           children: children.isEmpty
               ? <Widget>[
                   Padding(
-                    child:
-                        Text(detailMsg, style: TextStyle(color: Colors.black)),
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    child: Text(detailMsg!,
+                        style: const TextStyle(color: Colors.black)),
                   ),
                 ]
               : children,

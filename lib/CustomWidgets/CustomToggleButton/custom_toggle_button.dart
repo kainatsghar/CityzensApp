@@ -8,8 +8,11 @@ class CustomToggleButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const CustomToggleButton(
-      {Key key, this.student, this.title, this.color, this.onTap})
-      : super(key: key);
+      {super.key,
+      required this.student,
+      required this.title,
+      required this.color,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class CustomToggleButton extends StatelessWidget {
           child: Center(
             child: Text(title,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.w600)),
+                style: const TextStyle(fontWeight: FontWeight.w600)),
           )),
     );
   }

@@ -5,8 +5,8 @@ class CustomAppButton extends StatelessWidget {
   final String buttonTitle;
   final VoidCallback onTap;
 
-  const CustomAppButton({Key key, this.buttonTitle, this.onTap})
-      : super(key: key);
+  const CustomAppButton(
+      {super.key, required this.buttonTitle, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,8 @@ class CustomAppButton extends StatelessWidget {
             minimumSize: Size(size.width * 0.85, 45.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0))),
-        child: Text('$buttonTitle',
-            style: TextStyle(fontSize: 20, color: AppColors.whiteColor)),
-        onPressed: onTap);
+        onPressed: onTap,
+        child: Text(buttonTitle,
+            style: const TextStyle(fontSize: 20, color: AppColors.whiteColor)));
   }
 }

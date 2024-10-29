@@ -10,10 +10,12 @@ import 'Utils/app_themes.dart';
 
 void main() {
   HelperFunction.mainInitializer();
-  runApp(TCSApp());
+  runApp(const TCSApp());
 }
 
 class TCSApp extends StatelessWidget {
+  const TCSApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -22,7 +24,7 @@ class TCSApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Cityzens',
             theme: AppThemes.lightTheme,
-            home: SplashScreenUI(),
+            home: const SplashScreenUI(),
             initialRoute: AppNavRoutes.initialRoute,
             navigatorKey: AppNavigation.navigatorKey,
             onGenerateRoute: RouteGenerator.generateRoute));

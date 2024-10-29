@@ -5,7 +5,7 @@ import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 class PreviousSchoolFrom extends StatelessWidget {
-  const PreviousSchoolFrom({Key key}) : super(key: key);
+  const PreviousSchoolFrom({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PreviousSchoolFrom extends StatelessWidget {
                       validator: HelperFunction.validator,
                       inputAction: TextInputAction.next,
                       textCapitalization: TextCapitalization.words)),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.schoolLocationController,
@@ -29,7 +29,7 @@ class PreviousSchoolFrom extends StatelessWidget {
                   validator: HelperFunction.validator,
                   inputAction: TextInputAction.next,
                   textCapitalization: TextCapitalization.words),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.studiedFromClassController,
@@ -37,7 +37,7 @@ class PreviousSchoolFrom extends StatelessWidget {
                   validator: HelperFunction.validator,
                   inputAction: TextInputAction.next,
                   textCapitalization: TextCapitalization.words),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   controller: value.studiedToClassController,
@@ -45,7 +45,7 @@ class PreviousSchoolFrom extends StatelessWidget {
                   validator: HelperFunction.validator,
                   inputAction: TextInputAction.next,
                   textCapitalization: TextCapitalization.words),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               CustomTextFormField(
                   isDense: true,
                   maxLines: 3,

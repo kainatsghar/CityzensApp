@@ -9,8 +9,11 @@ class NotificationItem extends StatelessWidget {
   final ValueChanged<String> onTap;
   final int index;
 
-  const NotificationItem({Key key, this.notification, this.onTap, this.index})
-      : super(key: key);
+  const NotificationItem(
+      {super.key,
+      required this.notification,
+      required this.onTap,
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,9 @@ class NotificationItem extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Linkify(
                   onOpen: (v) => onTap,
-                  text: notification.notifyMessage,
-                  style: TextStyle(fontSize: 15, color: AppColors.blackColor)),
+                  text: notification.notifyMessage!,
+                  style: const TextStyle(
+                      fontSize: 15, color: AppColors.blackColor)),
             ),
           )
         ],

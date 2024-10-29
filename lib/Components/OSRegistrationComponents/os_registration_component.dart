@@ -7,7 +7,7 @@ import 'package:tcs_app/Components/OSRegistrationComponents/student_info_form.da
 import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 
 class OSRegistrationComponent extends StatelessWidget {
-  const OSRegistrationComponent({Key key}) : super(key: key);
+  const OSRegistrationComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,24 +17,27 @@ class OSRegistrationComponent extends StatelessWidget {
             currentStep: value.currentStep,
             steps: [
               Step(
-                  title: Text('Student', style: TextStyle(fontSize: 20.0)),
-                  content: StudentInfoForm(),
+                  title:
+                      const Text('Student', style: TextStyle(fontSize: 20.0)),
+                  content: const StudentInfoForm(),
                   state: value.getState(0),
                   isActive: value.currentStep >= 0),
               Step(
-                  title: Text('Admission', style: TextStyle(fontSize: 20.0)),
-                  content: StudentAdmissionForm(),
+                  title:
+                      const Text('Admission', style: TextStyle(fontSize: 20.0)),
+                  content: const StudentAdmissionForm(),
                   state: value.getState(1),
                   isActive: value.currentStep >= 1),
               Step(
-                  title:
-                      Text('Previous School', style: TextStyle(fontSize: 20.0)),
-                  content: PreviousSchoolFrom(),
+                  title: const Text('Previous School',
+                      style: TextStyle(fontSize: 20.0)),
+                  content: const PreviousSchoolFrom(),
                   state: value.getState(2),
                   isActive: value.currentStep >= 2),
               Step(
-                  title: Text('Guardian', style: TextStyle(fontSize: 20.0)),
-                  content: GuardianInfoForm(),
+                  title:
+                      const Text('Guardian', style: TextStyle(fontSize: 20.0)),
+                  content: const GuardianInfoForm(),
                   state: value.getState(3),
                   isActive: value.currentStep >= 3),
             ],

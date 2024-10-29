@@ -5,24 +5,23 @@ import 'package:tcs_app/model/Options/options.dart';
 class CustomDropdownMenu extends StatelessWidget {
   final List<Options> options;
   final String selectedValue;
-  final ValueChanged<String> itemCallBack;
+  final ValueChanged<String?> itemCallBack;
   final bool isEnabled;
-  final Color textColor;
+  final Color? textColor;
   final String hintText;
-  final Widget dropDownIcon;
+  final Widget? dropDownIcon;
   final double width;
 
   const CustomDropdownMenu(
-      {Key key,
-      @required this.options,
+      {super.key,
+      required this.options,
       this.selectedValue = '',
       this.isEnabled = true,
-      this.itemCallBack,
+      required this.itemCallBack,
       this.textColor,
       this.hintText = 'Select',
       this.dropDownIcon,
-      this.width = 150.0})
-      : super(key: key);
+      this.width = 150.0});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class CustomDropdownMenu extends StatelessWidget {
         hint: Padding(
             padding: const EdgeInsets.only(left: 8.0), child: Text(hintText)),
         isExpanded: true,
-        icon: dropDownIcon ?? Icon(Icons.arrow_drop_down, size: 30),
+        icon: dropDownIcon ?? const Icon(Icons.arrow_drop_down, size: 30),
         items: options.map((item) {
           return DropdownMenuItem<String>(
             value: '${item.value}',
@@ -48,7 +47,7 @@ class CustomDropdownMenu extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 '${item.title}',
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           );

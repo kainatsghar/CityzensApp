@@ -7,21 +7,21 @@ import 'package:tcs_app/model/Library/library_response.dart';
 class SingleLibraryItem extends StatelessWidget {
   final LibraryRecords record;
 
-  const SingleLibraryItem({Key key, this.record}) : super(key: key);
+  const SingleLibraryItem({super.key, required this.record});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5.0),
-      margin: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
+      margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.primaryTitleColor),
           borderRadius: BorderRadius.circular(15.0),
           color: AppColors.secondaryColor),
       child: Column(
         children: <Widget>[
-          CustomTitleValue(title: 'Book Title', value: record.bookTitle),
-          CustomTitleValue(title: 'Author Name', value: record.authorName),
+          CustomTitleValue(title: 'Book Title', value: record.bookTitle!),
+          CustomTitleValue(title: 'Author Name', value: record.authorName!),
           CustomTitleValue(
               title: 'Issue Date',
               value: HelperFunction.dateFormatter(record.issueDate)),

@@ -7,21 +7,22 @@ import '../../Provider/MarkUnverified/mark_unverified_provider.dart';
 import '../../Utils/app_colors.dart';
 
 class MarkUnverifiedComponent extends StatelessWidget {
-  const MarkUnverifiedComponent({Key key}) : super(key: key);
+  const MarkUnverifiedComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Consumer<MarkUnverifiedProvider>(builder: (context, value, _) {
           return SingleChildScrollView(
             child: Column(
               children: [
-                CustomLogoCover(),
+                const CustomLogoCover(),
                 SizedBox(height: size.height * 0.02),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 25.0),
                   decoration: BoxDecoration(
                       color: AppColors.secondaryColor,
                       borderRadius: BorderRadius.circular(20.0)),
@@ -48,7 +49,7 @@ class MarkUnverifiedComponent extends StatelessWidget {
                             onTap: () => value.sectionBottomSheet(),
                             readOnly: true,
                             validator: value.validator,
-                            suffixWidget: ImageIcon(
+                            suffixWidget: const ImageIcon(
                                 AssetImage('images/dropdown_icon.png'),
                                 color: AppColors.whiteColor)),
                         SizedBox(height: size.height * 0.02),
@@ -58,7 +59,7 @@ class MarkUnverifiedComponent extends StatelessWidget {
                             onTap: () => value.reasonsBottomSheet(),
                             readOnly: true,
                             validator: value.validator,
-                            suffixWidget: ImageIcon(
+                            suffixWidget: const ImageIcon(
                                 AssetImage('images/dropdown_icon.png'),
                                 color: AppColors.whiteColor)),
                         SizedBox(height: size.height * 0.02),

@@ -5,13 +5,15 @@ import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
 
 class AttendanceGraphComponent extends StatelessWidget {
+  const AttendanceGraphComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Consumer<MarkAttendanceProvider>(builder: (context, value, _) {
         return Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
               Padding(
@@ -19,9 +21,9 @@ class AttendanceGraphComponent extends StatelessWidget {
                 child: Image.asset('images/icon_success.png',
                     height: size.width / 4, width: size.width / 4),
               ),
-              Text('${value.saveAttendanceResponse.message}',
-                  style:
-                      TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600)),
+              Text('${value.saveAttendanceResponse!.message}',
+                  style: const TextStyle(
+                      fontSize: 16.0, fontWeight: FontWeight.w600)),
               Padding(
                 padding: EdgeInsets.symmetric(
                     vertical: size.height * 0.03,
@@ -30,13 +32,13 @@ class AttendanceGraphComponent extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Total Students: ${value.students.length}',
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                        fontSize: 16.0, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: size.width * 0.08),
+                  margin: EdgeInsets.symmetric(horizontal: size.width * 0.07),
                   child: Column(
                     children: [
                       Row(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../Utils/app_colors.dart';
 
 class CustomLogoCover extends StatelessWidget {
-  const CustomLogoCover({Key key}) : super(key: key);
+  const CustomLogoCover({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class CustomLogoCover extends StatelessWidget {
     return Container(
       width: size.width,
       height: size.height * 0.25,
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(20.0)),
