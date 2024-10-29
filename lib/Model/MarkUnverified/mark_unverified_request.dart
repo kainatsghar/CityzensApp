@@ -1,20 +1,13 @@
 class MarkUnverifiedRequest {
-  String studentId;
-  String studentName;
-  int reasonId;
-  String teacherRemarks;
-  int sectionId;
-  String employeeId;
-  String tokenId;
+  String? studentId;
+  String? studentName;
+  int? reasonId;
+  String? teacherRemarks;
+  int? sectionId;
+  String? employeeId;
+  String? tokenId;
 
-  MarkUnverifiedRequest(
-      {this.studentId,
-      this.studentName,
-      this.reasonId,
-      this.teacherRemarks,
-      this.sectionId,
-      this.employeeId,
-      this.tokenId});
+  MarkUnverifiedRequest({this.studentId, this.studentName, this.reasonId, this.teacherRemarks, this.sectionId, this.employeeId, this.tokenId});
 
   MarkUnverifiedRequest.fromJson(Map<String, dynamic> json) {
     studentId = json['studentId'];
@@ -27,14 +20,14 @@ class MarkUnverifiedRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['studentId'] = this.studentId;
-    data['studentName'] = this.studentName;
-    data['reasonId'] = this.reasonId;
-    data['teacherRemarks'] = this.teacherRemarks;
-    data['Section_Id'] = this.sectionId;
-    data['Employee_Id'] = this.employeeId;
-    data['tokenId'] = this.tokenId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['studentId'] = studentId;
+    data['studentName'] = studentName;
+    data['reasonId'] = reasonId;
+    data['teacherRemarks'] = teacherRemarks;
+    data['Section_Id'] = sectionId;
+    data['Employee_Id'] = employeeId;
+    data['tokenId'] = tokenId;
     return data;
   }
 }

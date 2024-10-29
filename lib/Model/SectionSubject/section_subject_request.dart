@@ -1,8 +1,8 @@
 class SectionSubjectRequest {
-  String tokenId;
-  String id;
-  String teacherId;
-  bool isDiary;
+  String? tokenId;
+  String? id;
+  String? teacherId;
+  bool? isDiary;
 
   SectionSubjectRequest({this.tokenId, this.teacherId, this.id, this.isDiary});
 

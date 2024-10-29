@@ -1,9 +1,9 @@
 class OutstandingChallanResponse {
-  bool isSuccessful;
-  String message;
-  bool isException;
-  StudentInfo info;
-  List<OutstandingChallan> outstandingList;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  StudentInfo? info;
+  List<OutstandingChallan>? outstandingList;
 
   OutstandingChallanResponse(
       {this.isSuccessful,
@@ -26,11 +26,11 @@ class OutstandingChallanResponse {
 }
 
 class StudentInfo {
-  String name;
-  int rollNo;
-  String className;
-  String centerName;
-  String regionName;
+  String? name;
+  int? rollNo;
+  String? className;
+  String? centerName;
+  String? regionName;
 
   StudentInfo(
       {this.name,
@@ -50,14 +50,14 @@ class StudentInfo {
 }
 
 class OutstandingChallan {
-  String challanNo;
-  String challanType;
-  String issueDate;
-  String dueDate;
-  String validityDate;
-  String periodName;
-  double originalFee;
-  double outstandingFee;
+  String? challanNo;
+  String? challanType;
+  String? issueDate;
+  String? dueDate;
+  String? validityDate;
+  String? periodName;
+  double? originalFee;
+  double? outstandingFee;
 
   OutstandingChallan(
       {this.challanNo,

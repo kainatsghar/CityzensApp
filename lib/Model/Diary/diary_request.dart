@@ -1,7 +1,7 @@
 class DiaryRequest {
-  String classTeacherId;
-  String tokenId;
-  String studentId;
+  String? classTeacherId;
+  String? tokenId;
+  String? studentId;
 
   DiaryRequest({this.classTeacherId, this.tokenId, this.studentId});
 
@@ -12,11 +12,12 @@ class DiaryRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.classTeacherId != null)
-      data['classTeacherId'] = this.classTeacherId;
-    if (this.tokenId != null) data['tokenId'] = this.tokenId;
-    if (this.studentId != null) data['StudentId'] = this.studentId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (classTeacherId != null) {
+      data['classTeacherId'] = classTeacherId;
+    }
+    if (tokenId != null) data['tokenId'] = tokenId;
+    if (studentId != null) data['StudentId'] = studentId;
     return data;
   }
 }

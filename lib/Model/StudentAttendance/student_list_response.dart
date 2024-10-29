@@ -1,8 +1,8 @@
 class StudentListResponse {
-  bool isSuccessful;
-  String message;
-  bool isException;
-  List<Student> studentList;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  List<Student>? studentList;
 
   StudentListResponse(
       {this.isSuccessful, this.message, this.isException, this.studentList});
@@ -19,11 +19,11 @@ class StudentListResponse {
 }
 
 class Student {
-  int studentId;
-  String name;
-  String day;
-  int attnTypeId;
-  bool status;
+  int? studentId;
+  String? name;
+  String? day;
+  int? attnTypeId;
+  bool? status;
 
   Student({this.studentId, this.name, this.day, this.attnTypeId, this.status});
 

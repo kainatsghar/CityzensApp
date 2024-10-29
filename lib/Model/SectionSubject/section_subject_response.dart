@@ -1,20 +1,21 @@
 class SectionSubjectResponse {
-  List<SectionSubject> sectionSubject;
-  bool isSuccessful;
-  String message;
-  bool isServerException;
+  List<SectionSubject>? sectionSubject;
+  bool? isSuccessful;
+  String? message;
+  bool? isServerException;
 
-  SectionSubjectResponse(
-      {this.sectionSubject,
-      this.isSuccessful,
-      this.message,
-      this.isServerException});
+  SectionSubjectResponse({
+    this.sectionSubject,
+    this.isSuccessful,
+    this.message,
+    this.isServerException,
+  });
 
   SectionSubjectResponse.fromJson(Map<String, dynamic> json) {
     if (json['SectionSubject'] != null) {
       sectionSubject = <SectionSubject>[];
       json['SectionSubject'].forEach((v) {
-        sectionSubject.add(new SectionSubject.fromJson(v));
+        sectionSubject!.add(SectionSubject.fromJson(v));
       });
     }
     isSuccessful = json['IsSuccessful'];
@@ -23,21 +24,20 @@ class SectionSubjectResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.sectionSubject != null) {
-      data['SectionSubject'] =
-          this.sectionSubject.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (sectionSubject != null) {
+      data['SectionSubject'] = sectionSubject!.map((v) => v.toJson()).toList();
     }
-    data['IsSuccessful'] = this.isSuccessful;
-    data['Message'] = this.message;
-    data['IsServerException'] = this.isServerException;
+    data['IsSuccessful'] = isSuccessful;
+    data['Message'] = message;
+    data['IsServerException'] = isServerException;
     return data;
   }
 }
 
 class SectionSubject {
-  int subjectId;
-  String subjectName;
+  int? subjectId;
+  String? subjectName;
 
   SectionSubject({this.subjectId, this.subjectName});
 
@@ -47,9 +47,9 @@ class SectionSubject {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['SubjectId'] = this.subjectId;
-    data['SubjectName'] = this.subjectName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['SubjectId'] = subjectId;
+    data['SubjectName'] = subjectName;
     return data;
   }
 }

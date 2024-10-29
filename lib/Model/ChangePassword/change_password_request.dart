@@ -1,8 +1,8 @@
 class ChangePasswordRequest {
-  String username;
-  String newPassword;
-  String userType;
-  String oldPassword;
+  String? username;
+  String? newPassword;
+  String? userType;
+  String? oldPassword;
 
   ChangePasswordRequest({this.username, this.newPassword,this.userType,this.oldPassword});
 

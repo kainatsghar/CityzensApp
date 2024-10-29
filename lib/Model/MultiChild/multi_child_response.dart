@@ -1,36 +1,33 @@
-class MultiChildResponse{
-  bool isSuccessful;
-  String message;
-  bool isException;
-  List<ChildInfo> children;
+class MultiChildResponse {
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  List<ChildInfo>? children;
 
   MultiChildResponse(
-      {this.isSuccessful,
-        this.message,
-        this.isException,
-        this.children});
+      {this.isSuccessful, this.message, this.isException, this.children});
 
   factory MultiChildResponse.fromJson(Map json) {
     var list = json['StudentInfo'] as List;
-    List<ChildInfo> childInfo =
-    list.map((i) => ChildInfo.fromJson(i)).toList();
+    List<ChildInfo> childInfo = list.map((i) => ChildInfo.fromJson(i)).toList();
     return MultiChildResponse(
         isSuccessful: json['IsSuccessful'],
         message: json['Message'],
         isException: json['IsServerException'],
-        children:  childInfo);
+        children: childInfo);
   }
 }
 
 class ChildInfo {
-  int studentId;
-  String className;
-  String studentName;
-  String dateOfBirth;
-  String regionName;
-  String centerName;
-  String fatherEmail;
-  bool isInvstrMenueEnable;
+  int? studentId;
+  String? className;
+  String? studentName;
+  String? dateOfBirth;
+  String? regionName;
+  String? centerName;
+  String? fatherEmail;
+  int? classId;
+  bool? isInvstrMenueEnable;
 
   ChildInfo(
       {this.studentId,
@@ -40,6 +37,7 @@ class ChildInfo {
       this.regionName,
       this.centerName,
       this.fatherEmail,
+      this.classId,
       this.isInvstrMenueEnable});
 
   factory ChildInfo.fromJson(Map json) {
@@ -51,6 +49,7 @@ class ChildInfo {
         regionName: json['Region_Name'] as String,
         centerName: json['Center_Name'] as String,
         fatherEmail: json['FatherEmail'] as String,
+        classId: json['ClassId'] as int,
         isInvstrMenueEnable: json['IsInvstrMenueEnable'] as bool);
   }
 }

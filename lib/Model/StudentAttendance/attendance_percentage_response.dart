@@ -1,7 +1,7 @@
 class AttendancePercentageResponse {
-  bool isSuccessful;
-  String message;
-  Data data;
+  bool? isSuccessful;
+  String? message;
+  Data? data;
 
   AttendancePercentageResponse({this.isSuccessful, this.message, this.data});
 
@@ -14,7 +14,7 @@ class AttendancePercentageResponse {
 }
 
 class Data {
-  num attendancePercentage;
+  num? attendancePercentage;
 
   Data({this.attendancePercentage});
 

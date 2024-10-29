@@ -1,8 +1,8 @@
 class StudentProfileResponse {
-  bool isSuccessful;
-  String message;
-  bool isException;
-  List<Profile> profile;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  List<Profile>? profile;
 
   StudentProfileResponse(
       {this.isSuccessful, this.message, this.isException, this.profile});
@@ -19,16 +19,16 @@ class StudentProfileResponse {
 }
 
 class Profile {
-  int studentId;
-  String name;
-  String dateOfBirth;
-  String address;
-  String contactNo;
-  String city;
-  String fatherEmail;
-  String region;
-  String center;
-  String className;
+  int? studentId;
+  String? name;
+  String? dateOfBirth;
+  String? address;
+  String? contactNo;
+  String? city;
+  String? fatherEmail;
+  String? region;
+  String? center;
+  String? className;
 
   Profile(
       {this.studentId,

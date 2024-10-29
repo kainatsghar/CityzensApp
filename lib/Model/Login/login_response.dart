@@ -1,15 +1,15 @@
 class LoginResponse {
-  String tokenId;
-  String name;
-  bool isSuccessful;
-  String message;
-  bool isException;
-  bool isInvstrEnable;
-  int id;
-  UserInfo info;
-  String userType;
-  String userName;
-
+  String? tokenId;
+  String? name;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  bool? isInvstrEnable;
+  int? id;
+  UserInfo? info;
+  String? userType;
+  String? userName;
+  int? gradeId;
 
   LoginResponse(
       {this.tokenId,
@@ -20,7 +20,9 @@ class LoginResponse {
       this.isException,
       this.id,
       this.info,
-      this.userType,this.userName});
+      this.userType,
+      this.userName,
+      this.gradeId});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -31,6 +33,7 @@ class LoginResponse {
     data['UserName'] = userName;
     data['IsInvstrMenueEnable'] = isInvstrEnable;
     data['UserInfo'] = info;
+    data['GradeId'] = gradeId;
     return data;
   }
 
@@ -45,18 +48,19 @@ class LoginResponse {
         isException: json['IsServerException'],
         userType: json['UserType'],
         userName: json['UserName'],
-        info: UserInfo.fromJson(json['UserInfo'] ?? {}));
+        info: UserInfo.fromJson(json['UserInfo'] ?? {}),
+        gradeId: json['GradeId']);
   }
 }
 
 class UserInfo {
-  String name;
-  int rollNo;
-  String className;
-  String centerName;
-  String regionName;
-  String fatherEmail;
-  int gradeId;
+  String? name;
+  int? rollNo;
+  String? className;
+  String? centerName;
+  String? regionName;
+  String? fatherEmail;
+  int? gradeId;
 
   UserInfo(
       {this.name,

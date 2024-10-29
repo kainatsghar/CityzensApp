@@ -1,8 +1,8 @@
 class ResultsRequest {
-  String tokenId;
-  String userName;
-  int academicYearId;
-  int termId;
+  String? tokenId;
+  String? userName;
+  int? academicYearId;
+  int? termId;
 
   ResultsRequest(
       {this.tokenId, this.userName, this.academicYearId, this.termId});

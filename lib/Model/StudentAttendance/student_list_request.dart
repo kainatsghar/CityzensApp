@@ -1,10 +1,10 @@
 class StudentListRequest {
-  String classSectionId;
-  String tokenId;
-  String attendanceData;
-  String subjectId;
-  String pMonth;
-  String studentId;
+  String? classSectionId;
+  String? tokenId;
+  String? attendanceData;
+  String? subjectId;
+  String? pMonth;
+  String? studentId;
 
   StudentListRequest(
       {this.classSectionId,

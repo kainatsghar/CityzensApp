@@ -1,19 +1,19 @@
 class TeacherProfileResponse {
-  String region;
-  String teacherName;
-  String employeeCode;
-  String branch;
-  String maritalStatus;
-  String cnicNumber;
-  String designation;
-  String religion;
-  String address;
-  String email;
-  String city;
-  String employeeCell;
-  bool isSuccessful;
-  String message;
-  bool isException;
+  String? region;
+  String? teacherName;
+  String? employeeCode;
+  String? branch;
+  String? maritalStatus;
+  String? cnicNumber;
+  String? designation;
+  String? religion;
+  String? address;
+  String? email;
+  String? city;
+  String? employeeCell;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
 
   TeacherProfileResponse(
       {this.region,

@@ -1,5 +1,5 @@
 class LogoutRequest{
-  String tokenId;
+  String? tokenId;
   LogoutRequest({this.tokenId});
 
   Map<String, dynamic> toJson() {

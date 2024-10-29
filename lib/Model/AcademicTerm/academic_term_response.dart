@@ -1,9 +1,9 @@
 class AcademicTermResponse {
-  bool isSuccessful;
-  String message;
-  bool isException;
-  List<AcademicTerm> session;
-  List<AcademicTerm> term;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  List<AcademicTerm>? session;
+  List<AcademicTerm>? term;
 
   AcademicTermResponse(
       {this.isSuccessful,
@@ -29,8 +29,8 @@ class AcademicTermResponse {
 }
 
 class AcademicTerm {
-  int id;
-  String name;
+  int? id;
+  String? name;
 
   AcademicTerm({this.id, this.name});
 

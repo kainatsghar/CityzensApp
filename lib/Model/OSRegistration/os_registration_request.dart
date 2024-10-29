@@ -1,62 +1,62 @@
 class OSRegistrationRequest {
-  Info info;
+  Info? info;
 
   OSRegistrationRequest({this.info});
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> registration = new Map<String, dynamic>();
-    if (this.info != null) {
-      registration['OnlineStudentRegistration'] = this.info.toJson();
+    final Map<String, dynamic> registration = <String, dynamic>{};
+    if (info != null) {
+      // ignore: unnecessary_this
+      registration['OnlineStudentRegistration'] = this.info!.toJson();
     }
     return registration;
   }
 }
 
 class Info {
-  String firstName;
-  String surName;
-  String gender;
-  String dOB;
-  String nationality;
-  String admissionRequiredSession;
-  String city;
-  String classId;
-  String branchCode;
-  String guardianName;
-  String guardianCNIC;
-  String guardianOccupation;
-  String guardianContactNumber;
-  String guardianEmail;
-  String previousSchoolName;
-  String previousSchoolLocation;
-  String studiedFromClass;
-  String studiedToClass;
-  String reasonForLeaving;
+  String? firstName;
+  String? surName;
+  String? gender;
+  String? dOB;
+  String? nationality;
+  String? admissionRequiredSession;
+  String? city;
+  String? classId;
+  String? branchCode;
+  String? guardianName;
+  String? guardianCNIC;
+  String? guardianOccupation;
+  String? guardianContactNumber;
+  String? guardianEmail;
+  String? previousSchoolName;
+  String? previousSchoolLocation;
+  String? studiedFromClass;
+  String? studiedToClass;
+  String? reasonForLeaving;
 
-  Info({
-    this.firstName,
-    this.surName,
-    this.gender,
-    this.dOB,
-    this.nationality,
-    this.admissionRequiredSession,
-    this.city,
-    this.classId,
-    this.branchCode,
-    this.guardianName,
-    this.guardianCNIC,
-    this.guardianOccupation,
-    this.guardianContactNumber,
-    this.guardianEmail,
-    this.previousSchoolName,
-    this.previousSchoolLocation,
-    this.studiedFromClass,
-    this.studiedToClass,
-    this.reasonForLeaving
-  });
+  Info(
+      {this.firstName,
+      this.surName,
+      this.gender,
+      this.dOB,
+      this.nationality,
+      this.admissionRequiredSession,
+      this.city,
+      this.classId,
+      this.branchCode,
+      this.guardianName,
+      this.guardianCNIC,
+      this.guardianOccupation,
+      this.guardianContactNumber,
+      this.guardianEmail,
+      this.previousSchoolName,
+      this.previousSchoolLocation,
+      this.studiedFromClass,
+      this.studiedToClass,
+      this.reasonForLeaving});
 
   Map<String, dynamic> toJson() {
-    var json = new Map<String, dynamic>();
+    var json = <String, dynamic>{};
     json['FirstName'] = firstName;
     json['Surname'] = surName;
     json['Gender'] = gender;

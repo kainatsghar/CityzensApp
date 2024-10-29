@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 class OSRegistrationResponse {
-  int id;
-  String name;
-  String code;
-  String address;
-  bool isActive;
+  int? id;
+  String? name;
+  String? code;
+  String? address;
+  bool? isActive;
 
   OSRegistrationResponse({
     this.id,

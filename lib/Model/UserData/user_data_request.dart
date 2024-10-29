@@ -1,8 +1,8 @@
 class UserDataRequest {
-  String tokenId;
-  String userName;
-  String group;
-  bool isDiary;
+  String? tokenId;
+  String? userName;
+  String? group;
+  bool? isDiary;
 
   UserDataRequest(
       {this.tokenId, this.userName, this.group, this.isDiary = false});

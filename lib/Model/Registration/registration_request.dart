@@ -1,10 +1,10 @@
 class RegistrationRequest {
-  String username;
-  String mobileNumber;
-  String deviceId;
-  String userType;
-  String pinCode;
-  String password;
+  String? username;
+  String? mobileNumber;
+  String? deviceId;
+  String? userType;
+  String? pinCode;
+  String? password;
 
   RegistrationRequest(
       {this.username, this.mobileNumber, this.deviceId, this.userType, this.pinCode, this.password});

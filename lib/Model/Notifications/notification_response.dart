@@ -1,8 +1,8 @@
 class NotificationResponse {
-  bool isSuccessful;
-  String message;
-  bool isException;
-  List<Notifications> notifications;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  List<Notifications>? notifications;
 
   NotificationResponse(
       {this.isSuccessful, this.message, this.isException, this.notifications});
@@ -21,8 +21,8 @@ class NotificationResponse {
 }
 
 class Notifications {
-  String notifySubject;
-  String notifyMessage;
+  String? notifySubject;
+  String? notifyMessage;
 
   Notifications({
     this.notifySubject,

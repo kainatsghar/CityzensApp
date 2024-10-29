@@ -1,9 +1,9 @@
 class LibraryResponse {
-  bool isSuccessful;
-  String message;
-  bool isException;
-  StudentInfo info;
-  List<LibraryRecords> listLibrary;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  StudentInfo? info;
+  List<LibraryRecords>? listLibrary;
 
   LibraryResponse(
       {this.isSuccessful,
@@ -26,11 +26,11 @@ class LibraryResponse {
 }
 
 class StudentInfo {
-  String name;
-  int rollNo;
-  String className;
-  String centerName;
-  String regionName;
+  String? name;
+  int? rollNo;
+  String? className;
+  String? centerName;
+  String? regionName;
 
   StudentInfo(
       {this.name,
@@ -51,12 +51,12 @@ class StudentInfo {
 }
 
 class LibraryRecords {
-  String bookTitle;
-  String authorName;
-  String issueDate;
-  String dueDate;
-  String returnDate;
-  double fine;
+  String? bookTitle;
+  String? authorName;
+  String? issueDate;
+  String? dueDate;
+  String? returnDate;
+  double? fine;
 
   LibraryRecords(
       {this.bookTitle,

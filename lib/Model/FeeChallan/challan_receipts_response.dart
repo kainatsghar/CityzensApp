@@ -1,9 +1,9 @@
 class ChallanReceiptResponse {
-  bool isSuccessful;
-  String message;
-  bool isException;
-  StudentInfo info;
-  List<FeechallanHistory> receiptList;
+  bool? isSuccessful;
+  String? message;
+  bool? isException;
+  StudentInfo? info;
+  List<FeechallanHistory>? receiptList;
 
   ChallanReceiptResponse(
       {this.isSuccessful,
@@ -26,11 +26,11 @@ class ChallanReceiptResponse {
 }
 
 class StudentInfo {
-  String name;
-  int rollNo;
-  String className;
-  String centerName;
-  String regionName;
+  String? name;
+  int? rollNo;
+  String? className;
+  String? centerName;
+  String? regionName;
 
   StudentInfo(
       {this.name,
@@ -50,12 +50,12 @@ class StudentInfo {
 }
 
 class FeechallanHistory {
-  String receiptNo;
-  String challanType;
-  String receiptDate;
-  String periodName;
-  double amount;
-  double overReceipt;
+  String? receiptNo;
+  String? challanType;
+  String? receiptDate;
+  String? periodName;
+  double? amount;
+  double? overReceipt;
 
   FeechallanHistory(
       {this.receiptNo,

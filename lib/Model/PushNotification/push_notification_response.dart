@@ -1,6 +1,6 @@
 class PushNotificationResponse {
-  String title;
-  String body;
+  String? title;
+  String? body;
 
   PushNotificationResponse({this.title, this.body});
 
