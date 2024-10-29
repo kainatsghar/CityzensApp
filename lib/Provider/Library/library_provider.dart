@@ -6,11 +6,12 @@ import 'package:tcs_app/Services/Library/library_service.dart';
 import 'package:tcs_app/model/Library/library_response.dart';
 
 class LibraryProvider with ChangeNotifier {
-  LibraryResponse libraryResponse;
+  late LibraryResponse libraryResponse;
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setLibraryData(LibraryResponse response) {
     libraryResponse = response;
@@ -19,14 +20,14 @@ class LibraryProvider with ChangeNotifier {
 
   Future<LibraryResponse> loadLibraryRecords() async {
     try {
-      LibraryResponse response =
-      await LibraryService.libraryRequest(
-          token: localDataProvider.userData.tokenId,
-          userName: localDataProvider.studentId);
+      LibraryResponse response = await LibraryService.libraryRequest(
+        token: localDataProvider.userData!.tokenId!,
+        userName: localDataProvider.studentId,
+      );
       setLibraryData(response);
       return response;
     } catch (ex) {
-      throw ex;
+      rethrow;
     }
   }
 }

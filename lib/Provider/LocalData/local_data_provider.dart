@@ -20,17 +20,21 @@ import '../../Screens/Student/StudentDashboardScreen/student_dashboard_screen.da
 import '../../Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart';
 
 class LocalDataProvider with ChangeNotifier {
-  LoginResponse userData = LoginResponse();
+  LoginResponse? userData = LoginResponse();
 
   String studentId = '';
+  int? gradeId = 0;
 
   Future<void> loadStoredData() async {
-    String localData =
+    String? localData =
         await AppLocalData.getStringPrefValue(key: AppConstants.userDataKey);
     if (localData != null) {
       userData = LoginResponse.fromJson(jsonDecode(localData));
-      if (userData.userType == 'Student') {
-        setStudentId(userData.userName);
+      if (userData!.userType == 'Student') {
+        setStudentId(userData!.userName!);
+        setSGradeId(userData!.info!.gradeId!);
+      } else if (userData!.userType == 'Teacher') {
+        setSGradeId(userData!.gradeId);
       }
       notifyListeners();
     } else {
@@ -43,40 +47,47 @@ class LocalDataProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setSGradeId(int? gId) {
+    gradeId = gId;
+    notifyListeners();
+  }
+
   Future<Widget> authDecider() async {
     await loadStoredData();
-    if (userData.tokenId == null) {
-      return LoginScreen();
+
+    if (userData!.tokenId == null) {
+      // if (userData!.tokenId.isEmpty) {
+      return const LoginScreen();
     } else {
-      if (userData.userType == 'Student') {
-        return StudentDashboardScreen();
-      } else if (userData.userType == 'Teacher') {
-        return TeacherDashboardScreen();
+      if (userData!.userType == 'Student') {
+        return const StudentDashboardScreen();
+      } else if (userData!.userType == 'Teacher') {
+        return const TeacherDashboardScreen();
       } else {
-        return ParentDashboardScreen();
+        return const ParentDashboardScreen();
       }
     }
   }
 
   void setUserImage(File file) {
     if (studentId.isNotEmpty) {
-      AppLocalData.setStringPrefValue(key: '$studentId', value: file.path);
+      AppLocalData.setStringPrefValue(key: studentId, value: file.path);
     } else {
       AppLocalData.setStringPrefValue(
-          key: '${userData.userName}', value: file.path);
+          key: '${userData!.userName}', value: file.path);
     }
     notifyListeners();
   }
 
-  Future<String> loadImagePath(String userId) async =>
+  Future<String?> loadImagePath(String userId) async =>
       await AppLocalData.getStringPrefValue(key: userId);
 
   Future logout(BuildContext context) async {
     DialogBuilder.showLoadingIndicator();
     try {
       ResponseMessage response =
-          await LogoutService.logoutRequest(userData.tokenId);
-      if (response.isSuccessful) {
+          await LogoutService.logoutRequest(userData!.tokenId!);
+      if (response.isSuccessful ?? false) {
         AppLocalData.removeKeyData(key: AppConstants.userDataKey);
         Future.delayed(Duration.zero,
             () => AppNavigation.pushAndKillAll(AppNavRoutes.authWrapperRoute));
@@ -92,23 +103,25 @@ class LocalDataProvider with ChangeNotifier {
   openCamera() async {
     AppNavigation.goBack();
     var image = await ImagePicker().pickImage(source: ImageSource.camera);
-    cropImage(File(image.path));
+    cropImage(File(image?.path ?? 'null'));
   }
 
   openGallery() async {
     AppNavigation.goBack();
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    cropImage(File(image.path));
+    cropImage(File(image?.path ?? 'null'));
   }
 
   Future cropImage(File image) async {
-    var croppedFile = await ImageCropper().cropImage(
-      sourcePath: image.path,
-      maxWidth: 512,
-      maxHeight: 512,
-    );
-    if (croppedFile != null) {
-      setUserImage(File(croppedFile.path));
+    if (await File(image.path).exists()) {
+      var croppedFile = await ImageCropper().cropImage(
+        sourcePath: image.path,
+        maxWidth: 512,
+        maxHeight: 512,
+      );
+      if (croppedFile != null) {
+        setUserImage(File(croppedFile.path));
+      }
     }
   }
 }

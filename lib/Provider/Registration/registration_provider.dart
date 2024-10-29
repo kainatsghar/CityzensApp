@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
+// import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/success_dialog_box.dart';
@@ -21,7 +22,7 @@ class RegistrationProvider with ChangeNotifier {
   final createPasswordFormKey = GlobalKey<FormState>();
 
   bool obscureText = true;
-  List<Options> userTypeList;
+  late List<Options> userTypeList;
   String userNameLabel = 'Roll Number', userNameHint = 'xxxxxxxx';
   String controllerMask = '00000000';
   TextEditingController phoneNumberController = TextEditingController();
@@ -31,7 +32,7 @@ class RegistrationProvider with ChangeNotifier {
 
   TextEditingController userTypeController =
       TextEditingController(text: 'Student');
-  MaskedTextController userNameController;
+  late MaskedTextController userNameController;
 
   ResponseMessage _responseMessage = ResponseMessage();
 
@@ -45,16 +46,32 @@ class RegistrationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String validator(String value) {
-    if (value.isEmpty) {
+  // String validator(String value) {
+  //   if (value.isEmpty) {
+  //     return "Required*";
+  //   } else {
+  //     return null;
+  //   }
+  // }
+  String? validator(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
     } else {
       return null;
     }
   }
 
-  String passwordValidator(String value) {
-    if (value.isEmpty) {
+  // String passwordValidator(String value) {
+  //   if (value.isEmpty) {
+  //     return "Required*";
+  //   } else if (value.length < 8) {
+  //     return "Password must be at least 8 characters long";
+  //   } else {
+  //     return null;
+  //   }
+  // }
+  String? passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
     } else if (value.length < 8) {
       return "Password must be at least 8 characters long";
@@ -63,8 +80,8 @@ class RegistrationProvider with ChangeNotifier {
     }
   }
 
-  String confirmPasswordValidator(String value) {
-    if (value.isEmpty) {
+  String? confirmPasswordValidator(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
     } else if (value != passwordController.text) {
       return "Password doesn't match";
@@ -76,17 +93,17 @@ class RegistrationProvider with ChangeNotifier {
   Future<void> userRegistration() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (regFormKey.currentState.validate()) {
-        FocusScope.of(AppNavigation.currentContext).requestFocus(FocusNode());
-        ResponseMessage responseMessage =
+      if (regFormKey.currentState!.validate()) {
+        FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
+        ResponseMessage? responseMessage =
             await RegistrationService.userRegRequest(
                 userName: userNameController.text,
                 mobileNumber: phoneNumberController.text,
                 userType: userTypeController.text);
-        if (responseMessage.isSuccessful) {
+        if (responseMessage.isSuccessful ?? false) {
           setResponseData(responseMessage);
           Future.delayed(
-              Duration(milliseconds: 1),
+              const Duration(milliseconds: 1),
               () => AppNavigation.navigateTo(
                   AppNavRoutes.registrationPinCodeRoute));
         } else {
@@ -102,18 +119,18 @@ class RegistrationProvider with ChangeNotifier {
   Future<void> verifyPinCode() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (pinCodeFormKey.currentState.validate()) {
-        FocusScope.of(AppNavigation.currentContext).requestFocus(FocusNode());
+      if (pinCodeFormKey.currentState!.validate()) {
+        FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         ResponseMessage responseMessage =
             await VerifyPinCodeService.verifyPinCodeRequest(
                 userName: userNameController.text,
                 pinCode: pinCodeController.text,
                 userType: userTypeController.text,
                 isRegPin: true);
-        if (responseMessage.isSuccessful) {
+        if (responseMessage.isSuccessful ?? false) {
           confirmPasswordController.clear();
           passwordController.clear();
-          Future.delayed(Duration(milliseconds: 1),
+          Future.delayed(const Duration(milliseconds: 1),
               () => AppNavigation.navigateTo(AppNavRoutes.createPasswordRoute));
         } else {
           showSnackBar(responseMessage.message);
@@ -128,19 +145,20 @@ class RegistrationProvider with ChangeNotifier {
   Future<void> createPassword() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (createPasswordFormKey.currentState.validate()) {
-        FocusScope.of(AppNavigation.currentContext).requestFocus(FocusNode());
-        ResponseMessage responseMessage =
+      if (createPasswordFormKey.currentState!.validate()) {
+        FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
+        ResponseMessage? responseMessage =
             await UpdatePasswordService.updatePasswordRequest(
                 userName: userNameController.text,
                 confirmPassword: confirmPasswordController.text,
                 userType: userTypeController.text,
                 isRegPass: true);
-        if (responseMessage.isSuccessful) {
-          Future.delayed(
-              Duration(milliseconds: 1), () => AppNavigation.removeAllRoutes());
+        if (responseMessage.isSuccessful ?? false) {
+          Future.delayed(const Duration(milliseconds: 1),
+              () => AppNavigation.removeAllRoutes());
           showSnackBar(
-              'Password for ${userNameController.text} has been created successfully',color: AppColors.successGreenColor);
+              'Password for ${userNameController.text} has been created successfully',
+              color: AppColors.successGreenColor);
           disposeData();
         } else {
           showSnackBar(responseMessage.message);
@@ -153,20 +171,20 @@ class RegistrationProvider with ChangeNotifier {
   }
 
   void initializeData() {
-    userNameController = new MaskedTextController(mask: controllerMask);
+    userNameController = MaskedTextController(mask: controllerMask);
     userTypeList = HelperFunction.userTypes().take(2).toList();
   }
 
   void initializePinCodeData() {
     pinCodeController.clear();
-    if (_responseMessage.isSuccessful != null &&
-        _responseMessage.isSuccessful) {
+    // if (_responseMessage.isSuccessful != null && _responseMessage.isSuccessful) {
+    if (_responseMessage.isSuccessful ?? false) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         showDialog(
-            context: AppNavigation.currentContext,
+            context: AppNavigation.currentContext!,
             builder: (BuildContext context) => SuccessDialogBox(
                 title: 'Success',
-                description: _responseMessage.message,
+                description: _responseMessage.message!,
                 buttonText: 'OK'));
       });
     }
@@ -179,7 +197,7 @@ class RegistrationProvider with ChangeNotifier {
         : v == 'Parent'
             ? '00000-0000000-0'
             : '00000000';
-    userNameController = new MaskedTextController(mask: controllerMask);
+    userNameController = MaskedTextController(mask: controllerMask);
     userNameLabel = v == 'Parent' ? 'CNIC Number' : 'Roll Number';
     userNameHint = v == 'Parent' ? 'xxxxx-xxxxxxx-x' : 'xxxxxxxx';
     notifyListeners();
@@ -188,7 +206,7 @@ class RegistrationProvider with ChangeNotifier {
 
   void userTypeBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext,
+        context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) => CustomFilterBottomSheet(
             controller: userTypeController,

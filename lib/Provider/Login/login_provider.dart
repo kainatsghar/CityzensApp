@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
+// import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
@@ -16,21 +17,21 @@ import 'package:tcs_app/model/Login/login_response.dart';
 class LoginProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   bool obscureText = true;
-  List<Options> userTypeList;
+  late List<Options> userTypeList;
   String userNameLabel = 'Roll Number';
   String controllerMask = '00000000';
   TextEditingController passwordController = TextEditingController();
   TextEditingController userTypeController =
       TextEditingController(text: 'Student');
-  MaskedTextController userNameController;
+  MaskedTextController? userNameController;
 
   void showHidePassword() {
     obscureText = !obscureText;
     notifyListeners();
   }
 
-  String validator(String value) {
-    if (value.isEmpty) {
+  String? validator(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
     } else {
       return null;
@@ -40,15 +41,15 @@ class LoginProvider extends ChangeNotifier {
   Future<void> login() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (formKey.currentState.validate()) {
-        FocusScope.of(AppNavigation.currentContext).requestFocus(FocusNode());
+      if (formKey.currentState?.validate() ?? false) {
+        FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         LoginResponse loginResponse = await LoginService.loginRequest(
-            userNameController.text,
+            userNameController?.text ?? '',
             passwordController.text,
             userTypeController.text);
-        if (loginResponse.isSuccessful) {
+        if (loginResponse.isSuccessful ?? false) {
           loginResponse.userType = userTypeController.text;
-          loginResponse.userName = userNameController.text;
+          loginResponse.userName = userNameController?.text ?? '';
           AppLocalData.setStringPrefValue(
               key: AppConstants.userDataKey, value: jsonEncode(loginResponse));
           Future.delayed(
@@ -66,7 +67,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void initializeData() {
-    userNameController = new MaskedTextController(mask: controllerMask);
+    userNameController = MaskedTextController(mask: controllerMask);
     userTypeList = HelperFunction.userTypes();
   }
 
@@ -83,7 +84,7 @@ class LoginProvider extends ChangeNotifier {
         : v == 'Parent'
             ? '00000-0000000-0'
             : '00000000';
-    userNameController = new MaskedTextController(mask: controllerMask);
+    userNameController = MaskedTextController(mask: controllerMask);
     userNameLabel = v == 'Teacher'
         ? 'Employee Number'
         : v == 'Parent'
@@ -93,7 +94,7 @@ class LoginProvider extends ChangeNotifier {
 
   void userTypeBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext,
+        context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) => CustomFilterBottomSheet(
             controller: userTypeController,
@@ -102,7 +103,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void disposeData() {
-    userNameController.clear();
+    userNameController?.clear();
     passwordController.clear();
     obscureText = true;
     userTypeController = TextEditingController(text: 'Student');

@@ -31,8 +31,8 @@ class MarkAttendanceProvider with ChangeNotifier {
   List<Options> sections = [];
   List<Options> subjects = [];
 
-  int sectionId;
-  int classId;
+  int? sectionId;
+  int? classId;
   int subjectId = 0;
 
   String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -43,18 +43,25 @@ class MarkAttendanceProvider with ChangeNotifier {
   StudentListResponse studentListResponse = StudentListResponse();
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
+
+  Future<void> navigateToMarkTimeTable() async {
+    if (formKey.currentState!.validate()) {
+      FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
+      AppNavigation.navigateTo(AppNavRoutes.teacherTimeTableRoute);
+    }
+  }
 
   void setSectionData(TeacherSectionResponse response) {
     sectionResponse = response;
     sectionController.clear();
     sectionId = null;
     sections = List.generate(
-        sectionResponse.section.length,
+        sectionResponse.section!.length,
         (index) => Options(
-            title: sectionResponse.section[index].name,
-            value: sectionResponse.section[index].classSectionId));
+            title: sectionResponse.section![index].name,
+            value: sectionResponse.section![index].classSectionId));
     notifyListeners();
   }
 
@@ -62,24 +69,24 @@ class MarkAttendanceProvider with ChangeNotifier {
     subjectResponse = response;
     subjectController.clear();
     subjects = List.generate(
-        subjectResponse.sectionSubject.length,
+        subjectResponse.sectionSubject!.length,
         (index) => Options(
-            title: subjectResponse.sectionSubject[index].subjectName,
-            value: subjectResponse.sectionSubject[index].subjectId));
+            title: subjectResponse.sectionSubject![index].subjectName!,
+            value: subjectResponse.sectionSubject![index].subjectId!));
     notifyListeners();
   }
 
-  Future<void> loadStudentList() async {
+  Future<StudentListResponse> loadStudentList() async {
     try {
       StudentListResponse response = await StudentListService.stdListRequest(
           classSectionId: '$sectionId',
           subjectId: subjectId,
-          tokenId: localDataProvider.userData.tokenId,
+          tokenId: localDataProvider.userData!.tokenId!,
           attendanceDate: formattedDate);
       setStudentList(response);
       return response;
     } catch (ex) {
-      throw ex;
+      rethrow;
     }
   }
 
@@ -88,15 +95,15 @@ class MarkAttendanceProvider with ChangeNotifier {
     try {
       await loadStudentList();
     } catch (e) {
-      throw e;
+      rethrow;
     }
     DialogBuilder.hideOpenDialog();
   }
 
   void changeStatus(String status, int index) {
-    studentListResponse.studentList[index].day = status;
-    studentListResponse.studentList[index].attnTypeId = attendanceOptions
-        .singleWhere((e) => e.title.characters.first == status)
+    studentListResponse.studentList![index].day = status;
+    studentListResponse.studentList![index].attnTypeId = attendanceOptions
+        .singleWhere((e) => e.title!.characters.first == status)
         .value;
     notifyListeners();
   }
@@ -110,7 +117,7 @@ class MarkAttendanceProvider with ChangeNotifier {
   Future<void> setSelectedSection(String sectionName) async {
     AppNavigation.goBack();
     sectionId = sections.firstWhere((e) => e.title == sectionName).value;
-    classId = sectionResponse.section
+    classId = sectionResponse.section!
         .firstWhere((e) => e.name == sectionName)
         .classId;
     subjectController.clear();
@@ -124,7 +131,7 @@ class MarkAttendanceProvider with ChangeNotifier {
   }
 
   void setSelectedSubject(String subjectName) {
-    subjectId = subjects.singleWhere((e) => e.title == subjectName).value;
+    subjectId = subjects.singleWhere((e) => e.title == subjectName).value!;
     subjectController.text = subjectName;
     AppNavigation.goBack();
     notifyListeners();
@@ -134,12 +141,12 @@ class MarkAttendanceProvider with ChangeNotifier {
     try {
       TeacherSectionResponse response =
           await TeacherSectionService.sectionRequest(
-              userName: localDataProvider.userData.userName,
-              token: localDataProvider.userData.tokenId);
+              userName: localDataProvider.userData!.userName!,
+              token: localDataProvider.userData!.tokenId!);
       setSectionData(response);
       return response;
     } catch (ex) {
-      throw ex;
+      rethrow;
     }
   }
 
@@ -148,18 +155,18 @@ class MarkAttendanceProvider with ChangeNotifier {
       SectionSubjectResponse response =
           await SectionSubjectService.getSubjectsRequest(
               classSectionId: '$sectionId',
-              teacherId: localDataProvider.userData.userName,
-              token: localDataProvider.userData.tokenId);
+              teacherId: localDataProvider.userData!.userName!,
+              token: localDataProvider.userData!.tokenId!);
       setSubjectsData(response);
       return response;
     } catch (ex) {
-      throw ex;
+      rethrow;
     }
   }
 
   Future<void> navigateToMarkAttendance() async {
-    if (formKey.currentState.validate()) {
-      FocusScope.of(AppNavigation.currentContext).requestFocus(FocusNode());
+    if (formKey.currentState!.validate()) {
+      FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
       AppNavigation.navigateTo(AppNavRoutes.markAttendanceRoute);
     }
   }
@@ -178,17 +185,17 @@ class MarkAttendanceProvider with ChangeNotifier {
                 day: markedList[i].day,
                 attnTypeId: attendanceOptions
                     .singleWhere(
-                        (e) => e.title.characters.first == markedList[i].day)
+                        (e) => e.title!.characters.first == markedList[i].day)
                     .value));
-        ResponseMessage responseMessage =
+        ResponseMessage? responseMessage =
             await SaveAttendanceService.saveAttendanceRequest(
                 SaveAttendanceRequest(
                     classSectionId: '$sectionId',
-                    tokenId: localDataProvider.userData.tokenId,
+                    tokenId: localDataProvider.userData!.tokenId,
                     attendanceDate: formattedDate,
                     subjectId: subjectId,
                     dailyAttendance: attendanceList));
-        if (responseMessage.isSuccessful) {
+        if (responseMessage.isSuccessful ?? false) {
           setSaveAttendanceResponse(responseMessage);
           showSnackBar(responseMessage.message,
               color: AppColors.successGreenColor);
@@ -204,7 +211,7 @@ class MarkAttendanceProvider with ChangeNotifier {
     DialogBuilder.hideOpenDialog();
   }
 
-  ResponseMessage saveAttendanceResponse = ResponseMessage();
+  ResponseMessage? saveAttendanceResponse = ResponseMessage();
 
   void setSaveAttendanceResponse(ResponseMessage responseMessage) {
     saveAttendanceResponse = responseMessage;
@@ -216,7 +223,7 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   void sectionBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext,
+        context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) => CustomFilterBottomSheet(
             title: 'Select Section',
@@ -227,7 +234,7 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   void subjectBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext,
+        context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) => CustomFilterBottomSheet(
             title: 'Select Subject',
@@ -242,19 +249,20 @@ class MarkAttendanceProvider with ChangeNotifier {
     pieData = List.generate(
         attendanceOptions.length,
         (index) => AttendanceGraph(
-            attendanceOptions[index].title,
+            attendanceOptions[index].title!,
             students
                 .where((e) =>
-                    e.day == attendanceOptions[index].title.characters.first)
+                    e.day == attendanceOptions[index].title!.characters.first)
                 .toList()
                 .length,
-            attendanceOptions[index].color));
+            attendanceOptions[index].color!));
   }
 
   List<PieChartSectionData> getSections() => List.generate(
       pieData.length,
       (index) => PieChartSectionData(
-          titleStyle: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
+          titleStyle:
+              const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
           radius: 30,
           titlePositionPercentageOffset: 1.6,
           color: pieData[index].color,

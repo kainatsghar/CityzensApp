@@ -6,11 +6,9 @@ import 'package:tcs_app/Services/TeacherProfile/teacher_profile_service.dart';
 import 'package:tcs_app/model/TeacherProfile/teacher_profile_response.dart';
 
 class TeacherProfileProvider with ChangeNotifier {
-  TeacherProfileResponse profileResponse;
+  TeacherProfileResponse? profileResponse;
 
-  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext,
-      listen: false);
+  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(AppNavigation.currentContext!, listen: false);
 
   void setTeacherProfileData(TeacherProfileResponse response) {
     profileResponse = response;
@@ -19,14 +17,11 @@ class TeacherProfileProvider with ChangeNotifier {
 
   Future<TeacherProfileResponse> loadTeacherProfile() async {
     try {
-      TeacherProfileResponse response =
-          await TeacherProfileService.teacherProfileRequest(
-            userName: localDataProvider.userData.userName,
-              token: localDataProvider.userData.tokenId);
+      TeacherProfileResponse response = await TeacherProfileService.teacherProfileRequest(userName: localDataProvider.userData!.userName!, token: localDataProvider.userData!.tokenId!);
       setTeacherProfileData(response);
       return response;
     } catch (ex) {
-      throw ex;
+      rethrow;
     }
   }
 }

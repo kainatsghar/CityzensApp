@@ -7,14 +7,12 @@ import 'package:tcs_app/model/FeeChallan/challan_receipts_response.dart';
 import 'package:tcs_app/model/FeeChallan/outstanding_challan_response.dart';
 
 class FeeChallanProvider with ChangeNotifier {
-  ScrollController scrollController;
-  TabController controller;
-  OutstandingChallanResponse outstandingChallans;
-  ChallanReceiptResponse challanReceiptResponse;
+  ScrollController? scrollController;
+  TabController? controller;
+  OutstandingChallanResponse? outstandingChallans;
+  ChallanReceiptResponse? challanReceiptResponse;
 
-  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext,
-      listen: false);
+  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(AppNavigation.currentContext!, listen: false);
 
   void initializeData(TickerProvider tickerProvider) {
     controller = TabController(length: 2, vsync: tickerProvider);
@@ -32,27 +30,27 @@ class FeeChallanProvider with ChangeNotifier {
 
   Future<OutstandingChallanResponse> loadOutstandingRecords() async {
     try {
-      OutstandingChallanResponse response =
-          await FeeChallanService.outStandingChallanRequest(
-              token: localDataProvider.userData.tokenId,
-              userName: localDataProvider.studentId);
+      OutstandingChallanResponse response = await FeeChallanService.outStandingChallanRequest(
+          // token: localDataProvider.userData.tokenId,
+          token: localDataProvider.userData!.tokenId ?? '',
+          userName: localDataProvider.studentId);
       setOutstandingChallanData(response);
       return response;
     } catch (ex) {
-      throw ex;
+      rethrow;
     }
   }
 
   Future<ChallanReceiptResponse> loadReceiptRecords() async {
     try {
-      ChallanReceiptResponse response =
-          await FeeChallanService.challanReceiptRequest(
-              token: localDataProvider.userData.tokenId,
-              userName: localDataProvider.studentId);
+      ChallanReceiptResponse response = await FeeChallanService.challanReceiptRequest(
+        token: localDataProvider.userData!.tokenId,
+        userName: localDataProvider.studentId,
+      );
       setChallanReceiptsData(response);
       return response;
     } catch (ex) {
-      throw ex;
+      rethrow;
     }
   }
 }

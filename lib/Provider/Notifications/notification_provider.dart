@@ -7,14 +7,12 @@ import 'package:tcs_app/model/Notifications/notification_response.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotificationProvider with ChangeNotifier {
-  List<Notifications> notifications;
+  List<Notifications>? notifications;
 
-  ScrollController scrollController;
-  TabController controller;
+  ScrollController? scrollController;
+  TabController? controller;
 
-  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext,
-      listen: false);
+  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(AppNavigation.currentContext!, listen: false);
 
   void setNotificationData(NotificationResponse response) {
     notifications = response.notifications;
@@ -35,15 +33,11 @@ class NotificationProvider with ChangeNotifier {
 
   Future<NotificationResponse> loadNotificationData(String group) async {
     try {
-      NotificationResponse response =
-          await NotificationService.notificationRequest(
-              token: localDataProvider.userData.tokenId,
-              userName: localDataProvider.studentId,
-              group: group);
+      NotificationResponse response = await NotificationService.notificationRequest(token: localDataProvider.userData!.tokenId!, userName: localDataProvider.studentId, group: group);
       setNotificationData(response);
       return response;
     } catch (ex) {
-      throw ex;
+      rethrow;
     }
   }
 }

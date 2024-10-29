@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:launch_review/launch_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
@@ -28,16 +27,16 @@ class DashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String validator(String value) {
-    if (value.isEmpty) {
+  String? validator(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
     } else {
       return null;
     }
   }
 
-  String passwordValidator(String value) {
-    if (value.isEmpty) {
+  String? passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
     } else if (value.length < 8) {
       return "Password must be at least 8 characters long";
@@ -46,8 +45,8 @@ class DashboardProvider with ChangeNotifier {
     }
   }
 
-  String confirmPasswordValidator(String value) {
-    if (value.isEmpty) {
+  String? confirmPasswordValidator(String? value) {
+    if (value == null || value.isEmpty) {
       return "Required*";
     } else if (value != newPassController.text) {
       return "Password doesn't match";
@@ -59,41 +58,45 @@ class DashboardProvider with ChangeNotifier {
   Future<void> changePassword() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (changePasswordFormKey.currentState.validate()) {
-        FocusScope.of(AppNavigation.currentContext).requestFocus(FocusNode());
+      if (changePasswordFormKey.currentState!.validate()) {
+        FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         ResponseMessage responseMessage =
             await ChangePasswordService.changePasswordRequest(
-                userName: userNameController.text,
-                oldPassword: oldPassController.text,
-                userType: userTypeController.text);
-        if (responseMessage.isSuccessful) {
+          userName: userNameController.text,
+          oldPassword: oldPassController.text,
+          userType: userTypeController.text,
+        );
+        if (responseMessage.isSuccessful ?? false) {
+          // if (responseMessage.isSuccessful) {
           Future.delayed(Duration.zero, () => AppNavigation.goBack());
           showSnackBar(
-              'Password for ${userNameController.text} has been changed successfully',
-              color: AppColors.successGreenColor);
+            'Password for ${userNameController.text} has been changed successfully',
+            color: AppColors.successGreenColor,
+          );
           disposeData();
         } else {
           showSnackBar(responseMessage.message);
         }
       }
     } catch (ex) {
-      showSnackBar(ex);
+      showSnackBar(ex.toString());
     }
     DialogBuilder.hideOpenDialog();
   }
 
   void initializeData() {
     var localProvider = Provider.of<LocalDataProvider>(
-        AppNavigation.currentContext,
+        AppNavigation.currentContext!,
         listen: false);
-    userTypeController.text = localProvider.userData.userType;
-    userNameController.text = localProvider.userData.userType == 'Student'
-        ? '${localProvider.studentId}'
-        : '${localProvider.userData.userName}';
+    userTypeController.text = localProvider.userData!.userType!;
+    userNameController.text = localProvider.userData!.userType == 'Student'
+        ? localProvider.studentId
+        : '${localProvider.userData!.userName}';
   }
 
   launchPlayStore() async {
     const url =
+        // ignore: prefer_adjacent_string_concatenation
         'https://play.google.com/store/apps/details?id=' + 'com.tcs.tcsapp';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
@@ -102,9 +105,9 @@ class DashboardProvider with ChangeNotifier {
     }
   }
 
-  launchAppStore() {
-    LaunchReview.launch(writeReview: false, iOSAppId: '1630070364');
-  }
+  // launchAppStore() {
+  //   LaunchReview.launch(writeReview: false, iOSAppId: '1630070364');
+  // }
 
   launchEmail() async {
     const address = 'mailto:appfeedback@csn.edu.pk';

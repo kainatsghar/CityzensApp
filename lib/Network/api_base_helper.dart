@@ -25,8 +25,14 @@ class ApiBaseHelper {
   }
 
   static Future<Map<String, dynamic>> httpPostRequest(String endPoint,
-      {Object body, String base = AppConstants.apiBaseURL}) async {
+      {Object? body,
+      String base = AppConstants.apiBaseURL,
+      String? token}) async {
     http.Response response;
+
+    final headers = {'Authorization': 'Bearer $token'};
+    headers.addAll(AppConstants.appHeaders);
+
     try {
       response = await http.post(Uri.parse('$base$endPoint'),
           headers: AppConstants.appHeaders, body: json.encode(body));
@@ -43,7 +49,7 @@ class ApiBaseHelper {
   }
 
   static Future<Map<String, dynamic>> httpPutRequest(String endPoint,
-      {Object body, String base = AppConstants.apiBaseURL}) async {
+      {Object? body, String base = AppConstants.apiBaseURL}) async {
     http.Response response;
     try {
       response = await http.put(Uri.parse('$base$endPoint'),
@@ -81,7 +87,7 @@ class ApiBaseHelper {
   }
 
   static Future<Map<String, dynamic>> httpDeleteRequest(String endPoint,
-      {Object body}) async {
+      {Object? body}) async {
     http.Response response;
     try {
       response = await http.delete(
