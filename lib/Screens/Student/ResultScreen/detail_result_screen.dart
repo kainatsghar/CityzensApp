@@ -7,6 +7,8 @@ import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class DetailResultScreen extends StatefulWidget {
+  const DetailResultScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return DetailResultScreenState();
@@ -14,9 +16,9 @@ class DetailResultScreen extends StatefulWidget {
 }
 
 class DetailResultScreenState extends State<DetailResultScreen> {
-  Future resultService;
-  var provider =
-      Provider.of<ResultsProvider>(AppNavigation.currentContext, listen: false);
+  late Future resultService;
+  var provider = Provider.of<ResultsProvider>(AppNavigation.currentContext!,
+      listen: false);
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class DetailResultScreenState extends State<DetailResultScreen> {
                   return const CustomLoader();
                 default:
                   if (snapshot.hasData) {
-                    return DetailResultViewDecider();
+                    return const DetailResultViewDecider();
                   } else {
                     return ShowError(errorText: '${snapshot.error}');
                   }

@@ -9,15 +9,18 @@ import 'library_notification_screen.dart';
 import 'message_screen.dart';
 
 class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
-    return new NotificationScreenState();
+    return NotificationScreenState();
   }
 }
 
 class NotificationScreenState extends State<NotificationScreen>
     with SingleTickerProviderStateMixin {
-  var provider = Provider.of<NotificationProvider>(AppNavigation.currentContext,
+  var provider = Provider.of<NotificationProvider>(
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -32,13 +35,13 @@ class NotificationScreenState extends State<NotificationScreen>
       body: Consumer<NotificationProvider>(builder: (context, value, _) {
         return CustomTabBar(
             scrollController: value.scrollController,
-            appBarTitle: 'ALERTS',
-            tabs: [
+            appBarTitle: 'CIRCULARS',
+            tabs: const [
               Tab(child: Text('MESSAGE')),
               Tab(child: Text('LIBRARY')),
               Tab(child: Text('CHALLAN'))
             ],
-            widgets: <Widget>[
+            widgets: const <Widget>[
               MessageScreen(),
               LibraryNotificationScreen(),
               ChallanNotificationScreen()

@@ -9,7 +9,7 @@ import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class ForgotPinCodeScreen extends StatefulWidget {
-  ForgotPinCodeScreen({Key key}) : super(key: key);
+  const ForgotPinCodeScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -19,7 +19,7 @@ class ForgotPinCodeScreen extends StatefulWidget {
 
 class ForgotPinCodeScreenState extends State<ForgotPinCodeScreen> {
   ForgotPasswordProvider provider = Provider.of<ForgotPasswordProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -32,17 +32,18 @@ class ForgotPinCodeScreenState extends State<ForgotPinCodeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: CustomAppBar(title: 'SECURITY CHECK'),
+        appBar: const CustomAppBar(title: 'SECURITY CHECK'),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: SingleChildScrollView(
             child:
                 Consumer<ForgotPasswordProvider>(builder: (context, value, _) {
               return Column(children: <Widget>[
-                CustomLogoCover(),
+                const CustomLogoCover(),
                 SizedBox(height: size.height * 0.02),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 25.0),
                   decoration: BoxDecoration(
                       color: AppColors.secondaryColor,
                       borderRadius: BorderRadius.circular(20.0)),
@@ -52,7 +53,7 @@ class ForgotPinCodeScreenState extends State<ForgotPinCodeScreen> {
                       children: <Widget>[
                         CustomTextFormField(
                             isEnable: false,
-                            hintText: '${value.userNameController.text}',
+                            hintText: value.userNameController!.text,
                             prefixIcon: Icons.person),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
@@ -69,7 +70,7 @@ class ForgotPinCodeScreenState extends State<ForgotPinCodeScreen> {
                 CustomAppButton(
                     buttonTitle: 'Next', onTap: () => value.verifyPinCode()),
                 SizedBox(height: size.height * 0.02),
-                Column(
+                const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(

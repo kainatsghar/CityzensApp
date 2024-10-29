@@ -17,9 +17,9 @@ import '../../../Utils/app_colors.dart';
 import '../../../Utils/helper_function.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
-  final ScreenArguments args;
+  final ScreenArguments? args;
 
-  const StudentDashboardScreen({Key key, this.args}) : super(key: key);
+  const StudentDashboardScreen({super.key, this.args});
 
   @override
   State<StatefulWidget> createState() {
@@ -29,17 +29,18 @@ class StudentDashboardScreen extends StatefulWidget {
 
 class StudentDashboardScreenState extends State<StudentDashboardScreen>
     with WidgetsBindingObserver {
-  var localData = Provider.of<LocalDataProvider>(AppNavigation.currentContext,
+  var localData = Provider.of<LocalDataProvider>(AppNavigation.currentContext!,
       listen: false);
   var attendance = Provider.of<StudentAttendanceProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
-  Future attendanceService;
+  late Future attendanceService;
 
   @override
   void initState() {
-    if (localData.userData.userType != 'Parent')
+    if (localData.userData!.userType != 'Parent') {
       FcmTokenRefreshService.refreshToken();
+    }
     attendanceService = attendance.getAttendancePercentage();
     super.initState();
   }
@@ -49,22 +50,27 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     Size size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight - 24) / 6;
     final double itemWidth = size.width / 2;
+
     return Consumer<LocalDataProvider>(builder: (context, value, _) {
+      final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
+      final localGradeId = value.gradeId?.toString() ?? '';
       return Scaffold(
           appBar: CustomAppBar(
-              title: localData.userData.userType == 'Parent'
-                  ? '${widget.args.userName}'
+              title: localData.userData!.userType == 'Parent'
+                  ? '${widget.args!.userName}'
+                  // ? '${widget.args.userName}'
                   : HelperFunction.noNullStringText(
-                      '${localData.userData.info.name}')),
-          drawer:
-              value.userData.userType == 'Parent' ? null : NavigationalDrawer(),
+                      '${localData.userData!.info!.name}')),
+          drawer: value.userData!.userType == 'Parent'
+              ? null
+              : const NavigationalDrawer(),
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
             child: Column(
               children: [
                 Container(
                     height: size.height * 0.2,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: AppColors.primaryColor,
                         borderRadius: BorderRadius.circular(20.0)),
@@ -79,17 +85,19 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                        '${DateFormat.MMMM().format(DateTime.now()).toUpperCase()}',
-                                        style: TextStyle(
+                                        DateFormat.MMMM()
+                                            .format(DateTime.now())
+                                            .toUpperCase(),
+                                        style: const TextStyle(
                                             fontSize: 18.0,
                                             color: AppColors.secondaryColor)),
                                     Text('${DateTime.now().year}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18.0,
                                             color: AppColors.whiteColor,
                                             fontWeight: FontWeight.w600))
                                   ]),
-                              Text('MY\nATTENDANCE',
+                              const Text('MY\nATTENDANCE',
                                   style: TextStyle(
                                       fontSize: 18.0,
                                       color: AppColors.whiteColor,
@@ -101,25 +109,25 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               builder: (context, snapshot) {
                                 switch (snapshot.connectionState) {
                                   case ConnectionState.waiting:
-                                    return Padding(
-                                        padding: const EdgeInsets.symmetric(
+                                    return const Padding(
+                                        padding: EdgeInsets.symmetric(
                                             horizontal: 8.0),
-                                        child: const CustomLoader(
+                                        child: CustomLoader(
                                             color: AppColors.whiteColor));
                                   default:
                                     if (snapshot.hasData) {
                                       return Consumer<
                                               StudentAttendanceProvider>(
                                           builder: (context, value, _) {
-                                        num data = value.attendancePercentage
-                                            .data.attendancePercentage;
+                                        num data = value.attendancePercentage!
+                                            .data!.attendancePercentage!;
                                         return CircularPercentIndicator(
                                             radius: size.width * 0.15,
                                             lineWidth: 10.0,
                                             percent: data / 100,
                                             progressColor: Colors.green,
                                             center: Text("$data%",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: AppColors.whiteColor,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 22.0)),
@@ -128,8 +136,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                                 CircularStrokeCap.round);
                                       });
                                     } else {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
+                                      return const Padding(
+                                        padding: EdgeInsets.symmetric(
                                             horizontal: 8.0),
                                         child: Icon(Icons.error_outline,
                                             color: AppColors.lightRedColor,
@@ -155,12 +163,22 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.studentProfileRoute),
                             imageName: 'profile_icon.png'),
-                        CustomDashboardButton(
-                            title: 'RESULT\nCARD',
-                            leftAlign: 5.0,
-                            onTap: () => AppNavigation.navigateTo(
-                                AppNavRoutes.academicTermRoute),
-                            imageName: 'result_icon.png'),
+                        if (gradeId != '2' &&
+                            gradeId != '3' &&
+                            gradeId != '4' &&
+                            gradeId != '5' &&
+                            gradeId != '6' &&
+                            localGradeId != '2' &&
+                            localGradeId != '3' &&
+                            localGradeId != '4' &&
+                            localGradeId != '5' &&
+                            localGradeId != '6')
+                          CustomDashboardButton(
+                              title: 'RESULT',
+                              leftAlign: 5.0,
+                              onTap: () => AppNavigation.navigateTo(
+                                  AppNavRoutes.academicTermRoute),
+                              imageName: 'result_icon.png'),
                         CustomDashboardButton(
                             title: 'LIBRARY',
                             bottomAlign: -45,
@@ -169,7 +187,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                 AppNavRoutes.libraryRoute),
                             imageName: 'library_icon.png'),
                         CustomDashboardButton(
-                            title: 'ALERTS',
+                            title: 'CIRCULARS',
                             leftAlign: 3.0,
                             bottomAlign: -3,
                             imageHeight: size.height * 0.1,
@@ -187,8 +205,18 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                             title: 'ATTENDANCE',
                             bottomAlign: -25,
                             imageHeight: size.height * 0.13,
-                            onTap: () => AppNavigation.navigateTo(
-                                AppNavRoutes.attendanceRoute),
+                            onTap: () {
+                              if (gradeId == '19' ||
+                                  gradeId == '20' ||
+                                  localGradeId == '19' ||
+                                  localGradeId == '20') {
+                                AppNavigation.navigateTo(
+                                    AppNavRoutes.attendanceSubjectRoute);
+                              } else {
+                                AppNavigation.navigateTo(
+                                    AppNavRoutes.attendanceRoute);
+                              }
+                            },
                             imageName: 'attendance_icon.png'),
                         CustomDashboardButton(
                             title: 'FEE BILL',
@@ -197,8 +225,66 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.feeChallansRoute),
                             imageName: 'fee_challan_icon.png'),
+                        CustomDashboardButton(
+                            title: 'CLASSWORK\nASSIGNMENTS',
+                            bottomAlign: -65,
+                            leftAlign: -50,
+                            imageHeight: size.height * 0.20,
+                            onTap: () => AppNavigation.navigateTo(
+                                AppNavRoutes.studentAssignmentRoute),
+                            imageName: 'assignment_icon_h.png'),
+                        CustomDashboardButton(
+                            title: 'EVENT\nCALENDAR',
+                            bottomAlign: -22,
+                            leftAlign: -10,
+                            imageHeight: size.height * 0.13,
+                            onTap: () => AppNavigation.navigateTo(
+                                AppNavRoutes.studentSchoolEventsRoute),
+                            imageName: 'calendar.png'),
+                        if (gradeId != '2' &&
+                            gradeId != '3' &&
+                            gradeId != '4' &&
+                            gradeId != '5' &&
+                            gradeId != '6' &&
+                            localGradeId != '2' &&
+                            localGradeId != '3' &&
+                            localGradeId != '4' &&
+                            localGradeId != '5' &&
+                            localGradeId != '6')
+                          CustomDashboardButton(
+                              title: 'CLASS TEST\nRESULTS',
+                              bottomAlign: -65,
+                              leftAlign: -65,
+                              imageHeight: size.height * 0.24,
+                              onTap: () => AppNavigation.navigateTo(
+                                  AppNavRoutes.studentClassTestResultRoute),
+                              imageName: 'class_result.png'),
+                        CustomDashboardButton(
+                            title: 'TIMETABLE',
+                            bottomAlign: -22,
+                            leftAlign: -10,
+                            imageHeight: size.height * 0.13,
+                            onTap: () => AppNavigation.navigateTo(
+                                AppNavRoutes.teacherTimeTableRoute),
+                            imageName: 'calendar.png'),
+                        CustomDashboardButton(
+                            title: 'SURVEY',
+                            bottomAlign: -14,
+                            leftAlign: -10,
+                            imageHeight: size.height * 0.11,
+                            onTap: () => AppNavigation.navigateTo(
+                                AppNavRoutes.studentSurveyRoute),
+                            imageName: 'survey.png'),
+                        // CustomDashboardButton(
+                        //     title: 'INDIVIDUAL\nEDUCATION PLAN',
+                        //     bottomAlign: -65,
+                        //     leftAlign: -65,
+                        //     imageHeight: size.height * 0.24,
+                        //     onTap: () => AppNavigation.navigateTo(
+                        //         AppNavRoutes.individualEducationPlanRoute),
+                        //     imageName: 'class_result.png'),
                         Visibility(
-                          visible: value.userData.userType == 'Parent'
+                          visible: value.userData!.userType == 'Parent'
                               ? true
                               : false,
                           child: CustomDashboardButton(
@@ -208,6 +294,65 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.challanPaymentRoute),
                               imageName: 'challan_payment_icon.png'),
+                        ),
+                        Visibility(
+                          visible: value.userData!.userType == 'Parent'
+                              ? true
+                              : false,
+                          child: CustomDashboardButton(
+                              title: 'BOOK AN\nAPPOINTMENT',
+                              bottomAlign: -24,
+                              leftAlign: 0,
+                              imageHeight: size.height * 0.10,
+                              onTap: () => AppNavigation.navigateTo(
+                                  AppNavRoutes.bookanAppointmentRoute),
+                              imageName: 'calendar_appoointment.png'),
+                        ),
+                        if (gradeId == '2' ||
+                            gradeId == '3' ||
+                            gradeId == '4' ||
+                            localGradeId == '2' ||
+                            localGradeId == '3' ||
+                            localGradeId == '4')
+                          Visibility(
+                            visible: value.userData!.userType == 'Parent'
+                                ? true
+                                : false,
+                            child: CustomDashboardButton(
+                                title: 'EYE ON\nYOUR CHILD',
+                                bottomAlign: -22,
+                                leftAlign: 0,
+                                imageHeight: size.height * 0.10,
+                                onTap: () => AppNavigation.navigateTo(
+                                    AppNavRoutes.parentEyeOnYourChildRoute),
+                                imageName: 'shield.png'),
+                          ),
+                        Visibility(
+                          visible: value.userData!.userType == 'Parent'
+                              ? true
+                              : false,
+                          child: CustomDashboardButton(
+                              title: 'WITHDRAWAL\nREQUEST',
+                              bottomAlign: -22,
+                              leftAlign: -15, //0,
+                              imageHeight: size.height * 0.08,
+                              onTap: () => AppNavigation.navigateTo(
+                                  AppNavRoutes.withdrawalRequestRoute),
+                              imageName: 'withdrawal.png'),
+                        ),
+                        Visibility(
+                          visible: value.userData!.userType == 'Parent'
+                              ? true
+                              : false,
+                          child: CustomDashboardButton(
+                              title: 'COMPLAINT\nQUERY',
+                              bottomAlign: -20,
+                              leftAlign: -15, //0,
+                              imageHeight: size.height * 0.10,
+                              onTap: null,
+                              // () => AppNavigation.navigateTo(
+                              //     AppNavRoutes.complaintQueryRoute),
+                              imageName: 'lightbulb.png'),
                         ),
                       ]),
                 ),

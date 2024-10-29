@@ -18,6 +18,8 @@ class AppNavRoutes {
   static const teacherProfileRoute = '/teacherProfile';
   static const markAttendanceRoute = '/markAttendance';
   static const attendanceRoute = '/attendance';
+  static const alevelAttendanceRoute = '/alevelAttendance';
+  static const attendanceSubjectRoute = '/attendanceSubject';
   static const onlineStdRegRoute = '/onlineStdReg';
   static const forgotPasswordRoute = '/forgotPassword';
   static const updatePasswordRoute = '/updatePassword';
@@ -30,5 +32,27 @@ class AppNavRoutes {
   static const teacherDiaryRoute = '/teacherDiary';
   static const studentDiaryRoute = '/studentDiary';
   static const challanPaymentRoute = '/challanPayment';
-
+  static const introductionRoute = '/introduction';
+  static const studentAssignmentRoute = '/studentAssignment';
+  static const addAssignmentRoute = '/addAssignment';
+  static const teacherAssignmentRoute = '/teacherAssignment';
+  static const studentSchoolEventsRoute = '/studentSchoolEvents';
+  static const addSchoolEventRoute = '/addStudentSchoolEvent';
+  static const teacherSchoolEventsRoute = '/teacherSchoolEvents';
+  static const teacherClassTestResultRoute = '/teacherClassTestResult';
+  static const teacherAddClassResultRoute = '/teacherAddClassResult';
+  static const studentClassTestResultRoute = '/studentClassTestResult';
+  static const individualEducationPlanRoute = '/individualEducationPlan';
+  static const bookanAppointmentRoute = '/bookanAppointment';
+  static const parentAppointmentRoute = '/parentAppointment';
+  static const eyeOnYourChildRoute = '/eyeOnYourChild';
+  static const parentEyeOnYourChildRoute = '/parentEyeOnYourChild';
+  static const teacherTimeTableRoute = '/teacherTimeTable';
+  static const teacherTimeTableSectionRoute = '/teacherTimeTableSection';
+  static const teacherSurveyRoute = '/teacherSurvey';
+  static const studentSurveyRoute = '/studentSurvey';
+  static const parentSurveyRoute = '/parentSurvey';
+  static const withdrawalRequestRoute = '/withdrawalRequest';
+  static const complaintQueryRoute = '/complaintQuery';
+  static const addCircularRoute = '/addCircular';
 }

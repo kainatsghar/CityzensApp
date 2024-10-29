@@ -8,7 +8,7 @@ import 'package:tcs_app/Provider/Library/library_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class LibraryScreen extends StatefulWidget {
-  LibraryScreen({Key key}) : super(key: key);
+  const LibraryScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -17,9 +17,9 @@ class LibraryScreen extends StatefulWidget {
 }
 
 class LibraryScreenState extends State<LibraryScreen> {
-  Future _libraryRecords;
-  var provider =
-      Provider.of<LibraryProvider>(AppNavigation.currentContext, listen: false);
+  late Future _libraryRecords;
+  var provider = Provider.of<LibraryProvider>(AppNavigation.currentContext!,
+      listen: false);
 
   @override
   void initState() {
@@ -27,9 +27,10 @@ class LibraryScreenState extends State<LibraryScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'LIBRARY DETAILS'),
+        appBar: const CustomAppBar(title: 'LIBRARY DETAILS'),
         body: RefreshIndicator(
             child: FutureBuilder(
                 future: _libraryRecords,
@@ -39,7 +40,7 @@ class LibraryScreenState extends State<LibraryScreen> {
                       return const CustomLoader();
                     default:
                       if (snapshot.hasData) {
-                        return LibraryComponent();
+                        return const LibraryComponent();
                       } else {
                         return ShowError(errorText: '${snapshot.error}');
                       }

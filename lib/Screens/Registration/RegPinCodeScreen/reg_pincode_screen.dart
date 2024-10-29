@@ -10,7 +10,7 @@ import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class RegPinCodeScreen extends StatefulWidget {
-  RegPinCodeScreen({Key key}) : super(key: key);
+  const RegPinCodeScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -20,7 +20,7 @@ class RegPinCodeScreen extends StatefulWidget {
 
 class RegPinCodeScreenState extends State<RegPinCodeScreen> {
   RegistrationProvider provider = Provider.of<RegistrationProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -33,17 +33,17 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: CustomAppBar(title: 'SECURITY CHECK'),
+        appBar: const CustomAppBar(title: 'SECURITY CHECK'),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Consumer<RegistrationProvider>(builder: (context, value, _) {
             return Column(
               children: <Widget>[
-                CustomLogoCover(),
+                const CustomLogoCover(),
                 SizedBox(height: size.height * 0.02),
                 Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 25.0),
                     decoration: BoxDecoration(
                         color: AppColors.secondaryColor,
                         borderRadius: BorderRadius.circular(20.0)),
@@ -54,7 +54,7 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
                           children: <Widget>[
                             CustomTextFormField(
                                 isEnable: false,
-                                hintText: '${value.userNameController.text}',
+                                hintText: value.userNameController.text,
                                 prefixIcon: Icons.person),
                             SizedBox(height: size.height * 0.02),
                             CustomTextFormField(
@@ -71,14 +71,14 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
                 CustomAppButton(
                     buttonTitle: 'Next', onTap: () => value.verifyPinCode()),
                 SizedBox(height: size.height * 0.02),
-                Column(
+                const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Note:',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold)),
                       Text(
-                          '\u2022 TCS app will send you a message containing 6-digit PIN code you will use to verify your number.',
+                          '\u2022 TCS app will send you a message containing 4-digit PIN code you will use to verify your number.',
                           style: TextStyle(height: 1.5)),
                       Text(
                           '\u2022 Verification message might not reach you if promotional message are blocked from your service provider.',

@@ -8,7 +8,7 @@ import 'detail_result_screen.dart';
 import 'overall_result_screen.dart';
 
 class ResultsScreen extends StatefulWidget {
-  ResultsScreen({Key key}) : super(key: key);
+  const ResultsScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -18,9 +18,8 @@ class ResultsScreen extends StatefulWidget {
 
 class ResultsScreenState extends State<ResultsScreen>
     with SingleTickerProviderStateMixin {
-  var provider =
-      Provider.of<ResultsProvider>(AppNavigation.currentContext, listen: false);
-
+  var provider = Provider.of<ResultsProvider>(AppNavigation.currentContext!,
+      listen: false);
 
   @override
   void initState() {
@@ -30,18 +29,21 @@ class ResultsScreenState extends State<ResultsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<ResultsProvider>(builder: (context, value, _) {
-      return CustomTabBar(
-          scrollController: value.scrollController,
-          appBarTitle: 'RESULTS',
-          tabs: [
-            Tab(child: Text('DETAILS RESULT')),
-            Tab(child: Text('OVERALL RESULT'))
-          ],
-          widgets: <Widget>[DetailResultScreen(), OverallResultScreen()],
-          controller: value.controller);
-    },
+    return Scaffold(body: Consumer<ResultsProvider>(
+      builder: (context, value, _) {
+        return CustomTabBar(
+            scrollController: value.scrollController,
+            appBarTitle: 'RESULTS',
+            tabs: const [
+              Tab(child: Text('DETAILS RESULT')),
+              Tab(child: Text('OVERALL RESULT'))
+            ],
+            widgets: const <Widget>[
+              DetailResultScreen(),
+              OverallResultScreen()
+            ],
+            controller: value.controller);
+      },
     ));
   }
 }

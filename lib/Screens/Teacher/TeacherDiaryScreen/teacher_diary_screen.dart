@@ -11,16 +11,16 @@ import '../../../Provider/Diary/diary_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
 class TeacherDiaryScreen extends StatefulWidget {
-  const TeacherDiaryScreen({Key key}) : super(key: key);
+  const TeacherDiaryScreen({super.key});
 
   @override
   State<TeacherDiaryScreen> createState() => _TeacherDiaryScreenState();
 }
 
 class _TeacherDiaryScreenState extends State<TeacherDiaryScreen> {
-  Future _diaryRecords;
+  late Future _diaryRecords;
   var provider =
-      Provider.of<DiaryProvider>(AppNavigation.currentContext, listen: false);
+      Provider.of<DiaryProvider>(AppNavigation.currentContext!, listen: false);
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _TeacherDiaryScreenState extends State<TeacherDiaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'HOMEWORK DIARY'),
+      appBar: const CustomAppBar(title: 'HOMEWORK DIARY'),
       body: FutureBuilder(
           future: _diaryRecords,
           builder: (context, snapshot) {
@@ -46,7 +46,7 @@ class _TeacherDiaryScreenState extends State<TeacherDiaryScreen> {
                 return const CustomLoader();
               default:
                 if (snapshot.hasData) {
-                  return DiaryRecordComponent();
+                  return const DiaryRecordComponent();
                 } else {
                   return ShowError(errorText: '${snapshot.error}');
                 }
@@ -55,7 +55,7 @@ class _TeacherDiaryScreenState extends State<TeacherDiaryScreen> {
       floatingActionButton: FloatingActionButton(
           onPressed: () => AppNavigation.navigateTo(AppNavRoutes.addDiaryRoute),
           backgroundColor: AppColors.primaryColor,
-          child: Icon(Icons.add, color: AppColors.whiteColor)),
+          child: const Icon(Icons.add, color: AppColors.whiteColor)),
     );
   }
 }

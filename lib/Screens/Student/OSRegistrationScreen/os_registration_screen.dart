@@ -8,17 +8,19 @@ import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class OSRegistrationScreen extends StatefulWidget {
+  const OSRegistrationScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
-    return new OSRegistrationScreenState();
+    return OSRegistrationScreenState();
   }
 }
 
 class OSRegistrationScreenState extends State<OSRegistrationScreen> {
-  Future _nationalityService, _sessionService, _citiesService;
+  late Future _nationalityService, _sessionService, _citiesService;
 
   var provider = Provider.of<OSRegistrationProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -33,7 +35,7 @@ class OSRegistrationScreenState extends State<OSRegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Student Registration'),
+        appBar: const CustomAppBar(title: 'Student Registration'),
         body: FutureBuilder(
             future: Future.wait(
                 [_nationalityService, _sessionService, _citiesService]),
@@ -43,7 +45,7 @@ class OSRegistrationScreenState extends State<OSRegistrationScreen> {
                   return const CustomLoader();
                 default:
                   if (snapshot.hasData) {
-                    return OSRegistrationComponent();
+                    return const OSRegistrationComponent();
                   } else {
                     return ShowError(errorText: '${snapshot.error}');
                   }

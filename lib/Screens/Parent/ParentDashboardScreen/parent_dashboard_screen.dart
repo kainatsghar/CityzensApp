@@ -11,6 +11,8 @@ import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 
 class ParentDashboardScreen extends StatefulWidget {
+  const ParentDashboardScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return ParentHomepageState();
@@ -18,10 +20,10 @@ class ParentDashboardScreen extends StatefulWidget {
 }
 
 class ParentHomepageState extends State<ParentDashboardScreen> {
-  Future _multiChild;
+  late Future _multiChild;
 
   var provider = Provider.of<ParentDashboardProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -34,8 +36,8 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'CITYZENS'),
-        drawer: NavigationalDrawer(),
+        appBar: const CustomAppBar(title: 'CITYZENS'),
+        drawer: const NavigationalDrawer(),
         body: RefreshIndicator(
             child: FutureBuilder(
                 future: _multiChild,
@@ -45,7 +47,7 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
                       return const CustomLoader();
                     default:
                       if (snapshot.hasData) {
-                        return MultiChildComponent();
+                        return const MultiChildComponent();
                       } else {
                         return ShowError(errorText: '${snapshot.error}');
                       }

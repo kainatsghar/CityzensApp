@@ -7,7 +7,7 @@ import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class OutstandingFeeScreen extends StatefulWidget {
-  OutstandingFeeScreen({Key key}) : super(key: key);
+  const OutstandingFeeScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -16,8 +16,8 @@ class OutstandingFeeScreen extends StatefulWidget {
 }
 
 class OutstandingFeeScreenState extends State<OutstandingFeeScreen> {
-  Future _outstandingFeeService;
-  var provider = Provider.of<FeeChallanProvider>(AppNavigation.currentContext,
+  late Future _outstandingFeeService;
+  var provider = Provider.of<FeeChallanProvider>(AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -37,7 +37,7 @@ class OutstandingFeeScreenState extends State<OutstandingFeeScreen> {
                   return const CustomLoader();
                 default:
                   if (snapshot.hasData) {
-                    return OutstandingFeeComponent();
+                    return const OutstandingFeeComponent();
                   } else {
                     return ShowError(errorText: '${snapshot.error}');
                   }

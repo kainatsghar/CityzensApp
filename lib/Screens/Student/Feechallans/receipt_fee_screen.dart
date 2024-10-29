@@ -8,17 +8,17 @@ import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class ReceiptFeeScreen extends StatefulWidget {
-  ReceiptFeeScreen({Key key}) : super(key: key);
+  const ReceiptFeeScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return new ReceiptFeeScreenState();
+    return ReceiptFeeScreenState();
   }
 }
 
 class ReceiptFeeScreenState extends State<ReceiptFeeScreen> {
-  Future _receiptService;
-  var provider = Provider.of<FeeChallanProvider>(AppNavigation.currentContext,
+  late Future _receiptService;
+  var provider = Provider.of<FeeChallanProvider>(AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -38,7 +38,7 @@ class ReceiptFeeScreenState extends State<ReceiptFeeScreen> {
                   return const CustomLoader();
                 default:
                   if (snapshot.hasData) {
-                    return ReceiptFeeComponent();
+                    return const ReceiptFeeComponent();
                   } else {
                     return ShowError(errorText: '${snapshot.error}');
                   }

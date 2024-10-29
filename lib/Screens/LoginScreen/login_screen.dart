@@ -13,13 +13,16 @@ import 'package:tcs_app/Utils/helper_function.dart';
 import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginProvider provider =
-      Provider.of<LoginProvider>(AppNavigation.currentContext, listen: false);
+      Provider.of<LoginProvider>(AppNavigation.currentContext!, listen: false);
 
   @override
   void initState() {
@@ -38,20 +41,21 @@ class _LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(title: 'LOGIN'),
+      appBar: const CustomAppBar(title: 'LOGIN'),
       body: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
               child: Consumer<LoginProvider>(builder: (context, value, _) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: Column(
                     children: <Widget>[
-                      CustomLogoCover(),
+                      const CustomLogoCover(),
                       SizedBox(height: size.height * 0.03),
                       Container(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 25.0),
                         decoration: BoxDecoration(
                             color: AppColors.secondaryColor,
@@ -65,10 +69,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintText: 'User Type',
                                   readOnly: true,
                                   onTap: () => value.userTypeBottomSheet(),
-                                  suffixWidget: ImageIcon(
+                                  suffixWidget: const ImageIcon(
                                       AssetImage('images/dropdown_icon.png'),
                                       color: AppColors.whiteColor)),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               CustomTextFormField(
                                   controller: value.userNameController,
                                   inputType: TextInputType.number,
@@ -77,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintText: value.userNameLabel,
                                   prefixIcon: Icons.person,
                                   validator: value.validator),
-                              SizedBox(height: 15),
+                              const SizedBox(height: 15),
                               CustomTextFormField(
                                   controller: value.passwordController,
                                   obscureText: value.obscureText,
@@ -98,13 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           InkWell(
-                              child: Text(
+                              child: const Text(
                                 'Forgot Password?',
                                 style: TextStyle(
                                     color: AppColors.primaryTitleColor,
@@ -115,22 +119,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                   AppNavRoutes.forgotPasswordRoute)),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       CustomAppButton(
                           buttonTitle: 'Login', onTap: () => value.login()),
-                      SizedBox(height: 15),
-                      Text('- OR -'),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
+                      const Text('- OR -'),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text('New user? '),
-                          SizedBox(height: 5),
+                          const Text('New user? '),
+                          const SizedBox(height: 5),
                           InkWell(
+                            // onTap: () => AppNavigation.navigateTo(
+                            //     AppNavRoutes.registrationRoute),
                             onTap: () => AppNavigation.navigateTo(
-                                AppNavRoutes.registrationRoute),
-                            child: Text('Register here',
+                                AppNavRoutes.introductionRoute),
+                            child: const Text('Register here',
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontStyle: FontStyle.italic,
@@ -157,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             onTap: () =>
                                                 HelperFunction.launchURL(
                                                     AppConstants.alumniAppURL),
-                                            child: Text(
+                                            child: const Text(
                                                 'The City School ALUMNI App',
                                                 maxLines: 2,
                                                 overflow: TextOverflow.fade,

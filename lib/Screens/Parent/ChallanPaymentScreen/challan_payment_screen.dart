@@ -5,7 +5,7 @@ import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ChallanPaymentScreen extends StatefulWidget {
-  const ChallanPaymentScreen({Key key}) : super(key: key);
+  const ChallanPaymentScreen({super.key});
 
   @override
   State<ChallanPaymentScreen> createState() => _ChallanPaymentScreenState();
@@ -13,7 +13,7 @@ class ChallanPaymentScreen extends StatefulWidget {
 
 class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
   int loadingPercentage = 0;
-  WebViewController controller;
+  late WebViewController controller;
 
   onProgressChange(int value) => setState(() => loadingPercentage = value);
 
@@ -35,7 +35,7 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'CHALLAN BILL'),
+      appBar: const CustomAppBar(title: 'CHALLAN BILL'),
       body: Column(
         children: [
           if (loadingPercentage < 100)

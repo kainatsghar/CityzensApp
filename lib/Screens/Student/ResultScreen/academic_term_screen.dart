@@ -8,6 +8,8 @@ import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class AcademicTermScreen extends StatefulWidget {
+  const AcademicTermScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return AcademicTermScreenState();
@@ -15,9 +17,9 @@ class AcademicTermScreen extends StatefulWidget {
 }
 
 class AcademicTermScreenState extends State<AcademicTermScreen> {
-  Future _academicTermService;
-  var provider =
-      Provider.of<ResultsProvider>(AppNavigation.currentContext, listen: false);
+  late Future _academicTermService;
+  var provider = Provider.of<ResultsProvider>(AppNavigation.currentContext!,
+      listen: false);
 
   @override
   void initState() {
@@ -34,7 +36,7 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'ACADEMIC YEAR & TERM'),
+        appBar: const CustomAppBar(title: 'ACADEMIC YEAR & TERM'),
         body: RefreshIndicator(
             child: FutureBuilder(
                 future: _academicTermService,
@@ -44,7 +46,7 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
                       return const CustomLoader();
                     default:
                       if (snapshot.hasData) {
-                        return AcademicTermComponent();
+                        return const AcademicTermComponent();
                       } else {
                         return ShowError(errorText: '${snapshot.error}');
                       }

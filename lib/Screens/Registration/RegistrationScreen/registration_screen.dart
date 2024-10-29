@@ -10,6 +10,8 @@ import 'package:tcs_app/Utils/app_colors.dart';
 import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 
 class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return RegistrationScreenState();
@@ -18,7 +20,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class RegistrationScreenState extends State<RegistrationScreen> {
   RegistrationProvider provider = Provider.of<RegistrationProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -37,16 +39,17 @@ class RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: CustomAppBar(title: 'USER REGISTRATION'),
+        appBar: const CustomAppBar(title: 'USER REGISTRATION'),
         body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: SingleChildScrollView(child:
                 Consumer<RegistrationProvider>(builder: (context, value, _) {
               return Column(children: <Widget>[
-                CustomLogoCover(),
+                const CustomLogoCover(),
                 SizedBox(height: size.height * 0.02),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 25.0),
                   decoration: BoxDecoration(
                       color: AppColors.secondaryColor,
                       borderRadius: BorderRadius.circular(20.0)),
@@ -58,7 +61,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                             controller: value.userTypeController,
                             readOnly: true,
                             onTap: () => value.userTypeBottomSheet(),
-                            suffixWidget: ImageIcon(
+                            suffixWidget: const ImageIcon(
                                 AssetImage('images/dropdown_icon.png'),
                                 color: AppColors.whiteColor)),
                         SizedBox(height: size.height * 0.02),
@@ -85,7 +88,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                 CustomAppButton(
                     buttonTitle: 'Next', onTap: () => value.userRegistration()),
                 SizedBox(height: size.height * 0.02),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
@@ -104,7 +107,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                 SizedBox(height: size.height * 0.01),
                 InkWell(
                     onTap: value.launchEmail,
-                    child: Text('appfeedback@csn.edu.pk',
+                    child: const Text('appfeedback@csn.edu.pk',
                         style: TextStyle(
                             fontSize: 15.0,
                             fontStyle: FontStyle.italic,

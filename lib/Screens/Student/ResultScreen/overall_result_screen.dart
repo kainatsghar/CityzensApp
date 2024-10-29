@@ -7,22 +7,21 @@ import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
-
 class OverallResultScreen extends StatefulWidget {
-  OverallResultScreen({
-    Key key,
-  }) : super(key: key);
+  const OverallResultScreen({
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() {
-    return new OverallResultScreenState();
+    return OverallResultScreenState();
   }
 }
 
 class OverallResultScreenState extends State<OverallResultScreen> {
-  Future resultService;
-  var provider =
-      Provider.of<ResultsProvider>(AppNavigation.currentContext, listen: false);
+  late Future resultService;
+  var provider = Provider.of<ResultsProvider>(AppNavigation.currentContext!,
+      listen: false);
 
   @override
   void initState() {
@@ -41,7 +40,7 @@ class OverallResultScreenState extends State<OverallResultScreen> {
                   return const CustomLoader();
                 default:
                   if (snapshot.hasData) {
-                    return OverallResultViewDecider();
+                    return const OverallResultViewDecider();
                   } else {
                     return ShowError(errorText: '${snapshot.error}');
                   }

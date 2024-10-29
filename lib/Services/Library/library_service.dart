@@ -3,12 +3,9 @@ import 'package:tcs_app/model/Library/library_response.dart';
 import 'package:tcs_app/model/UserData/user_data_request.dart';
 
 class LibraryService {
-  static Future<LibraryResponse> libraryRequest(
-      {String userName, String token}) async {
-    UserDataRequest _request =
-        UserDataRequest(userName: userName, tokenId: token);
-    var response =
-        await ApiBaseHelper.httpPostRequest("Library", body: _request.toJson());
+  static Future<LibraryResponse> libraryRequest({required String userName, required String token}) async {
+    UserDataRequest request = UserDataRequest(userName: userName, tokenId: token);
+    var response = await ApiBaseHelper.httpPostRequest("Library", body: request.toJson());
     return LibraryResponse.fromJson(response);
   }
 }

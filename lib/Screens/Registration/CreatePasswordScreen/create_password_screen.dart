@@ -9,9 +9,9 @@ import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
-  final String userType;
+  final String? userType;
 
-  CreatePasswordScreen({Key key, this.userType}) : super(key: key);
+  const CreatePasswordScreen({super.key, this.userType});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,20 +24,20 @@ class CreatePasswordScreenState extends State<CreatePasswordScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: CustomAppBar(title: 'CREATE PASSWORD'),
+        appBar: const CustomAppBar(title: 'CREATE PASSWORD'),
         body: LayoutBuilder(builder: (context, boxConstraints) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: SingleChildScrollView(
               child:
                   Consumer<RegistrationProvider>(builder: (context, value, _) {
                 return Column(
                   children: <Widget>[
-                    CustomLogoCover(),
+                    const CustomLogoCover(),
                     SizedBox(height: size.height * 0.02),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 25.0),
                       decoration: BoxDecoration(
                           color: AppColors.secondaryColor,
                           borderRadius: BorderRadius.circular(20.0)),
@@ -49,8 +49,7 @@ class CreatePasswordScreenState extends State<CreatePasswordScreen> {
                                 children: <Widget>[
                                   CustomTextFormField(
                                       isEnable: false,
-                                      hintText:
-                                          '${value.userNameController.text}',
+                                      hintText: value.userNameController.text,
                                       prefixIcon: Icons.person),
                                   SizedBox(height: size.height * 0.02),
                                   CustomTextFormField(

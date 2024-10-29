@@ -9,7 +9,7 @@ import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class UpdatePasswordScreen extends StatefulWidget {
-  UpdatePasswordScreen({Key key}) : super(key: key);
+  const UpdatePasswordScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -22,18 +22,18 @@ class UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: CustomAppBar(title: 'UPDATE PASSWORD'),
+        appBar: const CustomAppBar(title: 'UPDATE PASSWORD'),
         body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: SingleChildScrollView(
               child: Consumer<ForgotPasswordProvider>(
                   builder: (context, value, _) {
                 return Column(children: <Widget>[
-                  CustomLogoCover(),
+                  const CustomLogoCover(),
                   SizedBox(height: size.height * 0.02),
                   Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 25.0),
                       decoration: BoxDecoration(
                           color: AppColors.secondaryColor,
                           borderRadius: BorderRadius.circular(20.0)),
@@ -45,7 +45,7 @@ class UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                 CustomTextFormField(
                                     isEnable: false,
                                     hintText:
-                                        '${value.userNameController.text}',
+                                        '${value.userNameController?.text}',
                                     prefixIcon: Icons.person),
                                 SizedBox(height: size.height * 0.02),
                                 CustomTextFormField(

@@ -8,7 +8,7 @@ import 'package:tcs_app/Screens/Student/Feechallans/receipt_fee_screen.dart';
 import 'outstanding_fee_screen.dart';
 
 class FeeChallanScreen extends StatefulWidget {
-  FeeChallanScreen({Key key}) : super(key: key);
+  const FeeChallanScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -18,7 +18,7 @@ class FeeChallanScreen extends StatefulWidget {
 
 class FeeChallanScreenState extends State<FeeChallanScreen>
     with SingleTickerProviderStateMixin {
-  var provider = Provider.of<FeeChallanProvider>(AppNavigation.currentContext,
+  var provider = Provider.of<FeeChallanProvider>(AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -34,11 +34,11 @@ class FeeChallanScreenState extends State<FeeChallanScreen>
         return CustomTabBar(
             scrollController: value.scrollController,
             appBarTitle: 'FEE CHALLANS',
-            tabs: [
+            tabs: const [
               Tab(child: Text('OUTSTANDING')),
               Tab(child: Text('RECEIPTS'))
             ],
-            widgets: <Widget>[OutstandingFeeScreen(), ReceiptFeeScreen()],
+            widgets: const <Widget>[OutstandingFeeScreen(), ReceiptFeeScreen()],
             controller: value.controller);
       }),
     );

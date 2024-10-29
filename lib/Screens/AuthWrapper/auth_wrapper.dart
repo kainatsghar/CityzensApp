@@ -6,16 +6,19 @@ import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class AuthWrapper extends StatefulWidget {
+  const AuthWrapper({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _AuthWrapperState createState() => _AuthWrapperState();
 }
 
 class _AuthWrapperState extends State<AuthWrapper> {
-  Future _userData;
+  Future? _userData;
 
   @override
   void initState() {
-    _userData = Provider.of<LocalDataProvider>(AppNavigation.currentContext,
+    _userData = Provider.of<LocalDataProvider>(AppNavigation.currentContext!,
             listen: false)
         .authDecider();
     super.initState();
@@ -33,7 +36,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
                 return const CustomLoader();
               default:
                 if (snapshot.hasData) {
-                  return snapshot.data;
+                  return snapshot.data as Widget; //return snapshot.data
                 } else {
                   return ShowError(errorText: '${snapshot.error}');
                 }

@@ -9,16 +9,16 @@ import '../../../Provider/Diary/diary_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
 class StudentDiaryScreen extends StatefulWidget {
-  const StudentDiaryScreen({Key key}) : super(key: key);
+  const StudentDiaryScreen({super.key});
 
   @override
   State<StudentDiaryScreen> createState() => _StudentDiaryScreenState();
 }
 
 class _StudentDiaryScreenState extends State<StudentDiaryScreen> {
-  Future _diaryRecords;
+  late Future _diaryRecords;
   var provider =
-      Provider.of<DiaryProvider>(AppNavigation.currentContext, listen: false);
+      Provider.of<DiaryProvider>(AppNavigation.currentContext!, listen: false);
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _StudentDiaryScreenState extends State<StudentDiaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'HOMEWORK DIARY'),
+      appBar: const CustomAppBar(title: 'HOMEWORK DIARY'),
       body: FutureBuilder(
           future: _diaryRecords,
           builder: (context, snapshot) {
@@ -44,7 +44,7 @@ class _StudentDiaryScreenState extends State<StudentDiaryScreen> {
                 return const CustomLoader();
               default:
                 if (snapshot.hasData) {
-                  return DiaryRecordComponent();
+                  return const DiaryRecordComponent();
                 } else {
                   return ShowError(errorText: '${snapshot.error}');
                 }

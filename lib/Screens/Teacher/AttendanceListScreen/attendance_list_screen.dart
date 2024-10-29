@@ -10,7 +10,7 @@ import 'package:tcs_app/Routes/app_navigation.dart';
 import 'dart:async';
 
 class AttendanceListScreen extends StatefulWidget {
-  AttendanceListScreen({Key key}) : super(key: key);
+  const AttendanceListScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -19,10 +19,10 @@ class AttendanceListScreen extends StatefulWidget {
 }
 
 class AttendanceListScreenState extends State<AttendanceListScreen> {
-  Future _studentListService;
+  late Future _studentListService;
 
   var provider = Provider.of<MarkAttendanceProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -40,7 +40,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'MARK ATTENDANCE'),
+        appBar: const CustomAppBar(title: 'MARK ATTENDANCE'),
         body: FutureBuilder(
             future: _studentListService,
             builder: (context, snapshot) {
@@ -49,7 +49,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                   return const CustomLoader();
                 default:
                   if (snapshot.hasData) {
-                    return StudentListComponent();
+                    return const StudentListComponent();
                   } else {
                     return ShowError(errorText: '${snapshot.error}');
                   }

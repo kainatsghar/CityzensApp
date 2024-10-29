@@ -8,9 +8,8 @@ import '../../../CustomWidgets/ShowError/show_error.dart';
 import '../../../Provider/StudentAttendance/student_attendance_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
-
 class StudentAttendanceScreen extends StatefulWidget {
-  const StudentAttendanceScreen({Key key}) : super(key: key);
+  const StudentAttendanceScreen({super.key});
 
   @override
   State<StudentAttendanceScreen> createState() =>
@@ -18,9 +17,9 @@ class StudentAttendanceScreen extends StatefulWidget {
 }
 
 class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
-  Future attendanceData;
+  late Future attendanceData;
   var attendanceProvider = Provider.of<StudentAttendanceProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -38,7 +37,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: "ATTENDANCE"),
+        appBar: const CustomAppBar(title: "ATTENDANCE"),
         body: FutureBuilder(
             future: attendanceData,
             builder: (context, snapshot) {
@@ -47,7 +46,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                   return const CustomLoader();
                 default:
                   if (snapshot.hasData) {
-                    return StudentAttendanceComponent();
+                    return const StudentAttendanceComponent();
                   } else {
                     return ShowError(errorText: '${snapshot.error}');
                   }

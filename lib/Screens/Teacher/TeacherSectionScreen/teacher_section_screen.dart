@@ -8,6 +8,8 @@ import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class TeacherSectionScreen extends StatefulWidget {
+  const TeacherSectionScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return TeacherSectionScreenState();
@@ -15,9 +17,9 @@ class TeacherSectionScreen extends StatefulWidget {
 }
 
 class TeacherSectionScreenState extends State<TeacherSectionScreen> {
-  Future _sections;
+  late Future _sections;
   var provider = Provider.of<MarkAttendanceProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -35,22 +37,20 @@ class TeacherSectionScreenState extends State<TeacherSectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'ATTENDANCE'),
-        body: RefreshIndicator(
-            child: FutureBuilder(
-                future: _sections,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const CustomLoader();
-                    default:
-                      if (snapshot.hasData) {
-                        return TeacherSectionComponent();
-                      } else {
-                        return ShowError(errorText: '${snapshot.error}');
-                      }
+        appBar: const CustomAppBar(title: 'ATTENDANCE'),
+        body: FutureBuilder(
+            future: _sections,
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const CustomLoader();
+                default:
+                  if (snapshot.hasData) {
+                    return const TeacherSectionComponent();
+                  } else {
+                    return ShowError(errorText: '${snapshot.error}');
                   }
-                }),
-            onRefresh: () => provider.loadSections()));
+              }
+            }));
   }
 }

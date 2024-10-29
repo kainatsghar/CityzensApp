@@ -8,6 +8,8 @@ import 'package:tcs_app/Provider/TeacherProfile/teacher_profile_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class TeacherProfileScreen extends StatefulWidget {
+  const TeacherProfileScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return TeacherProfileScreenState();
@@ -15,9 +17,9 @@ class TeacherProfileScreen extends StatefulWidget {
 }
 
 class TeacherProfileScreenState extends State<TeacherProfileScreen> {
-  Future _teacherProfile;
+  late Future _teacherProfile;
   var provider = Provider.of<TeacherProfileProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -29,7 +31,7 @@ class TeacherProfileScreenState extends State<TeacherProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'PROFILE'),
+      appBar: const CustomAppBar(title: 'PROFILE'),
       body: RefreshIndicator(
           child: FutureBuilder(
               future: _teacherProfile,
@@ -39,7 +41,7 @@ class TeacherProfileScreenState extends State<TeacherProfileScreen> {
                     return const CustomLoader();
                   default:
                     if (snapshot.hasData) {
-                      return TeacherProfileComponent();
+                      return const TeacherProfileComponent();
                     } else {
                       return ShowError(errorText: '${snapshot.error}');
                     }

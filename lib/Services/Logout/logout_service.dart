@@ -4,9 +4,8 @@ import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 
 class LogoutService {
   static Future<ResponseMessage> logoutRequest(String tokenId) async {
-    LogoutRequest _request = LogoutRequest(tokenId: tokenId);
-    var response =
-        await ApiBaseHelper.httpPostRequest("Logout", body: _request.toJson());
+    LogoutRequest request = LogoutRequest(tokenId: tokenId);
+    var response = await ApiBaseHelper.httpPostRequest("Logout", body: request.toJson());
     return ResponseMessage.fromJson(response);
   }
 }

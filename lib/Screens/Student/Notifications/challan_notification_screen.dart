@@ -9,6 +9,8 @@ import 'package:tcs_app/Provider/Notifications/notification_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
 class ChallanNotificationScreen extends StatefulWidget {
+  const ChallanNotificationScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return ChallanNotificationScreenState();
@@ -16,9 +18,10 @@ class ChallanNotificationScreen extends StatefulWidget {
 }
 
 class ChallanNotificationScreenState extends State<ChallanNotificationScreen> {
-  Future _notificationService;
+  late Future _notificationService;
 
-  var provider = Provider.of<NotificationProvider>(AppNavigation.currentContext,
+  var provider = Provider.of<NotificationProvider>(
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -37,7 +40,7 @@ class ChallanNotificationScreenState extends State<ChallanNotificationScreen> {
               return const CustomLoader();
             default:
               if (snapshot.hasData) {
-                return NotificationComponent();
+                return const NotificationComponent();
               } else {
                 return ShowError(errorText: '${snapshot.error}');
               }

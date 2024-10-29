@@ -8,16 +8,16 @@ import '../../../Provider/MarkUnverified/mark_unverified_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
 class MarkUnidentifiedScreen extends StatefulWidget {
-  const MarkUnidentifiedScreen({Key key}) : super(key: key);
+  const MarkUnidentifiedScreen({super.key});
 
   @override
   State<MarkUnidentifiedScreen> createState() => _MarkUnidentifiedScreenState();
 }
 
 class _MarkUnidentifiedScreenState extends State<MarkUnidentifiedScreen> {
-  Future _sections, _reasons;
+  late Future _sections, _reasons;
   var provider = Provider.of<MarkUnverifiedProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -36,16 +36,16 @@ class _MarkUnidentifiedScreenState extends State<MarkUnidentifiedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'MARK UNIDENTIFIED'),
+        appBar: const CustomAppBar(title: 'MARK UNIDENTIFIED'),
         body: FutureBuilder(
-            future: Future.wait([_sections,_reasons]),
+            future: Future.wait([_sections, _reasons]),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
                   return const CustomLoader();
                 default:
                   if (snapshot.hasData) {
-                    return MarkUnverifiedComponent();
+                    return const MarkUnverifiedComponent();
                   } else {
                     return ShowError(errorText: '${snapshot.error}');
                   }

@@ -9,6 +9,8 @@ import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return ForgotPasswordScreenState();
@@ -17,7 +19,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   ForgotPasswordProvider provider = Provider.of<ForgotPasswordProvider>(
-      AppNavigation.currentContext,
+      AppNavigation.currentContext!,
       listen: false);
 
   @override
@@ -36,16 +38,17 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: CustomAppBar(title: 'FORGOT PASSWORD'),
+        appBar: const CustomAppBar(title: 'FORGOT PASSWORD'),
         body: SingleChildScrollView(
           child: Consumer<ForgotPasswordProvider>(builder: (context, value, _) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Column(children: <Widget>[
-                CustomLogoCover(),
+                const CustomLogoCover(),
                 SizedBox(height: size.height * 0.02),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 25.0),
                   decoration: BoxDecoration(
                       color: AppColors.secondaryColor,
                       borderRadius: BorderRadius.circular(20.0)),
@@ -57,18 +60,18 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             controller: value.userTypeController,
                             readOnly: true,
                             onTap: () => value.userTypeBottomSheet(),
-                            suffixWidget: ImageIcon(
+                            suffixWidget: const ImageIcon(
                                 AssetImage('images/dropdown_icon.png'),
                                 color: AppColors.whiteColor)),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         CustomTextFormField(
-                            controller: value.userNameController,
+                            controller: value.userNameController!,
                             inputType: TextInputType.number,
                             inputAction: TextInputAction.next,
                             hintText: value.userNameLabel,
                             prefixIcon: Icons.person,
                             validator: value.validator),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         CustomTextFormField(
                             controller: value.phoneNumberController,
                             inputType: TextInputType.number,
@@ -84,7 +87,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 CustomAppButton(
                     buttonTitle: 'Next', onTap: () => value.forgotPassword()),
                 SizedBox(height: size.height * 0.02),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text('Note:',
