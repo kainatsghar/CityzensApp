@@ -46,6 +46,7 @@ class CustomDashboardButton extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.bold,
+                        height: 1.2,
                         color: AppColors.primaryTitleColor,
                       ),
                     ),
