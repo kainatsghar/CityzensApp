@@ -21,7 +21,10 @@ class MultiChildComponent extends StatelessWidget {
             builder: (context, value, localData, _) {
       var children = value.multiChildResponse!.children;
       return Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
         child: Column(
           children: [
             const CustomLogoCover(),

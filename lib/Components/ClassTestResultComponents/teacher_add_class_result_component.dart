@@ -13,9 +13,12 @@ class TeacherAddClassResultComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
       child: Consumer<ClassTestResultProvider>(builder: (context, value, _) {
         return Column(
           children: [

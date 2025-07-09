@@ -21,17 +21,29 @@ class CustomExpansionTile extends StatelessWidget {
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
           collapsedBackgroundColor: AppColors.secondaryColor,
-          title: Text(title,
-              style: const TextStyle(
-                  color: AppColors.primaryTitleColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600)),
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: AppColors.primaryTitleColor,
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          iconColor: AppColors.primaryTitleColor,
+          collapsedIconColor: AppColors.primaryTitleColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
           children: children.isEmpty
               ? <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(detailMsg!,
-                        style: const TextStyle(color: Colors.black)),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        detailMsg!,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
                   ),
                 ]
               : children,

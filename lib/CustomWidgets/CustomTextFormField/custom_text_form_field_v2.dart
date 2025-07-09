@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
-class CustomTextFormFieldv2 extends StatelessWidget {
+class CustomTextFormFieldV2 extends StatelessWidget {
   final IconData? prefixIcon;
   final Widget? suffixWidget;
   final String hintText;
@@ -23,7 +23,7 @@ class CustomTextFormFieldv2 extends StatelessWidget {
   final bool isDense;
   final TextCapitalization? textCapitalization;
 
-  const CustomTextFormFieldv2(
+  const CustomTextFormFieldV2(
       {super.key,
       this.hintText = "",
       this.obscureText = false,

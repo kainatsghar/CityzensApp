@@ -17,36 +17,38 @@ class CustomFilterBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomSheet(
-        title: title,
-        scrollRequired: true,
-        child: SingleChildScrollView(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(filterOptions.length, (index) {
-                  var item = filterOptions[index];
-                  return Column(
-                    children: [
-                      ListTile(
-                          onTap: () => onSelect(item.title!),
-                          //  onTap: () => onSelect(item.title),
-                          dense: true,
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 5.0),
-                          title: Text(item.title!,
-                              style: TextStyle(
-                                  color: controller.text == item.title
-                                      ? AppColors.primaryColor
-                                      : AppColors.blackColor,
-                                  fontSize: 16)),
-                          trailing: Visibility(
-                            visible: controller.text == item.title,
-                            child: const Icon(Icons.check,
-                                color: AppColors.primaryColor),
-                          )),
-                      const Divider(height: 0.2)
-                    ],
-                  );
-                }))));
+    return SafeArea(
+      child: CustomBottomSheet(
+          title: title,
+          scrollRequired: true,
+          child: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(filterOptions.length, (index) {
+                    var item = filterOptions[index];
+                    return Column(
+                      children: [
+                        ListTile(
+                            onTap: () => onSelect(item.title!),
+                            //  onTap: () => onSelect(item.title),
+                            dense: true,
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            title: Text(item.title!,
+                                style: TextStyle(
+                                    color: controller.text == item.title
+                                        ? AppColors.primaryColor
+                                        : AppColors.blackColor,
+                                    fontSize: 16)),
+                            trailing: Visibility(
+                              visible: controller.text == item.title,
+                              child: const Icon(Icons.check,
+                                  color: AppColors.primaryColor),
+                            )),
+                        const Divider(height: 0.2)
+                      ],
+                    );
+                  })))),
+    );
   }
 }

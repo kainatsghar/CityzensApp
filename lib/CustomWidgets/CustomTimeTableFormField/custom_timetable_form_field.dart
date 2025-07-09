@@ -59,6 +59,7 @@ class CustomTimeTableFormField extends StatelessWidget {
         maxLines: maxLines,
         focusNode: node,
         onTap: onTap,
+        onTapOutside: (event) => FocusScope.of(context).unfocus(),
         readOnly: readOnly,
         textAlign: TextAlign.center,
         style: const TextStyle(

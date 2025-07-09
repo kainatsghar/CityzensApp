@@ -60,9 +60,13 @@ class _AddDiaryComponentState extends State<AddCircularComponent> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Padding(
-        padding: const EdgeInsets.all(20.0),
+    Size size = MediaQuery.sizeOf(context);
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
         child: Consumer<CircularProvider>(builder: (context, value, _) {
           value.base64String = base64;
           value.fileName = fileName;
@@ -241,6 +245,8 @@ class _AddDiaryComponentState extends State<AddCircularComponent> {
               ],
             ),
           );
-        }));
+        }),
+      ),
+    );
   }
 }

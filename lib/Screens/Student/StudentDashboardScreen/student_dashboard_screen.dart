@@ -47,7 +47,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     final double itemHeight = (size.height - kToolbarHeight - 24) / 6;
     final double itemWidth = size.width / 2;
 
@@ -65,12 +65,15 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
               ? null
               : const NavigationalDrawer(),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8,
+            ),
             child: Column(
               children: [
                 Container(
                     height: size.height * 0.2,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                         color: AppColors.primaryColor,
                         borderRadius: BorderRadius.circular(20.0)),

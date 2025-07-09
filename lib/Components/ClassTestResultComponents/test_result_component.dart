@@ -13,10 +13,13 @@ class TestResultComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Consumer<ClassTestResultProvider>(builder: (context, value, _) {
       return Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -58,31 +61,21 @@ class TestResultComponent extends StatelessWidget {
                   children: [
                     TabBar(
                       labelColor: AppColors.whiteColor,
+                      labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                       indicatorColor: AppColors.whiteColor,
                       indicatorSize: TabBarIndicatorSize.tab,
+                      splashBorderRadius: BorderRadius.circular(16),
                       indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(16),
                           color: AppColors.primaryDarkColor),
                       tabs: const [
-                        Tab(
-                          child: Text(
-                            'TEST 1',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Tab(
-                          child: Text(
-                            'TEST 2',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Tab(
-                          child: Text(
-                            'TEST 3',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                        Tab(text: 'TEST 1'),
+                        Tab(text: 'TEST 2'),
+                        Tab(text: 'TEST 3'),
                       ],
+                      indicatorPadding: const EdgeInsets.symmetric(
+                        vertical: 4.0,
+                      ),
                     ),
                     SizedBox(
                       height: size.height * 0.5,

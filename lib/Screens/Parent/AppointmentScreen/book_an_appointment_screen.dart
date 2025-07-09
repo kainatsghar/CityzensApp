@@ -45,7 +45,7 @@ class _BookanAppointmentScreenState extends State<BookanAppointmentScreen> {
                 return const CustomLoader();
               default:
                 if (snapshot.hasData) {
-                  return const BookanAppointmentComponent();
+                  return const BookAnAppointmentComponent();
                 } else {
                   return ShowError(errorText: '${snapshot.error}');
                 }

@@ -13,13 +13,16 @@ class SurveyComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Consumer<SurveyProvider>(builder: (context, value, _) {
       var responseData = value.surveyResponse;
 
       return SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 8.0,
+          ),
           child: responseData == null ||
                   responseData.surveyCategoryList!.isEmpty
               ? const ShowSurveyMessage(message: AppConstants.noRecordFound)
@@ -204,6 +207,10 @@ class SurveyComponent extends StatelessWidget {
                                                                             color:
                                                                                 AppColors.whiteColor)),
                                                               ),
+                                                              onTapOutside: (event) =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
                                                               onChanged:
                                                                   (values) {
                                                                 value.updateSelectedAnswer(

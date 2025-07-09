@@ -17,7 +17,10 @@ class TeacherSectionComponent extends StatelessWidget {
     return SingleChildScrollView(
       child: Consumer<MarkAttendanceProvider>(builder: (context, value, _) {
         return Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 8.0,
+          ),
           child: Column(
             children: <Widget>[
               const CustomLogoCover(),

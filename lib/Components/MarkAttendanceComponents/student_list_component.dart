@@ -13,30 +13,36 @@ class StudentListComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Consumer<MarkAttendanceProvider>(builder: (context, value, _) {
-        var studentList = value.studentListResponse.studentList;
-        return studentList!.isEmpty
-            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
-            : value.saveAttendanceResponse!.isSuccessful != null &&
-                    value.saveAttendanceResponse!.isSuccessful!
-                // : value.saveAttendanceResponse!.isSuccessful!
-                ? const AttendanceGraphComponent()
-                : ListView.builder(
-                    itemCount: studentList.length + 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index == studentList.length) {
-                        return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 10),
-                            child: CustomAppButton(
-                                buttonTitle: 'Save Attendance',
-                                onTap: () => value.saveAttendance()));
-                      } else {
-                        return AttendanceListItem(
-                            index: index, student: studentList[index]);
-                      }
-                    });
-      }),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 8.0,
+          horizontal: 16,
+        ),
+        child: Consumer<MarkAttendanceProvider>(builder: (context, value, _) {
+          var studentList = value.studentListResponse.studentList;
+          return studentList!.isEmpty
+              ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+              : value.saveAttendanceResponse!.isSuccessful != null &&
+                      value.saveAttendanceResponse!.isSuccessful!
+                  // : value.saveAttendanceResponse!.isSuccessful!
+                  ? const AttendanceGraphComponent()
+                  : ListView.builder(
+                      itemCount: studentList.length + 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index == studentList.length) {
+                          return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 16),
+                              child: CustomAppButton(
+                                  buttonTitle: 'Save Attendance',
+                                  onTap: () => value.saveAttendance()));
+                        } else {
+                          return AttendanceListItem(
+                              index: index, student: studentList[index]);
+                        }
+                      });
+        }),
+      ),
     );
   }
 }

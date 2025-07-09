@@ -21,8 +21,7 @@ class TeacherProfileComponent extends StatelessWidget {
           : SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: size.height * 0.03,
-                    horizontal: size.width * 0.035),
+                    vertical: size.height * 0.03, horizontal: 16),
                 child: Column(children: <Widget>[
                   Padding(
                       padding: const EdgeInsets.only(top: 15.0),

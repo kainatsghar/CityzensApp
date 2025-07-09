@@ -13,7 +13,7 @@ class Test1Component extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
       child: Consumer<ClassTestResultProvider>(builder: (context, value, _) {
         value.categoryId = 1;
@@ -38,6 +38,9 @@ class Test1Component extends StatelessWidget {
                     border: UnderlineInputBorder(borderSide: BorderSide.none)),
                 textAlign: TextAlign.center, // Center input value
                 keyboardType: TextInputType.number,
+                onTapOutside: (event) {
+                  FocusScope.of(context).unfocus();
+                },
                 controller: TextEditingController(
                   text:
                       value.totalMarks != 0 ? value.totalMarks.toString() : '',

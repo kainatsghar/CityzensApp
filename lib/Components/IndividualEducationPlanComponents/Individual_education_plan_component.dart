@@ -37,7 +37,7 @@ class IndividualEducationPlanComponent extends StatelessWidget {
                         horizontal: 5, vertical: 10.0),
                     child: Column(
                       children: [
-                        CustomTextFormFieldv2(
+                        CustomTextFormFieldV2(
                             hintText: 'Academic Year'.toUpperCase(),
                             controller: value.academicYearController,
                             onTap: () => value.academicYearBottomSheet(),
@@ -47,7 +47,7 @@ class IndividualEducationPlanComponent extends StatelessWidget {
                                 AssetImage('images/dropdown_icon.png'),
                                 color: AppColors.primaryDarkColor)),
                         SizedBox(height: size.height * 0.01),
-                        CustomTextFormFieldv2(
+                        CustomTextFormFieldV2(
                             hintText: 'Term'.toUpperCase(),
                             controller: value.termController,
                             onTap: () => value.termBottomSheet(),

@@ -13,7 +13,10 @@ class MarkUnverifiedComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
         child: Consumer<MarkUnverifiedProvider>(builder: (context, value, _) {
           return SingleChildScrollView(
             child: Column(

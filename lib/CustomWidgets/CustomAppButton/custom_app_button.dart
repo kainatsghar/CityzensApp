@@ -10,7 +10,7 @@ class CustomAppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryColor,

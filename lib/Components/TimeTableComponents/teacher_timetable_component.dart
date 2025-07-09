@@ -64,7 +64,7 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Consumer<TimeTableProvider>(builder: (context, value, _) {
       var responseData = value.timeTableResponse;
 

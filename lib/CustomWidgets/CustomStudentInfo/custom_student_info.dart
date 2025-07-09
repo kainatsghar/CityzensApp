@@ -9,7 +9,7 @@ class CustomStudentInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Card(
         child: Container(
             padding: const EdgeInsets.all(5.0),
@@ -32,7 +32,7 @@ class CustomStudentInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(
-                    width: size.width * 0.43,
+                    width: (size.width * 0.43) - 8,
                     child: Column(
                       children: [
                         const Text('BRANCH',
@@ -50,11 +50,9 @@ class CustomStudentInfo extends StatelessWidget {
                   const SizedBox(
                       height: 30,
                       child: VerticalDivider(
-                          width: 15.0,
-                          color: AppColors.blackColor,
-                          thickness: 1)),
+                          width: 0, color: AppColors.blackColor, thickness: 1)),
                   SizedBox(
-                    width: size.width * 0.43,
+                    width: (size.width * 0.43) - 8,
                     child: Column(
                       children: [
                         const Text('ROLL NUMBER',
@@ -80,7 +78,7 @@ class CustomStudentInfo extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(
-                        width: size.width * 0.43,
+                        width: (size.width * 0.43) - 8,
                         child: Column(
                           children: [
                             const Text(
@@ -102,11 +100,11 @@ class CustomStudentInfo extends StatelessWidget {
                       const SizedBox(
                           height: 30,
                           child: VerticalDivider(
-                              width: 15.0,
+                              width: 0,
                               color: AppColors.blackColor,
                               thickness: 1)),
                       SizedBox(
-                        width: size.width * 0.43,
+                        width: (size.width * 0.43) - 8,
                         child: Column(
                           children: [
                             const Text('CLASS',

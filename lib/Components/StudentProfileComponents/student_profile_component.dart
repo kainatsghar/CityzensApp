@@ -23,8 +23,11 @@ class StudentProfileComponent extends StatelessWidget {
             : SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: size.height * 0.03, horizontal: 12.0),
+                    padding: EdgeInsets.only(
+                      top: size.height * 0.03,
+                      left: 16.0,
+                      right: 16.0,
+                    ),
                     child: Column(children: <Widget>[
                       Padding(
                           padding: const EdgeInsets.only(top: 15.0),
@@ -48,7 +51,7 @@ class StudentProfileComponent extends StatelessWidget {
                                   topLeft: Radius.circular(10)),
                               title: 'CAMPUS NAME',
                               value: '${profile.first.center}')),
-                      const SizedBox(height: 5.0),
+                      const SizedBox(height: 8.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -76,7 +79,7 @@ class StudentProfileComponent extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 4),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -105,7 +108,7 @@ class StudentProfileComponent extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5.0),
+                      const SizedBox(height: 8.0),
                       Container(
                           padding: const EdgeInsets.symmetric(vertical: 5.0),
                           decoration: BoxDecoration(

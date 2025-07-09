@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Consumer<LoginProvider>(builder: (context, value, _) {
                 return Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Column(
                     children: <Widget>[
                       const CustomLogoCover(),

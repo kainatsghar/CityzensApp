@@ -22,7 +22,7 @@ class CustomProfileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: width,
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 3.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
         decoration: BoxDecoration(
             color: AppColors.secondaryColor, borderRadius: borderRadius),
         child: Column(children: <Widget>[

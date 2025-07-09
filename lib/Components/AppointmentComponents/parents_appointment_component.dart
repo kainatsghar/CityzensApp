@@ -20,13 +20,16 @@ class _ParentAppointmentComponentState
     extends State<ParentAppointmentComponent> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Consumer<AppointmentProvider>(builder: (context, value, _) {
       var responseData = value.meetingResponse;
 
       return SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 8.0,
+          ),
           child: responseData == null
               ? const ShowCustomMessage(message: AppConstants.noRecordFound)
               : Column(

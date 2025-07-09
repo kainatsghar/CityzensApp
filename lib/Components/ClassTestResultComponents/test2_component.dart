@@ -38,6 +38,9 @@ class Test2Component extends StatelessWidget {
                     border: UnderlineInputBorder(borderSide: BorderSide.none)),
                 textAlign: TextAlign.center, // Center input value
                 keyboardType: TextInputType.number,
+                onTapOutside: (event) {
+                  FocusScope.of(context).unfocus();
+                },
                 controller: TextEditingController(
                   text:
                       value.totalMarks != 0 ? value.totalMarks.toString() : '',

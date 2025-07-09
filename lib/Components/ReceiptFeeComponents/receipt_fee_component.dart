@@ -18,6 +18,7 @@ class ReceiptFeeComponent extends StatelessWidget {
             ? const ShowCustomMessage(message: AppConstants.noRecordFound)
             : ListView.builder(
                 itemCount: responseData.length + 1,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return value.challanReceiptResponse!.info == null

@@ -15,7 +15,9 @@ class ShowSurveyMessage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: size.height * 0.04),
-            Image.asset('images/survey_announcement.png'),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(16.0),
+                child: Image.asset('images/survey_announcement.png')),
             Visibility(
               visible: showMsg,
               child: Padding(

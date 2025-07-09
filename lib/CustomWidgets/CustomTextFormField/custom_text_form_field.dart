@@ -58,6 +58,9 @@ class CustomTextFormField extends StatelessWidget {
         maxLines: maxLines,
         focusNode: node,
         onTap: onTap,
+        onTapOutside: (event) {
+          FocusScope.of(context).unfocus();
+        },
         readOnly: readOnly,
         decoration: InputDecoration(
             fillColor: AppColors.whiteColor,
@@ -74,7 +77,8 @@ class CustomTextFormField extends StatelessWidget {
                 borderSide: const BorderSide(color: AppColors.whiteColor)),
             isDense: isDense,
             enabled: isEnable,
-            contentPadding: const EdgeInsets.only(left: 10),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             errorMaxLines: 5,
             suffixIcon: suffixWidget == null
                 ? null

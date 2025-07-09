@@ -59,6 +59,9 @@ class CustomTestResultFormField extends StatelessWidget {
         maxLines: maxLines,
         focusNode: node,
         onTap: onTap,
+        onTapOutside: (details) {
+          FocusScope.of(context).unfocus();
+        },
         readOnly: readOnly,
         textAlign: TextAlign.center,
         style: const TextStyle(
@@ -75,10 +78,11 @@ class CustomTestResultFormField extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: const BorderSide(
-                    color: Color.fromARGB(255, 201, 201, 201))),
+                    color: Color.fromARGB(255, 201, 201, 201), width: 1.5)),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
-                borderSide: const BorderSide(color: AppColors.whiteColor)),
+                borderSide: const BorderSide(
+                    color: AppColors.primaryColor, width: 1.5)),
             isDense: isDense,
             enabled: isEnable,
             contentPadding: const EdgeInsets.only(left: 10),

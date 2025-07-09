@@ -15,11 +15,11 @@ class AcademicTermComponent extends StatelessWidget {
   // AcademicTermComponent({super.key});
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return SafeArea(
       child: Consumer<ResultsProvider>(builder: (context, value, _) {
         return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Form(
                 key: value.formKey,
                 child: SingleChildScrollView(
@@ -30,10 +30,10 @@ class AcademicTermComponent extends StatelessWidget {
                   SizedBox(height: size.height * 0.02),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 5, vertical: 10.0),
+                        horizontal: 5, vertical: 8.0),
                     child: Column(
                       children: [
-                        CustomTextFormFieldv2(
+                        CustomTextFormFieldV2(
                             hintText: 'Academic Year'.toUpperCase(),
                             controller: value.academicYearController,
                             onTap: () => value.academicYearBottomSheet(),
@@ -43,7 +43,7 @@ class AcademicTermComponent extends StatelessWidget {
                                 AssetImage('images/dropdown_icon.png'),
                                 color: AppColors.primaryDarkColor)),
                         SizedBox(height: size.height * 0.01),
-                        CustomTextFormFieldv2(
+                        CustomTextFormFieldV2(
                             hintText: 'Term'.toUpperCase(),
                             controller: value.termController,
                             onTap: () => value.termBottomSheet(),

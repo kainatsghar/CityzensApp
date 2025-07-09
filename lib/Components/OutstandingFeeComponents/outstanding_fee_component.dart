@@ -19,6 +19,7 @@ class OutstandingFeeComponent extends StatelessWidget {
             : ListView.builder(
                 itemCount:
                     value.outstandingChallans!.outstandingList!.length + 1,
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return value.outstandingChallans!.info == null

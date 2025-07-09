@@ -15,11 +15,12 @@ class AttendanceListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     List<Options> attendanceOptions = HelperFunction.attendanceOptions();
     return Consumer<MarkAttendanceProvider>(builder: (context, value, _) {
       return Card(
           child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
               leading: SizedBox(
                   width: size.width / 8,
                   height: size.width / 8,
@@ -33,27 +34,20 @@ class AttendanceListItem extends StatelessWidget {
               ),
               subtitle: Text(student.studentId.toString()),
               trailing: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
+                  spacing: 4,
                   children: List.generate(
                       !student.status!
                           ? attendanceOptions.length - 1
                           : attendanceOptions.length,
-                      (i) => Row(children: [
-                            CustomToggleButton(
-                                student: student,
-                                title: attendanceOptions[i]
-                                    .title!
-                                    .characters
-                                    .first,
-                                color: attendanceOptions[i].color!,
-                                onTap: () => value.changeStatus(
-                                    attendanceOptions[i]
-                                        .title!
-                                        .characters
-                                        .first,
-                                    index)),
-                            const Padding(padding: EdgeInsets.only(right: 2.0))
-                          ])))));
+                      (i) => CustomToggleButton(
+                          student: student,
+                          title: attendanceOptions[i].title!.characters.first,
+                          color: attendanceOptions[i].color!,
+                          onTap: () => value.changeStatus(
+                              attendanceOptions[i].title!.characters.first,
+                              index))))));
     });
   }
 }
