@@ -18,6 +18,7 @@ class LibraryComponent extends StatelessWidget {
             ? const ShowCustomMessage(message: AppConstants.noRecordFound)
             : ListView.builder(
                 itemCount: value.libraryResponse.listLibrary!.length + 1,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return CustomStudentInfo(info: value.libraryResponse.info);

@@ -163,14 +163,20 @@ class AppointmentProvider with ChangeNotifier {
       MeetingResponse response = await AppointmentService.getMeetings(
           userName: userId ?? 0, isStudent: true);
       setAppointments(response);
-      setSelectedType(
-          meetingResponse!.meetingDetails![0].meetingPersonId as int);
-      setSelectedReason(
-          meetingResponse!.meetingDetails![0].meetingReasonId as int);
-      setSelectedTime(meetingResponse!.meetingDetails![0].meetingTimeId as int);
-      setSelectedDate(meetingResponse!.meetingDetails![0].meetingDay
-          .toString()
-          .toUpperCase());
+
+      if (meetingResponse != null &&
+          meetingResponse!.meetingDetails != null &&
+          meetingResponse!.meetingDetails!.isNotEmpty) {
+        setSelectedType(
+            meetingResponse!.meetingDetails![0].meetingPersonId as int);
+        setSelectedReason(
+            meetingResponse!.meetingDetails![0].meetingReasonId as int);
+        setSelectedTime(
+            meetingResponse!.meetingDetails![0].meetingTimeId as int);
+        setSelectedDate(meetingResponse!.meetingDetails![0].meetingDay
+            .toString()
+            .toUpperCase());
+      }
 
       return response;
     } catch (ex) {

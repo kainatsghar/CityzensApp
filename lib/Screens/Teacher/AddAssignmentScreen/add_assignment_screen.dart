@@ -3,19 +3,19 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/AddAssignmentComponents/add_assignment_component.dart';
 import 'package:tcs_app/Provider/Assignment/assignment_provider.dart';
 
-import '../../../CustomWidgets/CustomAppbar/custom_appbar.dart';
+import '../../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
 import '../../../CustomWidgets/ShowError/show_error.dart';
 import '../../../Routes/app_navigation.dart';
 
-class AddAssignmnetScreen extends StatefulWidget {
-  const AddAssignmnetScreen({super.key});
+class AddAssignmentScreen extends StatefulWidget {
+  const AddAssignmentScreen({super.key});
 
   @override
-  State<AddAssignmnetScreen> createState() => _AddAssignmnetScreenState();
+  State<AddAssignmentScreen> createState() => _AddAssignmentScreenState();
 }
 
-class _AddAssignmnetScreenState extends State<AddAssignmnetScreen> {
+class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
   late Future sections;
   var provider = Provider.of<AssignmentProvider>(AppNavigation.currentContext!,
       listen: false);

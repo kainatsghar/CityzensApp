@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/TeacherProfileComponents/teacher_profile_component.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/TeacherProfile/teacher_profile_provider.dart';

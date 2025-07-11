@@ -10,7 +10,7 @@ class StudentAttendance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<StudentAlevelAttendanceProvider>(
+    return Consumer<StudentALevelAttendanceProvider>(
       builder: (context, value, _) {
         return Container(
           margin: const EdgeInsets.all(10.0),
@@ -33,14 +33,15 @@ class StudentAttendance extends StatelessWidget {
             lastDay: DateTime.now(),
             daysOfWeekStyle: const DaysOfWeekStyle(
                 weekdayStyle: TextStyle(
-                    color: AppColors.blackColor, fontWeight: FontWeight.w600),
+                    color: AppColors.whiteColor, fontWeight: FontWeight.w600),
                 weekendStyle: TextStyle(
-                    color: Colors.orange, fontWeight: FontWeight.w600)),
+                    color: AppColors.goldenColors,
+                    fontWeight: FontWeight.w600)),
             calendarStyle: const CalendarStyle(
               isTodayHighlighted: true,
               defaultTextStyle: TextStyle(color: AppColors.whiteColor),
-              weekendTextStyle: TextStyle(color: Colors.orange),
-              selectedTextStyle: TextStyle(color: AppColors.blackColor),
+              weekendTextStyle: TextStyle(color: AppColors.goldenColors),
+              selectedTextStyle: TextStyle(color: AppColors.primaryDarkColor),
               selectedDecoration: BoxDecoration(
                   color: AppColors.secondaryColor, shape: BoxShape.circle),
             ),

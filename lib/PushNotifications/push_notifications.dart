@@ -25,8 +25,15 @@ class PushNotificationsManager {
   }
 
   static Future<void> _showNotification({RemoteMessage? message}) async {
-    var android = const AndroidNotificationDetails('id', 'channel ',
-        priority: Priority.high, importance: Importance.max, playSound: true);
+    var android = const AndroidNotificationDetails(
+      'id',
+      'channel ',
+      priority: Priority.high,
+      importance: Importance.max,
+      playSound: true,
+      icon: '@mipmap/ic_notification',
+      largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_notification'),
+    );
     var iOS = const DarwinNotificationDetails();
     var notificationDetails = NotificationDetails(android: android, iOS: iOS);
     await FlutterLocalNotificationsPlugin().show(
@@ -49,13 +56,13 @@ class PushNotificationsManager {
   static Future<void> _initializePushNotification() async {
     _initializeLocalNotifications();
     final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    await firebaseMessaging.requestPermission(
+      alert: true,
+      sound: true,
+      badge: true,
+    );
     if (Platform.isIOS) {
-      firebaseMessaging.requestPermission(
-          alert: true, sound: true, badge: true);
       firebaseMessaging.getNotificationSettings();
-    } else {
-      firebaseMessaging.requestPermission(
-          alert: true, sound: true, badge: true);
     }
     await firebaseMessaging.setForegroundNotificationPresentationOptions(
         alert: true, badge: true, sound: true);
@@ -69,7 +76,7 @@ class PushNotificationsManager {
 
   static Future<void> firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
-    // _showNotificatio
+    // _showNotification
     //
     //n(message: message);
   }

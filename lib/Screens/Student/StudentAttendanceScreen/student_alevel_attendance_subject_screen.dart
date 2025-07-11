@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/StudentAttendanceComponents/student_alevel_attendance_subject_component.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/StudentAttendance/student_alevel_attendance_provider.dart';
 // import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
-class StudentAlevelAttendanceSubjectScreen extends StatefulWidget {
-  const StudentAlevelAttendanceSubjectScreen({super.key});
+class StudentALevelAttendanceSubjectScreen extends StatefulWidget {
+  const StudentALevelAttendanceSubjectScreen({super.key});
 
   @override
-  State<StudentAlevelAttendanceSubjectScreen> createState() =>
-      _StudentAlevelAttendanceSubjectScreenState();
+  State<StudentALevelAttendanceSubjectScreen> createState() =>
+      _StudentALevelAttendanceSubjectScreenState();
 }
 
-class _StudentAlevelAttendanceSubjectScreenState
-    extends State<StudentAlevelAttendanceSubjectScreen> {
+class _StudentALevelAttendanceSubjectScreenState
+    extends State<StudentALevelAttendanceSubjectScreen> {
   late Future _attendanceSubjectsService;
-  var provider = Provider.of<StudentAlevelAttendanceProvider>(
+  var provider = Provider.of<StudentALevelAttendanceProvider>(
       AppNavigation.currentContext!,
       listen: false);
 
@@ -48,7 +48,7 @@ class _StudentAlevelAttendanceSubjectScreenState
                       return const CustomLoader();
                     default:
                       if (snapshot.hasData) {
-                        return const StudentAlevelAttendanceSubjectComponent();
+                        return const StudentALevelAttendanceSubjectComponent();
                       } else {
                         return ShowError(errorText: '${snapshot.error}');
                       }

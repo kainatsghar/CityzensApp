@@ -555,11 +555,11 @@ class _WithdrawalRequestComponentState
                                           height: size.height * 0.04,
                                           child: GestureDetector(
                                             onTap: () {
-                                              value.setComminicatingValue(
+                                              value.setCommunicatingValue(
                                                   options);
                                             },
                                             child: Card(
-                                              color: value.isComminicating ==
+                                              color: value.isCommunicating ==
                                                       options
                                                   ? AppColors.primaryDarkColor
                                                   : AppColors.secondaryColor,
@@ -575,7 +575,7 @@ class _WithdrawalRequestComponentState
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                     color:
-                                                        value.isComminicating ==
+                                                        value.isCommunicating ==
                                                                 options
                                                             ? AppColors
                                                                 .whiteColor

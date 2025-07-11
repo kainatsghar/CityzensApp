@@ -16,7 +16,7 @@ class StudentAttendanceComponent extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: SingleChildScrollView(child:
-          Consumer<StudentAlevelAttendanceProvider>(
+          Consumer<StudentALevelAttendanceProvider>(
               builder: (context, value, _) {
         return Padding(
             padding: const EdgeInsets.only(top: 18.0),

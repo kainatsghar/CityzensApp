@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
@@ -119,7 +119,7 @@ class RouteGenerator {
       case AppNavRoutes.alevelAttendanceRoute:
         return routeScreen(child: const StudentAlevelAttendanceScreen());
       case AppNavRoutes.attendanceSubjectRoute:
-        return routeScreen(child: const StudentAlevelAttendanceSubjectScreen());
+        return routeScreen(child: const StudentALevelAttendanceSubjectScreen());
       case AppNavRoutes.markUnidentifiedRoute:
         return routeScreen(child: const MarkUnidentifiedScreen());
       case AppNavRoutes.addDiaryRoute:
@@ -145,7 +145,7 @@ class RouteGenerator {
       case AppNavRoutes.teacherAddClassResultRoute:
         return routeScreen(child: const TeacherAddClassResultScreen());
       case AppNavRoutes.addAssignmentRoute:
-        return routeScreen(child: const AddAssignmnetScreen());
+        return routeScreen(child: const AddAssignmentScreen());
       case AppNavRoutes.teacherAssignmentRoute:
         return routeScreen(child: const TeacherAssignmentScreen());
       case AppNavRoutes.studentClassTestResultRoute:

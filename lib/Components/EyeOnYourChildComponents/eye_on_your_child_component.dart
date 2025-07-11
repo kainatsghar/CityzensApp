@@ -21,7 +21,7 @@ class EyeOnYourChildComponent extends StatefulWidget {
 class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Consumer<EyeOnYourChildProvider>(builder: (context, value, _) {
       var responseData = value.eyeOnChildResponse;
       // var update = [
@@ -39,12 +39,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
 
       // var childs = ['Nafay Ali', 'Zainab Fahad', 'Aun Saif'];
 
-      return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: responseData == null
-              ? const ShowCustomMessage(message: AppConstants.noRecordFound)
-              : Form(
+      return responseData == null
+          ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Form(
                   key: value.formKey,
                   child: Column(
                     children: [
@@ -441,8 +441,8 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                     ],
                   ),
                 ),
-        ),
-      );
+              ),
+            );
     });
   }
 }

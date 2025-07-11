@@ -12,7 +12,6 @@ class StudentAttendance extends StatelessWidget {
     return Consumer<StudentAttendanceProvider>(
       builder: (context, value, _) {
         return Container(
-          margin: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
               color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(15.0)),
@@ -32,14 +31,15 @@ class StudentAttendance extends StatelessWidget {
             lastDay: DateTime.now(),
             daysOfWeekStyle: const DaysOfWeekStyle(
                 weekdayStyle: TextStyle(
-                    color: AppColors.blackColor, fontWeight: FontWeight.w600),
+                    color: AppColors.whiteColor, fontWeight: FontWeight.w600),
                 weekendStyle: TextStyle(
-                    color: Colors.orange, fontWeight: FontWeight.w600)),
+                    color: AppColors.goldenColors,
+                    fontWeight: FontWeight.w600)),
             calendarStyle: const CalendarStyle(
               isTodayHighlighted: true,
               defaultTextStyle: TextStyle(color: AppColors.whiteColor),
-              weekendTextStyle: TextStyle(color: Colors.orange),
-              selectedTextStyle: TextStyle(color: AppColors.blackColor),
+              weekendTextStyle: TextStyle(color: AppColors.goldenColors),
+              selectedTextStyle: TextStyle(color: AppColors.primaryDarkColor),
               selectedDecoration: BoxDecoration(
                   color: AppColors.secondaryColor, shape: BoxShape.circle),
             ),
@@ -48,8 +48,8 @@ class StudentAttendance extends StatelessWidget {
             calendarBuilders: CalendarBuilders(
               singleMarkerBuilder: (context, day, dynamic event) => ClipOval(
                 child: SizedBox(
-                  height: 12,
-                  width: 12,
+                  height: 8,
+                  width: 8,
                   child: ColoredBox(color: event.color),
                   // child: ColoredBox(color: Colors.grey),
                 ),

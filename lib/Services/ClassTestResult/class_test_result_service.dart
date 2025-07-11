@@ -38,7 +38,7 @@ class ClassTestResultService {
     return ResponseMessage.fromJson(response);
   }
 
-  static Future<StudentTestResultListResponse> studentsTestResulListRequest(
+  static Future<StudentTestResultListResponse> studentsTestResultListRequest(
       {required int status, required int id}) async {
     StudentTestResultListRequest request =
         StudentTestResultListRequest(status: status, id: id);

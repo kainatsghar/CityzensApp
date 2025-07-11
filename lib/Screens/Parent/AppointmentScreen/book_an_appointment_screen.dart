@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Components/AppointmentComponents/book_an_appointment_component.dart';
-import '../../../CustomWidgets/CustomAppbar/custom_appbar.dart';
+import '../../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
 import '../../../CustomWidgets/ShowError/show_error.dart';
 import '../../../Provider/Appointment/appointment_provider.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/StudentAttendanceComponents/student_alevel_attendance_component.dart';
 // import 'package:tcs_app/Components/StudentAttendanceComponents/student_attendance_component.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/StudentAttendance/student_alevel_attendance_provider.dart';
@@ -19,7 +19,7 @@ class StudentAlevelAttendanceScreen extends StatefulWidget {
 class _StudentAlevelAttendanceScreenState
     extends State<StudentAlevelAttendanceScreen> {
   late Future attendanceData;
-  var attendanceProvider = Provider.of<StudentAlevelAttendanceProvider>(
+  var attendanceProvider = Provider.of<StudentALevelAttendanceProvider>(
       AppNavigation.currentContext!,
       listen: false);
 

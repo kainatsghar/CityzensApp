@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/imagepicker_bottom_sheet.dart';
 import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -30,9 +31,15 @@ class HelperFunction {
 
   static List<Options> attendanceOptions() => [
         Options(
-            title: 'Present', isSelected: true, color: Colors.green, value: 1),
+            title: 'Present',
+            isSelected: true,
+            color: AppColors.successGreenColor,
+            value: 1),
         Options(
-            title: 'Absent', isSelected: false, color: Colors.red, value: 2),
+            title: 'Absent',
+            isSelected: false,
+            color: AppColors.valuesRedColors,
+            value: 2),
         Options(
             title: 'Leave', isSelected: false, color: Colors.amber, value: 3),
         Options(

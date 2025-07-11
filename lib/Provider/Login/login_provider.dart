@@ -57,7 +57,12 @@ class LoginProvider extends ChangeNotifier {
               () => AppNavigation.pushReplacementTo(
                   AppNavRoutes.authWrapperRoute));
         } else {
-          showSnackBar(loginResponse.message);
+          if (loginResponse.isException ?? false) {
+            showSnackBar(
+                'Server Error: Something went wrong. Please try again later.');
+          } else {
+            showSnackBar(loginResponse.message);
+          }
         }
       }
     } catch (ex) {

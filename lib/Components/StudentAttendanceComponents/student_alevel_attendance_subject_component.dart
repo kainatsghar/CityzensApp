@@ -9,14 +9,14 @@ import 'package:provider/provider.dart';
 import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../Utils/app_colors.dart';
 
-class StudentAlevelAttendanceSubjectComponent extends StatelessWidget {
-  const StudentAlevelAttendanceSubjectComponent({super.key});
+class StudentALevelAttendanceSubjectComponent extends StatelessWidget {
+  const StudentALevelAttendanceSubjectComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
-      child: Consumer<StudentAlevelAttendanceProvider>(
+      child: Consumer<StudentALevelAttendanceProvider>(
           builder: (context, value, _) {
         return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

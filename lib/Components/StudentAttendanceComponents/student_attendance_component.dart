@@ -16,17 +16,23 @@ class StudentAttendanceComponent extends StatelessWidget {
       child: SingleChildScrollView(child:
           Consumer<StudentAttendanceProvider>(builder: (context, value, _) {
         return Padding(
-            padding: const EdgeInsets.only(top: 18.0),
+            padding: const EdgeInsets.only(
+              top: 18.0,
+              left: 16.0,
+              right: 16.0,
+            ),
             child: Column(
               children: [
+                const StudentAttendance(),
                 Visibility(
                   visible: value.presentDates.isNotEmpty,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: List.generate(
                                 value.pieData.length,
                                 (index) => Row(children: [
@@ -43,20 +49,21 @@ class StudentAttendanceComponent extends StatelessWidget {
                                               value.pieData[index].attendance))
                                     ]))),
                       ),
-                      Row(children: [
-                        Flexible(
-                            child: Container(
-                                padding:
-                                    EdgeInsets.only(top: size.height * 0.02),
-                                height: size.height * 0.2,
-                                child: PieChart(PieChartData(
-                                    sections: value.getSections())))),
-                        Container(width: size.width * 0.25)
-                      ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: size.height * 0.02),
+                                    height: size.height * 0.2,
+                                    child: PieChart(PieChartData(
+                                        sections: value.getSections())))),
+                            // Container(width: size.width * 0.25)
+                          ]),
                     ],
                   ),
                 ),
-                const StudentAttendance()
               ],
             ));
       })),

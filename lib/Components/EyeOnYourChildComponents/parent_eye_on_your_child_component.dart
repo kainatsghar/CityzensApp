@@ -21,7 +21,7 @@ class _ParentEyeOnYourChildComponentState
     extends State<ParentEyeOnYourChildComponent> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     final double itemHeight = (size.height - kToolbarHeight - 24) / 6;
     final double itemWidth = size.width / 2;
     return Consumer<EyeOnYourChildProvider>(builder: (context, value, _) {
@@ -30,12 +30,12 @@ class _ParentEyeOnYourChildComponentState
       String formattedDate =
           DateFormat("dd'TH' MMMM yyyy").format(DateTime.now());
 
-      return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: responseData!.fileList!.isEmpty
-              ? const ShowCustomMessage(message: AppConstants.noRecordFound)
-              : Column(
+      return responseData!.fileList!.isEmpty
+          ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
                   children: [
                     const CustomCoverImage(
                         title: 'EYE ON YOUR CHILD', imagePath: 'location.png'),
@@ -149,8 +149,8 @@ class _ParentEyeOnYourChildComponentState
                     SizedBox(height: size.height * 0.01),
                   ],
                 ),
-        ),
-      );
+              ),
+            );
     });
   }
 }

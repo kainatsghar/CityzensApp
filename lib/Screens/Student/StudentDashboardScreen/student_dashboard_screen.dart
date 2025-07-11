@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/DashboardComponents/navigational_drawer.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppbar/custom_appbar.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_button.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
@@ -128,7 +128,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                             radius: size.width * 0.15,
                                             lineWidth: 10.0,
                                             percent: data / 100,
-                                            progressColor: Colors.green,
+                                            progressColor:
+                                                AppColors.successGreenColor,
+                                            backgroundColor:
+                                                AppColors.whiteColor,
                                             center: Text("$data%",
                                                 style: const TextStyle(
                                                     color: AppColors.whiteColor,

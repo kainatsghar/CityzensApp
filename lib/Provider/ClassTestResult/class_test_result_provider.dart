@@ -300,7 +300,7 @@ class ClassTestResultProvider with ChangeNotifier {
             : localDataProvider.userData!.id;
     try {
       StudentTestResultListResponse response =
-          await ClassTestResultService.studentsTestResulListRequest(
+          await ClassTestResultService.studentsTestResultListRequest(
         status: localDataProvider.userData!.userType == 'Student'
             ? 0
             : localDataProvider.userData!.userType == 'Parent'

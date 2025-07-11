@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/AddSchoolEventComponents/add_school_event_component.dart';
 import 'package:tcs_app/Provider/SchoolEvents/school_event_provider.dart';
 
-import '../../../CustomWidgets/CustomAppbar/custom_appbar.dart';
+import '../../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
 import '../../../CustomWidgets/ShowError/show_error.dart';
 import '../../../Routes/app_navigation.dart';

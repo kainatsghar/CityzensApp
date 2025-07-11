@@ -25,7 +25,7 @@ class WithdrawalRequestProvider with ChangeNotifier {
   String specify = "";
   String reasonString = "";
 
-  String? isComminicating = "";
+  String? isCommunicating = "";
   String? isContacted = "";
   String? isSatisfied = "";
   String? isWithdraw = "";
@@ -47,8 +47,8 @@ class WithdrawalRequestProvider with ChangeNotifier {
     specify = val;
   }
 
-  void setComminicatingValue(String? val) {
-    isComminicating = val;
+  void setCommunicatingValue(String? val) {
+    isCommunicating = val;
 
     notifyListeners();
   }
@@ -121,7 +121,7 @@ class WithdrawalRequestProvider with ChangeNotifier {
         request.createdBy = localDataProvider.userData!.userName;
         request.studentId = int.tryParse(localDataProvider.studentId);
         if (isSubmitted == true &&
-            (isComminicating!.isEmpty ||
+            (isCommunicating!.isEmpty ||
                 isSatisfied!.isEmpty ||
                 isWithdraw!.isEmpty)) {
           if (selectedReasons.isEmpty) {
@@ -129,7 +129,7 @@ class WithdrawalRequestProvider with ChangeNotifier {
             return;
           } else {
             request.isContactedBySchool =
-                isComminicating == "Yes" ? true : false;
+                isCommunicating == "Yes" ? true : false;
             request.isSatisfiedConcerns = isSatisfied == "Yes" ? true : false;
             request.isWithdrawal = isWithdraw == "Yes" ? true : false;
             if (isWithdraw == "Yes") {
@@ -274,7 +274,7 @@ class WithdrawalRequestProvider with ChangeNotifier {
     townCity = "";
     specify = "";
     reasonString = "";
-    isComminicating = "";
+    isCommunicating = "";
     isContacted = "";
     isSatisfied = "";
     isWithdraw = "";
