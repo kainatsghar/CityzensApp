@@ -238,14 +238,14 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.studentAssignmentRoute),
                             imageName: 'assignment_icon_h.png'),
-                        CustomDashboardButton(
-                            title: 'EVENT\nCALENDAR',
-                            bottomAlign: -22,
-                            leftAlign: -10,
-                            imageHeight: size.height * 0.13,
-                            onTap: () => AppNavigation.navigateTo(
-                                AppNavRoutes.studentSchoolEventsRoute),
-                            imageName: 'calendar.png'),
+                        // CustomDashboardButton(
+                        //     title: 'EVENT\nCALENDAR',
+                        //     bottomAlign: -22,
+                        //     leftAlign: -10,
+                        //     imageHeight: size.height * 0.13,
+                        //     onTap: () => AppNavigation.navigateTo(
+                        //         AppNavRoutes.studentSchoolEventsRoute),
+                        //     imageName: 'calendar.png'),
                         if (gradeId != '2' &&
                             gradeId != '3' &&
                             gradeId != '4' &&
@@ -272,14 +272,14 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.teacherTimeTableRoute),
                             imageName: 'calendar.png'),
-                        CustomDashboardButton(
-                            title: 'SURVEY',
-                            bottomAlign: -14,
-                            leftAlign: -10,
-                            imageHeight: size.height * 0.11,
-                            onTap: () => AppNavigation.navigateTo(
-                                AppNavRoutes.studentSurveyRoute),
-                            imageName: 'survey.png'),
+                        // CustomDashboardButton(
+                        //     title: 'SURVEY',
+                        //     bottomAlign: -14,
+                        //     leftAlign: -10,
+                        //     imageHeight: size.height * 0.11,
+                        //     onTap: () => AppNavigation.navigateTo(
+                        //         AppNavRoutes.studentSurveyRoute),
+                        //     imageName: 'survey.png'),
                         // CustomDashboardButton(
                         //     title: 'INDIVIDUAL\nEDUCATION PLAN',
                         //     bottomAlign: -65,
@@ -329,16 +329,16 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.withdrawalRequestRoute),
                               imageName: 'withdrawal.png'),
-                        if (value.userData!.userType == 'Parent')
-                          CustomDashboardButton(
-                              title: 'COMPLAINT\nQUERY',
-                              bottomAlign: -20,
-                              leftAlign: -15, //0,
-                              imageHeight: size.height * 0.10,
-                              onTap: null,
-                              // () => AppNavigation.navigateTo(
-                              //     AppNavRoutes.complaintQueryRoute),
-                              imageName: 'lightbulb.png'),
+                        // if (value.userData!.userType == 'Parent')
+                        //   CustomDashboardButton(
+                        //       title: 'COMPLAINT\nQUERY',
+                        //       bottomAlign: -20,
+                        //       leftAlign: -15, //0,
+                        //       imageHeight: size.height * 0.10,
+                        //       onTap: null,
+                        //       // () => AppNavigation.navigateTo(
+                        //       //     AppNavRoutes.complaintQueryRoute),
+                        //       imageName: 'lightbulb.png'),
                       ]),
                 ),
               ],
