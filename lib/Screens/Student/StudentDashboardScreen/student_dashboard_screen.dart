@@ -67,7 +67,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 16.0,
-              vertical: 8,
+              vertical: 16.0,
             ),
             child: Column(
               children: [
@@ -156,7 +156,6 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                 SizedBox(height: size.height * 0.02),
                 Expanded(
                   child: GridView.count(
-                      shrinkWrap: true,
                       primary: false,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
@@ -289,23 +288,16 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         //     onTap: () => AppNavigation.navigateTo(
                         //         AppNavRoutes.individualEducationPlanRoute),
                         //     imageName: 'class_result.png'),
-                        Visibility(
-                          visible: value.userData!.userType == 'Parent'
-                              ? true
-                              : false,
-                          child: CustomDashboardButton(
+                        if (value.userData!.userType == 'Parent')
+                          CustomDashboardButton(
                               title: 'BILL\nPAYMENT',
                               bottomAlign: -25,
                               leftAlign: -10,
                               onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.challanPaymentRoute),
                               imageName: 'challan_payment_icon.png'),
-                        ),
-                        Visibility(
-                          visible: value.userData!.userType == 'Parent'
-                              ? true
-                              : false,
-                          child: CustomDashboardButton(
+                        if (value.userData!.userType == 'Parent')
+                          CustomDashboardButton(
                               title: 'BOOK AN\nAPPOINTMENT',
                               bottomAlign: -24,
                               leftAlign: 0,
@@ -313,31 +305,23 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.bookanAppointmentRoute),
                               imageName: 'calendar_appoointment.png'),
-                        ),
-                        if (gradeId == '2' ||
-                            gradeId == '3' ||
-                            gradeId == '4' ||
-                            localGradeId == '2' ||
-                            localGradeId == '3' ||
-                            localGradeId == '4')
-                          Visibility(
-                            visible: value.userData!.userType == 'Parent'
-                                ? true
-                                : false,
-                            child: CustomDashboardButton(
-                                title: 'EYE ON\nYOUR CHILD',
-                                bottomAlign: -22,
-                                leftAlign: 0,
-                                imageHeight: size.height * 0.10,
-                                onTap: () => AppNavigation.navigateTo(
-                                    AppNavRoutes.parentEyeOnYourChildRoute),
-                                imageName: 'shield.png'),
-                          ),
-                        Visibility(
-                          visible: value.userData!.userType == 'Parent'
-                              ? true
-                              : false,
-                          child: CustomDashboardButton(
+                        if ((gradeId == '2' ||
+                                gradeId == '3' ||
+                                gradeId == '4' ||
+                                localGradeId == '2' ||
+                                localGradeId == '3' ||
+                                localGradeId == '4') &&
+                            value.userData!.userType == 'Parent')
+                          CustomDashboardButton(
+                              title: 'EYE ON\nYOUR CHILD',
+                              bottomAlign: -22,
+                              leftAlign: 0,
+                              imageHeight: size.height * 0.10,
+                              onTap: () => AppNavigation.navigateTo(
+                                  AppNavRoutes.parentEyeOnYourChildRoute),
+                              imageName: 'shield.png'),
+                        if (value.userData!.userType == 'Parent')
+                          CustomDashboardButton(
                               title: 'WITHDRAWAL\nREQUEST',
                               bottomAlign: -22,
                               leftAlign: -15, //0,
@@ -345,12 +329,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.withdrawalRequestRoute),
                               imageName: 'withdrawal.png'),
-                        ),
-                        Visibility(
-                          visible: value.userData!.userType == 'Parent'
-                              ? true
-                              : false,
-                          child: CustomDashboardButton(
+                        if (value.userData!.userType == 'Parent')
+                          CustomDashboardButton(
                               title: 'COMPLAINT\nQUERY',
                               bottomAlign: -20,
                               leftAlign: -15, //0,
@@ -359,7 +339,6 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               // () => AppNavigation.navigateTo(
                               //     AppNavRoutes.complaintQueryRoute),
                               imageName: 'lightbulb.png'),
-                        ),
                       ]),
                 ),
               ],

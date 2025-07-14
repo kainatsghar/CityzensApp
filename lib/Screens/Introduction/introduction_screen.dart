@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
@@ -23,7 +24,10 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
         VideoPlayerController.asset('images/FEATURE_Citizans_App2.mp4')
           ..initialize().then((_) {
             _controller.play();
-            setState(() {});
+            _controller.setLooping(true);
+            if (mounted) {
+              setState(() {});
+            }
           });
   }
 
@@ -31,43 +35,29 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: Stack(
-        children: <Widget>[
-          LayoutBuilder(
-            builder: (context, constraints) => AspectRatio(
-              aspectRatio: constraints.maxWidth / constraints.maxHeight,
-              child: VideoPlayer(_controller),
+      floatingActionButton: SizedBox(
+        height: 36,
+        child: FloatingActionButton(
+          backgroundColor: AppColors.whiteColor,
+          onPressed: () {
+            // setState(() {
+            //   _controller.value.isPlaying
+            //       ? _controller.pause()
+            //       : _controller.pause();
+            // });
+            AppNavigation.pushReplacementTo(AppNavRoutes.registrationRoute);
+          },
+          child: const Text(
+            'Skip',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppColors.primaryColor,
             ),
           ),
-          Positioned(
-            right: 12,
-            bottom: 12,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _controller.value.isPlaying
-                      ? _controller.pause()
-                      : _controller.pause();
-                });
-                AppNavigation.navigateTo(AppNavRoutes.registrationRoute);
-              },
-              child: Container(
-                padding: const EdgeInsets.only(
-                    top: 5, bottom: 5, right: 10, left: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: const Text(
-                  'Skip',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 3, 108, 193)),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
+      ),
+      body: SafeArea(
+        child: VideoPlayer(_controller),
       ),
     );
   }

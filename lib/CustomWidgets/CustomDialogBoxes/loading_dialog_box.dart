@@ -4,10 +4,14 @@ import '../../Routes/app_navigation.dart';
 
 class DialogBuilder {
   static showLoadingIndicator() => showDialog(
-      context: AppNavigation.currentContext!,
-      barrierDismissible: false,
-      // ignore: deprecated_member_use
-      builder: (BuildContext context) => WillPopScope(onWillPop: () async => false, child: const CustomLoadingWidget()));
+        context: AppNavigation.currentContext!,
+        barrierDismissible: false,
+        // ignore: deprecated_member_use
+        builder: (BuildContext context) => WillPopScope(
+          onWillPop: () async => false,
+          child: const CustomLoadingWidget(),
+        ),
+      );
 
   static void hideOpenDialog() => AppNavigation.goBack();
 }

@@ -37,11 +37,11 @@ class RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
         appBar: const CustomAppBar(title: 'USER REGISTRATION'),
         body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: SingleChildScrollView(child:
                 Consumer<RegistrationProvider>(builder: (context, value, _) {
               return Column(children: <Widget>[

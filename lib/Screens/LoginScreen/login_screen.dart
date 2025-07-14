@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const CustomAppBar(title: 'LOGIN'),
@@ -58,8 +58,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 25.0),
                         decoration: BoxDecoration(
-                            color: AppColors.secondaryColor,
-                            borderRadius: BorderRadius.circular(20.0)),
+                          color: AppColors.secondaryColor,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                         child: Form(
                           key: value.formKey,
                           child: Column(
@@ -74,30 +75,32 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color: AppColors.whiteColor)),
                               const SizedBox(height: 10),
                               CustomTextFormField(
-                                  controller: value.userNameController,
-                                  inputType: TextInputType.number,
-                                  inputAction: TextInputAction.next,
-                                  labelText: value.userNameLabel,
-                                  hintText: value.userNameLabel,
-                                  prefixIcon: Icons.person,
-                                  validator: value.validator),
+                                controller: value.userNameController,
+                                inputType: TextInputType.number,
+                                inputAction: TextInputAction.next,
+                                labelText: value.userNameLabel,
+                                hintText: value.userNameLabel,
+                                prefixIcon: Icons.person,
+                                validator: value.validator,
+                              ),
                               const SizedBox(height: 15),
                               CustomTextFormField(
-                                  controller: value.passwordController,
-                                  obscureText: value.obscureText,
-                                  inputType: TextInputType.text,
-                                  hintText: 'Password',
-                                  prefixIcon: Icons.lock,
-                                  inputAction: TextInputAction.done,
-                                  suffixWidget: GestureDetector(
-                                    onTap: () => value.showHidePassword(),
-                                    child: Icon(
-                                        value.obscureText
-                                            ? Icons.visibility_off
-                                            : Icons.visibility,
-                                        color: AppColors.whiteColor),
-                                  ),
-                                  validator: value.validator),
+                                controller: value.passwordController,
+                                obscureText: value.obscureText,
+                                inputType: TextInputType.text,
+                                hintText: 'Password',
+                                prefixIcon: Icons.lock,
+                                inputAction: TextInputAction.done,
+                                suffixWidget: GestureDetector(
+                                  onTap: () => value.showHidePassword(),
+                                  child: Icon(
+                                      value.obscureText
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: AppColors.whiteColor),
+                                ),
+                                validator: value.validator,
+                              ),
                             ],
                           ),
                         ),
@@ -108,20 +111,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           InkWell(
-                              child: const Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                    color: AppColors.primaryTitleColor,
-                                    fontStyle: FontStyle.italic,
-                                    decoration: TextDecoration.underline),
-                              ),
-                              onTap: () => AppNavigation.navigateTo(
-                                  AppNavRoutes.forgotPasswordRoute)),
+                            child: const Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                  color: AppColors.primaryTitleColor,
+                                  fontStyle: FontStyle.italic,
+                                  decoration: TextDecoration.underline),
+                            ),
+                            onTap: () => AppNavigation.navigateTo(
+                                AppNavRoutes.forgotPasswordRoute),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 20),
                       CustomAppButton(
-                          buttonTitle: 'Login', onTap: () => value.login()),
+                        buttonTitle: 'Login',
+                        onTap: () => value.login(),
+                      ),
                       const SizedBox(height: 15),
                       const Text('- OR -'),
                       const SizedBox(height: 15),
@@ -136,45 +142,49 @@ class _LoginScreenState extends State<LoginScreen> {
                             //     AppNavRoutes.registrationRoute),
                             onTap: () => AppNavigation.navigateTo(
                                 AppNavRoutes.introductionRoute),
-                            child: const Text('Register here',
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontStyle: FontStyle.italic,
-                                    decoration: TextDecoration.underline,
-                                    color: AppColors.primaryTitleColor,
-                                    fontWeight: FontWeight.w500)),
+                            child: const Text(
+                              'Register here',
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontStyle: FontStyle.italic,
+                                  decoration: TextDecoration.underline,
+                                  color: AppColors.primaryTitleColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(height: size.height * 0.025),
                       Align(
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset('images/alumni_icon.png',
-                                    width: size.width * 0.2),
-                                Flexible(
-                                    child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: InkWell(
-                                            onTap: () =>
-                                                HelperFunction.launchURL(
-                                                    AppConstants.alumniAppURL),
-                                            child: const Text(
-                                                'The City School ALUMNI App',
-                                                maxLines: 2,
-                                                overflow: TextOverflow.fade,
-                                                style: TextStyle(
-                                                    fontStyle: FontStyle.italic,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors
-                                                        .primaryTitleColor,
-                                                    decoration: TextDecoration
-                                                        .underline)))))
-                              ])),
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset('images/alumni_icon.png',
+                                width: size.width * 0.2),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: InkWell(
+                                  onTap: () => HelperFunction.launchURL(
+                                      AppConstants.alumniAppURL),
+                                  child: const Text(
+                                    'The City School ALUMNI App',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.primaryTitleColor,
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                       Padding(
                           padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom))

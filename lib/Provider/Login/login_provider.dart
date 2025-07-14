@@ -44,18 +44,23 @@ class LoginProvider extends ChangeNotifier {
       if (formKey.currentState?.validate() ?? false) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         LoginResponse loginResponse = await LoginService.loginRequest(
-            userNameController?.text ?? '',
-            passwordController.text,
-            userTypeController.text);
+          userNameController?.text ?? '',
+          passwordController.text,
+          userTypeController.text,
+        );
+        DialogBuilder.hideOpenDialog();
         if (loginResponse.isSuccessful ?? false) {
           loginResponse.userType = userTypeController.text;
           loginResponse.userName = userNameController?.text ?? '';
           AppLocalData.setStringPrefValue(
-              key: AppConstants.userDataKey, value: jsonEncode(loginResponse));
+            key: AppConstants.userDataKey,
+            value: jsonEncode(loginResponse),
+          );
           Future.delayed(
-              Duration.zero,
-              () => AppNavigation.pushReplacementTo(
-                  AppNavRoutes.authWrapperRoute));
+            Duration.zero,
+            () =>
+                AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute),
+          );
         } else {
           if (loginResponse.isException ?? false) {
             showSnackBar(
@@ -64,11 +69,14 @@ class LoginProvider extends ChangeNotifier {
             showSnackBar(loginResponse.message);
           }
         }
+      } else {
+        DialogBuilder.hideOpenDialog();
       }
     } catch (ex) {
+      DialogBuilder.hideOpenDialog();
       showSnackBar('$ex');
     }
-    DialogBuilder.hideOpenDialog();
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   void initializeData() {
