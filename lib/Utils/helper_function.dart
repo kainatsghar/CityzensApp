@@ -49,7 +49,7 @@ class HelperFunction {
             value: 35)
       ];
 
-  static launchURL(String url) async {
+  static Future<void> launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     } else {
@@ -85,7 +85,7 @@ class HelperFunction {
           ? '-'
           : DateFormat(format ?? 'MMMM dd, yyyy').format(DateTime.parse(date));
 
-  static imagePickerBottomSheet() {
+  static void imagePickerBottomSheet() {
     showModalBottomSheet(
         context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,

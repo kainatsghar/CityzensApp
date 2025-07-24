@@ -10,12 +10,16 @@ class CustomListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                color: AppColors.whiteColor,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600)),
-        onTap: onTap);
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: AppColors.whiteColor,
+          fontSize: 16.0,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      onTap: onTap,
+    );
   }
 }

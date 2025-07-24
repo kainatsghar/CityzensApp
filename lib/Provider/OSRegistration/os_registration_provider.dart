@@ -29,7 +29,8 @@ class OSRegistrationProvider with ChangeNotifier {
   TextEditingController studiedToClassController = TextEditingController();
   TextEditingController leavingRxnController = TextEditingController();
   TextEditingController fatherNameController = TextEditingController();
-  MaskedTextController fatherCNICController = MaskedTextController(mask: '00000-0000000-0');
+  MaskedTextController fatherCNICController =
+      MaskedTextController(mask: '00000-0000000-0');
   TextEditingController fatherOccupationController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
@@ -74,7 +75,8 @@ class OSRegistrationProvider with ChangeNotifier {
 
   Future<List<OSRegistrationResponse>> loadSessions() async {
     try {
-      List<OSRegistrationResponse> response = await OSRegistrationService.osInfoRequest(endpoint: 'AllSessions');
+      List<OSRegistrationResponse> response =
+          await OSRegistrationService.osInfoRequest(endpoint: 'AllSessions');
       setSessionsResponse(response);
       return response;
     } catch (ex) {
@@ -82,14 +84,18 @@ class OSRegistrationProvider with ChangeNotifier {
     }
   }
 
-  setSessionsResponse(List<OSRegistrationResponse> response) {
-    sessions = List.generate(response.length, (index) => Options(title: response[index].name!, value: response[index].id!));
+  void setSessionsResponse(List<OSRegistrationResponse> response) {
+    sessions = List.generate(
+        response.length,
+        (index) =>
+            Options(title: response[index].name!, value: response[index].id!));
     notifyListeners();
   }
 
   Future<List<OSRegistrationResponse>> loadCities() async {
     try {
-      List<OSRegistrationResponse> response = await OSRegistrationService.osInfoRequest(endpoint: 'AllCities');
+      List<OSRegistrationResponse> response =
+          await OSRegistrationService.osInfoRequest(endpoint: 'AllCities');
       setCitiesResponse(response);
       return response;
     } catch (ex) {
@@ -97,14 +103,18 @@ class OSRegistrationProvider with ChangeNotifier {
     }
   }
 
-  setCitiesResponse(List<OSRegistrationResponse> response) {
-    cities = List.generate(response.length, (index) => Options(title: response[index].name!, value: response[index].id!));
+  void setCitiesResponse(List<OSRegistrationResponse> response) {
+    cities = List.generate(
+        response.length,
+        (index) =>
+            Options(title: response[index].name!, value: response[index].id!));
     notifyListeners();
   }
 
   Future<List<OSRegistrationResponse>> loadCountries() async {
     try {
-      List<OSRegistrationResponse> response = await OSRegistrationService.osInfoRequest(endpoint: 'Countries');
+      List<OSRegistrationResponse> response =
+          await OSRegistrationService.osInfoRequest(endpoint: 'Countries');
       setCountriesResponse(response);
       return response;
     } catch (ex) {
@@ -112,15 +122,21 @@ class OSRegistrationProvider with ChangeNotifier {
     }
   }
 
-  setCountriesResponse(List<OSRegistrationResponse> response) {
-    countries = List.generate(response.length, (index) => Options(title: response[index].name!, value: response[index].id!));
+  void setCountriesResponse(List<OSRegistrationResponse> response) {
+    countries = List.generate(
+        response.length,
+        (index) =>
+            Options(title: response[index].name!, value: response[index].id!));
     notifyListeners();
   }
 
   Future<void> loadCityCampus() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      List<OSRegistrationResponse> response = await OSRegistrationService.osInfoRequest(endpoint: 'CampusByCity', body: UserDataRequest(userName: '$selectedCityId'));
+      List<OSRegistrationResponse> response =
+          await OSRegistrationService.osInfoRequest(
+              endpoint: 'CampusByCity',
+              body: UserDataRequest(userName: '$selectedCityId'));
       setCityCampusResponse(response);
     } catch (ex) {
       showSnackBar('$ex');
@@ -129,7 +145,10 @@ class OSRegistrationProvider with ChangeNotifier {
   }
 
   void setCityCampusResponse(List<OSRegistrationResponse> response) {
-    cityCampuses = List.generate(response.length, (index) => Options(title: response[index].name!, value: response[index].id!));
+    cityCampuses = List.generate(
+        response.length,
+        (index) =>
+            Options(title: response[index].name!, value: response[index].id!));
     Future.delayed(Duration.zero, () => campusBottomSheet());
     notifyListeners();
   }
@@ -137,7 +156,10 @@ class OSRegistrationProvider with ChangeNotifier {
   Future<void> loadCampusClass() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      List<OSRegistrationResponse> response = await OSRegistrationService.osInfoRequest(endpoint: 'ClassByCampus', body: UserDataRequest(userName: '$selectedCampusId'));
+      List<OSRegistrationResponse> response =
+          await OSRegistrationService.osInfoRequest(
+              endpoint: 'ClassByCampus',
+              body: UserDataRequest(userName: '$selectedCampusId'));
       setCampusClassesResponse(response);
     } catch (ex) {
       showSnackBar('$ex');
@@ -145,8 +167,11 @@ class OSRegistrationProvider with ChangeNotifier {
     DialogBuilder.hideOpenDialog();
   }
 
-  setCampusClassesResponse(List<OSRegistrationResponse> response) {
-    campusClasses = List.generate(response.length, (index) => Options(title: response[index].name!, value: response[index].id!));
+  void setCampusClassesResponse(List<OSRegistrationResponse> response) {
+    campusClasses = List.generate(
+        response.length,
+        (index) =>
+            Options(title: response[index].name!, value: response[index].id!));
     Future.delayed(Duration.zero, () => classBottomSheet());
     notifyListeners();
   }
@@ -155,8 +180,11 @@ class OSRegistrationProvider with ChangeNotifier {
     showModalBottomSheet(
         context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) =>
-            CustomFilterBottomSheet(title: 'Select Gender', controller: genderController, filterOptions: HelperFunction.genderOptions(), onSelect: (v) => onBottomSelection(genderController, v)));
+        builder: (BuildContext bc) => CustomFilterBottomSheet(
+            title: 'Select Gender',
+            controller: genderController,
+            filterOptions: HelperFunction.genderOptions(),
+            onSelect: (v) => onBottomSelection(genderController, v)));
   }
 
   void previousSchoolBottomSheet() {
@@ -164,25 +192,35 @@ class OSRegistrationProvider with ChangeNotifier {
         context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select', controller: previousSchoolController, filterOptions: HelperFunction.previousSchoolOptions(), onSelect: (v) => onBottomSelection(previousSchoolController, v)));
+            title: 'Select',
+            controller: previousSchoolController,
+            filterOptions: HelperFunction.previousSchoolOptions(),
+            onSelect: (v) => onBottomSelection(previousSchoolController, v)));
   }
 
   void sessionBottomSheet() {
     showModalBottomSheet(
         context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) =>
-            CustomFilterBottomSheet(title: 'Select Session', controller: sessionController, filterOptions: sessions, onSelect: (v) => onBottomSelection(sessionController, v)));
+        builder: (BuildContext bc) => CustomFilterBottomSheet(
+            title: 'Select Session',
+            controller: sessionController,
+            filterOptions: sessions,
+            onSelect: (v) => onBottomSelection(sessionController, v)));
   }
 
   void citiesBottomSheet() {
     showModalBottomSheet(
         context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(title: 'Select City', controller: cityController, filterOptions: cities, onSelect: (v) => setSelectedCity(v)));
+        builder: (BuildContext bc) => CustomFilterBottomSheet(
+            title: 'Select City',
+            controller: cityController,
+            filterOptions: cities,
+            onSelect: (v) => setSelectedCity(v)));
   }
 
-  setSelectedCity(String v) {
+  void setSelectedCity(String v) {
     cityController.text = v;
     campusController.clear();
     classController.clear();
@@ -196,13 +234,18 @@ class OSRegistrationProvider with ChangeNotifier {
     showModalBottomSheet(
         context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(title: 'Select Campus', controller: campusController, filterOptions: cityCampuses, onSelect: (v) => setSelectedCampus(v)));
+        builder: (BuildContext bc) => CustomFilterBottomSheet(
+            title: 'Select Campus',
+            controller: campusController,
+            filterOptions: cityCampuses,
+            onSelect: (v) => setSelectedCampus(v)));
   }
 
-  setSelectedCampus(String v) {
+  void setSelectedCampus(String v) {
     campusController.text = v;
     classController.clear();
-    selectedCampusId = cityCampuses.singleWhere((element) => element.title == v).value;
+    selectedCampusId =
+        cityCampuses.singleWhere((element) => element.title == v).value;
     notifyListeners();
     AppNavigation.goBack();
   }
@@ -211,12 +254,17 @@ class OSRegistrationProvider with ChangeNotifier {
     showModalBottomSheet(
         context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(title: 'Select Class', controller: classController, filterOptions: campusClasses, onSelect: (v) => setSelectedClass(v)));
+        builder: (BuildContext bc) => CustomFilterBottomSheet(
+            title: 'Select Class',
+            controller: classController,
+            filterOptions: campusClasses,
+            onSelect: (v) => setSelectedClass(v)));
   }
 
-  setSelectedClass(String v) {
+  void setSelectedClass(String v) {
     classController.text = v;
-    selectedClassId = campusClasses.singleWhere((element) => element.title == v).value;
+    selectedClassId =
+        campusClasses.singleWhere((element) => element.title == v).value;
     notifyListeners();
     AppNavigation.goBack();
   }
@@ -225,8 +273,11 @@ class OSRegistrationProvider with ChangeNotifier {
     showModalBottomSheet(
         context: AppNavigation.currentContext!,
         backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) =>
-            CustomFilterBottomSheet(title: 'Nationality', controller: nationalityController, filterOptions: countries, onSelect: (v) => onBottomSelection(nationalityController, v)));
+        builder: (BuildContext bc) => CustomFilterBottomSheet(
+            title: 'Nationality',
+            controller: nationalityController,
+            filterOptions: countries,
+            onSelect: (v) => onBottomSelection(nationalityController, v)));
   }
 
   void onBottomSelection(TextEditingController controller, String v) {

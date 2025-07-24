@@ -18,11 +18,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         elevation: 0.0,
         backgroundColor: AppColors.whiteColor,
         centerTitle: true,
-        title: Text(title,
-            style: const TextStyle(
-                fontSize: 18.0,
-                color: AppColors.primaryTitleColor,
-                fontWeight: FontWeight.w600)),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18.0,
+            color: AppColors.primaryTitleColor,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         actions: actions ??
             [
               Padding(

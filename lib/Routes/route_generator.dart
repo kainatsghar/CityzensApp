@@ -78,8 +78,10 @@ class RouteGenerator {
         return routeScreen(child: const CreatePasswordScreen());
       case AppNavRoutes.studentDashboardRoute:
         return routeScreen(
-            child: StudentDashboardScreen(
-                args: settings.arguments as ScreenArguments));
+          child: StudentDashboardScreen(
+            args: settings.arguments as ScreenArguments,
+          ),
+        );
       case AppNavRoutes.parentDashboardRoute:
         return routeScreen(child: const ParentDashboardScreen());
       case AppNavRoutes.studentProfileRoute:
@@ -181,16 +183,26 @@ class RouteGenerator {
   }
 
   static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(builder: (_) {
-      return const Scaffold(
-          appBar: CustomAppBar(title: 'ERROR'), body: ShowError());
-    });
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => const Scaffold(
+        appBar: CustomAppBar(title: 'ERROR'),
+        body: ShowError(),
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+      transitionDuration: const Duration(milliseconds: 300),
+    );
   }
 
-  static Route<dynamic> routeScreen(
-      {Widget? child, bool fullscreenDialog = false}) {
-    return MaterialPageRoute(
-        builder: (context) => child ?? Container(),
-        fullscreenDialog: fullscreenDialog);
+  static Route<dynamic> routeScreen({Widget? child}) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          child ?? Container(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+      transitionDuration: const Duration(milliseconds: 300),
+    );
   }
 }

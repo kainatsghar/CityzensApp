@@ -20,8 +20,9 @@ class StudentProfileScreenState extends State<StudentProfileScreen> {
   late Future _stdProfile;
 
   var provider = Provider.of<StudentProfileProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -34,21 +35,23 @@ class StudentProfileScreenState extends State<StudentProfileScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'PROFILE'),
       body: RefreshIndicator(
-          child: FutureBuilder(
-              future: _stdProfile,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return const CustomLoader();
-                  default:
-                    if (snapshot.hasData) {
-                      return const StudentProfileComponent();
-                    } else {
-                      return ShowError(errorText: '${snapshot.error}');
-                    }
+        child: FutureBuilder(
+          future: _stdProfile,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const CustomLoader();
+              default:
+                if (snapshot.hasData) {
+                  return const StudentProfileComponent();
+                } else {
+                  return ShowError(errorText: '${snapshot.error}');
                 }
-              }),
-          onRefresh: () => provider.loadStdProfile()),
+            }
+          },
+        ),
+        onRefresh: () => provider.loadStdProfile(),
+      ),
     );
   }
 }

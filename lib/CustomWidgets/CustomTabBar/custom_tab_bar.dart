@@ -28,13 +28,21 @@ class CustomTabBar extends StatelessWidget {
                   centerTitle: true,
                   elevation: 0.0,
                   backgroundColor: AppColors.whiteColor,
-                  title: Text(appBarTitle!,
-                      style: const TextStyle(
-                          fontSize: 18.0, color: AppColors.primaryTitleColor)),
+                  title: Text(
+                    appBarTitle!,
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      color: AppColors.primaryTitleColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   actions: <Widget>[
                     Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset('images/tcs_logo.png'))
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: SizedBox(
+                            height: 48,
+                            width: 48,
+                            child: Image.asset('images/tcs_logo.png')))
                   ],
                   bottom: TabBar(
                       labelColor: AppColors.primaryTitleColor,

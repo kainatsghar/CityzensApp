@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:tcs_app/Network/api_base_helper.dart';
 import 'package:tcs_app/model/Login/login_request.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
@@ -39,6 +40,7 @@ class LoginService {
     } else {
       fcmToken = await messaging.getToken();
     }
+    debugPrint("FCM Token: $fcmToken");
 
     LoginRequest loginRequest = LoginRequest(
       username: username,

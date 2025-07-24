@@ -29,7 +29,7 @@ class AppNavigation {
   static void removeAllRoutes() =>
       navigatorKey.currentState?.popUntil((route) => route.isFirst);
 
-  static goBack() {
+  static void goBack() {
     return navigatorKey.currentState?.pop();
   }
 

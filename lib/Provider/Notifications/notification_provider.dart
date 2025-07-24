@@ -9,13 +9,16 @@ import 'package:url_launcher/url_launcher.dart';
 class NotificationProvider with ChangeNotifier {
   List<Notifications>? notifications;
 
-  ScrollController? scrollController;
-  TabController? controller;
+  // ScrollController? scrollController;
+  // TabController? controller;
 
-  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(AppNavigation.currentContext!, listen: false);
+  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setNotificationData(NotificationResponse response) {
-    notifications = response.notifications;
+    notifications = response.notifications?.reversed.toList();
     notifyListeners();
   }
 
@@ -27,13 +30,18 @@ class NotificationProvider with ChangeNotifier {
     }
   }
 
-  void initializeData(TickerProvider tickerProvider) {
-    controller = TabController(length: 3, vsync: tickerProvider);
-  }
+  // void initializeData(TickerProvider tickerProvider) {
+  //   controller = TabController(length: 2, vsync: tickerProvider);
+  // }
 
   Future<NotificationResponse> loadNotificationData(String group) async {
     try {
-      NotificationResponse response = await NotificationService.notificationRequest(token: localDataProvider.userData!.tokenId!, userName: localDataProvider.studentId, group: group);
+      NotificationResponse response =
+          await NotificationService.notificationRequest(
+            token: localDataProvider.userData!.tokenId!,
+            userName: localDataProvider.studentId,
+            group: group,
+          );
       setNotificationData(response);
       return response;
     } catch (ex) {

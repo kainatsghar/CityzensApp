@@ -11,20 +11,20 @@ class AppException implements Exception {
 
 class FetchDataException extends AppException {
   // ignore: use_super_parameters
-  FetchDataException([message]) : super(message);
+  FetchDataException([dynamic message]) : super(message);
 }
 
 class BadRequestException extends AppException {
   // ignore: use_super_parameters
-  BadRequestException([message]) : super(message);
+  BadRequestException([dynamic message]) : super(message);
 }
 
-class UnauthorisedException extends AppException {
+class UnAuthorizedException extends AppException {
   // ignore: use_super_parameters
-  UnauthorisedException([message]) : super(message);
+  UnAuthorizedException([dynamic message]) : super(message);
 }
 
 class InvalidInputException extends AppException {
   // ignore: use_super_parameters
-  InvalidInputException([message]) : super(message);
+  InvalidInputException([dynamic message]) : super(message);
 }

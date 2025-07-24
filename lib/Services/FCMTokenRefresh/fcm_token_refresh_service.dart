@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Network/api_base_helper.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
@@ -41,6 +42,7 @@ class FcmTokenRefreshService {
         return false;
       }
     }
+    debugPrint("FCM Token: $fcmToken");
     var localData = Provider.of<LocalDataProvider>(
         AppNavigation.currentContext!,
         listen: false);

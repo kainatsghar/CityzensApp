@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
@@ -245,6 +246,11 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                                 child: CustomTimeTableFormField(
                                   inputType: TextInputType.text,
                                   controller: _controllers[dayName]![index],
+                                  inputFormatter: [
+                                    LengthLimitingTextInputFormatter(3),
+                                  ],
+                                  textCapitalization:
+                                      TextCapitalization.characters,
                                   onChange: (newValue) {
                                     value.setValue(dayName, index, newValue);
                                   },

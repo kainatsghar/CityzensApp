@@ -94,7 +94,7 @@ class DashboardProvider with ChangeNotifier {
         : '${localProvider.userData!.userName}';
   }
 
-  launchPlayStore() async {
+  Future<void> launchPlayStore() async {
     const url =
         // ignore: prefer_adjacent_string_concatenation
         'https://play.google.com/store/apps/details?id=' + 'com.tcs.tcsapp';
@@ -109,7 +109,7 @@ class DashboardProvider with ChangeNotifier {
   //   LaunchReview.launch(writeReview: false, iOSAppId: '1630070364');
   // }
 
-  launchEmail() async {
+  Future<void> launchEmail() async {
     const address = 'mailto:appfeedback@csn.edu.pk';
     try {
       if (await canLaunchUrl(Uri.parse(address))) {
@@ -122,7 +122,7 @@ class DashboardProvider with ChangeNotifier {
     }
   }
 
-  loadVersionName() async {
+  Future<void> loadVersionName() async {
     try {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       projectVersion = packageInfo.version;

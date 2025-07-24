@@ -21,18 +21,20 @@ class NotificationResponse {
 }
 
 class Notifications {
-  String? notifySubject;
-  String? notifyMessage;
-
-  Notifications({
+  const Notifications({
     this.notifySubject,
     this.notifyMessage,
+    this.generatedOn,
   });
+  final String? notifySubject;
+  final String? notifyMessage;
+  final String? generatedOn;
 
   factory Notifications.fromJson(Map json) {
     return Notifications(
       notifySubject: json['Notif_Subject'] as String,
       notifyMessage: json['Notif_Message'] as String,
+      generatedOn: json['GeneratedOn'] as String,
     );
   }
 }

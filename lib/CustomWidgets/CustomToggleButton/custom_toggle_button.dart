@@ -16,13 +16,13 @@ class CustomToggleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
           decoration: BoxDecoration(
               color: student.day == title
-                  ? color.withOpacity(0.5)
+                  ? color.withValues(alpha: 0.5)
                   : Colors.transparent,
               shape: BoxShape.circle,
               border: Border.all(color: color, width: 2.0)),

@@ -21,63 +21,64 @@ class CustomDashboardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return GestureDetector(
       onTap: onTap,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15.0),
-        child: Stack(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(right: 8.0, top: 8),
-              color: onTap == null
-                  ? Colors.grey
-                  : AppColors.secondaryColor, // Set to grey if disabled
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize
-                      .min, // Ensures the text doesn't take more space than necessary
-                  children: [
-                    Text(
-                      title ?? 'HOMEWORK\nDIARY', // Display the title text
-                      textAlign: TextAlign.end,
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.bold,
-                        height: 1.2,
-                        color: AppColors.primaryTitleColor,
-                      ),
-                    ),
-                    if (onTap == null) // Show "Coming Soon" if disabled
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            top:
-                                4.0), // Adds space between title and "Coming Soon"
-                        child: Text(
-                          'COMING SOON',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+      child: Card(
+        color: onTap == null ? Colors.grey : AppColors.secondaryColor,
+        elevation: 4,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16.0),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0, top: 8),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize
+                        .min, // Ensures the text doesn't take more space than necessary
+                    children: [
+                      Text(
+                        title ?? 'HOMEWORK\nDIARY', // Display the title text
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                          height: 1.2,
+                          color: AppColors.primaryTitleColor,
                         ),
                       ),
-                  ],
+                      if (onTap == null) // Show "Coming Soon" if disabled
+                        const Padding(
+                          padding: EdgeInsets.only(
+                            top: 4.0,
+                          ), // Adds space between title and "Coming Soon"
+                          child: Text(
+                            'COMING SOON',
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: bottomAlign ?? -15,
-              left: leftAlign ?? -5,
-              child: Image.asset(
-                'images/$imageName',
-                height: imageHeight ?? size.height * 0.12,
+              Positioned(
+                bottom: bottomAlign ?? -15,
+                left: leftAlign ?? -5,
+                child: Image.asset(
+                  'images/$imageName',
+                  height: imageHeight ?? size.height * 0.12,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

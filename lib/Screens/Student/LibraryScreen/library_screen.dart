@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/LibraryComponents/library_component.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
-import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/CustomWidgets/CustomTabBar/custom_tab_bar.dart';
 import 'package:tcs_app/Provider/Library/library_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Screens/Student/LibraryScreen/library_notification_screen.dart';
+
+import 'library_records_screen.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -16,36 +16,34 @@ class LibraryScreen extends StatefulWidget {
   }
 }
 
-class LibraryScreenState extends State<LibraryScreen> {
-  late Future _libraryRecords;
+class LibraryScreenState extends State<LibraryScreen>
+    with SingleTickerProviderStateMixin {
   var provider = Provider.of<LibraryProvider>(AppNavigation.currentContext!,
       listen: false);
 
   @override
   void initState() {
-    _libraryRecords = provider.loadLibraryRecords();
+    provider.initializeData(this);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'LIBRARY DETAILS'),
-        body: RefreshIndicator(
-            child: FutureBuilder(
-                future: _libraryRecords,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const CustomLoader();
-                    default:
-                      if (snapshot.hasData) {
-                        return const LibraryComponent();
-                      } else {
-                        return ShowError(errorText: '${snapshot.error}');
-                      }
-                  }
-                }),
-            onRefresh: () => provider.loadLibraryRecords()));
+      body: Consumer<LibraryProvider>(builder: (context, value, _) {
+        return CustomTabBar(
+            scrollController: value.scrollController,
+            appBarTitle: 'Library',
+            tabs: const [
+              Tab(child: Text('Records')),
+              Tab(child: Text('Notifications')),
+            ],
+            widgets: const <Widget>[
+              LibraryDetailsScreen(),
+              LibraryNotificationScreen(),
+            ],
+            controller: value.tabController);
+      }),
+    );
   }
 }

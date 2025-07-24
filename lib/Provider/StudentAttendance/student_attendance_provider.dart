@@ -102,7 +102,7 @@ class StudentAttendanceProvider with ChangeNotifier {
 
   Map<DateTime, List<Event>> studentAttendance = {};
 
-  setEventsOnCalender() {
+  void setEventsOnCalender() {
     studentAttendance.clear();
     // ignore: prefer_collection_literals
     final sets = Set();
@@ -184,7 +184,7 @@ class StudentAttendanceProvider with ChangeNotifier {
     }
   }
 
-  setSelectedDate(DateTime dateTime) {
+  void setSelectedDate(DateTime dateTime) {
     selectedDate = dateTime;
     notifyListeners();
   }

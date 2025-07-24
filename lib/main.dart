@@ -8,8 +8,8 @@ import 'package:tcs_app/Screens/SplashScreen/splash_screen_ui.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'Utils/app_themes.dart';
 
-void main() {
-  HelperFunction.mainInitializer();
+void main() async {
+  await HelperFunction.mainInitializer();
   runApp(const TCSApp());
 }
 
@@ -19,14 +19,16 @@ class TCSApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: appProviders,
-        child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Cityzens',
-            theme: AppThemes.lightTheme,
-            home: const SplashScreenUI(),
-            initialRoute: AppNavRoutes.initialRoute,
-            navigatorKey: AppNavigation.navigatorKey,
-            onGenerateRoute: RouteGenerator.generateRoute));
+      providers: appProviders,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Cityzens',
+        theme: AppThemes.lightTheme,
+        home: const SplashScreenUI(),
+        initialRoute: AppNavRoutes.initialRoute,
+        navigatorKey: AppNavigation.navigatorKey,
+        onGenerateRoute: RouteGenerator.generateRoute,
+      ),
+    );
   }
 }

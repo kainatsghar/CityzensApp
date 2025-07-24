@@ -37,19 +37,23 @@ class PushNotificationsManager {
     var iOS = const DarwinNotificationDetails();
     var notificationDetails = NotificationDetails(android: android, iOS: iOS);
     await FlutterLocalNotificationsPlugin().show(
-        Random().nextInt(1000),
-        '${message!.notification!.title}',
-        '${message.notification!.body}',
-        notificationDetails,
-        payload: message.data['route']);
+      Random().nextInt(1000),
+      '${message!.notification!.title}',
+      '${message.notification!.body}',
+      notificationDetails,
+      payload: message.data['route'],
+    );
   }
 
   static Future<void> _initializeLocalNotifications() async {
-    var initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/ic_notification');
+    var initializationSettingsAndroid = const AndroidInitializationSettings(
+      '@mipmap/ic_notification',
+    );
     var initializationSettingsIOs = const DarwinInitializationSettings();
     var initSettings = InitializationSettings(
-        android: initializationSettingsAndroid, iOS: initializationSettingsIOs);
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOs,
+    );
     await FlutterLocalNotificationsPlugin().initialize(initSettings);
   }
 
@@ -65,7 +69,10 @@ class PushNotificationsManager {
       firebaseMessaging.getNotificationSettings();
     }
     await firebaseMessaging.setForegroundNotificationPresentationOptions(
-        alert: true, badge: true, sound: true);
+      alert: true,
+      badge: true,
+      sound: true,
+    );
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _handleNotificationClick(message, true);
     });
@@ -75,14 +82,17 @@ class PushNotificationsManager {
   }
 
   static Future<void> firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
+    RemoteMessage message,
+  ) async {
     // _showNotification
     //
     //n(message: message);
   }
 
   static void _handleNotificationClick(
-      RemoteMessage message, bool openedFromTerminated) {
+    RemoteMessage message,
+    bool openedFromTerminated,
+  ) {
     String? route = message.data['route'];
     if (route != null) {
       if (openedFromTerminated) {

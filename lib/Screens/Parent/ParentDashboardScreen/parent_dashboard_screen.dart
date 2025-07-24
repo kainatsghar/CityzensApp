@@ -23,8 +23,9 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
   late Future _multiChild;
 
   var provider = Provider.of<ParentDashboardProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -36,23 +37,26 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'CITYZENS'),
-        drawer: const NavigationalDrawer(),
-        body: RefreshIndicator(
-            child: FutureBuilder(
-                future: _multiChild,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const CustomLoader();
-                    default:
-                      if (snapshot.hasData) {
-                        return const MultiChildComponent();
-                      } else {
-                        return ShowError(errorText: '${snapshot.error}');
-                      }
-                  }
-                }),
-            onRefresh: () => provider.loadMultiChildData()));
+      appBar: const CustomAppBar(title: 'CITYZENS'),
+      drawer: const NavigationalDrawer(),
+      body: RefreshIndicator(
+        child: FutureBuilder(
+          future: _multiChild,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const CustomLoader();
+              default:
+                if (snapshot.hasData) {
+                  return const MultiChildComponent();
+                } else {
+                  return ShowError(errorText: '${snapshot.error}');
+                }
+            }
+          },
+        ),
+        onRefresh: () => provider.loadMultiChildData(),
+      ),
+    );
   }
 }

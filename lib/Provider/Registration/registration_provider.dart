@@ -214,7 +214,7 @@ class RegistrationProvider with ChangeNotifier {
             onSelect: (v) => onUserTypeSelection(v)));
   }
 
-  launchEmail() async {
+  Future<void> launchEmail() async {
     const address = 'mailto:appfeedback@csn.edu.pk';
     if (await canLaunchUrl(Uri.parse(address))) {
       await launchUrl(Uri.parse(address));

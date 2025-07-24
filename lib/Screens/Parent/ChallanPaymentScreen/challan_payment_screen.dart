@@ -15,7 +15,7 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
   int loadingPercentage = 0;
   late WebViewController controller;
 
-  onProgressChange(int value) => setState(() => loadingPercentage = value);
+  void onProgressChange(int value) => setState(() => loadingPercentage = value);
 
   @override
   void initState() {

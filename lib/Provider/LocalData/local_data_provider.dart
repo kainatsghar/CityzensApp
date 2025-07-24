@@ -14,6 +14,7 @@ import 'package:tcs_app/SharedPreference/shared_preference.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
 import '../../Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
@@ -26,8 +27,9 @@ class LocalDataProvider with ChangeNotifier {
   int? gradeId = 0;
 
   Future<void> loadStoredData() async {
-    String? localData =
-        await AppLocalData.getStringPrefValue(key: AppConstants.userDataKey);
+    String? localData = await AppLocalData.getStringPrefValue(
+      key: AppConstants.userDataKey,
+    );
     if (localData != null) {
       userData = LoginResponse.fromJson(jsonDecode(localData));
       if (userData!.userType == 'Student') {
@@ -55,18 +57,22 @@ class LocalDataProvider with ChangeNotifier {
   Future<Widget> authDecider() async {
     await loadStoredData();
 
-    if (userData!.tokenId == null) {
-      // if (userData!.tokenId.isEmpty) {
-      return const LoginScreen();
-    } else {
-      if (userData!.userType == 'Student') {
-        return const StudentDashboardScreen();
-      } else if (userData!.userType == 'Teacher') {
-        return const TeacherDashboardScreen();
-      } else {
-        return const ParentDashboardScreen();
-      }
-    }
+    return UpgradeAlert(
+      barrierDismissible: true,
+      upgrader: Upgrader(minAppVersion: '1.11.20'),
+      showLater: true,
+      dialogStyle: Platform.isIOS
+          ? UpgradeDialogStyle.cupertino
+          : UpgradeDialogStyle.material,
+      navigatorKey: AppNavigation.navigatorKey,
+      child: (userData!.tokenId == null)
+          ? const LoginScreen()
+          : (userData!.userType == 'Student')
+          ? const StudentDashboardScreen()
+          : (userData!.userType == 'Teacher')
+          ? const TeacherDashboardScreen()
+          : const ParentDashboardScreen(),
+    );
   }
 
   void setUserImage(File file) {
@@ -74,7 +80,9 @@ class LocalDataProvider with ChangeNotifier {
       AppLocalData.setStringPrefValue(key: studentId, value: file.path);
     } else {
       AppLocalData.setStringPrefValue(
-          key: '${userData!.userName}', value: file.path);
+        key: '${userData!.userName}',
+        value: file.path,
+      );
     }
     notifyListeners();
   }
@@ -85,12 +93,15 @@ class LocalDataProvider with ChangeNotifier {
   Future logout(BuildContext context) async {
     DialogBuilder.showLoadingIndicator();
     try {
-      ResponseMessage response =
-          await LogoutService.logoutRequest(userData!.tokenId!);
+      ResponseMessage response = await LogoutService.logoutRequest(
+        userData!.tokenId!,
+      );
       if (response.isSuccessful ?? false) {
         AppLocalData.removeKeyData(key: AppConstants.userDataKey);
-        Future.delayed(Duration.zero,
-            () => AppNavigation.pushAndKillAll(AppNavRoutes.authWrapperRoute));
+        Future.delayed(
+          Duration.zero,
+          () => AppNavigation.pushAndKillAll(AppNavRoutes.authWrapperRoute),
+        );
       } else {
         showSnackBar(response.message);
       }
@@ -100,13 +111,13 @@ class LocalDataProvider with ChangeNotifier {
     DialogBuilder.hideOpenDialog();
   }
 
-  openCamera() async {
+  Future<void> openCamera() async {
     AppNavigation.goBack();
     var image = await ImagePicker().pickImage(source: ImageSource.camera);
     cropImage(File(image?.path ?? 'null'));
   }
 
-  openGallery() async {
+  Future<void> openGallery() async {
     AppNavigation.goBack();
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
     cropImage(File(image?.path ?? 'null'));

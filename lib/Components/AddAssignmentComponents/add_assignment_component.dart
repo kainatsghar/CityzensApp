@@ -64,7 +64,7 @@ class _AddAssignmentComponentState extends State<AddAssignmentComponent> {
         '/Users/it/Downloads/base64.txt'; // Replace with your desired file path
     File base64File = File(filePath);
     await base64File.writeAsString(base64String);
-    print('Base64 String saved to file: $filePath');
+    debugPrint('Base64 String saved to file: $filePath');
   }
 
   @override

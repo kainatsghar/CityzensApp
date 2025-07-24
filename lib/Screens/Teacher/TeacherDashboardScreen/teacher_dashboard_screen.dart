@@ -92,14 +92,14 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                               onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.teacherAssignmentRoute),
                               imageName: 'assignment_icon_h.png'),
-                          CustomDashboardButton(
-                              title: 'SCHOOL\nEVENTS',
-                              bottomAlign: -22,
-                              leftAlign: -10,
-                              imageHeight: size.height * 0.13,
-                              onTap: () => AppNavigation.navigateTo(
-                                  AppNavRoutes.teacherSchoolEventsRoute),
-                              imageName: 'calendar.png'),
+                          // CustomDashboardButton(
+                          //     title: 'SCHOOL\nEVENTS',
+                          //     bottomAlign: -22,
+                          //     leftAlign: -10,
+                          //     imageHeight: size.height * 0.13,
+                          //     onTap: () => AppNavigation.navigateTo(
+                          //         AppNavRoutes.teacherSchoolEventsRoute),
+                          //     imageName: 'calendar.png'),
                           CustomDashboardButton(
                               title: 'CLASS TEST\nRESULTS',
                               bottomAlign: -65,
@@ -108,14 +108,14 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                               onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.teacherClassTestResultRoute),
                               imageName: 'class_result.png'),
-                          CustomDashboardButton(
-                              title: 'APPOINTMENTS',
-                              bottomAlign: -12,
-                              leftAlign: 0,
-                              imageHeight: size.height * 0.10,
-                              onTap: () => AppNavigation.navigateTo(
-                                  AppNavRoutes.parentAppointmentRoute),
-                              imageName: 'calendar_appoointment.png'),
+                          // CustomDashboardButton(
+                          //     title: 'APPOINTMENTS',
+                          //     bottomAlign: -12,
+                          //     leftAlign: 0,
+                          //     imageHeight: size.height * 0.10,
+                          //     onTap: () => AppNavigation.navigateTo(
+                          //         AppNavRoutes.parentAppointmentRoute),
+                          //     imageName: 'calendar_appoointment.png'),
                           if (gradeId == '2' ||
                               gradeId == '3' ||
                               gradeId == '4' ||
@@ -138,14 +138,14 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                               onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.teacherTimeTableSectionRoute),
                               imageName: 'calendar.png'),
-                          CustomDashboardButton(
-                              title: 'SURVEY',
-                              bottomAlign: -14,
-                              leftAlign: -10,
-                              imageHeight: size.height * 0.11,
-                              onTap: () => AppNavigation.navigateTo(
-                                  AppNavRoutes.teacherSurveyRoute),
-                              imageName: 'survey.png'),
+                          // CustomDashboardButton(
+                          //     title: 'SURVEY',
+                          //     bottomAlign: -14,
+                          //     leftAlign: -10,
+                          //     imageHeight: size.height * 0.11,
+                          //     onTap: () => AppNavigation.navigateTo(
+                          //         AppNavRoutes.teacherSurveyRoute),
+                          //     imageName: 'survey.png'),
                           CustomDashboardButton(
                               title: 'CIRCULAR',
                               bottomAlign: -14,

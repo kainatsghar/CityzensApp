@@ -8,10 +8,17 @@ import 'package:tcs_app/model/Library/library_response.dart';
 class LibraryProvider with ChangeNotifier {
   late LibraryResponse libraryResponse;
 
+  ScrollController? scrollController;
+  TabController? tabController;
+
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
     AppNavigation.currentContext!,
     listen: false,
   );
+
+  void initializeData(TickerProvider tickerProvider) {
+    tabController = TabController(length: 2, vsync: tickerProvider);
+  }
 
   void setLibraryData(LibraryResponse response) {
     libraryResponse = response;

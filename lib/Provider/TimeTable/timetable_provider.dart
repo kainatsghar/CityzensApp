@@ -55,7 +55,7 @@ class TimeTableProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  setValue(String day, int periodIndex, String marks) {
+  void setValue(String day, int periodIndex, String marks) {
     if (isInitial == true) {
       timetablelistValues.update(
         day,

@@ -1,17 +1,17 @@
-class StudentAlevelAttendanceRequest {
+class StudentALevelAttendanceRequest {
   String? studentId;
   int? subjectId;
   String? tokenId;
   String? pMonth;
 
-  StudentAlevelAttendanceRequest({
+  StudentALevelAttendanceRequest({
     this.studentId,
     this.subjectId,
     this.tokenId,
     this.pMonth,
   });
 
-  StudentAlevelAttendanceRequest.fromJson(Map<String, dynamic> json) {
+  StudentALevelAttendanceRequest.fromJson(Map<String, dynamic> json) {
     studentId = json['StudentId'];
     subjectId = json['SubjectId'];
     tokenId = json['TokenId'];
