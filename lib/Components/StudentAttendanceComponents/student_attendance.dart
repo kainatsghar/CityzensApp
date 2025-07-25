@@ -11,68 +11,75 @@ class StudentAttendance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<StudentAttendanceProvider>(
       builder: (context, value, _) {
-        return Container(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          decoration: BoxDecoration(
-            color: AppColors.primaryColor,
+        return Card(
+          margin: EdgeInsets.zero,
+          elevation: 8,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
           ),
-          child: TableCalendar(
-            eventLoader: (v) => value.getAttendance(v),
-            headerStyle: const HeaderStyle(
-              formatButtonVisible: false,
-              leftChevronIcon: Icon(
-                Icons.chevron_left,
-                color: AppColors.whiteColor,
-              ),
-              rightChevronIcon: Icon(
-                Icons.chevron_right,
-                color: AppColors.whiteColor,
-              ),
-              titleCentered: true,
-              titleTextStyle: TextStyle(
-                color: AppColors.whiteColor,
-                fontSize: 17.0,
-                fontWeight: FontWeight.bold,
-              ),
+          child: Container(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(16.0),
             ),
-            focusedDay: value.selectedDate,
-            firstDay: DateTime.utc(2022, 01, 01),
-            lastDay: DateTime.now(),
-            daysOfWeekStyle: const DaysOfWeekStyle(
-              weekdayStyle: TextStyle(
-                color: AppColors.whiteColor,
-                fontWeight: FontWeight.w600,
-              ),
-              weekendStyle: TextStyle(
-                color: AppColors.goldenColors,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            calendarStyle: const CalendarStyle(
-              isTodayHighlighted: true,
-              defaultTextStyle: TextStyle(color: AppColors.whiteColor),
-              weekendTextStyle: TextStyle(color: AppColors.goldenColors),
-              selectedTextStyle: TextStyle(color: AppColors.primaryDarkColor),
-              selectedDecoration: BoxDecoration(
-                color: AppColors.secondaryColor,
-                shape: BoxShape.circle,
-              ),
-            ),
-            onPageChanged: (v) => value.reloadAttendance(v),
-            selectedDayPredicate: (day) => isSameDay(day, DateTime.now()),
-            calendarBuilders: CalendarBuilders(
-              singleMarkerBuilder: (context, day, dynamic event) => ClipOval(
-                child: SizedBox(
-                  height: 8,
-                  width: 8,
-                  child: ColoredBox(color: event.color),
-                  // child: ColoredBox(color: Colors.grey),
+            child: TableCalendar(
+              eventLoader: (v) => value.getAttendance(v),
+              headerStyle: const HeaderStyle(
+                formatButtonVisible: false,
+                leftChevronIcon: Icon(
+                  Icons.chevron_left,
+                  color: AppColors.whiteColor,
+                ),
+                rightChevronIcon: Icon(
+                  Icons.chevron_right,
+                  color: AppColors.whiteColor,
+                ),
+                titleCentered: true,
+                titleTextStyle: TextStyle(
+                  color: AppColors.whiteColor,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              focusedDay: value.selectedDate,
+              firstDay: DateTime.utc(2022, 01, 01),
+              lastDay: DateTime.now(),
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                weekdayStyle: TextStyle(
+                  color: AppColors.whiteColor,
+                  fontWeight: FontWeight.w600,
+                ),
+                weekendStyle: TextStyle(
+                  color: AppColors.goldenColors,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              calendarStyle: const CalendarStyle(
+                isTodayHighlighted: true,
+                defaultTextStyle: TextStyle(color: AppColors.whiteColor),
+                weekendTextStyle: TextStyle(color: AppColors.goldenColors),
+                selectedTextStyle: TextStyle(color: AppColors.primaryDarkColor),
+                selectedDecoration: BoxDecoration(
+                  color: AppColors.secondaryColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              onPageChanged: (v) => value.reloadAttendance(v),
+              selectedDayPredicate: (day) => isSameDay(day, DateTime.now()),
+              calendarBuilders: CalendarBuilders(
+                singleMarkerBuilder: (context, day, dynamic event) => ClipOval(
+                  child: SizedBox(
+                    height: 8,
+                    width: 8,
+                    child: ColoredBox(color: event.color),
+                    // child: ColoredBox(color: Colors.grey),
+                  ),
+                ),
+              ),
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              calendarFormat: CalendarFormat.month,
             ),
-            startingDayOfWeek: StartingDayOfWeek.monday,
-            calendarFormat: CalendarFormat.month,
           ),
         );
       },
