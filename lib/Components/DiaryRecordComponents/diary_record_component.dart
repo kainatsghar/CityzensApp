@@ -22,8 +22,10 @@ class DiaryRecordComponent extends StatefulWidget {
 }
 
 class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
-  var localData = Provider.of<LocalDataProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var localData = Provider.of<LocalDataProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   // Future<void> _launchFile(String fileName) async {
   //   final url =
@@ -39,7 +41,8 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
 
   Future<void> _launchFile(String fileName) async {
     final Uri url = Uri.parse(
-        'https://app.csn.edu.pk:8090/MobileAppAttachments/DailyDiary/$fileName');
+      '${AppConstants.apiBaseURLForFiles}/MobileAppAttachments/DailyDiary/$fileName',
+    );
     // ignore: deprecated_member_use
     if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
       // ignore: deprecated_member_use
@@ -52,93 +55,104 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<DiaryProvider>(builder: (context, value, _) {
-      List<DiaryRecords> diaryRecords = value.diaryResponse!.diaryRecords!;
-      return Padding(
-        padding: const EdgeInsets.all(10),
-        // child: diaryRecords == null || diaryRecords.isEmpty
-        child: diaryRecords.isEmpty
-            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
-            : Column(
-                children: [
-                  const CustomCoverImage(
-                      title: 'HOMEWORK DIARY', imagePath: 'diary_icon.png'),
-                  SizedBox(height: size.height * 0.02),
-                  Flexible(
-                    child: GroupedListView<DiaryRecords, String>(
+    return Consumer<DiaryProvider>(
+      builder: (context, value, _) {
+        List<DiaryRecords> diaryRecords = value.diaryResponse!.diaryRecords!;
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          // child: diaryRecords == null || diaryRecords.isEmpty
+          child: diaryRecords.isEmpty
+              ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+              : Column(
+                  children: [
+                    const CustomCoverImage(
+                      title: 'HOMEWORK DIARY',
+                      imagePath: 'diary_icon.png',
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    Flexible(
+                      child: GroupedListView<DiaryRecords, String>(
                         elements: diaryRecords,
                         groupBy: (element) => element.diaryDate!,
                         groupSeparatorBuilder: (String groupByValue) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                DateFormat('MMMM dd, yyyy')
-                                    .format(DateTime.parse(groupByValue)),
-                                style: const TextStyle(
-                                    color: AppColors.blackColor,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600))),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            DateFormat(
+                              'MMMM dd, yyyy',
+                            ).format(DateTime.parse(groupByValue)),
+                            style: const TextStyle(
+                              color: AppColors.blackColor,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                         itemBuilder: (context, DiaryRecords element) => Card(
-                                child: CustomExpansionTile(
-                                    title: '${element.subject}',
-                                    children: <Widget>[
-                                  ListTile(title: Text(element.description!)),
-                                  (element.fileName != null &&
-                                          element.fileName != "")
-                                      ? ListTile(
-                                          title: GestureDetector(
-                                            onTap: () {
-                                              // Replace 'image.png' with your actual file path
+                          child: CustomExpansionTile(
+                            title: '${element.subject}',
+                            children: <Widget>[
+                              ListTile(title: Text(element.description!)),
+                              (element.fileName != null &&
+                                      element.fileName != "")
+                                  ? ListTile(
+                                      title: GestureDetector(
+                                        onTap: () {
+                                          // Replace 'image.png' with your actual file path
 
-                                              _launchFile(
-                                                  element.fileName ?? '');
-                                            },
-                                            child: Row(
-                                              children: [
-                                                const Icon(Icons
-                                                    .download), // Download icon
-                                                const SizedBox(
-                                                    width: 8), // Spacer
-                                                Text(
-                                                  element.fileName ?? '',
-                                                  style: const TextStyle(
-                                                      color: AppColors
-                                                          .primaryDarkColor),
-                                                ), // File name text
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                  // ListTile(
-                                  //   title: GestureDetector(
-                                  //     onTap: () {
-                                  //       // Replace 'image.png' with your actual file path
+                                          _launchFile(element.fileName ?? '');
+                                        },
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.download,
+                                            ), // Download icon
+                                            const SizedBox(width: 8), // Spacer
+                                            Text(
+                                              element.fileName ?? '',
+                                              style: const TextStyle(
+                                                color:
+                                                    AppColors.primaryDarkColor,
+                                              ),
+                                            ), // File name text
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                              // ListTile(
+                              //   title: GestureDetector(
+                              //     onTap: () {
+                              //       // Replace 'image.png' with your actual file path
 
-                                  //       _launchFile(
-                                  //         element.fileName ?? '',
-                                  //       );
-                                  //     },
-                                  //     child: Row(
-                                  //       children: [
-                                  //         const Icon(
-                                  //             Icons.download), // Download icon
-                                  //         const SizedBox(width: 8), // Spacer
-                                  //         Text(
-                                  //           element.fileName ?? '',
-                                  //           style: const TextStyle(
-                                  //               color:
-                                  //                   AppColors.primaryDarkColor),
-                                  //         ), // File name text
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ])),
-                        order: GroupedListOrder.DESC),
-                  ),
-                ],
-              ),
-      );
-    });
+                              //       _launchFile(
+                              //         element.fileName ?? '',
+                              //       );
+                              //     },
+                              //     child: Row(
+                              //       children: [
+                              //         const Icon(
+                              //             Icons.download), // Download icon
+                              //         const SizedBox(width: 8), // Spacer
+                              //         Text(
+                              //           element.fileName ?? '',
+                              //           style: const TextStyle(
+                              //               color:
+                              //                   AppColors.primaryDarkColor),
+                              //         ), // File name text
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ),
+                        order: GroupedListOrder.DESC,
+                      ),
+                    ),
+                  ],
+                ),
+        );
+      },
+    );
   }
 }

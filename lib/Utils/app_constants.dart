@@ -1,5 +1,16 @@
+import 'package:flutter/foundation.dart';
+
 class AppConstants {
-  static const String apiBaseURL = "https://app.csn.edu.pk:8090/api/";
+  static const String apiBaseURL = kDebugMode
+      ? "$apiTestBaseURL/api/"
+      : "$apiLiveBaseURL/api/";
+  // Use test URL in debug mode, live URL in release
+
+  static const String apiBaseURLForFiles = kDebugMode
+      ? apiTestBaseURL
+      : apiLiveBaseURL; // Use test URL in debug mode, live URL in release
+  static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
+  static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
   static const String exceptionMessage =
       "Something Went Wrong, Please Try Again Later";
   static const String markAttendanceMessage = "Please Mark Complete Attendance";
@@ -25,6 +36,6 @@ class AppConstants {
 
   static const Map<String, String> appHeaders = {
     'Content-Type': 'application/json; charset=UTF-8',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
   };
 }

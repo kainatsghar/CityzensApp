@@ -31,8 +31,14 @@ class StudentProfileComponent extends StatelessWidget {
                     ),
                     child: Column(
                       children: <Widget>[
+                        CustomUserImage(
+                          userId: HelperFunction.noNullStringText(
+                            '${profile.first.studentId}',
+                          ),
+                          disableUploadImage: false,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 15.0),
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
                             HelperFunction.noNullStringText(
                               profile.first.name,
@@ -44,18 +50,12 @@ class StudentProfileComponent extends StatelessWidget {
                             ),
                           ),
                         ),
-                        CustomUserImage(
-                          userId: HelperFunction.noNullStringText(
-                            '${profile.first.studentId}',
-                          ),
-                          disableUploadImage: false,
-                        ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: CustomProfileItem(
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
+                            width: size.width,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(16),
                             ),
                             title: 'CAMPUS NAME',
                             value: '${profile.first.center}',
@@ -68,8 +68,8 @@ class StudentProfileComponent extends StatelessWidget {
                             Expanded(
                               child: CustomProfileItem(
                                 borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(16),
+                                  topLeft: Radius.circular(16),
                                 ),
                                 title: 'ROLL NUMBER',
                                 value: '${profile.first.studentId}',
@@ -86,8 +86,8 @@ class StudentProfileComponent extends StatelessWidget {
                             Expanded(
                               child: CustomProfileItem(
                                 borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(16),
+                                  topLeft: Radius.circular(16),
                                 ),
                                 title: 'CLASS NAME',
                                 value: '${profile.first.className}',
@@ -102,8 +102,8 @@ class StudentProfileComponent extends StatelessWidget {
                             Expanded(
                               child: CustomProfileItem(
                                 borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(16),
+                                  bottomLeft: Radius.circular(16),
                                 ),
                                 title: 'REGION NAME',
                                 value: '${profile.first.region}',
@@ -120,8 +120,8 @@ class StudentProfileComponent extends StatelessWidget {
                             Expanded(
                               child: CustomProfileItem(
                                 borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(16),
+                                  bottomLeft: Radius.circular(16),
                                 ),
                                 title: 'DATE OF BIRTH',
                                 value: HelperFunction.dateFormatter(
@@ -132,44 +132,36 @@ class StudentProfileComponent extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 8.0),
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          decoration: BoxDecoration(
-                            color: AppColors.secondaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            children: [
-                              CustomProfileItem(
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  topLeft: Radius.circular(10),
-                                ),
-                                width: size.width,
-                                title: 'ADDRESS',
-                                maxLines: 3,
-                                value: '${profile.first.address}',
+                        Column(
+                          spacing: 4,
+                          children: [
+                            CustomProfileItem(
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(16),
+                                topLeft: Radius.circular(16),
                               ),
-                              const SizedBox(height: 2.0),
-                              CustomProfileItem(
-                                width: size.width,
-                                title: 'CITY NAME',
-                                maxLines: 2,
-                                value: '${profile.first.city}',
+                              width: size.width,
+                              title: 'ADDRESS',
+                              maxLines: 3,
+                              value: '${profile.first.address}',
+                            ),
+                            CustomProfileItem(
+                              width: size.width,
+                              title: 'CITY NAME',
+                              maxLines: 2,
+                              value: '${profile.first.city}',
+                            ),
+                            CustomProfileItem(
+                              borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(16),
+                                bottomLeft: Radius.circular(16),
                               ),
-                              const SizedBox(height: 2.0),
-                              CustomProfileItem(
-                                borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                ),
-                                width: size.width,
-                                title: 'CONTACT NUMBER',
-                                maxLines: 2,
-                                value: '${profile.first.contactNo}',
-                              ),
-                            ],
-                          ),
+                              width: size.width,
+                              title: 'CONTACT NUMBER',
+                              maxLines: 2,
+                              value: '${profile.first.contactNo}',
+                            ),
+                          ],
                         ),
                       ],
                     ),

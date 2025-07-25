@@ -6,15 +6,21 @@ class CustomLogoCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width,
-      height: size.height * 0.25,
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      decoration: BoxDecoration(
+    Size size = MediaQuery.sizeOf(context);
+    return Card(
+      margin: EdgeInsets.zero,
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      child: Container(
+        width: size.width,
+        height: size.height * 0.25,
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        decoration: BoxDecoration(
           color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(20.0)),
-      child: Image.asset('images/tcs_logo_white.png'),
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Image.asset('images/tcs_logo_white.png'),
+      ),
     );
   }
 }

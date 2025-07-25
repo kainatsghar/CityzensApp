@@ -14,30 +14,36 @@ class NotificationComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return SafeArea(
-      child: Consumer<NotificationProvider>(builder: (context, value, _) {
-        return Container(
-          margin: EdgeInsets.only(top: size.height * 0.03),
-          padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
-          child: value.notifications!.isEmpty
-              ? const ShowCustomMessage(message: AppConstants.noRecordFound)
-              : Column(
-                  children: [
-                    const CustomCoverImage(
-                        title: 'CIRCULARS', imagePath: 'notification_icon.png'),
-                    Flexible(
-                      child: ListView.builder(
+      child: Consumer<NotificationProvider>(
+        builder: (context, value, _) {
+          return Container(
+            margin: EdgeInsets.only(top: size.height * 0.03),
+            padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+            child: value.notifications!.isEmpty
+                ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+                : Column(
+                    children: [
+                      const CustomCoverImage(
+                        title: 'CIRCULARS',
+                        imagePath: 'notification_icon.png',
+                      ),
+                      Flexible(
+                        child: ListView.builder(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           itemCount: value.notifications!.length,
                           itemBuilder: (BuildContext context, int index) =>
                               NotificationItem(
-                                  index: index + 1,
-                                  notification: value.notifications![index],
-                                  onTap: (url) => value.loadURL(url))),
-                    ),
-                  ],
-                ),
-        );
-      }),
+                                index: index + 1,
+                                notification: value.notifications![index],
+                                onTap: (url) => value.loadURL(url),
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+          );
+        },
+      ),
     );
   }
 }

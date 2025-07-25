@@ -19,8 +19,9 @@ class TeacherProfileScreen extends StatefulWidget {
 class TeacherProfileScreenState extends State<TeacherProfileScreen> {
   late Future _teacherProfile;
   var provider = Provider.of<TeacherProfileProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -33,21 +34,23 @@ class TeacherProfileScreenState extends State<TeacherProfileScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'PROFILE'),
       body: RefreshIndicator(
-          child: FutureBuilder(
-              future: _teacherProfile,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return const CustomLoader();
-                  default:
-                    if (snapshot.hasData) {
-                      return const TeacherProfileComponent();
-                    } else {
-                      return ShowError(errorText: '${snapshot.error}');
-                    }
+        child: FutureBuilder(
+          future: _teacherProfile,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const CustomLoader();
+              default:
+                if (snapshot.hasData) {
+                  return const TeacherProfileComponent();
+                } else {
+                  return ShowError(errorText: '${snapshot.error}');
                 }
-              }),
-          onRefresh: () => provider.loadTeacherProfile()),
+            }
+          },
+        ),
+        onRefresh: () => provider.loadTeacherProfile(),
+      ),
     );
   }
 }

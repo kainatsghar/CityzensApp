@@ -23,12 +23,15 @@ class AssignmentRecordComponent extends StatefulWidget {
 }
 
 class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
-  var localData = Provider.of<LocalDataProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var localData = Provider.of<LocalDataProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   Future<void> _launchFile(String fileName) async {
-    final Uri url =
-        Uri.parse('https://app.csn.edu.pk:8090/MobileAppAttachments/$fileName');
+    final Uri url = Uri.parse(
+      '${AppConstants.apiBaseURLForFiles}/MobileAppAttachments/$fileName',
+    );
     // ignore: deprecated_member_use
     if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
       // ignore: deprecated_member_use
@@ -52,74 +55,81 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Consumer<AssignmentProvider>(builder: (context, value, _) {
-      List<AssignmentRecords> assignmentRecords =
-          value.assignmentResponse!.assignmentRecords!;
-      return Padding(
-        padding: const EdgeInsets.all(10),
-        child: assignmentRecords.isEmpty
-            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
-            : Column(
-                children: [
-                  const CustomCoverImage(
+    Size size = MediaQuery.sizeOf(context);
+    return Consumer<AssignmentProvider>(
+      builder: (context, value, _) {
+        List<AssignmentRecords> assignmentRecords =
+            value.assignmentResponse!.assignmentRecords!;
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: assignmentRecords.isEmpty
+              ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+              : Column(
+                  children: [
+                    const CustomCoverImage(
                       title: 'CLASSWORK ASSIGNMENT',
-                      imagePath: 'assignment_icon.png'),
-                  SizedBox(height: size.height * 0.01),
-                  Flexible(
-                    child: GroupedListView<AssignmentRecords, String>(
+                      imagePath: 'assignment_icon.png',
+                    ),
+                    SizedBox(height: size.height * 0.01),
+                    Flexible(
+                      child: GroupedListView<AssignmentRecords, String>(
                         elements: assignmentRecords,
                         groupBy: (element) => element.classWorkDate!,
                         groupSeparatorBuilder: (String groupByValue) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                DateFormat('MMMM dd, yyyy')
-                                    .format(DateTime.parse(groupByValue)),
-                                style: const TextStyle(
-                                    color: AppColors.blackColor,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600),
-                              ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            DateFormat(
+                              'MMMM dd, yyyy',
+                            ).format(DateTime.parse(groupByValue)),
+                            style: const TextStyle(
+                              color: AppColors.blackColor,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
                             ),
-                        itemBuilder: (context, AssignmentRecords element) =>
-                            Card(
-                                child: CustomExpansionTile(
-                                    title: '${element.subject}',
-                                    children: <Widget>[
-                                  ListTile(title: Text(element.description!)),
-                                  (element.fileName != null &&
-                                          element.fileName != "")
-                                      ? ListTile(
-                                          title: GestureDetector(
-                                            onTap: () {
-                                              // Replace 'image.png' with your actual file path
+                          ),
+                        ),
+                        itemBuilder: (context, AssignmentRecords element) => Card(
+                          child: CustomExpansionTile(
+                            title: '${element.subject}',
+                            children: <Widget>[
+                              ListTile(title: Text(element.description!)),
+                              (element.fileName != null &&
+                                      element.fileName != "")
+                                  ? ListTile(
+                                      title: GestureDetector(
+                                        onTap: () {
+                                          // Replace 'image.png' with your actual file path
 
-                                              _launchFile(
-                                                  element.fileName ?? '');
-                                            },
-                                            child: Row(
-                                              children: [
-                                                const Icon(Icons
-                                                    .download), // Download icon
-                                                const SizedBox(
-                                                    width: 8), // Spacer
-                                                Text(
-                                                  element.fileName ?? '',
-                                                  style: const TextStyle(
-                                                      color: AppColors
-                                                          .primaryDarkColor),
-                                                ), // File name text
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ])),
-                        order: GroupedListOrder.DESC),
-                  ),
-                ],
-              ),
-      );
-    });
+                                          _launchFile(element.fileName ?? '');
+                                        },
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.download,
+                                            ), // Download icon
+                                            const SizedBox(width: 8), // Spacer
+                                            Text(
+                                              element.fileName ?? '',
+                                              style: const TextStyle(
+                                                color:
+                                                    AppColors.primaryDarkColor,
+                                              ),
+                                            ), // File name text
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ],
+                          ),
+                        ),
+                        order: GroupedListOrder.DESC,
+                      ),
+                    ),
+                  ],
+                ),
+        );
+      },
+    );
   }
 }
