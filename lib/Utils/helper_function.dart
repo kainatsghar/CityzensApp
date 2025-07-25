@@ -34,26 +34,28 @@ class HelperFunction {
     // FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-    try {
-      FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-      await remoteConfig.setDefaults({'apiBaseUrl': AppConstants.apiBaseURL});
-      await remoteConfig.setConfigSettings(
-        RemoteConfigSettings(
-          fetchTimeout: const Duration(seconds: 10),
-          minimumFetchInterval: const Duration(seconds: 30),
-        ),
-      );
-      await remoteConfig.fetchAndActivate();
-      String apiBaseUrl = remoteConfig.getString('apiBaseUrl');
-      if (apiBaseUrl.isNotEmpty && !kDebugMode) {
-        debugPrint('API Base URL: $apiBaseUrl');
-        AppConstants.baseUrl = apiBaseUrl;
-        debugPrint('API URL: ${AppConstants.apiBaseURL}');
-        AppConstants.apiBaseURL = '$apiBaseUrl/api/';
-        debugPrint('API URL: ${AppConstants.apiBaseURL}');
+    if (!kDebugMode) {
+      try {
+        FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+        await remoteConfig.setDefaults({'apiBaseUrl': AppConstants.apiBaseURL});
+        await remoteConfig.setConfigSettings(
+          RemoteConfigSettings(
+            fetchTimeout: const Duration(seconds: 10),
+            minimumFetchInterval: const Duration(seconds: 30),
+          ),
+        );
+        await remoteConfig.fetchAndActivate();
+        String apiBaseUrl = remoteConfig.getString('apiBaseUrl');
+        if (apiBaseUrl.isNotEmpty) {
+          debugPrint('API Base URL: $apiBaseUrl');
+          AppConstants.baseUrl = apiBaseUrl;
+          debugPrint('API URL: ${AppConstants.apiBaseURL}');
+          AppConstants.apiBaseURL = '$apiBaseUrl/api/';
+          debugPrint('API URL: ${AppConstants.apiBaseURL}');
+        }
+      } on Exception catch (e) {
+        debugPrint('Remote Config Error: $e');
       }
-    } on Exception catch (e) {
-      debugPrint('Remote Config Error: $e');
     }
   }
 
