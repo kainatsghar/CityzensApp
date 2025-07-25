@@ -30,7 +30,7 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
 
   Future<void> _launchFile(String fileName) async {
     final Uri url = Uri.parse(
-      '${AppConstants.apiBaseURLForFiles}/MobileAppAttachments/$fileName',
+      '${AppConstants.baseUrl}/MobileAppAttachments/$fileName',
     );
     // ignore: deprecated_member_use
     if (await launchUrl(url, mode: LaunchMode.externalApplication)) {

@@ -41,7 +41,7 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
 
   Future<void> _launchFile(String fileName) async {
     final Uri url = Uri.parse(
-      '${AppConstants.apiBaseURLForFiles}/MobileAppAttachments/DailyDiary/$fileName',
+      '${AppConstants.baseUrl}/MobileAppAttachments/DailyDiary/$fileName',
     );
     // ignore: deprecated_member_use
     if (await launchUrl(url, mode: LaunchMode.externalApplication)) {

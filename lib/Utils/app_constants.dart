@@ -1,12 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 class AppConstants {
-  static const String apiBaseURL = kDebugMode
-      ? "$apiTestBaseURL/api/"
-      : "$apiLiveBaseURL/api/";
-  // Use test URL in debug mode, live URL in release
-
-  static const String apiBaseURLForFiles = kDebugMode
+  static String apiBaseURL = "$baseUrl/api/";
+  static String baseUrl = kDebugMode
       ? apiTestBaseURL
       : apiLiveBaseURL; // Use test URL in debug mode, live URL in release
   static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";

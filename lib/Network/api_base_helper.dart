@@ -8,14 +8,11 @@ import 'package:tcs_app/Utils/app_constants.dart';
 import 'app_exceptions.dart';
 
 class ApiBaseHelper {
-  static Future<Map<String, dynamic>> httpGetRequest(
-    String endPoint, {
-    String base = AppConstants.apiBaseURL,
-  }) async {
+  static Future<Map<String, dynamic>> httpGetRequest(String endPoint) async {
     http.Response response;
     try {
       response = await http.get(
-        Uri.parse('$base$endPoint'),
+        Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
         headers: AppConstants.appHeaders,
       );
     } on SocketException {
@@ -33,7 +30,7 @@ class ApiBaseHelper {
   static Future<Map<String, dynamic>> httpPostRequest(
     String endPoint, {
     Object? body,
-    String base = AppConstants.apiBaseURL,
+
     String? token,
   }) async {
     http.Response response;
@@ -43,13 +40,13 @@ class ApiBaseHelper {
 
     try {
       if (kDebugMode) {
-        log('Request URL: $base$endPoint');
+        log('Request URL: ${AppConstants.apiBaseURL}$endPoint');
         log('Request Headers: $headers');
         log('Request Body: ${json.encode(body)}');
       }
 
       response = await http.post(
-        Uri.parse('$base$endPoint'),
+        Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
         headers: AppConstants.appHeaders,
         body: json.encode(body),
       );
@@ -71,12 +68,11 @@ class ApiBaseHelper {
   static Future<Map<String, dynamic>> httpPutRequest(
     String endPoint, {
     Object? body,
-    String base = AppConstants.apiBaseURL,
   }) async {
     http.Response response;
     try {
       response = await http.put(
-        Uri.parse('$base$endPoint'),
+        Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
         headers: AppConstants.appHeaders,
         body: jsonEncode(body),
       );
