@@ -23,8 +23,8 @@ class CustomUserImage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Card(
-      margin: EdgeInsets.only(bottom: 8),
-      elevation: 8,
+      margin: EdgeInsets.zero,
+      elevation: 4,
       shape: CircleBorder(),
       child: Stack(
         children: [

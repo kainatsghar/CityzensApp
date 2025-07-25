@@ -45,17 +45,25 @@ class HelperFunction {
           ),
         );
         await remoteConfig.fetchAndActivate();
-        String apiBaseUrl = remoteConfig.getString('apiBaseUrl');
-        if (apiBaseUrl.isNotEmpty) {
-          debugPrint('API Base URL: $apiBaseUrl');
-          AppConstants.baseUrl = apiBaseUrl;
-          debugPrint('API URL: ${AppConstants.apiBaseURL}');
-          AppConstants.apiBaseURL = '$apiBaseUrl/api/';
-          debugPrint('API URL: ${AppConstants.apiBaseURL}');
-        }
+        setApiBaseUrl(remoteConfig);
+        remoteConfig.onConfigUpdated.listen((event) async {
+          await remoteConfig.activate();
+          setApiBaseUrl(remoteConfig);
+        });
       } on Exception catch (e) {
         debugPrint('Remote Config Error: $e');
       }
+    }
+  }
+
+  static void setApiBaseUrl(FirebaseRemoteConfig remoteConfig) {
+    String apiBaseUrl = remoteConfig.getString('apiBaseUrl');
+    if (apiBaseUrl.isNotEmpty) {
+      debugPrint('API Base URL: $apiBaseUrl');
+      AppConstants.baseUrl = apiBaseUrl;
+      debugPrint('API URL: ${AppConstants.apiBaseURL}');
+      AppConstants.apiBaseURL = '$apiBaseUrl/api/';
+      debugPrint('API URL: ${AppConstants.apiBaseURL}');
     }
   }
 
