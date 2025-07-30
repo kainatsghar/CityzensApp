@@ -11,27 +11,35 @@ class SingleReceiptItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5.0),
-      margin: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-          border: Border.all(color: AppColors.primaryTitleColor),
-          borderRadius: BorderRadius.circular(15.0),
-          color: AppColors.secondaryColor),
-      child: Column(
-        children: <Widget>[
-          CustomTitleValue(title: 'Receipt No', value: record.receiptNo!),
-          CustomTitleValue(title: 'Period Name', value: record.periodName!),
-          CustomTitleValue(title: 'Challan Type', value: record.challanType!),
-          CustomTitleValue(
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+        // margin: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          // border: Border.all(color: AppColors.primaryTitleColor),
+          borderRadius: BorderRadius.circular(16.0),
+          color: AppColors.secondaryColor,
+        ),
+        child: Column(
+          children: <Widget>[
+            CustomTitleValue(title: 'Receipt No', value: record.receiptNo!),
+            CustomTitleValue(title: 'Period Name', value: record.periodName!),
+            CustomTitleValue(title: 'Challan Type', value: record.challanType!),
+            CustomTitleValue(
               title: 'Receipt Date',
-              value: HelperFunction.dateFormatter(record.receiptDate!)),
-          CustomTitleValue(title: 'Amount', value: 'PKR ${record.amount}'),
-          CustomTitleValue(
+              value: HelperFunction.dateFormatter(record.receiptDate!),
+            ),
+            CustomTitleValue(title: 'Amount', value: 'PKR ${record.amount}'),
+            CustomTitleValue(
               title: 'Over Receipt',
               value: '${record.overReceipt}',
-              showDivider: false)
-        ],
+              showDivider: false,
+            ),
+          ],
+        ),
       ),
     );
   }

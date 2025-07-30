@@ -27,6 +27,7 @@ class FcmTokenRefreshService {
 
     if (Platform.isIOS) {
       // Obtain the FCM token for iOS
+      await Future.delayed(const Duration(seconds: 2));
       fcmToken = await messaging.getAPNSToken();
       //iosFcmToken = await messaging.getToken();
       if (fcmToken == null) {
@@ -44,15 +45,19 @@ class FcmTokenRefreshService {
     }
     debugPrint("FCM Token: $fcmToken");
     var localData = Provider.of<LocalDataProvider>(
-        AppNavigation.currentContext!,
-        listen: false);
+      AppNavigation.currentContext!,
+      listen: false,
+    );
     LoginRequest request = LoginRequest(
-        username: localData.userData!.userName,
-        userType: localData.userData!.userType,
-        fcmToken: fcmToken,
-        iosFcmToken: iosFcmToken);
-    var response = await ApiBaseHelper.httpPostRequest("RefreshToken",
-        body: request.toJson());
+      username: localData.userData!.userName,
+      userType: localData.userData!.userType,
+      fcmToken: fcmToken,
+      iosFcmToken: iosFcmToken,
+    );
+    var response = await ApiBaseHelper.httpPostRequest(
+      "RefreshToken",
+      body: request.toJson(),
+    );
     return response['Status'] ?? false;
   }
 }

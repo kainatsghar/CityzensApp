@@ -6,6 +6,7 @@ import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 import '../../CustomWidgets/CustomDivider/custom_divider.dart';
@@ -109,6 +110,16 @@ class NavigationalDrawer extends StatelessWidget {
               CustomListTile(
                 title: 'Logout',
                 onTap: () => value.logout(context),
+              ),
+              SizedBox(height: size.height * 0.05),
+
+              const Text(
+                'App Version: ${AppConstants.appVersion}',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: AppColors.whiteColor,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),

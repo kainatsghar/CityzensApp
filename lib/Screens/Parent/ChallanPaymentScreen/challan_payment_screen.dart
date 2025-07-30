@@ -15,7 +15,11 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
   int loadingPercentage = 0;
   late WebViewController controller;
 
-  void onProgressChange(int value) => setState(() => loadingPercentage = value);
+  void onProgressChange(int value) {
+    if (mounted) {
+      setState(() => loadingPercentage = value);
+    }
+  }
 
   @override
   void initState() {
@@ -23,10 +27,10 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-            onProgress: (int progress) => onProgressChange(progress),
-            onPageStarted: (String url) => onProgressChange(loadingPercentage),
-            onPageFinished: (String url) =>
-                onProgressChange(loadingPercentage)),
+          onProgress: (int progress) => onProgressChange(progress),
+          onPageStarted: (String url) => onProgressChange(loadingPercentage),
+          onPageFinished: (String url) => onProgressChange(loadingPercentage),
+        ),
       )
       ..loadRequest(Uri.parse(AppConstants.paymentGatewayURL));
     super.initState();
@@ -40,11 +44,10 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
         children: [
           if (loadingPercentage < 100)
             LinearProgressIndicator(
-                value: loadingPercentage / 100.0,
-                color: AppColors.lightRedColor),
-          Expanded(
-            child: WebViewWidget(controller: controller),
-          ),
+              value: loadingPercentage / 100.0,
+              color: AppColors.lightRedColor,
+            ),
+          Expanded(child: WebViewWidget(controller: controller)),
         ],
       ),
     );

@@ -12,7 +12,7 @@ class CustomLogoCover extends StatelessWidget {
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       child: Container(
-        width: size.width,
+        width: size.width - 32,
         height: size.height * 0.25,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         decoration: BoxDecoration(

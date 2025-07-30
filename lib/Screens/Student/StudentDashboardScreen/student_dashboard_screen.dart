@@ -81,7 +81,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                   size: size,
                   attendanceService: attendanceService,
                 ),
-                SizedBox(height: size.height * 0.02),
+                SizedBox(height: size.height * 0.01),
                 Expanded(
                   child: GridView.count(
                     primary: false,
@@ -165,7 +165,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         imageName: 'attendance_icon.png',
                       ),
                       CustomDashboardButton(
-                        title: 'FEE BILL',
+                        title: 'FEE BILL &\n PAYMENT',
                         bottomAlign: -25,
                         leftAlign: -12,
                         onTap: () => AppNavigation.navigateTo(
@@ -237,16 +237,16 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                       //     onTap: () => AppNavigation.navigateTo(
                       //         AppNavRoutes.individualEducationPlanRoute),
                       //     imageName: 'class_result.png'),
-                      if (value.userData!.userType == 'Parent')
-                        CustomDashboardButton(
-                          title: 'BILL\nPAYMENT',
-                          bottomAlign: -25,
-                          leftAlign: -10,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.challanPaymentRoute,
-                          ),
-                          imageName: 'challan_payment_icon.png',
-                        ),
+                      // if (value.userData!.userType == 'Parent')
+                      //   CustomDashboardButton(
+                      //     title: 'BILL\nPAYMENT',
+                      //     bottomAlign: -25,
+                      //     leftAlign: -10,
+                      //     onTap: () => AppNavigation.navigateTo(
+                      //       AppNavRoutes.challanPaymentRoute,
+                      //     ),
+                      //     imageName: 'challan_payment_icon.png',
+                      //   ),
                       // if (value.userData!.userType == 'Parent')
                       //   CustomDashboardButton(
                       //       title: 'BOOK AN\nAPPOINTMENT',

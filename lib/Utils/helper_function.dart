@@ -197,30 +197,35 @@ Future<void> initializeFCM() async {
     sound: true,
   );
 
-  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    //print('User granted permission');
-  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
-    //print('User granted provisional permission');
-  } else {
+  if (settings.authorizationStatus != AuthorizationStatus.authorized &&
+      settings.authorizationStatus != AuthorizationStatus.provisional) {
     return;
-    //print('User declined or has not accepted permission');
   }
 
   // Obtain tokens based on platform
   if (Platform.isIOS) {
-    String? apnsToken = await messaging.getAPNSToken();
-    if (apnsToken != null) {
-      //print("APNS Token: $apnsToken");
-    } else {
-      //print("Failed to obtain APNS Token.");
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+      String? apnsToken = await messaging.getAPNSToken();
+      if (apnsToken != null) {
+        //print("APNS Token: $apnsToken");
+      } else {
+        //print("Failed to obtain APNS Token.");
+      }
+    } on Exception catch (e) {
+      debugPrint('Error obtaining APNS Token: $e');
     }
   }
 
   // For both Android and iOS, get the FCM token
-  String? fcmToken = await messaging.getToken();
-  if (fcmToken != null) {
-    //print("FCM Token: $fcmToken");
-  } else {
-    //print("Failed to obtain FCM Token.");
+  try {
+    String? fcmToken = await messaging.getToken();
+    if (fcmToken != null) {
+      //print("FCM Token: $fcmToken");
+    } else {
+      //print("Failed to obtain FCM Token.");
+    }
+  } on Exception catch (e) {
+    debugPrint('Error obtaining FCM Token: $e');
   }
 }

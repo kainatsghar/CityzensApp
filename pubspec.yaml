@@ -16,7 +16,7 @@ description: "Cityzen Application."
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.11.20+75
+version: 1.12.20+76
 
 environment:
   sdk: ^3.8.1
@@ -45,16 +45,16 @@ dependencies:
   flutter_linkify: ^6.0.0
   fluttertoast: ^8.2.12
   flutter_masked_text2: ^0.9.1
-  firebase_core: ^3.15.1
-  firebase_messaging: ^15.2.9
-  firebase_crashlytics: ^4.3.9
-  firebase_remote_config: ^5.5.0
+  firebase_core: ^4.0.0
+  firebase_messaging: ^16.0.0
+  firebase_crashlytics: ^5.0.0
+  firebase_remote_config: ^6.0.0
   # launch_review: ^3.0.1
   provider: ^6.1.5
   flutter_spinkit: ^5.2.1
   device_info_plus: ^11.5.0
   package_info_plus: ^8.3.0
-  flutter_local_notifications: ^19.3.0
+  flutter_local_notifications: ^19.4.0
   fl_chart: ^1.0.0
   flutter_launcher_icons: ^0.14.4
   table_calendar: ^3.2.0
