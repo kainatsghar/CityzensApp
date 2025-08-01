@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
@@ -17,18 +18,18 @@ class SplashScreenUI extends StatefulWidget {
 
 class SplashScreenUIState extends State<SplashScreenUI>
     with SingleTickerProviderStateMixin {
-  late Animation<double> _iconAnimation;
-  late AnimationController _iconAnimationController;
+  // late Animation<double> _iconAnimation;
+  // late AnimationController _iconAnimationController;
 
   @override
   void initState() {
     super.initState();
-    _iconAnimationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    _iconAnimation =
-        CurvedAnimation(parent: _iconAnimationController, curve: Curves.linear);
-    _iconAnimation.addListener(() => setState(() {}));
-    _iconAnimationController.forward();
+    // _iconAnimationController =
+    //     AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    // _iconAnimation =
+    //     CurvedAnimation(parent: _iconAnimationController, curve: Curves.linear);
+    // _iconAnimation.addListener(() => setState(() {}));
+    // _iconAnimationController.forward();
     Future.delayed(const Duration(seconds: 3), () {
       AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
       PushNotificationsManager.init();
@@ -37,7 +38,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
 
   @override
   void dispose() {
-    _iconAnimationController.dispose();
+    // _iconAnimationController.dispose();
     super.dispose();
   }
 
@@ -45,30 +46,40 @@ class SplashScreenUIState extends State<SplashScreenUI>
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-        backgroundColor: AppColors.primaryColor,
-        body: Stack(
+      backgroundColor: AppColors.primaryColor,
+      body: FadeIn(
+        duration: const Duration(milliseconds: 2000),
+        delay: const Duration(milliseconds: 500),
+        child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Image.asset('images/tcs_logo_white.png',
-                    height: _iconAnimation.value * size.height / 3),
-                SizedBox(height: size.height * 0.02),
-                const Text(
-                  ' W E L C O M E ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'images/tcs_logo_white.png',
+                    height: size.height / 3,
+                  ),
+                  // height: _iconAnimation.value * size.height / 3),
+                  SizedBox(height: size.height * 0.02),
+                  const Text(
+                    ' W E L C O M E ',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
                       fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w500),
-                )
-              ],
-            )),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/CustomWidgets/CustomTitleValue/custom_title_value.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
@@ -31,7 +29,11 @@ class SingleChallanItem extends StatelessWidget {
         ),
         child: Column(
           children: <Widget>[
-            CustomTitleValue(title: 'Challan No', value: record.challanNo!),
+            CustomTitleValue(
+              title: 'Challan No',
+              value: record.challanNo!,
+              isCopyAllowed: true,
+            ),
             CustomTitleValue(
               title: 'Issue Date',
               value: HelperFunction.dateFormatter(record.issueDate!),
@@ -52,16 +54,11 @@ class SingleChallanItem extends StatelessWidget {
               showDivider: false,
             ),
             SizedBox(height: 8.0),
-            if (Provider.of<LocalDataProvider>(
-                  AppNavigation.currentContext!,
-                  listen: false,
-                ).userData!.userType ==
-                'Parent')
-              CustomAppButton(
-                buttonTitle: 'Pay Now',
-                onTap: () =>
-                    AppNavigation.navigateTo(AppNavRoutes.challanPaymentRoute),
-              ),
+            CustomAppButton(
+              buttonTitle: 'Pay Now',
+              onTap: () =>
+                  AppNavigation.navigateTo(AppNavRoutes.challanPaymentRoute),
+            ),
           ],
         ),
       ),

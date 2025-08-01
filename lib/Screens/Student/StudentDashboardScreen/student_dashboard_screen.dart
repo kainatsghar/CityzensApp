@@ -99,51 +99,6 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         ),
                         imageName: 'profile_icon.png',
                       ),
-                      if (gradeId != '2' &&
-                          gradeId != '3' &&
-                          gradeId != '4' &&
-                          gradeId != '5' &&
-                          gradeId != '6' &&
-                          localGradeId != '2' &&
-                          localGradeId != '3' &&
-                          localGradeId != '4' &&
-                          localGradeId != '5' &&
-                          localGradeId != '6')
-                        CustomDashboardButton(
-                          title: 'RESULT',
-                          leftAlign: 5.0,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.academicTermRoute,
-                          ),
-                          imageName: 'result_icon.png',
-                        ),
-                      CustomDashboardButton(
-                        title: 'LIBRARY',
-                        bottomAlign: -45,
-                        imageHeight: size.height * 0.14,
-                        onTap: () =>
-                            AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
-                        imageName: 'library_icon.png',
-                      ),
-                      CustomDashboardButton(
-                        title: 'CIRCULARS',
-                        leftAlign: 3.0,
-                        bottomAlign: -3,
-                        imageHeight: size.height * 0.1,
-                        onTap: () => AppNavigation.navigateTo(
-                          AppNavRoutes.notificationsRoute,
-                        ),
-                        imageName: 'notification_icon.png',
-                      ),
-                      CustomDashboardButton(
-                        title: 'HOMEWORK\nDIARY',
-                        bottomAlign: -20,
-                        leftAlign: -10,
-                        onTap: () => AppNavigation.navigateTo(
-                          AppNavRoutes.studentDiaryRoute,
-                        ),
-                        imageName: 'diary_icon.png',
-                      ),
                       CustomDashboardButton(
                         title: 'ATTENDANCE',
                         bottomAlign: -25,
@@ -164,14 +119,15 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         },
                         imageName: 'attendance_icon.png',
                       ),
+
                       CustomDashboardButton(
-                        title: 'FEE BILL &\n PAYMENT',
-                        bottomAlign: -25,
-                        leftAlign: -12,
+                        title: 'HOMEWORK\nDIARY',
+                        bottomAlign: -20,
+                        leftAlign: -10,
                         onTap: () => AppNavigation.navigateTo(
-                          AppNavRoutes.feeChallansRoute,
+                          AppNavRoutes.studentDiaryRoute,
                         ),
-                        imageName: 'fee_challan_icon.png',
+                        imageName: 'diary_icon.png',
                       ),
                       CustomDashboardButton(
                         title: 'CLASSWORK\nASSIGNMENTS',
@@ -183,34 +139,72 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         ),
                         imageName: 'assignment_icon_h.png',
                       ),
-                      // CustomDashboardButton(
-                      //     title: 'EVENT\nCALENDAR',
-                      //     bottomAlign: -22,
-                      //     leftAlign: -10,
-                      //     imageHeight: size.height * 0.13,
-                      //     onTap: () => AppNavigation.navigateTo(
-                      //         AppNavRoutes.studentSchoolEventsRoute),
-                      //     imageName: 'calendar.png'),
-                      if (gradeId != '2' &&
-                          gradeId != '3' &&
-                          gradeId != '4' &&
-                          gradeId != '5' &&
-                          gradeId != '6' &&
-                          localGradeId != '2' &&
-                          localGradeId != '3' &&
-                          localGradeId != '4' &&
-                          localGradeId != '5' &&
-                          localGradeId != '6')
-                        CustomDashboardButton(
-                          title: 'CLASS TEST\nRESULTS',
-                          bottomAlign: -65,
-                          leftAlign: -65,
-                          imageHeight: size.height * 0.24,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.studentClassTestResultRoute,
-                          ),
-                          imageName: 'class_result.png',
+                      // if (gradeId != '2' &&
+                      //     gradeId != '3' &&
+                      //     gradeId != '4' &&
+                      //     gradeId != '5' &&
+                      //     gradeId != '6' &&
+                      //     localGradeId != '2' &&
+                      //     localGradeId != '3' &&
+                      //     localGradeId != '4' &&
+                      //     localGradeId != '5' &&
+                      //     localGradeId != '6')
+                      CustomDashboardButton(
+                        title: 'TERM RESULT',
+                        leftAlign: 5.0,
+                        onTap: () => AppNavigation.navigateTo(
+                          AppNavRoutes.academicTermRoute,
                         ),
+                        imageName: 'result_icon.png',
+                      ),
+                      // if (gradeId != '2' &&
+                      //     gradeId != '3' &&
+                      //     gradeId != '4' &&
+                      //     gradeId != '5' &&
+                      //     gradeId != '6' &&
+                      //     localGradeId != '2' &&
+                      //     localGradeId != '3' &&
+                      //     localGradeId != '4' &&
+                      //     localGradeId != '5' &&
+                      //     localGradeId != '6')
+                      CustomDashboardButton(
+                        title: 'CLASS TEST\nRESULTS',
+                        bottomAlign: -65,
+                        leftAlign: -65,
+                        imageHeight: size.height * 0.24,
+                        onTap: () => AppNavigation.navigateTo(
+                          AppNavRoutes.studentClassTestResultRoute,
+                        ),
+                        imageName: 'class_result.png',
+                      ),
+                      CustomDashboardButton(
+                        title: 'FEE BILL &\n PAYMENT',
+                        bottomAlign: -25,
+                        leftAlign: -12,
+                        onTap: () => AppNavigation.navigateTo(
+                          AppNavRoutes.feeChallansRoute,
+                        ),
+                        imageName: 'fee_challan_icon.png',
+                      ),
+                      CustomDashboardButton(
+                        title: 'CIRCULARS',
+                        leftAlign: 3.0,
+                        bottomAlign: -3,
+                        imageHeight: size.height * 0.1,
+                        onTap: () => AppNavigation.navigateTo(
+                          AppNavRoutes.notificationsRoute,
+                        ),
+                        imageName: 'notification_icon.png',
+                      ),
+                      CustomDashboardButton(
+                        title: 'LIBRARY',
+                        bottomAlign: -45,
+                        imageHeight: size.height * 0.14,
+                        onTap: () =>
+                            AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
+                        imageName: 'library_icon.png',
+                      ),
+
                       CustomDashboardButton(
                         title: 'TIMETABLE',
                         bottomAlign: -22,
@@ -221,6 +215,15 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         ),
                         imageName: 'calendar.png',
                       ),
+                      // CustomDashboardButton(
+                      //     title: 'EVENT\nCALENDAR',
+                      //     bottomAlign: -22,
+                      //     leftAlign: -10,
+                      //     imageHeight: size.height * 0.13,
+                      //     onTap: () => AppNavigation.navigateTo(
+                      //         AppNavRoutes.studentSchoolEventsRoute),
+                      //     imageName: 'calendar.png'),
+
                       // CustomDashboardButton(
                       //     title: 'SURVEY',
                       //     bottomAlign: -14,
@@ -256,23 +259,23 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                       //       onTap: () => AppNavigation.navigateTo(
                       //           AppNavRoutes.bookanAppointmentRoute),
                       //       imageName: 'calendar_appoointment.png'),
-                      if ((gradeId == '2' ||
-                              gradeId == '3' ||
-                              gradeId == '4' ||
-                              localGradeId == '2' ||
-                              localGradeId == '3' ||
-                              localGradeId == '4') &&
-                          value.userData!.userType == 'Parent')
-                        CustomDashboardButton(
-                          title: 'EYE ON\nYOUR CHILD',
-                          bottomAlign: -22,
-                          leftAlign: 0,
-                          imageHeight: size.height * 0.10,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.parentEyeOnYourChildRoute,
-                          ),
-                          imageName: 'shield.png',
+                      // if ((gradeId == '2' ||
+                      //         gradeId == '3' ||
+                      //         gradeId == '4' ||
+                      //         localGradeId == '2' ||
+                      //         localGradeId == '3' ||
+                      //         localGradeId == '4') &&
+                      //     value.userData!.userType == 'Parent')
+                      CustomDashboardButton(
+                        title: 'EYE ON\nYOUR CHILD',
+                        bottomAlign: -22,
+                        leftAlign: 0,
+                        imageHeight: size.height * 0.10,
+                        onTap: () => AppNavigation.navigateTo(
+                          AppNavRoutes.parentEyeOnYourChildRoute,
                         ),
+                        imageName: 'shield.png',
+                      ),
                       // if (value.userData!.userType == 'Parent')
                       //   CustomDashboardButton(
                       //       title: 'WITHDRAWAL\nREQUEST',
