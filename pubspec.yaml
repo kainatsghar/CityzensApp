@@ -16,7 +16,7 @@ description: "Cityzen Application."
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.12.20+76
+version: 1.12.20+77
 
 environment:
   sdk: ^3.8.1
@@ -62,7 +62,7 @@ dependencies:
   webview_flutter: ^4.13.0
   introduction_screen: ^3.1.17
   video_player: ^2.10.0
-  file_picker: ^10.2.0
+  file_picker: ^10.2.1
   open_file: ^3.5.10
   cached_network_image: ^3.4.1
   upgrader: ^11.4.0
