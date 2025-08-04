@@ -39,11 +39,14 @@ reset-pod:
 pod-deintegrate-and-install:
 	cd ios/ && pod deintegrate && pod install
 
+appbundle:
+	flutter build appbundle
+
 apk:
 	flutter build apk --release
 
 test-apk:
-	flutter build apk --release --dart-define=STNDRD_ENV=true
+	flutter build apk --release --dart-define=CITYZENS_ENV=true
 
 fix:
 	dart fix --apply && dart format . && dart sort_imports_script.dart lib/
