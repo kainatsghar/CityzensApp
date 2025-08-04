@@ -36,13 +36,17 @@ class PushNotificationsManager {
     );
     var iOS = const DarwinNotificationDetails();
     var notificationDetails = NotificationDetails(android: android, iOS: iOS);
-    await FlutterLocalNotificationsPlugin().show(
-      Random().nextInt(1000),
-      '${message!.notification!.title}',
-      '${message.notification!.body}',
-      notificationDetails,
-      payload: message.data['route'],
-    );
+    try {
+      await FlutterLocalNotificationsPlugin().show(
+        Random().nextInt(1000),
+        '${message!.notification!.title}',
+        '${message.notification!.body}',
+        notificationDetails,
+        payload: message.data['route'],
+      );
+    } on Exception catch (e) {
+      debugPrint('Error showing notification: $e');
+    }
   }
 
   static Future<void> _initializeLocalNotifications() async {
@@ -54,25 +58,41 @@ class PushNotificationsManager {
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOs,
     );
-    await FlutterLocalNotificationsPlugin().initialize(initSettings);
+    try {
+      await FlutterLocalNotificationsPlugin().initialize(initSettings);
+    } on Exception catch (e) {
+      debugPrint('Error initializing local notifications: $e');
+    }
   }
 
   static Future<void> _initializePushNotification() async {
     _initializeLocalNotifications();
     final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    await firebaseMessaging.requestPermission(
-      alert: true,
-      sound: true,
-      badge: true,
-    );
-    if (Platform.isIOS) {
-      firebaseMessaging.getNotificationSettings();
+    try {
+      await firebaseMessaging.requestPermission(
+        alert: true,
+        sound: true,
+        badge: true,
+      );
+    } on Exception catch (e) {
+      debugPrint('Error requesting permission: $e');
     }
-    await firebaseMessaging.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    if (Platform.isIOS) {
+      try {
+        await firebaseMessaging.getNotificationSettings();
+      } on Exception catch (e) {
+        debugPrint('Error getting notification settings: $e');
+      }
+    }
+    try {
+      await firebaseMessaging.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    } on Exception catch (e) {
+      debugPrint('Error setting foreground notification options: $e');
+    }
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _handleNotificationClick(message, true);
     });

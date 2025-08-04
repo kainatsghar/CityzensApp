@@ -191,15 +191,18 @@ Future<void> initializeFCM() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   // Request permission for notifications
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-
-  if (settings.authorizationStatus != AuthorizationStatus.authorized &&
-      settings.authorizationStatus != AuthorizationStatus.provisional) {
-    return;
+  try {
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    if (settings.authorizationStatus != AuthorizationStatus.authorized &&
+        settings.authorizationStatus != AuthorizationStatus.provisional) {
+      return;
+    }
+  } on Exception catch (e) {
+    debugPrint('Error requesting notification permission: $e');
   }
 
   // Obtain tokens based on platform

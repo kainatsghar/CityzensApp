@@ -55,7 +55,7 @@
 		6A1BEA8F2CB6919100D26BAF /* RunnerProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerProfile.entitlements; sourceTree = "<group>"; };
 		6A3F51382CA6B79800626B3A /* Cityzens.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cityzens.entitlements; sourceTree = "<group>"; };
 		6A5ABC792E38E8490081DF6C /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
-		6A5ABC7A2E38E87D0081DF6C /* RunnerDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerDebug.entitlements; sourceTree = "<group>"; };
+		6A7E03DC2E40BB1100D8C448 /* RunnerDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerDebug.entitlements; sourceTree = "<group>"; };
 		6AA9CADD2C99B114005C6690 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -146,7 +146,6 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				6A5ABC7A2E38E87D0081DF6C /* RunnerDebug.entitlements */,
 				6A5ABC792E38E8490081DF6C /* Runner.entitlements */,
 				6A1BEA8F2CB6919100D26BAF /* RunnerProfile.entitlements */,
 				6AA9CADD2C99B114005C6690 /* GoogleService-Info.plist */,
@@ -158,6 +157,7 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				6A7E03DC2E40BB1100D8C448 /* RunnerDebug.entitlements */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -691,6 +691,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/RunnerDebug.entitlements;
 				CURRENT_PROJECT_VERSION = 75;
 				DEVELOPMENT_TEAM = VGTWPL7QUR;
 				ENABLE_BITCODE = NO;

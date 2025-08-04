@@ -16,11 +16,21 @@ class FcmTokenRefreshService {
 
     // Request permission for notifications
     // ignore: unused_local_variable
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    try {
+      NotificationSettings settings = await messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+
+      if (settings.authorizationStatus != AuthorizationStatus.authorized &&
+          settings.authorizationStatus != AuthorizationStatus.provisional) {
+        debugPrint('User declined or has not accepted permission');
+        return false; // Permission not granted
+      }
+    } on Exception catch (e) {
+      debugPrint('Error requesting notification permission: $e');
+    }
 
     String? fcmToken;
     String? iosFcmToken;
@@ -28,16 +38,24 @@ class FcmTokenRefreshService {
     if (Platform.isIOS) {
       // Obtain the FCM token for iOS
       await Future.delayed(const Duration(seconds: 2));
-      fcmToken = await messaging.getAPNSToken();
-      //iosFcmToken = await messaging.getToken();
-      if (fcmToken == null) {
+      try {
+        fcmToken = await messaging.getAPNSToken();
+        iosFcmToken = await messaging.getToken();
+      } on Exception catch (e) {
+        debugPrint('Error obtaining iOS FCM Token: $e');
+      }
+      if (iosFcmToken == null) {
         // Token generation might not be ready yet
         //print("FCM Token for iOS has not been generated yet.");
         return false;
       }
     } else {
       // Obtain the FCM token for Android
-      fcmToken = await messaging.getToken();
+      try {
+        fcmToken = await messaging.getToken();
+      } on Exception catch (e) {
+        debugPrint('Error obtaining Android FCM Token: $e');
+      }
       if (fcmToken == null) {
         //print("FCM Token for Android has not been generated yet.");
         return false;
