@@ -35,9 +35,10 @@ class LoginService {
     String? fcmToken;
     String? iosFcmToken;
 
-    if (Platform.isIOS == true) {
+    if (Platform.isIOS) {
       // Ensure token is generated
       try {
+        await Future.delayed(const Duration(seconds: 2));
         fcmToken = await messaging.getAPNSToken();
         // ignore: avoid_print
         //print("APNS Token: $fcmToken");
@@ -53,13 +54,13 @@ class LoginService {
       } on Exception catch (e) {
         debugPrint('Error obtaining APNS Token: $e');
       }
-    } else {
-      try {
-        fcmToken = await messaging.getToken();
-      } on Exception catch (e) {
-        debugPrint('Error obtaining FCM Token: $e');
-      }
     }
+    try {
+      fcmToken = await messaging.getToken();
+    } on Exception catch (e) {
+      debugPrint('Error obtaining FCM Token: $e');
+    }
+
     debugPrint("FCM Token: $fcmToken");
 
     LoginRequest loginRequest = LoginRequest(

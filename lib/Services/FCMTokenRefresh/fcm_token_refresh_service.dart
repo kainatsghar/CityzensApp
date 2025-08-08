@@ -49,18 +49,18 @@ class FcmTokenRefreshService {
         //print("FCM Token for iOS has not been generated yet.");
         return false;
       }
-    } else {
-      // Obtain the FCM token for Android
-      try {
-        fcmToken = await messaging.getToken();
-      } on Exception catch (e) {
-        debugPrint('Error obtaining Android FCM Token: $e');
-      }
-      if (fcmToken == null) {
-        //print("FCM Token for Android has not been generated yet.");
-        return false;
-      }
     }
+    // Obtain the FCM token for Android
+    try {
+      fcmToken = await messaging.getToken();
+    } on Exception catch (e) {
+      debugPrint('Error obtaining FCM Token: $e');
+    }
+    if (fcmToken == null) {
+      //print("FCM Token for Android has not been generated yet.");
+      return false;
+    }
+
     debugPrint("FCM Token: $fcmToken");
     var localData = Provider.of<LocalDataProvider>(
       AppNavigation.currentContext!,

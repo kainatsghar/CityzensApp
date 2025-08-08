@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -13,6 +14,7 @@ import 'package:tcs_app/PushNotifications/push_notifications.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/firebase_options.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,7 +27,12 @@ class HelperFunction {
 
   static Future<void> mainInitializer() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    // await _initAnalytics();
+
     await initializeFCM();
 
     FirebaseMessaging.onBackgroundMessage(
@@ -34,34 +41,89 @@ class HelperFunction {
     // FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-    if (!kDebugMode) {
+    await initRemoteConfig();
+  }
+
+  static Future<void> initRemoteConfig() async {
+    try {
+      FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+
+      debugPrint('Initializing Remote Config...');
+      await remoteConfig.ensureInitialized();
+      debugPrint('Remote Config initialized');
+
+      debugPrint('Setting Remote Config defaults...');
+      await remoteConfig.setDefaults({'apiBaseUrl': AppConstants.apiBaseURL});
+      debugPrint('Remote Config defaults set');
+
+      debugPrint('Configuring Remote Config settings...');
+      await remoteConfig.setConfigSettings(
+        RemoteConfigSettings(
+          fetchTimeout: const Duration(seconds: 30),
+          minimumFetchInterval: Duration.zero,
+        ),
+      );
+      debugPrint('Remote Config settings configured');
+
+      bool configApplied = false;
       try {
-        FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-        await remoteConfig.setDefaults({'apiBaseUrl': AppConstants.apiBaseURL});
-        await remoteConfig.setConfigSettings(
-          RemoteConfigSettings(
-            fetchTimeout: const Duration(seconds: 10),
-            minimumFetchInterval: const Duration(seconds: 30),
-          ),
-        );
-        await remoteConfig.fetchAndActivate();
-        setApiBaseUrl(remoteConfig);
-        remoteConfig.onConfigUpdated.listen((event) async {
-          await remoteConfig.activate();
+        debugPrint('Fetching Remote Config values...');
+        final bool activated = await remoteConfig.fetchAndActivate();
+        debugPrint('Remote Config activation result: $activated');
+
+        if (activated) {
           setApiBaseUrl(remoteConfig);
-        });
-      } on Exception catch (e) {
-        debugPrint('Remote Config Error: $e');
+          configApplied = true;
+
+          remoteConfig.onConfigUpdated.listen((event) async {
+            debugPrint('Remote Config update received');
+            final bool updated = await remoteConfig.activate();
+            if (updated) {
+              setApiBaseUrl(remoteConfig);
+            }
+          });
+        }
+      } catch (fetchError) {
+        debugPrint('Error during fetch/activate: $fetchError');
+        if (fetchError.toString().contains('403')) {
+          debugPrint(
+            '403 error detected. Checking if Firebase is properly initialized...',
+          );
+          debugPrint(
+            'Current platform options: ${DefaultFirebaseOptions.currentPlatform}',
+          );
+        }
+        // Only use last fetched values if we haven't already applied config
+        if (!configApplied) {
+          setApiBaseUrl(remoteConfig);
+        }
       }
+    } catch (e, stack) {
+      debugPrint('Remote Config initialization error: $e');
+      debugPrint('Stack trace: $stack');
     }
   }
+
+  // static Future<void> _initAnalytics() async {
+  //   // Initialize Firebase Analytics
+  //   try {
+  //     final analytics = FirebaseAnalytics.instance;
+  //     if (!kDebugMode) {
+  //       await analytics.setAnalyticsCollectionEnabled(true);
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error initializing Firebase Analytics: $e');
+  //   }
+  // }
 
   static void setApiBaseUrl(FirebaseRemoteConfig remoteConfig) {
     String apiBaseUrl = remoteConfig.getString('apiBaseUrl');
     if (apiBaseUrl.isNotEmpty) {
+      // Remove any trailing slashes from the base URL
+      apiBaseUrl = apiBaseUrl.replaceAll(RegExp(r'/api/'), '');
+
       debugPrint('API Base URL: $apiBaseUrl');
       AppConstants.baseUrl = apiBaseUrl;
-      debugPrint('API URL: ${AppConstants.apiBaseURL}');
       AppConstants.apiBaseURL = '$apiBaseUrl/api/';
       debugPrint('API URL: ${AppConstants.apiBaseURL}');
     }

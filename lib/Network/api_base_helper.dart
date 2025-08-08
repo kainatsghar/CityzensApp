@@ -56,7 +56,7 @@ class ApiBaseHelper {
       throw FetchDataException(AppConstants.badResponseFormat);
     } on TimeoutException {
       throw FetchDataException(AppConstants.slowInternetMsg);
-    } catch (_) {
+    } catch (e) {
       throw FetchDataException(AppConstants.exceptionMessage);
     }
     if (kDebugMode) {

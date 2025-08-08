@@ -1,16 +1,15 @@
-import 'package:flutter/foundation.dart';
-
 class AppConstants {
   static String apiBaseURL = "$baseUrl/api/";
-  static String baseUrl = kDebugMode
-      ? apiTestBaseURL
-      : apiLiveBaseURL; // Use test URL in debug mode, live URL in release
+  static String baseUrl = apiTestBaseURL;
+  // static String baseUrl = kDebugMode
+  //     ? apiTestBaseURL
+  //     : apiLiveBaseURL; // Use test URL in debug mode, live URL in release
 
   //We are using this URL for Firebase Remote Config "apiBaseUrl"
   static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
   static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
 
-  static const String appVersion = '1.12.20';
+  static const String appVersion = '1.12.21';
   static const String exceptionMessage =
       "Something Went Wrong, Please Try Again Later";
   static const String markAttendanceMessage = "Please Mark Complete Attendance";

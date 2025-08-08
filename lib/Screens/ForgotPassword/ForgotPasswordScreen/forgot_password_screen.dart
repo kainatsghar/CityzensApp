@@ -19,8 +19,9 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   ForgotPasswordProvider provider = Provider.of<ForgotPasswordProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -36,71 +37,90 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-        appBar: const CustomAppBar(title: 'FORGOT PASSWORD'),
-        body: SingleChildScrollView(
-          child: Consumer<ForgotPasswordProvider>(builder: (context, value, _) {
+      appBar: const CustomAppBar(title: 'FORGOT PASSWORD'),
+      body: SingleChildScrollView(
+        child: Consumer<ForgotPasswordProvider>(
+          builder: (context, value, _) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Column(children: <Widget>[
-                const CustomLogoCover(),
-                SizedBox(height: size.height * 0.02),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 25.0),
-                  decoration: BoxDecoration(
+              child: Column(
+                children: <Widget>[
+                  const CustomLogoCover(),
+                  SizedBox(height: size.height * 0.02),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 25.0,
+                    ),
+                    decoration: BoxDecoration(
                       color: AppColors.secondaryColor,
-                      borderRadius: BorderRadius.circular(20.0)),
-                  child: Form(
-                    key: value.forgotFormKey,
-                    child: Column(
-                      children: <Widget>[
-                        CustomTextFormField(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Form(
+                      key: value.forgotFormKey,
+                      child: Column(
+                        children: <Widget>[
+                          CustomTextFormField(
                             controller: value.userTypeController,
                             readOnly: true,
                             onTap: () => value.userTypeBottomSheet(),
                             suffixWidget: const ImageIcon(
-                                AssetImage('images/dropdown_icon.png'),
-                                color: AppColors.whiteColor)),
-                        const SizedBox(height: 10),
-                        CustomTextFormField(
+                              AssetImage('images/dropdown_icon.png'),
+                              color: AppColors.whiteColor,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          CustomTextFormField(
                             controller: value.userNameController!,
                             inputType: TextInputType.number,
                             inputAction: TextInputAction.next,
                             hintText: value.userNameLabel,
                             prefixIcon: Icons.person,
-                            validator: value.validator),
-                        const SizedBox(height: 10),
-                        CustomTextFormField(
+                            validator: value.validator,
+                          ),
+                          const SizedBox(height: 10),
+                          CustomTextFormField(
                             controller: value.phoneNumberController,
                             inputType: TextInputType.number,
                             inputAction: TextInputAction.done,
                             hintText: 'Mobile Number',
                             prefixIcon: Icons.phone_iphone,
-                            validator: value.validator),
-                      ],
+                            validator: value.validator,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: size.height * 0.03),
-                CustomAppButton(
-                    buttonTitle: 'Next', onTap: () => value.forgotPassword()),
-                SizedBox(height: size.height * 0.02),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Note:',
+                  SizedBox(height: size.height * 0.03),
+                  CustomAppButton(
+                    buttonTitle: 'Next',
+                    onTap: () => value.forgotPassword(),
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Note:',
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 5.0),
-                    Text(
-                        '\u2022 Provided Mobile Number needs to be same used for TCS Mobile App registration.')
-                  ],
-                ),
-              ]),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        '\u2022 Provided Mobile Number needs to be same used for TCS Mobile App registration.',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             );
-          }),
-        ));
+          },
+        ),
+      ),
+    );
   }
 }

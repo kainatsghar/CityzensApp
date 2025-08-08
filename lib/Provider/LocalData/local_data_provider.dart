@@ -59,8 +59,9 @@ class LocalDataProvider with ChangeNotifier {
 
     return UpgradeAlert(
       barrierDismissible: true,
-      upgrader: Upgrader(minAppVersion: '1.12.20'),
+      upgrader: Upgrader(minAppVersion: AppConstants.appVersion),
       showLater: true,
+      showIgnore: false,
       dialogStyle: Platform.isIOS
           ? UpgradeDialogStyle.cupertino
           : UpgradeDialogStyle.material,

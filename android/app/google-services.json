@@ -3,7 +3,7 @@
     "project_number": "603906180654",
     "firebase_url": "https://thecityschoolapp.firebaseio.com",
     "project_id": "thecityschoolapp",
-    "storage_bucket": "thecityschoolapp.appspot.com"
+    "storage_bucket": "thecityschoolapp.firebasestorage.app"
   },
   "client": [
     {

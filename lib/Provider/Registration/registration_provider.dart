@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/success_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import 'package:tcs_app/Provider/Login/login_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Services/Registration/registration_service.dart';
@@ -30,11 +32,17 @@ class RegistrationProvider with ChangeNotifier {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  TextEditingController userTypeController =
-      TextEditingController(text: 'Student');
+  TextEditingController userTypeController = TextEditingController(
+    text: 'Student',
+  );
   late MaskedTextController userNameController;
 
   ResponseMessage _responseMessage = ResponseMessage();
+
+  LoginProvider loginProvider = Provider.of<LoginProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setResponseData(ResponseMessage responseMessage) {
     _responseMessage = responseMessage;
@@ -97,15 +105,17 @@ class RegistrationProvider with ChangeNotifier {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         ResponseMessage? responseMessage =
             await RegistrationService.userRegRequest(
-                userName: userNameController.text,
-                mobileNumber: phoneNumberController.text,
-                userType: userTypeController.text);
+              userName: userNameController.text,
+              mobileNumber: phoneNumberController.text,
+              userType: userTypeController.text,
+            );
         if (responseMessage.isSuccessful ?? false) {
           setResponseData(responseMessage);
           Future.delayed(
-              const Duration(milliseconds: 1),
-              () => AppNavigation.navigateTo(
-                  AppNavRoutes.registrationPinCodeRoute));
+            const Duration(milliseconds: 1),
+            () =>
+                AppNavigation.navigateTo(AppNavRoutes.registrationPinCodeRoute),
+          );
         } else {
           showSnackBar(responseMessage.message);
         }
@@ -123,15 +133,18 @@ class RegistrationProvider with ChangeNotifier {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         ResponseMessage responseMessage =
             await VerifyPinCodeService.verifyPinCodeRequest(
-                userName: userNameController.text,
-                pinCode: pinCodeController.text,
-                userType: userTypeController.text,
-                isRegPin: true);
+              userName: userNameController.text,
+              pinCode: pinCodeController.text,
+              userType: userTypeController.text,
+              isRegPin: true,
+            );
         if (responseMessage.isSuccessful ?? false) {
           confirmPasswordController.clear();
           passwordController.clear();
-          Future.delayed(const Duration(milliseconds: 1),
-              () => AppNavigation.navigateTo(AppNavRoutes.createPasswordRoute));
+          Future.delayed(
+            const Duration(milliseconds: 1),
+            () => AppNavigation.navigateTo(AppNavRoutes.createPasswordRoute),
+          );
         } else {
           showSnackBar(responseMessage.message);
         }
@@ -149,16 +162,20 @@ class RegistrationProvider with ChangeNotifier {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         ResponseMessage? responseMessage =
             await UpdatePasswordService.updatePasswordRequest(
-                userName: userNameController.text,
-                confirmPassword: confirmPasswordController.text,
-                userType: userTypeController.text,
-                isRegPass: true);
+              userName: userNameController.text,
+              confirmPassword: confirmPasswordController.text,
+              userType: userTypeController.text,
+              isRegPass: true,
+            );
         if (responseMessage.isSuccessful ?? false) {
-          Future.delayed(const Duration(milliseconds: 1),
-              () => AppNavigation.removeAllRoutes());
+          Future.delayed(
+            const Duration(milliseconds: 1),
+            () => AppNavigation.removeAllRoutes(),
+          );
           showSnackBar(
-              'Password for ${userNameController.text} has been created successfully',
-              color: AppColors.successGreenColor);
+            'Password for ${userNameController.text} has been created successfully',
+            color: AppColors.successGreenColor,
+          );
           disposeData();
         } else {
           showSnackBar(responseMessage.message);
@@ -173,6 +190,14 @@ class RegistrationProvider with ChangeNotifier {
   void initializeData() {
     userNameController = MaskedTextController(mask: controllerMask);
     userTypeList = HelperFunction.userTypes().take(2).toList();
+    onUserTypeSelection(
+      userTypeList.any(
+            (element) => element.title == loginProvider.userTypeController.text,
+          )
+          ? loginProvider.userTypeController.text
+          : userTypeList.first.title!,
+      isInitialization: true,
+    );
   }
 
   void initializePinCodeData() {
@@ -181,37 +206,43 @@ class RegistrationProvider with ChangeNotifier {
     if (_responseMessage.isSuccessful ?? false) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         showDialog(
-            context: AppNavigation.currentContext!,
-            builder: (BuildContext context) => SuccessDialogBox(
-                title: 'Success',
-                description: _responseMessage.message!,
-                buttonText: 'OK'));
+          context: AppNavigation.currentContext!,
+          builder: (BuildContext context) => SuccessDialogBox(
+            title: 'Success',
+            description: _responseMessage.message!,
+            buttonText: 'OK',
+          ),
+        );
       });
     }
   }
 
-  void onUserTypeSelection(String v) {
+  void onUserTypeSelection(String v, {bool isInitialization = false}) {
     userTypeController.text = v;
     controllerMask = v == 'Teacher'
         ? '00000000'
         : v == 'Parent'
-            ? '00000-0000000-0'
-            : '00000000';
+        ? '00000-0000000-0'
+        : '00000000';
     userNameController = MaskedTextController(mask: controllerMask);
     userNameLabel = v == 'Parent' ? 'CNIC Number' : 'Roll Number';
     userNameHint = v == 'Parent' ? 'xxxxx-xxxxxxx-x' : 'xxxxxxxx';
-    notifyListeners();
-    AppNavigation.goBack();
+    if (!isInitialization) {
+      notifyListeners();
+      AppNavigation.goBack();
+    }
   }
 
   void userTypeBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            controller: userTypeController,
-            filterOptions: userTypeList,
-            onSelect: (v) => onUserTypeSelection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        controller: userTypeController,
+        filterOptions: userTypeList,
+        onSelect: (v) => onUserTypeSelection(v),
+      ),
+    );
   }
 
   Future<void> launchEmail() async {

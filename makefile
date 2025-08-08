@@ -39,6 +39,9 @@ reset-pod:
 pod-deintegrate-and-install:
 	cd ios/ && pod deintegrate && pod install
 
+reset-pod-cache:
+	cd ios/ && rm -rf Pods Podfile.lock && pod cache clean --all && pod install --repo-update
+
 appbundle:
 	flutter build appbundle
 
@@ -55,4 +58,7 @@ gen:
 	fluttergen -c pubspec.yaml
 
 git-config:
-	git config user.name && git config user.email	
+	git config user.name && git config user.email
+
+fast-pod:
+	cd ios/ && rm -rf Pods Podfile.lock && pod install --verbose --no-repo-update	
