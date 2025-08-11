@@ -16,6 +16,7 @@ import 'package:tcs_app/Services/UpdatePassword/update_password_service.dart';
 import 'package:tcs_app/Services/VerifyPinCode/verify_pincode_service.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/Utils/validators.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 
@@ -24,7 +25,8 @@ class ForgotPasswordProvider with ChangeNotifier {
   final pinCodeFormKey = GlobalKey<FormState>();
   final updatePasswordFormKey = GlobalKey<FormState>();
 
-  bool obscureText = true;
+  bool obscureTextPassword = true;
+  bool obscureTextConfirmPassword = true;
   List<Options> userTypeList = [];
   String userNameLabel = 'Roll Number', userNameHint = 'xxxxxxxx';
   String controllerMask = '00000000';
@@ -45,32 +47,23 @@ class ForgotPasswordProvider with ChangeNotifier {
     listen: false,
   );
 
+  String? validator(String? text) => userTypeController.text == 'Parent'
+      ? Validators.validatorForCNICNo(text)
+      : Validators.validator(text);
+
   void setResponseData(ResponseMessage responseMessage) {
     forgotResponse = responseMessage;
     notifyListeners();
   }
 
   void showHidePassword() {
-    obscureText = !obscureText;
+    obscureTextPassword = !obscureTextPassword;
     notifyListeners();
   }
 
-  String? validator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Required*";
-    } else {
-      return null;
-    }
-  }
-
-  String? passwordValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Required*";
-    } else if (value.length < 8) {
-      return "Password must be atleast 8 characters long";
-    } else {
-      return null;
-    }
+  void showHideConfirmPassword() {
+    obscureTextConfirmPassword = !obscureTextConfirmPassword;
+    notifyListeners();
   }
 
   String? confirmPasswordValidator(String? value) {
@@ -245,6 +238,7 @@ class ForgotPasswordProvider with ChangeNotifier {
     controllerMask = '00000000';
     confirmPasswordController.clear();
     passwordController.clear();
-    obscureText = true;
+    obscureTextPassword = true;
+    obscureTextConfirmPassword = true;
   }
 }

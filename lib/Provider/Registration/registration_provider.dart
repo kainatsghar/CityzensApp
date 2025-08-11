@@ -14,6 +14,7 @@ import 'package:tcs_app/Services/UpdatePassword/update_password_service.dart';
 import 'package:tcs_app/Services/VerifyPinCode/verify_pincode_service.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/Utils/validators.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -44,6 +45,10 @@ class RegistrationProvider with ChangeNotifier {
     listen: false,
   );
 
+  String? validator(String? text) => userTypeController.text == 'Parent'
+      ? Validators.validatorForCNICNo(text)
+      : Validators.validator(text);
+
   void setResponseData(ResponseMessage responseMessage) {
     _responseMessage = responseMessage;
     notifyListeners();
@@ -61,13 +66,13 @@ class RegistrationProvider with ChangeNotifier {
   //     return null;
   //   }
   // }
-  String? validator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Required*";
-    } else {
-      return null;
-    }
-  }
+  // String? validator(String? value) {
+  //   if (value == null || value.isEmpty) {
+  //     return "Required*";
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   // String passwordValidator(String value) {
   //   if (value.isEmpty) {

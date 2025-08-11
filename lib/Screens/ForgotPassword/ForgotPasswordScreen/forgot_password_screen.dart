@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/ForgotPassword/forgot_password_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Utils/input_formatters.dart';
+import 'package:tcs_app/Utils/validators.dart';
 import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
@@ -85,9 +88,11 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             controller: value.phoneNumberController,
                             inputType: TextInputType.number,
                             inputAction: TextInputAction.done,
-                            hintText: 'Mobile Number',
+                            inputFormatter:
+                                InputFormatters.mobileNumberFormatter(),
+                            hintText: 'Mobile Number(03XX-XXXXXXX)',
                             prefixIcon: Icons.phone_iphone,
-                            validator: value.validator,
+                            validator: Validators.validatorForMobileNo,
                           ),
                         ],
                       ),

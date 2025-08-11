@@ -15,6 +15,8 @@ class DashboardProvider with ChangeNotifier {
   final changePasswordFormKey = GlobalKey<FormState>();
 
   bool obscureText = true;
+  bool obscureTextNewPassword = true;
+  bool obscureTextConfirmPassword = true;
   TextEditingController userNameController = TextEditingController();
   TextEditingController oldPassController = TextEditingController();
   TextEditingController newPassController = TextEditingController();
@@ -24,6 +26,16 @@ class DashboardProvider with ChangeNotifier {
 
   void showHidePassword() {
     obscureText = !obscureText;
+    notifyListeners();
+  }
+
+  void showHideNewPassword() {
+    obscureTextNewPassword = !obscureTextNewPassword;
+    notifyListeners();
+  }
+
+  void showHideConfirmPassword() {
+    obscureTextConfirmPassword = !obscureTextConfirmPassword;
     notifyListeners();
   }
 
@@ -62,10 +74,10 @@ class DashboardProvider with ChangeNotifier {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         ResponseMessage responseMessage =
             await ChangePasswordService.changePasswordRequest(
-          userName: userNameController.text,
-          oldPassword: oldPassController.text,
-          userType: userTypeController.text,
-        );
+              userName: userNameController.text,
+              oldPassword: oldPassController.text,
+              userType: userTypeController.text,
+            );
         if (responseMessage.isSuccessful ?? false) {
           // if (responseMessage.isSuccessful) {
           Future.delayed(Duration.zero, () => AppNavigation.goBack());
@@ -86,8 +98,9 @@ class DashboardProvider with ChangeNotifier {
 
   void initializeData() {
     var localProvider = Provider.of<LocalDataProvider>(
-        AppNavigation.currentContext!,
-        listen: false);
+      AppNavigation.currentContext!,
+      listen: false,
+    );
     userTypeController.text = localProvider.userData!.userType!;
     userNameController.text = localProvider.userData!.userType == 'Student'
         ? localProvider.studentId
@@ -138,5 +151,7 @@ class DashboardProvider with ChangeNotifier {
     newPassController.clear();
     confirmPassController.clear();
     obscureText = true;
+    obscureTextNewPassword = true;
+    obscureTextConfirmPassword = true;
   }
 }

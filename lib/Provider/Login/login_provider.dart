@@ -11,6 +11,7 @@ import 'package:tcs_app/Services/Login/login_service.dart';
 import 'package:tcs_app/SharedPreference/shared_preference.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/Utils/validators.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
 
@@ -21,21 +22,19 @@ class LoginProvider extends ChangeNotifier {
   String userNameLabel = 'Roll Number';
   String controllerMask = '00000000';
   TextEditingController passwordController = TextEditingController();
-  TextEditingController userTypeController =
-      TextEditingController(text: 'Student');
+  TextEditingController userTypeController = TextEditingController(
+    text: 'Student',
+  );
   MaskedTextController? userNameController;
+  String? validator(String? text) => userTypeController.text == 'Teacher'
+      ? Validators.validator(text)
+      : userTypeController.text == 'Parent'
+      ? Validators.validatorForCNICNo(text)
+      : Validators.validator(text);
 
   void showHidePassword() {
     obscureText = !obscureText;
     notifyListeners();
-  }
-
-  String? validator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Required*";
-    } else {
-      return null;
-    }
   }
 
   Future<void> login() async {
@@ -64,7 +63,8 @@ class LoginProvider extends ChangeNotifier {
         } else {
           if (loginResponse.isException ?? false) {
             showSnackBar(
-                'Server Error: Something went wrong. Please try again later.');
+              'Server Error: Something went wrong. Please try again later.',
+            );
           } else {
             showSnackBar(loginResponse.message);
           }
@@ -95,24 +95,26 @@ class LoginProvider extends ChangeNotifier {
     controllerMask = v == 'Teacher'
         ? '00000000'
         : v == 'Parent'
-            ? '00000-0000000-0'
-            : '00000000';
+        ? '00000-0000000-0'
+        : '00000000';
     userNameController = MaskedTextController(mask: controllerMask);
     userNameLabel = v == 'Teacher'
         ? 'Employee Number'
         : v == 'Parent'
-            ? 'CNIC Number'
-            : 'Roll Number';
+        ? 'CNIC Number'
+        : 'Roll Number';
   }
 
   void userTypeBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            controller: userTypeController,
-            filterOptions: userTypeList,
-            onSelect: (v) => onUserTypeSelection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        controller: userTypeController,
+        filterOptions: userTypeList,
+        onSelect: (v) => onUserTypeSelection(v),
+      ),
+    );
   }
 
   void disposeData() {

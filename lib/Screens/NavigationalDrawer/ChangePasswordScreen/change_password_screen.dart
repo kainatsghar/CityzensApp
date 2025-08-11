@@ -19,8 +19,10 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  var provider = Provider.of<DashboardProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var provider = Provider.of<DashboardProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -36,11 +38,12 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-        appBar: const CustomAppBar(title: 'CHANGE PASSWORD'),
-        body: SafeArea(
-          child: Consumer<DashboardProvider>(builder: (context, value, _) {
+      appBar: const CustomAppBar(title: 'CHANGE PASSWORD'),
+      body: SafeArea(
+        child: Consumer<DashboardProvider>(
+          builder: (context, value, _) {
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
@@ -53,69 +56,100 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     SizedBox(height: size.height * 0.03),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 25.0),
+                        horizontal: 20,
+                        vertical: 25.0,
+                      ),
                       decoration: BoxDecoration(
-                          color: AppColors.secondaryColor,
-                          borderRadius: BorderRadius.circular(20.0)),
+                        color: AppColors.secondaryColor,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                       child: Column(
                         children: <Widget>[
                           Form(
-                              key: value.changePasswordFormKey,
-                              child: Column(
-                                children: <Widget>[
-                                  CustomTextFormField(
-                                      isEnable: false,
-                                      hintText: value.userNameController.text,
-                                      prefixIcon: Icons.person),
-                                  SizedBox(height: size.height * 0.02),
-                                  CustomTextFormField(
-                                      controller: value.oldPassController,
-                                      obscureText: true,
-                                      inputType: TextInputType.text,
-                                      inputAction: TextInputAction.next,
-                                      hintText: 'Current Password',
-                                      prefixIcon: Icons.lock,
-                                      validator: value.validator),
-                                  SizedBox(height: size.height * 0.02),
-                                  CustomTextFormField(
-                                      controller: value.newPassController,
-                                      obscureText: true,
-                                      inputType: TextInputType.text,
-                                      inputAction: TextInputAction.next,
-                                      hintText: 'New Password',
-                                      prefixIcon: Icons.lock,
-                                      validator: value.passwordValidator),
-                                  SizedBox(height: size.height * 0.02),
-                                  CustomTextFormField(
-                                      obscureText: value.obscureText,
-                                      controller: value.confirmPassController,
-                                      inputType: TextInputType.text,
-                                      inputAction: TextInputAction.done,
-                                      hintText: 'Confirm Password',
-                                      prefixIcon: Icons.lock,
-                                      suffixWidget: GestureDetector(
-                                          onTap: () => value.showHidePassword(),
-                                          child: Icon(
-                                              value.obscureText
-                                                  ? Icons.visibility_off
-                                                  : Icons.visibility,
-                                              color: AppColors.whiteColor)),
-                                      validator:
-                                          value.confirmPasswordValidator),
-                                ],
-                              )),
+                            key: value.changePasswordFormKey,
+                            child: Column(
+                              children: <Widget>[
+                                CustomTextFormField(
+                                  isEnable: false,
+                                  hintText: value.userNameController.text,
+                                  prefixIcon: Icons.person,
+                                ),
+                                SizedBox(height: size.height * 0.02),
+                                CustomTextFormField(
+                                  controller: value.oldPassController,
+                                  obscureText: value.obscureText,
+                                  suffixWidget: GestureDetector(
+                                    onTap: () => value.showHidePassword(),
+                                    child: Icon(
+                                      value.obscureText
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                  inputType: TextInputType.text,
+                                  inputAction: TextInputAction.next,
+                                  hintText: 'Current Password',
+                                  prefixIcon: Icons.lock,
+                                  validator: value.validator,
+                                ),
+                                SizedBox(height: size.height * 0.02),
+                                CustomTextFormField(
+                                  controller: value.newPassController,
+                                  obscureText: value.obscureTextNewPassword,
+                                  suffixWidget: GestureDetector(
+                                    onTap: () => value.showHideNewPassword(),
+                                    child: Icon(
+                                      value.obscureTextNewPassword
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                  inputType: TextInputType.text,
+                                  inputAction: TextInputAction.next,
+                                  hintText: 'New Password',
+                                  prefixIcon: Icons.lock,
+                                  validator: value.passwordValidator,
+                                ),
+                                SizedBox(height: size.height * 0.02),
+                                CustomTextFormField(
+                                  obscureText: value.obscureTextConfirmPassword,
+                                  controller: value.confirmPassController,
+                                  inputType: TextInputType.text,
+                                  inputAction: TextInputAction.done,
+                                  hintText: 'Confirm Password',
+                                  prefixIcon: Icons.lock,
+                                  suffixWidget: GestureDetector(
+                                    onTap: () =>
+                                        value.showHideConfirmPassword(),
+                                    child: Icon(
+                                      value.obscureTextConfirmPassword
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                  validator: value.confirmPasswordValidator,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     SizedBox(height: size.height * 0.02),
                     CustomAppButton(
-                        buttonTitle: 'Save',
-                        onTap: () => value.changePassword())
+                      buttonTitle: 'Save',
+                      onTap: () => value.changePassword(),
+                    ),
                   ],
                 ),
               ),
             );
-          }),
-        ));
+          },
+        ),
+      ),
+    );
   }
 }
