@@ -10,7 +10,6 @@ import '../../Utils/app_colors.dart';
 
 class SingleChallanItem extends StatelessWidget {
   final OutstandingChallan record;
-
   const SingleChallanItem({super.key, required this.record});
 
   @override

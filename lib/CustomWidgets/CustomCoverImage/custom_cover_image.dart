@@ -39,7 +39,7 @@ class CustomCoverImage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8.0),
+            // const SizedBox(height: 8.0),
             Text(
               title,
               style: const TextStyle(

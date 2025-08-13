@@ -352,6 +352,7 @@ class AttendanceDashboardCard extends StatelessWidget {
                         fontSize: 18.0,
                         color: AppColors.whiteColor,
                         fontWeight: FontWeight.w600,
+                        height: 1,
                       ),
                     ),
                   ],
@@ -362,68 +363,72 @@ class AttendanceDashboardCard extends StatelessWidget {
                     fontSize: 18.0,
                     color: AppColors.whiteColor,
                     fontWeight: FontWeight.w600,
+                    height: 1.12,
                   ),
                 ),
               ],
             ),
-            FutureBuilder(
-              future: attendanceService,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: CustomLoader(color: AppColors.whiteColor),
-                    );
-                  default:
-                    if (snapshot.hasData) {
-                      return Consumer<StudentAttendanceProvider>(
-                        builder: (context, value, _) {
-                          num data = value
-                              .attendancePercentage!
-                              .data!
-                              .attendancePercentage!;
-                          return Card(
-                            elevation: 4,
-                            borderOnForeground: false,
-                            color: Colors.transparent,
-                            shadowColor: AppColors.blackColor.withValues(
-                              alpha: 0.9,
-                            ),
-                            margin: EdgeInsets.zero,
-                            shape: CircleBorder(),
-                            child: CircularPercentIndicator(
-                              radius: size.height * 0.07,
-                              lineWidth: 10.0,
-                              percent: data / 100,
-                              progressColor: AppColors.successGreenColor,
-                              backgroundColor: AppColors.whiteColor,
-                              center: Text(
-                                "$data%",
-                                style: const TextStyle(
-                                  color: AppColors.whiteColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                ),
-                              ),
-                              rotateLinearGradient: true,
-                              circularStrokeCap: CircularStrokeCap.round,
-                            ),
-                          );
-                        },
-                      );
-                    } else {
+            SizedBox(
+              height: ((size.height * 0.18) - 32),
+              child: FutureBuilder(
+                future: attendanceService,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
                       return const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Icon(
-                          Icons.error_outline,
-                          color: AppColors.lightRedColor,
-                          size: 50,
-                        ),
+                        child: CustomLoader(color: AppColors.whiteColor),
                       );
-                    }
-                }
-              },
+                    default:
+                      if (snapshot.hasData) {
+                        return Consumer<StudentAttendanceProvider>(
+                          builder: (context, value, _) {
+                            num data = value
+                                .attendancePercentage!
+                                .data!
+                                .attendancePercentage!;
+                            return Card(
+                              elevation: 4,
+                              borderOnForeground: false,
+                              color: Colors.transparent,
+                              shadowColor: AppColors.blackColor.withValues(
+                                alpha: 0.9,
+                              ),
+                              margin: EdgeInsets.zero,
+                              shape: CircleBorder(),
+                              child: CircularPercentIndicator(
+                                radius: size.height * 0.065,
+                                lineWidth: (size.height) / 90,
+                                percent: data / 100,
+                                progressColor: AppColors.successGreenColor,
+                                backgroundColor: AppColors.whiteColor,
+                                center: Text(
+                                  "$data%",
+                                  style: const TextStyle(
+                                    color: AppColors.whiteColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22.0,
+                                  ),
+                                ),
+                                rotateLinearGradient: true,
+                                circularStrokeCap: CircularStrokeCap.round,
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Icon(
+                            Icons.error_outline,
+                            color: AppColors.lightRedColor,
+                            size: 50,
+                          ),
+                        );
+                      }
+                  }
+                },
+              ),
             ),
           ],
         ),

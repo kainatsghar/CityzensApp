@@ -95,7 +95,7 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
                       ),
                     ),
                     Text(
-                      '\u2022 TCS app will send you a message containing 4-digit PIN code you will use to verify your number.',
+                      '\u2022 TCS app will send you a message containing a PIN code you will use to verify your number.',
                       style: TextStyle(height: 1.5),
                     ),
                     Text(
