@@ -50,7 +50,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
+    final size = MediaQuery.sizeOf(context);
     final double itemHeight = (size.height - kToolbarHeight - 24) / 6;
     final double itemWidth = size.width / 2;
 
@@ -58,39 +58,38 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       builder: (context, value, _) {
         final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
         final localGradeId = value.gradeId?.toString() ?? '';
-        return Scaffold(
-          appBar: CustomAppBar(
-            title: localData.userData!.userType == 'Parent'
-                ? '${widget.args!.userName}'
-                // ? '${widget.args.userName}'
-                : HelperFunction.noNullStringText(
-                    '${localData.userData!.info!.name}',
-                  ),
-          ),
-          drawer: value.userData!.userType == 'Parent'
-              ? null
-              : const NavigationalDrawer(),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 16.0,
+        return SafeArea(
+          child: Scaffold(
+            appBar: CustomAppBar(
+              title: localData.userData!.userType == 'Parent'
+                  ? '${widget.args!.userName}'
+                  // ? '${widget.args.userName}'
+                  : HelperFunction.noNullStringText(
+                      '${localData.userData!.info!.name}',
+                    ),
             ),
-            child: Column(
-              children: [
-                AttendanceDashboardCard(
-                  size: size,
-                  attendanceService: attendanceService,
+            drawer: value.userData!.userType == 'Parent'
+                ? null
+                : const NavigationalDrawer(),
+            body: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: AttendanceDashboardCard(
+                      attendanceService: attendanceService,
+                      size: size,
+                    ),
+                  ),
                 ),
-                SizedBox(height: size.height * 0.01),
-                Expanded(
-                  child: GridView.count(
-                    primary: false,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+                  sliver: SliverGrid.count(
                     crossAxisCount: 2,
-                    shrinkWrap: false,
-                    childAspectRatio: (itemWidth / itemHeight),
-                    children: <Widget>[
+                    childAspectRatio: itemWidth / itemHeight,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    children: [
                       CustomDashboardButton(
                         title: 'PROFILE',
                         bottomAlign: -20,

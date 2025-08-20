@@ -36,28 +36,33 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
       builder: (context, value, _) {
         // final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
         // final localGradeId = value.gradeId?.toString() ?? '';
-        return Scaffold(
-          appBar: CustomAppBar(
-            title: HelperFunction.noNullStringText(
-              // '${value.userData.info?.name ?? 'CITYZENS'}')),
-              value.userData!.info!.name ?? 'CITYZENS',
+        return SafeArea(
+          child: Scaffold(
+            appBar: CustomAppBar(
+              title: HelperFunction.noNullStringText(
+                // '${value.userData.info?.name ?? 'CITYZENS'}')),
+                value.userData!.info!.name ?? 'CITYZENS',
+              ),
             ),
-          ),
-          drawer: const NavigationalDrawer(),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-            child: Column(
-              children: [
-                const CustomLogoCover(),
-                SizedBox(height: size.height * 0.01),
-                Expanded(
-                  child: GridView.count(
-                    shrinkWrap: false,
-                    primary: false,
+            drawer: const NavigationalDrawer(),
+            body: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 0,
+                    ),
+                    child: const CustomLogoCover(),
+                  ),
+                ),
+
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32),
+                  sliver: SliverGrid.count(
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
                     crossAxisCount: 2,
-                    padding: const EdgeInsets.only(bottom: 16),
                     childAspectRatio: (itemWidth / itemHeight),
                     children: <Widget>[
                       CustomDashboardButton(
