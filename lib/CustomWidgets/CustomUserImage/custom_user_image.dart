@@ -39,7 +39,7 @@ class CustomUserImage extends StatelessWidget {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
                         return Image.asset(
-                          'images/profile_avatar_yellow.png',
+                          'assets/images/profile_avatar_yellow.png',
                           fit: BoxFit.cover,
                         );
                       default:
@@ -50,12 +50,12 @@ class CustomUserImage extends StatelessWidget {
                                   fit: BoxFit.cover,
                                 )
                               : Image.asset(
-                                  'images/profile_avatar_yellow.png',
+                                  'assets/images/profile_avatar_yellow.png',
                                   fit: BoxFit.cover,
                                 );
                         } else {
                           return Image.asset(
-                            'images/profile_avatar_yellow.png',
+                            'assets/images/profile_avatar_yellow.png',
                             fit: BoxFit.cover,
                           );
                         }

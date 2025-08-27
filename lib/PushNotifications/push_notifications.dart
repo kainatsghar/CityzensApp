@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:tcs_app/Utils/helper_function.dart';
 
 import '../Routes/app_navigation.dart';
 import '../Routes/app_navigation_routes.dart';
@@ -125,6 +126,18 @@ class PushNotificationsManager {
         _navigateToPage(route);
       }
     }
+    String? openUrl = message.data['openUrl'];
+    if (openUrl != null) {
+      if (openedFromTerminated) {
+        // If the app was terminated when the notification was clicked, navigate to the desired page directly
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          HelperFunction.launchURL(openUrl);
+        });
+      } else {
+        // If the app was in foreground/background, directly navigate to the desired page.
+        HelperFunction.launchURL(openUrl);
+      }
+    }
   }
 
   static void _navigateToPage(String route) {
@@ -132,6 +145,10 @@ class PushNotificationsManager {
       AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute);
     } else if (route == 'Classwork') {
       AppNavigation.navigateTo(AppNavRoutes.studentAssignmentRoute);
+    } else {
+      if (AppNavRoutes.isRouteAvailable(route)) {
+        AppNavigation.navigateTo(route);
+      }
     }
   }
 }

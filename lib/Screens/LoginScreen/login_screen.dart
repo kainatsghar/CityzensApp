@@ -80,7 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     readOnly: true,
                                     onTap: () => value.userTypeBottomSheet(),
                                     suffixWidget: const ImageIcon(
-                                      AssetImage('images/dropdown_icon.png'),
+                                      AssetImage(
+                                        'assets/images/dropdown_icon.png',
+                                      ),
                                       color: AppColors.whiteColor,
                                     ),
                                   ),
@@ -178,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  'images/alumni_icon.png',
+                                  'assets/images/alumni_icon.png',
                                   width: size.width * 0.2,
                                 ),
                                 Flexible(

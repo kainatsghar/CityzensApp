@@ -70,7 +70,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                             readOnly: true,
                             onTap: () => value.userTypeBottomSheet(),
                             suffixWidget: const ImageIcon(
-                              AssetImage('images/dropdown_icon.png'),
+                              AssetImage('assets/images/dropdown_icon.png'),
                               color: AppColors.whiteColor,
                             ),
                           ),

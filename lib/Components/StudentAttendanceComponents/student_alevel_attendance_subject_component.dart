@@ -17,41 +17,53 @@ class StudentALevelAttendanceSubjectComponent extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Consumer<StudentALevelAttendanceProvider>(
-          builder: (context, value, _) {
-        return Padding(
+        builder: (context, value, _) {
+          return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Form(
-                key: value.formKey,
-                child: SingleChildScrollView(
-                    child: Column(children: <Widget>[
-                  const CustomLogoCover(),
-                  SizedBox(height: size.height * 0.02),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 25.0),
-                    decoration: BoxDecoration(
+              key: value.formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    const CustomLogoCover(),
+                    SizedBox(height: size.height * 0.02),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 25.0,
+                      ),
+                      decoration: BoxDecoration(
                         color: AppColors.secondaryColor,
-                        borderRadius: BorderRadius.circular(20.0)),
-                    child: Column(
-                      children: [
-                        CustomTextFormField(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Column(
+                        children: [
+                          CustomTextFormField(
                             hintText: 'Subject',
                             controller: value.subjectController,
                             onTap: () => value.subjectBottomSheet(),
                             readOnly: true,
                             validator: HelperFunction.validator,
                             suffixWidget: const ImageIcon(
-                                AssetImage('images/dropdown_icon.png'),
-                                color: AppColors.whiteColor)),
-                      ],
+                              AssetImage('assets/images/dropdown_icon.png'),
+                              color: AppColors.whiteColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  CustomAppButton(
+                    SizedBox(height: size.height * 0.02),
+                    CustomAppButton(
                       buttonTitle: 'Next',
-                      onTap: () => value.navigateToAttendance())
-                ]))));
-      }),
+                      onTap: () => value.navigateToAttendance(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

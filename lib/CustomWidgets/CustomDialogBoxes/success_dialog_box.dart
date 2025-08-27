@@ -58,9 +58,7 @@ class _SuccessDialogBoxState extends State<SuccessDialogBox> {
                 Text(
                   widget.description,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                  ),
+                  style: const TextStyle(fontSize: 16.0),
                 ),
                 const SizedBox(height: 24.0),
                 Align(
@@ -82,7 +80,7 @@ class _SuccessDialogBoxState extends State<SuccessDialogBox> {
             child: CircleAvatar(
               backgroundColor: Colors.white,
               radius: Const.avatarRadius,
-              child: Image.asset('images/icon_success.png'),
+              child: Image.asset('assets/images/icon_success.png'),
             ),
           ),
         ],

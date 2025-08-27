@@ -7,20 +7,28 @@ class AppNavigation {
       GlobalKey<NavigatorState>();
 
   static Future<dynamic> navigateTo(String routeName, {Object? arguments}) {
-    return navigatorKey.currentState!
-        .pushNamed(routeName, arguments: arguments ?? const ScreenArguments());
+    return navigatorKey.currentState!.pushNamed(
+      routeName,
+      arguments: arguments ?? const ScreenArguments(),
+    );
   }
 
-  static Future<dynamic> pushReplacementTo(String routeName,
-      {Object? arguments}) {
-    return navigatorKey.currentState!.pushReplacementNamed(routeName,
-        arguments: arguments ?? const ScreenArguments());
+  static Future<dynamic> pushReplacementTo(
+    String routeName, {
+    Object? arguments,
+  }) {
+    return navigatorKey.currentState!.pushReplacementNamed(
+      routeName,
+      arguments: arguments ?? const ScreenArguments(),
+    );
   }
 
   static Future<dynamic> pushAndKillAll(String routeName, {Object? arguments}) {
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
-        routeName, ModalRoute.withName(AppNavRoutes.initialRoute),
-        arguments: arguments ?? const ScreenArguments());
+      routeName,
+      ModalRoute.withName(AppNavRoutes.initialRoute),
+      arguments: arguments ?? const ScreenArguments(),
+    );
   }
 
   static void removeRoutesUntil(String routeName) =>

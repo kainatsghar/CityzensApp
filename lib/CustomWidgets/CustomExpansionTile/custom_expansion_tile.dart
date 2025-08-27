@@ -6,17 +6,20 @@ class CustomExpansionTile extends StatelessWidget {
   final String title;
   final String? detailMsg;
   final List<Widget> children;
+  final EdgeInsets? childrenPadding;
 
-  const CustomExpansionTile(
-      {super.key,
-      required this.title,
-      this.detailMsg,
-      this.children = const []});
+  const CustomExpansionTile({
+    super.key,
+    required this.title,
+    this.detailMsg,
+    this.children = const [],
+    this.childrenPadding,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(5.0),
+      borderRadius: BorderRadius.circular(6.0),
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
@@ -31,8 +34,12 @@ class CustomExpansionTile extends StatelessWidget {
           ),
           iconColor: AppColors.primaryTitleColor,
           collapsedIconColor: AppColors.primaryTitleColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6.0),
+          ),
+          expandedCrossAxisAlignment: CrossAxisAlignment.start,
+          expandedAlignment: Alignment.centerLeft,
+          childrenPadding: childrenPadding,
           children: children.isEmpty
               ? <Widget>[
                   SizedBox(

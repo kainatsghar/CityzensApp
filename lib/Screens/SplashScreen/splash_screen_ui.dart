@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:tcs_app/Model/Firebase/Promotion/promotion_model.dart';
 import 'package:tcs_app/PushNotifications/push_notifications.dart';
+import 'package:tcs_app/Repositories/Promotion/promotion_repository.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Routes/promotion_args.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 class SplashScreenUI extends StatefulWidget {
@@ -16,29 +19,37 @@ class SplashScreenUI extends StatefulWidget {
   }
 }
 
-class SplashScreenUIState extends State<SplashScreenUI>
-    with SingleTickerProviderStateMixin {
-  // late Animation<double> _iconAnimation;
-  // late AnimationController _iconAnimationController;
+class SplashScreenUIState extends State<SplashScreenUI> {
+  PromotionModel? _activePromotion;
 
   @override
   void initState() {
     super.initState();
-    // _iconAnimationController =
-    //     AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    // _iconAnimation =
-    //     CurvedAnimation(parent: _iconAnimationController, curve: Curves.linear);
-    // _iconAnimation.addListener(() => setState(() {}));
-    // _iconAnimationController.forward();
+    PushNotificationsManager.init();
+
+    PromotionRepository().getActivePromotion().then((value) {
+      if (value != null) {
+        _activePromotion = value;
+      }
+    });
+
     Future.delayed(const Duration(seconds: 3), () {
-      AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
-      PushNotificationsManager.init();
+      if (_activePromotion != null &&
+          _activePromotion!.isLive &&
+          _activePromotion!.startDate!.isBefore(DateTime.now()) &&
+          _activePromotion!.endDate!.isAfter(DateTime.now())) {
+        AppNavigation.pushReplacementTo(
+          AppNavRoutes.promotionRoute,
+          arguments: PromotionArgs(promotionModel: _activePromotion!),
+        );
+      } else {
+        AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
+      }
     });
   }
 
   @override
   void dispose() {
-    // _iconAnimationController.dispose();
     super.dispose();
   }
 
@@ -59,10 +70,9 @@ class SplashScreenUIState extends State<SplashScreenUI>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
-                    'images/tcs_logo_white.png',
+                    'assets/images/tcs_logo_white.png',
                     height: size.height / 3,
                   ),
-                  // height: _iconAnimation.value * size.height / 3),
                   SizedBox(height: size.height * 0.02),
                   const Text(
                     ' W E L C O M E ',

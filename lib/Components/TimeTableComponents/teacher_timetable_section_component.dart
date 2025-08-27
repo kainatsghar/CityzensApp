@@ -15,47 +15,55 @@ class TeacherTimeTableSectionComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
-      child: Consumer<TimeTableProvider>(builder: (context, value, _) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-            vertical: 8.0,
-          ),
-          child: Column(
-            children: <Widget>[
-              const CustomLogoCover(),
-              SizedBox(height: size.height * 0.03),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
-                decoration: BoxDecoration(
+      child: Consumer<TimeTableProvider>(
+        builder: (context, value, _) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
+            child: Column(
+              children: <Widget>[
+                const CustomLogoCover(),
+                SizedBox(height: size.height * 0.03),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 25.0,
+                  ),
+                  decoration: BoxDecoration(
                     color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(20.0)),
-                child: Form(
-                  key: value.formKey,
-                  child: Column(
-                    children: [
-                      CustomTextFormField(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Form(
+                    key: value.formKey,
+                    child: Column(
+                      children: [
+                        CustomTextFormField(
                           hintText: 'Select Section',
                           controller: value.sectionController,
                           onTap: () => value.sectionBottomSheet(),
                           readOnly: true,
                           validator: HelperFunction.validator,
                           suffixWidget: const ImageIcon(
-                              AssetImage('images/dropdown_icon.png'),
-                              color: AppColors.whiteColor)),
-                    ],
+                            AssetImage('assets/images/dropdown_icon.png'),
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.03),
-              CustomAppButton(
+                SizedBox(height: size.height * 0.03),
+                CustomAppButton(
                   buttonTitle: 'Next',
-                  onTap: () => value.navigateToMarkTimeTable())
-            ],
-          ),
-        );
-      }),
+                  onTap: () => value.navigateToMarkTimeTable(),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

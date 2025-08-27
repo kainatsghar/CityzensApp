@@ -29,7 +29,7 @@ class AttendanceListItem extends StatelessWidget {
               width: size.width / 8,
               height: size.width / 8,
               child: const Image(
-                image: AssetImage('images/profile_avatar.png'),
+                image: AssetImage('assets/images/profile_avatar.png'),
                 fit: BoxFit.cover,
               ),
             ),

@@ -19,10 +19,10 @@ clean:
 	flutter clean && make get
 
 generate: 
-	flutter pub run build_runner build --delete-conflicting-outputs
+	dart run build_runner build --delete-conflicting-outputs
 
 watch: 
-	flutter pub run build_runner watch --delete-conflicting-outputs
+	dart run build_runner watch --delete-conflicting-outputs
 
 getAndGenerate:
 	make get && make generate

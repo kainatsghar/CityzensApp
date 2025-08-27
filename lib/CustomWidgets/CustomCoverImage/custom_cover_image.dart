@@ -33,7 +33,7 @@ class CustomCoverImage extends StatelessWidget {
             Column(
               children: [
                 Image.asset(
-                  'images/$imagePath',
+                  'assets/images/$imagePath',
                   height: size.height * 0.15,
                   alignment: Alignment.bottomCenter,
                 ),

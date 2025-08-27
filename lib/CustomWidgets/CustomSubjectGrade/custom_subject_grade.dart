@@ -10,19 +10,21 @@ class CustomSubjectGrade extends StatelessWidget {
     String subjectGrade = grade.toLowerCase();
     return Padding(
       padding: const EdgeInsets.all(3.0),
-      child: Image.asset(subjectGrade == 'a'
-          ? 'images/a_grade.png'
-          : subjectGrade == 'a*'
-              ? 'images/as_grade.png'
-              : subjectGrade == 'b'
-                  ? 'images/b_grade.png'
-                  : subjectGrade == 'c'
-                      ? 'images/c_grade.png'
-                      : subjectGrade == 'd'
-                          ? 'images/d_grade.png'
-                          : subjectGrade == 'e'
-                              ? 'images/e_grade.png'
-                              : 'images/no_grade.png'),
+      child: Image.asset(
+        subjectGrade == 'a'
+            ? 'assets/images/a_grade.png'
+            : subjectGrade == 'a*'
+            ? 'assets/images/as_grade.png'
+            : subjectGrade == 'b'
+            ? 'assets/images/b_grade.png'
+            : subjectGrade == 'c'
+            ? 'assets/images/c_grade.png'
+            : subjectGrade == 'd'
+            ? 'assets/images/d_grade.png'
+            : subjectGrade == 'e'
+            ? 'assets/images/e_grade.png'
+            : 'assets/images/no_grade.png',
+      ),
     );
   }
 }

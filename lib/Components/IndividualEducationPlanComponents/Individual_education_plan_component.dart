@@ -20,88 +20,102 @@ class IndividualEducationPlanComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
-      child: Consumer<ResultsProvider>(builder: (context, value, _) {
-        return Padding(
+      child: Consumer<ResultsProvider>(
+        builder: (context, value, _) {
+          return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Form(
-                key: value.formKey,
-                child: SingleChildScrollView(
-                    child: Column(children: <Widget>[
-                  //const CustomLogoCover(),
-                  const CustomCoverImage(
+              key: value.formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    //const CustomLogoCover(),
+                    const CustomCoverImage(
                       title: 'INDIVIDUAL\nEDUCATION PLAN',
-                      imagePath: 'planner.png'),
-                  SizedBox(height: size.height * 0.02),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5, vertical: 10.0),
-                    child: Column(
-                      children: [
-                        CustomTextFormFieldV2(
+                      imagePath: 'planner.png',
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 10.0,
+                      ),
+                      child: Column(
+                        children: [
+                          CustomTextFormFieldV2(
                             hintText: 'Academic Year'.toUpperCase(),
                             controller: value.academicYearController,
                             onTap: () => value.academicYearBottomSheet(),
                             readOnly: true,
                             validator: HelperFunction.validator,
                             suffixWidget: const ImageIcon(
-                                AssetImage('images/dropdown_icon.png'),
-                                color: AppColors.primaryDarkColor)),
-                        SizedBox(height: size.height * 0.01),
-                        CustomTextFormFieldV2(
+                              AssetImage('assets/images/dropdown_icon.png'),
+                              color: AppColors.primaryDarkColor,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.01),
+                          CustomTextFormFieldV2(
                             hintText: 'Term'.toUpperCase(),
                             controller: value.termController,
                             onTap: () => value.termBottomSheet(),
                             readOnly: true,
                             validator: HelperFunction.validator,
                             suffixWidget: const ImageIcon(
-                                AssetImage('images/dropdown_icon.png'),
-                                color: AppColors.primaryDarkColor)),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.08),
-                  // if (value.termSelected &&
-                  //     value.resultsResponse.pdfResultslist?.isNotEmpty ==
-                  //         true &&
-                  //     value.resultsResponse.pdfResultslist![0].url != null)
-                  GestureDetector(
-                    onTap: () {
-                      // Add logic to download PDF here
-                    },
-                    child: GestureDetector(
-                      onTap: () {
-                        //Handle null URL case using null-aware operator
-                        String url =
-                            value.resultsResponse.pdfResultslist![0].url!;
-                        value.launchFile(url);
-                      },
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomAppButton(
-                              buttonTitle: 'DOWNLOAD IEP',
-                              onTap: () => {},
+                              AssetImage('assets/images/dropdown_icon.png'),
+                              color: AppColors.primaryDarkColor,
                             ),
                           ),
-                          SizedBox(height: size.height * 0.01),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomAppButton(
-                              buttonTitle: 'ACHKOWLEDGE\nIEP/UNDERTAKING',
-                              onTap: () => {},
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.01),
-                          const SizedBox(height: 5),
                         ],
                       ),
                     ),
-                  )
-                  // else
-                  //   const ShowCustomMessage(message: AppConstants.noRecordFound)
-                ]))));
-      }),
+                    SizedBox(height: size.height * 0.08),
+                    // if (value.termSelected &&
+                    //     value.resultsResponse.pdfResultslist?.isNotEmpty ==
+                    //         true &&
+                    //     value.resultsResponse.pdfResultslist![0].url != null)
+                    GestureDetector(
+                      onTap: () {
+                        // Add logic to download PDF here
+                      },
+                      child: GestureDetector(
+                        onTap: () {
+                          //Handle null URL case using null-aware operator
+                          String url =
+                              value.resultsResponse.pdfResultslist![0].url!;
+                          value.launchFile(url);
+                        },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomAppButton(
+                                buttonTitle: 'DOWNLOAD IEP',
+                                onTap: () => {},
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.01),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomAppButton(
+                                buttonTitle: 'ACHKOWLEDGE\nIEP/UNDERTAKING',
+                                onTap: () => {},
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.01),
+                            const SizedBox(height: 5),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // else
+                    //   const ShowCustomMessage(message: AppConstants.noRecordFound)
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

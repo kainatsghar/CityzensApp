@@ -75,7 +75,7 @@ class CustomDashboardButton extends StatelessWidget {
                   bottom: bottomAlign ?? -15,
                   left: leftAlign ?? -5,
                   child: Image.asset(
-                    'images/$imageName',
+                    'assets/images/$imageName',
                     height: imageHeight ?? size.height * 0.12,
                   ),
                 ),

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Routes/promotion_args.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Screens/AuthWrapper/auth_wrapper.dart';
 import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
 import 'package:tcs_app/Screens/Parent/ChallanPaymentScreen/challan_payment_screen.dart';
 import 'package:tcs_app/Screens/Parent/WithdrawalRequestScreen/withdrawal_request_screen.dart';
+import 'package:tcs_app/Screens/Promotion/promotion_screen_ui.dart';
 import 'package:tcs_app/Screens/SplashScreen/splash_screen_ui.dart';
 import 'package:tcs_app/Screens/Student/StudentAssignmentScreen/student_assignment_screen.dart';
 import 'package:tcs_app/Screens/Student/StudentAttendanceScreen/student_alevel_attendance_screen.dart';
@@ -64,6 +66,10 @@ class RouteGenerator {
     switch (settings.name) {
       case AppNavRoutes.initialRoute:
         return routeScreen(child: const SplashScreenUI());
+      case AppNavRoutes.promotionRoute:
+        return routeScreen(
+          child: PromotionScreenUI(args: settings.arguments as PromotionArgs),
+        );
       case AppNavRoutes.loginRoute:
         return routeScreen(child: const LoginScreen());
       case AppNavRoutes.authWrapperRoute:

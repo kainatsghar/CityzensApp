@@ -72,171 +72,195 @@ class _AddAssignmentComponentState extends State<AddAssignmentComponent> {
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Consumer<AssignmentProvider>(builder: (context, value, _) {
-        value.base64String = base64;
-        value.fileName = fileName;
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              const CustomLogoCover(),
-              SizedBox(height: size.height * 0.01),
-              Stack(
-                children: [
-                  Positioned(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: files.length.toInt() != 0
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: size.width * 0.45,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 6),
-                                    child: Card(
-                                      elevation: 2,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(files.length.toInt() == 0
-                                            ? ''
-                                            : fileName.toString()),
+      child: Consumer<AssignmentProvider>(
+        builder: (context, value, _) {
+          value.base64String = base64;
+          value.fileName = fileName;
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                const CustomLogoCover(),
+                SizedBox(height: size.height * 0.01),
+                Stack(
+                  children: [
+                    Positioned(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: files.length.toInt() != 0
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.45,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 6),
+                                      child: Card(
+                                        elevation: 2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            files.length.toInt() == 0
+                                                ? ''
+                                                : fileName.toString(),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: InkWell(
-                                        onTap: () => uploadAttachment(),
-                                        child: Container(
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            shape: BoxShape.rectangle,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(
-                                              'images/attachment.png',
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 10,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () => uploadAttachment(),
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.grey,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              shape: BoxShape.rectangle,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(
+                                                8.0,
+                                              ),
+                                              child: Image.asset(
+                                                'assets/images/attachment.png',
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Text(
-                                        'UPLOAD\nATTACHMENT',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey,
-                                          fontSize: 10,
+                                      const Padding(
+                                        padding: EdgeInsets.only(right: 10),
+                                        child: Text(
+                                          'UPLOAD\nATTACHMENT',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey,
+                                            fontSize: 10,
+                                          ),
+                                          textAlign: TextAlign.right,
                                         ),
-                                        textAlign: TextAlign.right,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: InkWell(
-                                    onTap: () => uploadAttachment(),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(8),
-                                        shape: BoxShape.rectangle,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(
-                                          'images/attachment.png',
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: InkWell(
+                                      onTap: () => uploadAttachment(),
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.grey,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          shape: BoxShape.rectangle,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            'assets/images/attachment.png',
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Text(
-                                    'UPLOAD\nATTACHMENT',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey,
-                                      fontSize: 10,
+                                  const Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Text(
+                                      'UPLOAD\nATTACHMENT',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey,
+                                        fontSize: 10,
+                                      ),
+                                      textAlign: TextAlign.right,
                                     ),
-                                    textAlign: TextAlign.right,
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                      ),
                     ),
+                  ],
+                ),
+                SizedBox(height: size.height * 0.01),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 25.0,
                   ),
-                ],
-              ),
-              SizedBox(height: size.height * 0.01),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 25.0),
-                decoration: BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(20.0)),
-                child: Form(
-                  key: value.formKey,
-                  child: Column(
-                    children: [
-                      CustomTextFormField(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Form(
+                    key: value.formKey,
+                    child: Column(
+                      children: [
+                        CustomTextFormField(
                           hintText: 'Select Section',
                           controller: value.sectionController,
                           onTap: () => value.sectionBottomSheet(),
                           readOnly: true,
                           validator: HelperFunction.validator,
                           suffixWidget: const ImageIcon(
-                              AssetImage('images/dropdown_icon.png'),
-                              color: AppColors.whiteColor)),
-                      SizedBox(height: size.height * 0.02),
-                      CustomTextFormField(
+                            AssetImage('assets/images/dropdown_icon.png'),
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        CustomTextFormField(
                           hintText: 'Select Subject',
                           controller: value.subjectController,
                           onTap: () => value.subjectBottomSheet(),
                           readOnly: true,
                           validator: HelperFunction.validator,
                           suffixWidget: const ImageIcon(
-                              AssetImage('images/dropdown_icon.png'),
-                              color: AppColors.whiteColor)),
-                      SizedBox(height: size.height * 0.02),
-                      CustomTextFormField(
+                            AssetImage('assets/images/dropdown_icon.png'),
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        CustomTextFormField(
                           controller: value.descriptionController,
                           inputType: TextInputType.text,
                           inputAction: TextInputAction.done,
                           maxLines: 3,
                           hintText: 'Description',
-                          validator: HelperFunction.validator),
-                    ],
+                          validator: HelperFunction.validator,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.04),
-              CustomAppButton(
-                  buttonTitle: 'Save', onTap: () => value.submitAssignment())
-            ],
-          ),
-        );
-      }),
+                SizedBox(height: size.height * 0.04),
+                CustomAppButton(
+                  buttonTitle: 'Save',
+                  onTap: () => value.submitAssignment(),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

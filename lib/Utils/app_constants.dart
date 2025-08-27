@@ -9,7 +9,7 @@ class AppConstants {
   static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
   static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
 
-  static const String appVersion = '1.12.21';
+  static const String appVersion = '1.12.22';
   static const String exceptionMessage =
       "Something Went Wrong, Please Try Again Later";
   static const String markAttendanceMessage = "Please Mark Complete Attendance";
@@ -23,7 +23,6 @@ class AppConstants {
   static const String noInternetMsg =
       'No Internet Connection, Connect Your Internet & Try Again';
   static const String noRecordFound = 'No Record Found';
-  static const String imagesPath = 'images/';
   static const String textFontFamily = 'NexaText';
   static const String alumniAppURL =
       "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";

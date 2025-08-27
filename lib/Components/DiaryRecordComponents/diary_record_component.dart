@@ -43,9 +43,8 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
     final Uri url = Uri.parse(
       '${AppConstants.baseUrl}/MobileAppAttachments/DailyDiary/$fileName',
     );
-    // ignore: deprecated_member_use
+
     if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      // ignore: deprecated_member_use
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not launch $url';
@@ -94,26 +93,41 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                               ListTile(title: Text(element.description!)),
                               (element.fileName != null &&
                                       element.fileName != "")
-                                  ? ListTile(
-                                      title: GestureDetector(
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 16.0,
+                                        right: 16,
+                                        bottom: 16,
+                                      ),
+                                      child: GestureDetector(
                                         onTap: () {
-                                          // Replace 'image.png' with your actual file path
-
                                           _launchFile(element.fileName ?? '');
                                         },
                                         child: Row(
                                           children: [
-                                            const Icon(
-                                              Icons.download,
-                                            ), // Download icon
+                                            Expanded(
+                                              child: Text(
+                                                element.fileName ?? '',
+                                                style: const TextStyle(
+                                                  color: AppColors
+                                                      .primaryDarkColor,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
                                             const SizedBox(width: 8), // Spacer
-                                            Text(
-                                              element.fileName ?? '',
-                                              style: const TextStyle(
-                                                color:
+                                            IconButton.filled(
+                                              style: IconButton.styleFrom(
+                                                backgroundColor:
                                                     AppColors.primaryDarkColor,
                                               ),
-                                            ), // File name text
+                                              onPressed: () {
+                                                _launchFile(
+                                                  element.fileName ?? '',
+                                                );
+                                              },
+                                              icon: const Icon(Icons.download),
+                                            ),
                                           ],
                                         ),
                                       ),

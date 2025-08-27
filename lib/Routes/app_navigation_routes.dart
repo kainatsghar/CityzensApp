@@ -1,6 +1,7 @@
 class AppNavRoutes {
   static const initialRoute = '/';
   static const loginRoute = '/login';
+  static const promotionRoute = '/promotion';
   static const authWrapperRoute = '/authWrapper';
   static const registrationRoute = '/userRegistration';
   static const forgotPinCodeRoute = '/forgotPinCode';
@@ -55,4 +56,77 @@ class AppNavRoutes {
   static const withdrawalRequestRoute = '/withdrawalRequest';
   static const complaintQueryRoute = '/complaintQuery';
   static const addCircularRoute = '/addCircular';
+
+  /// Returns true if the given route name matches any of the defined routes
+  static bool isRouteAvailable(String routeName) {
+    if (routeName.isEmpty) return false;
+
+    // Normalize the route name by removing any trailing slashes
+    final normalizedRoute = routeName.endsWith('/')
+        ? routeName.substring(0, routeName.length - 1)
+        : routeName;
+
+    // Set of all route constants (using Set to ensure uniqueness)
+    final allRoutes = <String>{
+      initialRoute,
+      loginRoute,
+      promotionRoute,
+      authWrapperRoute,
+      registrationRoute,
+      forgotPinCodeRoute,
+      registrationPinCodeRoute,
+      createPasswordRoute,
+      studentDashboardRoute,
+      parentDashboardRoute,
+      studentProfileRoute,
+      resultsRoute,
+      academicTermRoute,
+      libraryRoute,
+      notificationsRoute,
+      feeChallansRoute,
+      teacherDashboardRoute,
+      teacherProfileRoute,
+      markAttendanceRoute,
+      attendanceRoute,
+      alevelAttendanceRoute,
+      attendanceSubjectRoute,
+      onlineStdRegRoute,
+      forgotPasswordRoute,
+      updatePasswordRoute,
+      aboutUsRoute,
+      appFeedbackRoute,
+      changePasswordRoute,
+      teacherSectionRoute,
+      markUnidentifiedRoute,
+      addDiaryRoute,
+      teacherDiaryRoute,
+      studentDiaryRoute,
+      challanPaymentRoute,
+      introductionRoute,
+      studentAssignmentRoute,
+      addAssignmentRoute,
+      teacherAssignmentRoute,
+      studentSchoolEventsRoute,
+      addSchoolEventRoute,
+      teacherSchoolEventsRoute,
+      teacherClassTestResultRoute,
+      teacherAddClassResultRoute,
+      studentClassTestResultRoute,
+      individualEducationPlanRoute,
+      bookanAppointmentRoute,
+      parentAppointmentRoute,
+      eyeOnYourChildRoute,
+      parentEyeOnYourChildRoute,
+      teacherTimeTableRoute,
+      teacherTimeTableSectionRoute,
+      teacherSurveyRoute,
+      studentSurveyRoute,
+      parentSurveyRoute,
+      withdrawalRequestRoute,
+      complaintQueryRoute,
+      addCircularRoute,
+    };
+
+    return allRoutes.any((route) => route == normalizedRoute);
+  }
 }

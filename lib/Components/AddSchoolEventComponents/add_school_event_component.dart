@@ -48,7 +48,9 @@ class _AddSchoolEventComponentState extends State<AddSchoolEventComponent> {
                 SizedBox(height: size.height * 0.02),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 25.0),
+                    horizontal: 20,
+                    vertical: 25.0,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.secondaryColor,
                     borderRadius: BorderRadius.circular(20.0),
@@ -58,19 +60,21 @@ class _AddSchoolEventComponentState extends State<AddSchoolEventComponent> {
                     child: Column(
                       children: [
                         CustomTextFormField(
-                            hintText: 'Select Section',
-                            controller: value.sectionController,
-                            onTap: () => value.sectionBottomSheet(),
-                            readOnly: true,
-                            validator: HelperFunction.validator,
-                            suffixWidget: const ImageIcon(
-                              AssetImage('images/dropdown_icon.png'),
-                              color: AppColors.whiteColor,
-                            )),
+                          hintText: 'Select Section',
+                          controller: value.sectionController,
+                          onTap: () => value.sectionBottomSheet(),
+                          readOnly: true,
+                          validator: HelperFunction.validator,
+                          suffixWidget: const ImageIcon(
+                            AssetImage('assets/images/dropdown_icon.png'),
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
-                          hintText:
-                              HelperFunction.dateFormatter('$selectedDate'),
+                          hintText: HelperFunction.dateFormatter(
+                            '$selectedDate',
+                          ),
                           onTap: () => selectDate(context),
                           isEnable: true,
                           readOnly: true,
@@ -98,7 +102,9 @@ class _AddSchoolEventComponentState extends State<AddSchoolEventComponent> {
                 ),
                 SizedBox(height: size.height * 0.04),
                 CustomAppButton(
-                    buttonTitle: 'Save', onTap: () => value.submitSchoolEvent())
+                  buttonTitle: 'Save',
+                  onTap: () => value.submitSchoolEvent(),
+                ),
               ],
             ),
           );

@@ -13,11 +13,9 @@ class MarkUnverifiedComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 8.0,
-        ),
-        child: Consumer<MarkUnverifiedProvider>(builder: (context, value, _) {
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Consumer<MarkUnverifiedProvider>(
+        builder: (context, value, _) {
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -25,64 +23,78 @@ class MarkUnverifiedComponent extends StatelessWidget {
                 SizedBox(height: size.height * 0.02),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 25.0),
+                    horizontal: 20,
+                    vertical: 25.0,
+                  ),
                   decoration: BoxDecoration(
-                      color: AppColors.secondaryColor,
-                      borderRadius: BorderRadius.circular(20.0)),
+                    color: AppColors.secondaryColor,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                   child: Form(
                     key: value.formKey,
                     child: Column(
                       children: [
                         CustomTextFormField(
-                            controller: value.studentIdController,
-                            inputType: TextInputType.number,
-                            inputAction: TextInputAction.next,
-                            hintText: 'Roll Number'),
+                          controller: value.studentIdController,
+                          inputType: TextInputType.number,
+                          inputAction: TextInputAction.next,
+                          hintText: 'Roll Number',
+                        ),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
-                            controller: value.studentNameController,
-                            inputType: TextInputType.text,
-                            inputAction: TextInputAction.next,
-                            hintText: 'Student Name',
-                            validator: value.validator),
+                          controller: value.studentNameController,
+                          inputType: TextInputType.text,
+                          inputAction: TextInputAction.next,
+                          hintText: 'Student Name',
+                          validator: value.validator,
+                        ),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
-                            hintText: 'Select Section',
-                            controller: value.sectionController,
-                            onTap: () => value.sectionBottomSheet(),
-                            readOnly: true,
-                            validator: value.validator,
-                            suffixWidget: const ImageIcon(
-                                AssetImage('images/dropdown_icon.png'),
-                                color: AppColors.whiteColor)),
+                          hintText: 'Select Section',
+                          controller: value.sectionController,
+                          onTap: () => value.sectionBottomSheet(),
+                          readOnly: true,
+                          validator: value.validator,
+                          suffixWidget: const ImageIcon(
+                            AssetImage('assets/images/dropdown_icon.png'),
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
-                            hintText: 'Select Reason',
-                            controller: value.reasonController,
-                            onTap: () => value.reasonsBottomSheet(),
-                            readOnly: true,
-                            validator: value.validator,
-                            suffixWidget: const ImageIcon(
-                                AssetImage('images/dropdown_icon.png'),
-                                color: AppColors.whiteColor)),
+                          hintText: 'Select Reason',
+                          controller: value.reasonController,
+                          onTap: () => value.reasonsBottomSheet(),
+                          readOnly: true,
+                          validator: value.validator,
+                          suffixWidget: const ImageIcon(
+                            AssetImage('assets/images/dropdown_icon.png'),
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
-                            controller: value.remarksController,
-                            inputType: TextInputType.text,
-                            inputAction: TextInputAction.done,
-                            maxLines: 3,
-                            hintText: 'Remarks',
-                            validator: value.validator),
+                          controller: value.remarksController,
+                          inputType: TextInputType.text,
+                          inputAction: TextInputAction.done,
+                          maxLines: 3,
+                          hintText: 'Remarks',
+                          validator: value.validator,
+                        ),
                       ],
                     ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.02),
                 CustomAppButton(
-                    buttonTitle: 'Save', onTap: () => value.markUnverified())
+                  buttonTitle: 'Save',
+                  onTap: () => value.markUnverified(),
+                ),
               ],
             ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

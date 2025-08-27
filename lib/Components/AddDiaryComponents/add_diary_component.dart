@@ -52,8 +52,9 @@ class _AddDiaryComponentState extends State<AddDiaryComponent> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Consumer<DiaryProvider>(builder: (context, value, _) {
+      padding: const EdgeInsets.all(20.0),
+      child: Consumer<DiaryProvider>(
+        builder: (context, value, _) {
           value.base64String = base64;
           value.fileName = fileName;
           return SingleChildScrollView(
@@ -79,9 +80,11 @@ class _AddDiaryComponentState extends State<AddDiaryComponent> {
                                         elevation: 2,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Text(files.length.toInt() == 0
-                                              ? ''
-                                              : fileName.toString()),
+                                          child: Text(
+                                            files.length.toInt() == 0
+                                                ? ''
+                                                : fileName.toString(),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -90,8 +93,9 @@ class _AddDiaryComponentState extends State<AddDiaryComponent> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
+                                        padding: const EdgeInsets.only(
+                                          right: 10,
+                                        ),
                                         child: InkWell(
                                           onTap: () => uploadAttachment(),
                                           child: Container(
@@ -99,16 +103,18 @@ class _AddDiaryComponentState extends State<AddDiaryComponent> {
                                             width: 40,
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.grey),
+                                                color: Colors.grey,
+                                              ),
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                               shape: BoxShape.rectangle,
                                             ),
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: const EdgeInsets.all(
+                                                8.0,
+                                              ),
                                               child: Image.asset(
-                                                'images/attachment.png',
+                                                'assets/images/attachment.png',
                                               ),
                                             ),
                                           ),
@@ -141,16 +147,18 @@ class _AddDiaryComponentState extends State<AddDiaryComponent> {
                                         height: 40,
                                         width: 40,
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          border: Border.all(
+                                            color: Colors.grey,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                           shape: BoxShape.rectangle,
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Image.asset(
-                                            'images/attachment.png',
+                                            'assets/images/attachment.png',
                                           ),
                                         ),
                                       ),
@@ -177,51 +185,63 @@ class _AddDiaryComponentState extends State<AddDiaryComponent> {
                 SizedBox(height: size.height * 0.01),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 25.0),
+                    horizontal: 20,
+                    vertical: 25.0,
+                  ),
                   decoration: BoxDecoration(
-                      color: AppColors.secondaryColor,
-                      borderRadius: BorderRadius.circular(20.0)),
+                    color: AppColors.secondaryColor,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                   child: Form(
                     key: value.formKey,
                     child: Column(
                       children: [
                         CustomTextFormField(
-                            hintText: 'Select Section',
-                            controller: value.sectionController,
-                            onTap: () => value.sectionBottomSheet(),
-                            readOnly: true,
-                            validator: HelperFunction.validator,
-                            suffixWidget: const ImageIcon(
-                                AssetImage('images/dropdown_icon.png'),
-                                color: AppColors.whiteColor)),
+                          hintText: 'Select Section',
+                          controller: value.sectionController,
+                          onTap: () => value.sectionBottomSheet(),
+                          readOnly: true,
+                          validator: HelperFunction.validator,
+                          suffixWidget: const ImageIcon(
+                            AssetImage('assets/images/dropdown_icon.png'),
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
-                            hintText: 'Select Subject',
-                            controller: value.subjectController,
-                            onTap: () => value.subjectBottomSheet(),
-                            readOnly: true,
-                            validator: HelperFunction.validator,
-                            suffixWidget: const ImageIcon(
-                                AssetImage('images/dropdown_icon.png'),
-                                color: AppColors.whiteColor)),
+                          hintText: 'Select Subject',
+                          controller: value.subjectController,
+                          onTap: () => value.subjectBottomSheet(),
+                          readOnly: true,
+                          validator: HelperFunction.validator,
+                          suffixWidget: const ImageIcon(
+                            AssetImage('assets/images/dropdown_icon.png'),
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(
-                            controller: value.descriptionController,
-                            inputType: TextInputType.text,
-                            inputAction: TextInputAction.done,
-                            maxLines: 3,
-                            hintText: 'Description',
-                            validator: HelperFunction.validator),
+                          controller: value.descriptionController,
+                          inputType: TextInputType.text,
+                          inputAction: TextInputAction.done,
+                          maxLines: 3,
+                          hintText: 'Description',
+                          validator: HelperFunction.validator,
+                        ),
                       ],
                     ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.04),
                 CustomAppButton(
-                    buttonTitle: 'Save', onTap: () => value.submitDiary())
+                  buttonTitle: 'Save',
+                  onTap: () => value.submitDiary(),
+                ),
               ],
             ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

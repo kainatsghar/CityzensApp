@@ -13,8 +13,10 @@ class NotificationService {
       tokenId: token,
       group: group,
     );
-    var response = await ApiBaseHelper.httpPostRequest("Notifications",
-        body: request.toJson());
+    var response = await ApiBaseHelper.httpPostRequest(
+      "Notifications",
+      body: request.toJson(),
+    );
     return NotificationResponse.fromJson(response);
   }
 }

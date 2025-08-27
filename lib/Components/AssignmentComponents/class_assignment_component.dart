@@ -88,41 +88,62 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
                             ),
                           ),
                         ),
-                        itemBuilder: (context, AssignmentRecords element) => Card(
-                          child: CustomExpansionTile(
-                            title: '${element.subject}',
-                            children: <Widget>[
-                              ListTile(title: Text(element.description!)),
-                              (element.fileName != null &&
-                                      element.fileName != "")
-                                  ? ListTile(
-                                      title: GestureDetector(
-                                        onTap: () {
-                                          // Replace 'image.png' with your actual file path
-
-                                          _launchFile(element.fileName ?? '');
-                                        },
-                                        child: Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.download,
-                                            ), // Download icon
-                                            const SizedBox(width: 8), // Spacer
-                                            Text(
-                                              element.fileName ?? '',
-                                              style: const TextStyle(
-                                                color:
-                                                    AppColors.primaryDarkColor,
-                                              ),
-                                            ), // File name text
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox.shrink(),
-                            ],
-                          ),
-                        ),
+                        itemBuilder: (context, AssignmentRecords element) =>
+                            Card(
+                              child: CustomExpansionTile(
+                                title: '${element.subject}',
+                                children: <Widget>[
+                                  ListTile(title: Text(element.description!)),
+                                  (element.fileName != null &&
+                                          element.fileName != "")
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 16.0,
+                                            right: 16,
+                                            bottom: 16,
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              _launchFile(
+                                                element.fileName ?? '',
+                                              );
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    element.fileName ?? '',
+                                                    style: const TextStyle(
+                                                      color: AppColors
+                                                          .primaryDarkColor,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                IconButton.filled(
+                                                  style: IconButton.styleFrom(
+                                                    backgroundColor: AppColors
+                                                        .primaryDarkColor,
+                                                  ),
+                                                  onPressed: () {
+                                                    _launchFile(
+                                                      element.fileName ?? '',
+                                                    );
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.download,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ],
+                              ),
+                            ),
                         order: GroupedListOrder.DESC,
                       ),
                     ),

@@ -19,7 +19,7 @@ class CustomLogoCover extends StatelessWidget {
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(16.0),
         ),
-        child: Image.asset('images/tcs_logo_white.png'),
+        child: Image.asset('assets/images/tcs_logo_white.png'),
       ),
     );
   }
