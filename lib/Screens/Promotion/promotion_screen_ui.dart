@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,16 @@ class PromotionScreenUI extends StatefulWidget {
 class _PromotionScreenUIState extends State<PromotionScreenUI>
     with SingleTickerProviderStateMixin {
   VideoPlayerController? _videoController;
-  late final Timer _timer;
+  Timer? _timer;
   double _progress = 0.0;
+  // Change _progressDuration to a shorter interval for smoother updates
   final _progressDuration = const Duration(milliseconds: 50);
+  DateTime? _startTime;
+  bool _isPaused = false;
+
+  // Add these variables to track pause time
+  DateTime? _pauseStartTime;
+  Duration _totalPausedDuration = Duration.zero;
 
   @override
   void initState() {
@@ -52,7 +60,10 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
+    _startTime = null;
+    _totalPausedDuration = Duration.zero;
+    _pauseStartTime = null;
     _videoController?.removeListener(_onVideoProgress);
     _videoController?.dispose();
     super.dispose();
@@ -78,11 +89,16 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
   }
 
   void _startTimer() {
+    _timer?.cancel();
+    _startTime ??= DateTime.now();
+
     _timer = Timer.periodic(_progressDuration, (timer) {
-      if (mounted) {
+      if (mounted && !_isPaused) {
         setState(() {
+          final currentDuration =
+              DateTime.now().difference(_startTime!) - _totalPausedDuration;
           _progress =
-              (timer.tick * _progressDuration.inMilliseconds) /
+              currentDuration.inMilliseconds /
               Duration(
                 seconds: widget.args.promotionModel.displayDuration,
               ).inMilliseconds;
@@ -103,43 +119,80 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
   }
 
   void _navigateToNextScreen() {
-    _timer.cancel();
+    _timer?.cancel();
     AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
+  }
+
+  void _handleTapDown(TapDownDetails details) {
+    setState(() {
+      _isPaused = true;
+      _pauseStartTime = DateTime.now();
+      _timer?.cancel();
+      if (_videoController?.value.isPlaying ?? false) {
+        _videoController?.pause();
+      }
+    });
+  }
+
+  void _handleTapUp(TapUpDetails details) {
+    if (_isPaused) {
+      if (_pauseStartTime != null) {
+        _totalPausedDuration += DateTime.now().difference(_pauseStartTime!);
+      }
+      setState(() {
+        _isPaused = false;
+        _pauseStartTime = null;
+        if (_videoController != null) {
+          _videoController?.play();
+        } else {
+          _startTimer();
+        }
+      });
+    }
+  }
+
+  void _handleTapCancel() {
+    _handleTapUp(TapUpDetails(kind: PointerDeviceKind.touch));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: _buildSkipButton(),
-      body: Stack(
-        children: [
-          // Content (Image or Video)
-          if (widget.args.promotionModel.promotionType.toLowerCase() ==
-                  PromotionType.video.displayName.toLowerCase() &&
-              _videoController?.value.isInitialized == true)
-            Center(
-              child: AspectRatio(
-                aspectRatio: _videoController!.value.aspectRatio,
-                child: VideoPlayer(_videoController!),
-              ),
-            )
-          else if (widget.args.promotionModel.promotionType.toLowerCase() ==
-              PromotionType.image.displayName.toLowerCase())
-            FadeIn(
-              child: Center(
-                child: SingleChildScrollView(
-                  child: CachedNetworkImage(
-                    imageUrl: widget.args.promotionModel.url!,
-                    fit: BoxFit.contain,
-                    placeholder: (context, url) =>
-                        const Center(child: CustomLoader()),
-                    errorWidget: (context, url, error) =>
-                        Center(child: ShowError(errorText: error.toString())),
+      body: GestureDetector(
+        onTapDown: _handleTapDown,
+        onTapUp: _handleTapUp,
+        onTapCancel: _handleTapCancel,
+        child: Stack(
+          children: [
+            // Content (Image or Video)
+            if (widget.args.promotionModel.promotionType.toLowerCase() ==
+                    PromotionType.video.displayName.toLowerCase() &&
+                _videoController?.value.isInitialized == true)
+              Center(
+                child: AspectRatio(
+                  aspectRatio: _videoController!.value.aspectRatio,
+                  child: VideoPlayer(_videoController!),
+                ),
+              )
+            else if (widget.args.promotionModel.promotionType.toLowerCase() ==
+                PromotionType.image.displayName.toLowerCase())
+              FadeIn(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.args.promotionModel.url!,
+                      fit: BoxFit.contain,
+                      placeholder: (context, url) =>
+                          const Center(child: CustomLoader()),
+                      errorWidget: (context, url, error) =>
+                          Center(child: ShowError(errorText: error.toString())),
+                    ),
                   ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
