@@ -39,14 +39,16 @@ class CustomCoverImage extends StatelessWidget {
                 ),
               ],
             ),
-            // const SizedBox(height: 8.0),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 23.0,
-                letterSpacing: 1.5,
-                color: AppColors.whiteColor,
-                fontWeight: FontWeight.bold,
+            FittedBox(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 23.0,
+                  letterSpacing: 1.5,
+                  color: AppColors.whiteColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
               ),
             ),
           ],

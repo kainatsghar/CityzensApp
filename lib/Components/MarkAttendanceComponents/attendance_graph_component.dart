@@ -9,7 +9,7 @@ class AttendanceGraphComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
       child: Consumer<MarkAttendanceProvider>(
         builder: (context, value, _) {

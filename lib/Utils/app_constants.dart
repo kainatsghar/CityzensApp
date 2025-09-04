@@ -9,7 +9,7 @@ class AppConstants {
   static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
   static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
 
-  static const String appVersion = '1.12.22';
+  static const String appVersion = '1.12.23';
   static const String exceptionMessage =
       "Something Went Wrong, Please Try Again Later";
   static const String markAttendanceMessage = "Please Mark Complete Attendance";

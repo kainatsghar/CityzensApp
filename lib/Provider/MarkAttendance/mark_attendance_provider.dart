@@ -118,8 +118,16 @@ class MarkAttendanceProvider with ChangeNotifier {
     studentListResponse = listResponse;
     saveAttendanceResponse = ResponseMessage();
     for (int i = 0; i < studentListResponse.studentList!.length; i++) {
-      studentListResponse.studentList![i].day = 'P';
-      studentListResponse.studentList![i].attnTypeId = 1;
+      if (studentListResponse.studentList![i].day == null ||
+          studentListResponse.studentList![i].day!.isEmpty ||
+          attendanceOptions.any(
+            (e) =>
+                e.title!.characters.first !=
+                studentListResponse.studentList![i].day,
+          )) {
+        studentListResponse.studentList![i].day = 'P';
+        studentListResponse.studentList![i].attnTypeId = 1;
+      }
     }
     notifyListeners();
   }
