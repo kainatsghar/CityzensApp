@@ -7,6 +7,7 @@ class AppNavigation {
       GlobalKey<NavigatorState>();
 
   static Future<dynamic> navigateTo(String routeName, {Object? arguments}) {
+    debugPrint('[AN] Navigating to $routeName : ${arguments.toString()}');
     return navigatorKey.currentState!.pushNamed(
       routeName,
       arguments: arguments ?? const ScreenArguments(),
@@ -17,6 +18,7 @@ class AppNavigation {
     String routeName, {
     Object? arguments,
   }) {
+    debugPrint('[AN] Navigating to $routeName : ${arguments.toString()}');
     return navigatorKey.currentState!.pushReplacementNamed(
       routeName,
       arguments: arguments ?? const ScreenArguments(),
@@ -24,6 +26,7 @@ class AppNavigation {
   }
 
   static Future<dynamic> pushAndKillAll(String routeName, {Object? arguments}) {
+    debugPrint('[AN] Navigating to $routeName : ${arguments.toString()}');
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
       routeName,
       ModalRoute.withName(AppNavRoutes.initialRoute),

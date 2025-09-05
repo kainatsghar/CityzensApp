@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Model/Firebase/Promotion/promotion_model.dart';
-import 'package:tcs_app/PushNotifications/push_notifications.dart';
+// import 'package:tcs_app/PushNotifications/push_notifications_manager.dart';
 import 'package:tcs_app/Repositories/Promotion/promotion_repository.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
@@ -25,7 +25,7 @@ class SplashScreenUIState extends State<SplashScreenUI> {
   @override
   void initState() {
     super.initState();
-    PushNotificationsManager.init();
+    // PushNotificationsManager.init();
 
     PromotionRepository().getActivePromotion().then((value) {
       if (value != null) {

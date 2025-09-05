@@ -94,8 +94,9 @@ class FirebaseMaster {
   }
 
   Future<void> _initRemoteConfig() async {
+    final rc = FirebaseRemoteConfig.instance;
+
     try {
-      final rc = FirebaseRemoteConfig.instance;
       await rc.setConfigSettings(
         RemoteConfigSettings(
           fetchTimeout: const Duration(seconds: 20),
@@ -105,26 +106,49 @@ class FirebaseMaster {
         ),
       );
       await rc.setDefaults({'apiBaseUrl': AppConstants.apiBaseURL});
-      final activated = await rc.fetchAndActivate();
-      if (activated) _applyRemoteConfig(rc, rc.getAll().keys.toSet());
+    } catch (e, s) {
+      debugPrint('[FM] Remote Config settings failed: $e');
+      await recordNonFatal(e, s);
+    }
 
+    // Try fetch + activate separately
+    try {
+      await rc.fetch();
+      final didActivate = await rc.activate();
+      if (didActivate) {
+        _applyRemoteConfig(rc, rc.getAll().keys.toSet());
+      }
+    } catch (e, s) {
+      debugPrint('[FM] Remote Config initial fetch failed: $e');
+      await recordNonFatal(e, s);
+      // still continue to listen for updates
+    }
+
+    // Always attach listener even if fetch failed
+    try {
       await _rcUpdateSub?.cancel();
       _rcUpdateSub = rc.onConfigUpdated.listen((event) async {
         try {
           final didActivate = await rc.activate();
-          if (didActivate) _applyRemoteConfig(rc, event.updatedKeys);
+          if (didActivate) {
+            _applyRemoteConfig(rc, event.updatedKeys);
+            if (kDebugMode) {
+              debugPrint(
+                '[FM] Remote Config updated: ${event.updatedKeys.join(', ')}',
+              );
+            }
+          }
         } catch (e, s) {
           await recordNonFatal(e, s);
         }
       });
-
-      _status['remoteConfig'] = true;
-      if (kDebugMode) debugPrint('[FM] Remote Config initialized');
     } catch (e, s) {
-      _status['remoteConfig'] = false;
-      debugPrint('[FM] Remote Config init failed: $e');
+      debugPrint('[FM] Remote Config listener failed: $e');
       await recordNonFatal(e, s);
     }
+
+    _status['remoteConfig'] = true;
+    debugPrint('[FM] Remote Config initialized');
   }
 
   void _applyRemoteConfig(FirebaseRemoteConfig rc, Set<String> keys) {
@@ -135,8 +159,8 @@ class FirebaseMaster {
             (url.startsWith('http://') || url.startsWith('https://'))) {
           final clean = url.replaceAll(RegExp(r'/api/?$'), '');
           AppConstants.baseUrl = clean;
-          AppConstants.apiBaseURL = '\$clean/api/';
-          debugPrint('[FM] API URL updated: \${AppConstants.apiBaseURL}');
+          AppConstants.apiBaseURL = '$clean/api/';
+          debugPrint('[FM] API URL updated: ${AppConstants.apiBaseURL}');
         } else {
           FirebaseCrashlytics.instance.recordError(
             'Invalid apiBaseUrl',
@@ -157,7 +181,7 @@ class FirebaseMaster {
 
       _onMessageSub = FirebaseMessaging.onMessage.listen((message) async {
         // Forward to PushNotifications to show local notification (main isolate)
-        await PushNotifications.instance.showFromForeground(message: message);
+        await PushNotifications.instance.showFromForegroundMessage(message);
       });
 
       _onMessageOpenedAppSub = FirebaseMessaging.onMessageOpenedApp.listen((

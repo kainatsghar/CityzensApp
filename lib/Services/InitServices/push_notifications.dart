@@ -1,96 +1,14 @@
-import 'dart:math';
 import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
-import 'package:tcs_app/firebase_options.dart';
 
-// Background handler entry-point (must be top-level and visible to the runtime)
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // Minimal safe background initialization
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  final FlutterLocalNotificationsPlugin backgroundLocal =
-      FlutterLocalNotificationsPlugin();
-
-  // Initialize locally in background isolate (minimal)
-  final androidInit = const AndroidInitializationSettings(
-    '@mipmap/ic_notification',
-  );
-  final iosInit = const DarwinInitializationSettings();
-  try {
-    await backgroundLocal.initialize(
-      InitializationSettings(android: androidInit, iOS: iosInit),
-    );
-  } catch (e) {
-    // continue even if init fails; we try to show notification below
-    if (kDebugMode) debugPrint('[PN_BG] Local initialize failed: $e');
-  }
-
-  // Create channel on background isolate if possible (no prefs)
-  if (Platform.isAndroid) {
-    try {
-      final androidPlugin = backgroundLocal
-          .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin
-          >();
-      await androidPlugin?.createNotificationChannel(
-        const AndroidNotificationChannel(
-          'cityzens_notifications',
-          'Cityzens Notifications',
-          importance: Importance.max,
-          playSound: true,
-          showBadge: true,
-        ),
-      );
-    } catch (e) {
-      if (kDebugMode) debugPrint('[PN_BG] createChannel error: $e');
-    }
-  }
-
-  // Build and show a notification directly
-  final title = message.notification?.title ?? '';
-  final body = message.notification?.body ?? '';
-
-  final androidDetails = AndroidNotificationDetails(
-    'cityzens_notifications',
-    'Cityzens Notifications',
-    priority: Priority.high,
-    importance: Importance.max,
-    playSound: true,
-    icon: '@mipmap/ic_notification',
-    largeIcon: const DrawableResourceAndroidBitmap('@mipmap/ic_notification'),
-  );
-  const iosDetails = DarwinNotificationDetails(
-    presentAlert: true,
-    presentBadge: true,
-    presentSound: true,
-  );
-  final details = NotificationDetails(android: androidDetails, iOS: iosDetails);
-
-  try {
-    await backgroundLocal.show(
-      Random().nextInt(0x7FFFFFFF),
-      title,
-      body,
-      details,
-      payload: message.data['route'] ?? message.data['openUrl'],
-    );
-    if (kDebugMode) {
-      debugPrint('[PN_BG] Notification shown from background (title: $title)');
-    }
-  } catch (e) {
-    if (kDebugMode) {
-      debugPrint('[PN_BG] Error showing background notification: $e');
-    }
-  }
-}
+import '../../Routes/app_navigation.dart';
+import '../../Routes/app_navigation_routes.dart';
+import '../../Utils/helper_function.dart';
 
 class PushNotifications {
   PushNotifications._();
@@ -98,6 +16,7 @@ class PushNotifications {
 
   final FlutterLocalNotificationsPlugin _local =
       FlutterLocalNotificationsPlugin();
+
   bool _initialized = false;
   bool _channelCreated = false;
   bool _cachedEnabled = true;
@@ -109,65 +28,50 @@ class PushNotifications {
   Future<void> init() async {
     if (_initialized) return;
 
-    await _initializeLocalNotifications();
+    await _initializeLocal();
+    await _requestPermission();
 
-    final messaging = FirebaseMessaging.instance;
-
-    // Request permission
-    try {
-      final settings = await messaging.requestPermission(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-      if (kDebugMode) {
-        debugPrint(
-          '[PN] Notification permission: ${settings.authorizationStatus}',
-        );
-      }
-    } catch (e) {
-      debugPrint('[PN] Permission request failed: $e');
-    }
-
-    // cache pref
     _cachedEnabled = await _readEnabledPref();
 
-    // Foreground presentation (iOS)
-    try {
-      await messaging.setForegroundNotificationPresentationOptions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-    } catch (e) {
-      debugPrint('[PN] setForegroundNotificationPresentationOptions error: $e');
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+
+    // Foreground messages
+    FirebaseMessaging.onMessage.listen(showFromForegroundMessage);
+
+    // Opened messages
+    FirebaseMessaging.onMessageOpenedApp.listen(handleNotificationTap);
+
+    // Terminated case
+    final initial = await FirebaseMessaging.instance.getInitialMessage();
+    if (initial != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        handleNotificationTap(initial);
+      });
     }
 
     _initialized = true;
-    if (kDebugMode) {
-      debugPrint('[PN] PushNotifications initialized (main isolate)');
-    }
+    _log('[PN] PushNotifications initialized');
   }
 
-  Future<void> _initializeLocalNotifications() async {
+  Future<void> _initializeLocal() async {
     final android = const AndroidInitializationSettings(
       '@mipmap/ic_notification',
     );
     final ios = const DarwinInitializationSettings();
     final settings = InitializationSettings(android: android, iOS: ios);
 
-    try {
-      await _local.initialize(
-        settings,
-        onDidReceiveNotificationResponse: (details) {
-          final payload = details.payload;
-          if (payload == null) return;
-          _handleLocalPayload(payload);
-        },
-      );
-    } catch (e) {
-      debugPrint('[PN] Local notifications init error: $e');
-    }
+    await _local.initialize(
+      settings,
+      onDidReceiveNotificationResponse: (details) {
+        final payload = details.payload;
+        if (payload != null) _handlePayload(payload);
+      },
+    );
 
     if (Platform.isAndroid && !_channelCreated) {
       final androidPlugin = _local
@@ -187,7 +91,20 @@ class PushNotifications {
     }
   }
 
-  Future<void> showFromForeground({required RemoteMessage message}) async {
+  Future<void> _requestPermission() async {
+    try {
+      final settings = await FirebaseMessaging.instance.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+      _log('[PN] Permission: ${settings.authorizationStatus}');
+    } catch (e) {
+      _log('[PN] Permission request failed: $e');
+    }
+  }
+
+  Future<void> showFromForegroundMessage(RemoteMessage message) async {
     if (!await isEnabled()) return;
     await _show(
       message.notification?.title ?? '',
@@ -197,7 +114,6 @@ class PushNotifications {
   }
 
   Future<void> showFromBackgroundSafe(RemoteMessage message) async {
-    // Compatibility wrapper - background handler uses its own implementation
     await _show(
       message.notification?.title ?? '',
       message.notification?.body ?? '',
@@ -225,63 +141,87 @@ class PushNotifications {
       iOS: iosDetails,
     );
 
-    try {
-      await _local.show(
-        Random().nextInt(0x7FFFFFFF),
-        title,
-        body,
-        details,
-        payload: payload,
-      );
-      if (kDebugMode) {
-        debugPrint('[PN] Local notification shown (title: $title)');
-      }
-    } catch (e) {
-      debugPrint('[PN] Error showing notification: $e');
-    }
+    await _local.show(
+      Random().nextInt(0x7FFFFFFF),
+      title,
+      body,
+      details,
+      payload: payload,
+    );
+    _log('[PN] Notification shown (title: $title)');
   }
 
   Future<void> handleNotificationTap(RemoteMessage message) async {
-    final route = message.data['route'];
-    final openUrl = message.data['openUrl'];
-    if (openUrl != null && openUrl.isNotEmpty) {
-      HelperFunction.launchURL(openUrl);
+    if (message.data.isEmpty) {
+      _log('[PN] No payload in tapped notification');
       return;
     }
-    if (route != null && route.isNotEmpty) {
-      _navigateTo(route);
-    }
-  }
 
-  Future<void> handleNotificationTapFromPayload(String payload) async {
-    if (payload.startsWith('http')) {
-      HelperFunction.launchURL(payload);
+    _log('[PN] Handling payload: ${message.data}');
+
+    final route = message.data['route'];
+
+    if (route != null) {
+      _handlePayload(route, extras: message.data);
+    } else if (message.data.containsKey('openUrl')) {
+      HelperFunction.launchURL(message.data['openUrl']!);
+      return;
     } else {
-      _navigateTo(payload);
+      _log('[PN] Unknown payload: ${message.data}');
     }
   }
 
-  void _handleLocalPayload(String payload) {
-    if (payload.startsWith('http')) {
-      HelperFunction.launchURL(payload);
-    } else {
-      _navigateTo(payload);
+  void _handlePayload(String route, {Map<String, dynamic>? extras}) {
+    _log('[PN] Executing payload: $route with extras: $extras');
+
+    switch (route) {
+      // case 'Challan':
+      //   if (extras?['studentId'] != null) {
+      //     final id = extras!['studentId'];
+      //     AppNavigation.navigateTo(
+      //       AppNavRoutes.feeChallansRoute,
+      //       arguments: {'studentId': id},
+      //     );
+      //   } else {
+      //     AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute);
+      //   }
+      //   break;
+
+      case 'Diary':
+        AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute);
+        break;
+
+      case 'Classwork':
+        AppNavigation.navigateTo(AppNavRoutes.studentAssignmentRoute);
+        break;
+
+      default:
+        if (AppNavRoutes.isRouteAvailable(route)) {
+          AppNavigation.navigateTo(route, arguments: extras);
+        } else {
+          _log('[PN] Unknown payload: $route');
+        }
     }
   }
 
-  void _navigateTo(String route) {
-    if (route == 'Diary') {
-      AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute);
-    } else if (route == 'Classwork') {
-      AppNavigation.navigateTo(AppNavRoutes.studentAssignmentRoute);
-    } else {
-      if (AppNavRoutes.isRouteAvailable(route)) AppNavigation.navigateTo(route);
-    }
-  }
+  // Future<void> handleNotificationTap(RemoteMessage message) async {
+  //   final payload = message.data['route'] ?? message.data['openUrl'];
+  //   if (payload != null) _handlePayload(payload);
+  // }
 
-  Future<bool> isEnabled() async {
-    return _cachedEnabled;
-  }
+  // void _handlePayload(String payload) {
+  //   if (payload.startsWith('http')) {
+  //     HelperFunction.launchURL(payload);
+  //   } else if (payload == 'Diary') {
+  //     AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute);
+  //   } else if (payload == 'Classwork') {
+  //     AppNavigation.navigateTo(AppNavRoutes.studentAssignmentRoute);
+  //   } else if (AppNavRoutes.isRouteAvailable(payload)) {
+  //     AppNavigation.navigateTo(payload);
+  //   }
+  // }
+
+  Future<bool> isEnabled() async => _cachedEnabled;
 
   Future<void> setEnabled(bool enabled) async {
     final prefs = await SharedPreferences.getInstance();
@@ -292,5 +232,9 @@ class PushNotifications {
   Future<bool> _readEnabledPref() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_prefsKey) ?? true;
+  }
+
+  void _log(String msg) {
+    if (kDebugMode) debugPrint(msg);
   }
 }

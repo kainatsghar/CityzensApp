@@ -59,6 +59,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
         final localGradeId = value.gradeId?.toString() ?? '';
         return SafeArea(
+          top: false,
           child: Scaffold(
             appBar: CustomAppBar(
               title: localData.userData!.userType == 'Parent'
