@@ -134,4 +134,36 @@ class HelperFunction {
       return value;
     }
   }
+
+  static Future<void> sendEmail(String email) async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+      // query: encodeQueryParameters(<String, String>{'subject': 'App Feedback'}),
+    );
+
+    await launchUrl(emailLaunchUri);
+  }
+
+  static String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map(
+          (e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}',
+        )
+        .join('&');
+  }
+
+  static String userType(AppUserType type) {
+    switch (type) {
+      case AppUserType.student:
+        return "Student";
+      case AppUserType.parent:
+        return "Parent";
+      case AppUserType.teacher:
+        return "Teacher";
+    }
+  }
 }
+
+enum AppUserType { student, parent, teacher }

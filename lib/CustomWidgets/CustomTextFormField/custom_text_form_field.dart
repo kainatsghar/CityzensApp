@@ -23,90 +23,99 @@ class CustomTextFormField extends StatelessWidget {
   final bool isDense;
   final TextCapitalization? textCapitalization;
 
-  const CustomTextFormField(
-      {super.key,
-      this.hintText = "",
-      this.obscureText = false,
-      this.isEnable = true,
-      this.inputType,
-      this.controller,
-      this.node,
-      this.validator,
-      this.onChange,
-      this.inputAction = TextInputAction.done,
-      this.readOnly = false,
-      this.onTap,
-      this.prefixIcon,
-      this.suffixWidget,
-      this.autoValidateMode = AutovalidateMode.onUserInteraction,
-      this.maxLines = 1,
-      this.labelText,
-      this.isDense = false,
-      this.inputFormatter = const [],
-      this.textCapitalization});
+  const CustomTextFormField({
+    super.key,
+    this.hintText = "",
+    this.obscureText = false,
+    this.isEnable = true,
+    this.inputType,
+    this.controller,
+    this.node,
+    this.validator,
+    this.onChange,
+    this.inputAction = TextInputAction.done,
+    this.readOnly = false,
+    this.onTap,
+    this.prefixIcon,
+    this.suffixWidget,
+    this.autoValidateMode = AutovalidateMode.onUserInteraction,
+    this.maxLines = 1,
+    this.labelText,
+    this.isDense = false,
+    this.inputFormatter = const [],
+    this.textCapitalization,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        inputFormatters: inputFormatter,
-        autovalidateMode: autoValidateMode,
-        textCapitalization: textCapitalization ?? TextCapitalization.none,
-        keyboardType: inputType ?? TextInputType.text,
-        obscureText: obscureText,
-        textInputAction: inputAction ?? TextInputAction.next,
-        controller: controller,
-        maxLines: maxLines,
-        focusNode: node,
-        onTap: onTap,
-        onTapOutside: (event) {
-          FocusScope.of(context).unfocus();
-        },
-        readOnly: readOnly,
-        decoration: InputDecoration(
-            fillColor: AppColors.whiteColor,
-            filled: true,
-            focusColor: AppColors.whiteColor,
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: const BorderSide(color: AppColors.whiteColor)),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: const BorderSide(color: AppColors.whiteColor)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: const BorderSide(color: AppColors.whiteColor)),
-            isDense: isDense,
-            enabled: isEnable,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            errorMaxLines: 5,
-            suffixIcon: suffixWidget == null
-                ? null
-                : Container(
-                    decoration: const BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(8.0),
-                            bottomRight: Radius.circular(8.0))),
-                    child: suffixWidget),
-            prefixIcon: prefixIcon != null
-                ? Container(
-                    margin: const EdgeInsets.only(right: 3.0),
-                    decoration: const BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8.0),
-                            bottomLeft: Radius.circular(8.0))),
-                    child: Icon(prefixIcon, color: AppColors.whiteColor))
-                : null,
-            hintText: hintText,
-            labelStyle: const TextStyle(fontSize: 14.0),
-            hintStyle: const TextStyle(
-                fontSize: 14.0) /*,
-            labelText: labelText*/
-            ),
+      inputFormatters: inputFormatter,
+      autovalidateMode: autoValidateMode,
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
+      keyboardType: inputType ?? TextInputType.text,
+      obscureText: obscureText,
+      textInputAction: inputAction ?? TextInputAction.next,
+      controller: controller,
+      maxLines: maxLines,
+      focusNode: node,
+      onTap: onTap,
+      onTapOutside: (event) {
+        FocusScope.of(context).unfocus();
+      },
+      readOnly: readOnly,
+      decoration: InputDecoration(
+        fillColor: AppColors.whiteColor,
+        filled: true,
+        focusColor: AppColors.whiteColor,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: const BorderSide(color: AppColors.whiteColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: const BorderSide(color: AppColors.whiteColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: const BorderSide(color: AppColors.whiteColor),
+        ),
+        isDense: isDense,
         enabled: isEnable,
-        validator: validator,
-        onChanged: onChange);
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        errorMaxLines: 5,
+        suffixIcon: suffixWidget == null
+            ? null
+            : Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(8.0),
+                    bottomRight: Radius.circular(8.0),
+                  ),
+                ),
+                child: suffixWidget,
+              ),
+        prefixIcon: prefixIcon != null
+            ? Container(
+                margin: const EdgeInsets.only(right: 3.0),
+                decoration: const BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    bottomLeft: Radius.circular(8.0),
+                  ),
+                ),
+                child: Icon(prefixIcon, color: AppColors.whiteColor),
+              )
+            : null,
+        hintText: hintText,
+        labelStyle: const TextStyle(fontSize: 14.0),
+        hintStyle: const TextStyle(fontSize: 14.0) /*,
+            labelText: labelText*/,
+      ),
+      enabled: isEnable,
+      validator: validator,
+      onChanged: onChange,
+    );
   }
 }

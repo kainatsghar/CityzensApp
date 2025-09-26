@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Model/Firebase/Promotion/promotion_model.dart';
 // import 'package:tcs_app/PushNotifications/push_notifications_manager.dart';
@@ -25,26 +26,26 @@ class SplashScreenUIState extends State<SplashScreenUI> {
   @override
   void initState() {
     super.initState();
-    // PushNotificationsManager.init();
 
     PromotionRepository().getActivePromotion().then((value) {
       if (value != null) {
         _activePromotion = value;
       }
-    });
-
-    Future.delayed(const Duration(seconds: 3), () {
-      if (_activePromotion != null &&
-          _activePromotion!.isLive &&
-          _activePromotion!.startDate!.isBefore(DateTime.now()) &&
-          _activePromotion!.endDate!.isAfter(DateTime.now())) {
-        AppNavigation.pushReplacementTo(
-          AppNavRoutes.promotionRoute,
-          arguments: PromotionArgs(promotionModel: _activePromotion!),
-        );
-      } else {
-        AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
-      }
+      Future.delayed(const Duration(seconds: 3), () {
+        if (_activePromotion != null &&
+            ((_activePromotion!.isLive &&
+                    kReleaseMode &&
+                    _activePromotion!.startDate!.isBefore(DateTime.now()) &&
+                    _activePromotion!.endDate!.isAfter(DateTime.now())) ||
+                (kDebugMode && _activePromotion!.isTesting))) {
+          AppNavigation.pushReplacementTo(
+            AppNavRoutes.promotionRoute,
+            arguments: PromotionArgs(promotionModel: _activePromotion!),
+          );
+        } else {
+          AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
+        }
+      });
     });
   }
 

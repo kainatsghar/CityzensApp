@@ -65,7 +65,6 @@ class DefaultFirebaseOptions {
     projectId: 'thecityschoolapp',
     databaseURL: 'https://thecityschoolapp.firebaseio.com',
     storageBucket: 'thecityschoolapp.firebasestorage.app',
-    iosClientId: '603906180654-gthctikn73di288fa9ih7bjpoeauoq27.apps.googleusercontent.com',
     iosBundleId: 'com.tcs.tcsapp',
   );
 

@@ -17,7 +17,6 @@ import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/Utils/validators.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class RegistrationProvider with ChangeNotifier {
   final regFormKey = GlobalKey<FormState>();
@@ -248,13 +247,6 @@ class RegistrationProvider with ChangeNotifier {
         onSelect: (v) => onUserTypeSelection(v),
       ),
     );
-  }
-
-  Future<void> launchEmail() async {
-    const address = 'mailto:appfeedback@csn.edu.pk';
-    if (await canLaunchUrl(Uri.parse(address))) {
-      await launchUrl(Uri.parse(address));
-    }
   }
 
   void disposeData() {

@@ -8,9 +8,12 @@ part of 'promotion_model.dart';
 
 _PromotionModel _$PromotionModelFromJson(Map<String, dynamic> json) =>
     _PromotionModel(
+      id: json['id'] as String,
       title: json['title'] as String?,
       description: json['description'] as String?,
       isLive: json['isLive'] as bool? ?? false,
+      isTesting: json['isTesting'] as bool? ?? false,
+      isFullScreen: json['isFullScreen'] as bool? ?? false,
       promotionType: json['promotionType'] as String? ?? 'image',
       url: json['url'] as String?,
       displayDuration: (json['displayDuration'] as num?)?.toInt() ?? 10,
@@ -20,9 +23,12 @@ _PromotionModel _$PromotionModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$PromotionModelToJson(_PromotionModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'description': instance.description,
       'isLive': instance.isLive,
+      'isTesting': instance.isTesting,
+      'isFullScreen': instance.isFullScreen,
       'promotionType': instance.promotionType,
       'url': instance.url,
       'displayDuration': instance.displayDuration,

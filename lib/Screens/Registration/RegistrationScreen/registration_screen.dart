@@ -5,6 +5,7 @@ import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/input_formatters.dart';
 import 'package:tcs_app/Utils/validators.dart';
@@ -119,24 +120,31 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                         style: TextStyle(height: 1.5),
                       ),
                       Text(
-                        '\u2022 For assistance, please reach out to your respective School Administrator or email us on:',
+                        '\u2022 For assistance, please reach out to your respective School Administrator or contact TCS Support.',
                         style: TextStyle(height: 1.5),
                       ),
                     ],
                   ),
                   SizedBox(height: size.height * 0.01),
-                  InkWell(
-                    onTap: value.launchEmail,
-                    child: const Text(
-                      'appfeedback@csn.edu.pk',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        fontStyle: FontStyle.italic,
-                        color: AppColors.primaryColor,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
+                  TextButton(
+                    onPressed: () {
+                      AppNavigation.navigateTo(AppNavRoutes.appFeedbackRoute);
+                    },
+                    child: const Text('Contact Support'),
                   ),
+                  // InkWell(
+                  // onTap:
+                  // HelperFunction.sendEmail(AppConstants.appSupportEmail),
+                  // child: Text(
+                  //   AppConstants.appSupportEmail,
+                  //   style: TextStyle(
+                  //     fontSize: 15.0,
+                  //     fontStyle: FontStyle.italic,
+                  //     color: AppColors.primaryColor,
+                  //     decoration: TextDecoration.underline,
+                  //   ),
+                  // ),
+                  // ),
                 ],
               );
             },

@@ -26,9 +26,12 @@ class TimestampConverter implements JsonConverter<DateTime?, dynamic> {
 @freezed
 abstract class PromotionModel with _$PromotionModel {
   factory PromotionModel({
+    required String id,
     String? title,
     String? description,
     @Default(false) bool isLive,
+    @Default(false) bool isTesting,
+    @Default(false) bool isFullScreen,
     @Default('image') String promotionType,
     String? url,
     @Default(10) int displayDuration,

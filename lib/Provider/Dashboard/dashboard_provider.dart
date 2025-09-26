@@ -39,12 +39,10 @@ class DashboardProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // Validator
   String? validator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Required*";
-    } else {
-      return null;
-    }
+    if (value == null || value.isEmpty) return "Required*";
+    return null;
   }
 
   String? passwordValidator(String? value) {
@@ -122,18 +120,18 @@ class DashboardProvider with ChangeNotifier {
   //   LaunchReview.launch(writeReview: false, iOSAppId: '1630070364');
   // }
 
-  Future<void> launchEmail() async {
-    const address = 'mailto:appfeedback@csn.edu.pk';
-    try {
-      if (await canLaunchUrl(Uri.parse(address))) {
-        await launchUrl(Uri.parse(address));
-      } else {
-        throw 'Could not launch $address';
-      }
-    } catch (_) {
-      throw 'Could not launch $address';
-    }
-  }
+  // Future<void> launchEmail() async {
+  //   const address = 'mailto:appfeedback@csn.edu.pk';
+  //   try {
+  //     if (await canLaunchUrl(Uri.parse(address))) {
+  //       await launchUrl(Uri.parse(address));
+  //     } else {
+  //       throw 'Could not launch $address';
+  //     }
+  //   } catch (_) {
+  //     throw 'Could not launch $address';
+  //   }
+  // }
 
   Future<void> loadVersionName() async {
     try {

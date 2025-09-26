@@ -18,8 +18,9 @@ class EyeOnYourChildScreen extends StatefulWidget {
 class _EyeOnYourChildScreenState extends State<EyeOnYourChildScreen> {
   late Future eyeOnYourChildRecords;
   var provider = Provider.of<EyeOnYourChildProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -38,19 +39,20 @@ class _EyeOnYourChildScreenState extends State<EyeOnYourChildScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'EYE ON YOUR CHILD'),
       body: FutureBuilder(
-          future: eyeOnYourChildRecords,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const EyeOnYourChildComponent();
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: eyeOnYourChildRecords,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const EyeOnYourChildComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
     );
   }
 }

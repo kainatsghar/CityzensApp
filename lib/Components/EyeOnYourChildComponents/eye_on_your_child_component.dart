@@ -147,129 +147,165 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                             right: 5.0,
                             left: 5.0,
                           ),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        size.width *
-                                        0.45, // Set the width of the selection card
-                                    child: ListView.builder(
-                                      physics: const ClampingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: responseData
-                                          .studentUpdateDetails
-                                          ?.length,
-                                      itemBuilder: (_, index) {
-                                        final updates = responseData
-                                            .studentUpdateDetails?[index];
-                                        return SizedBox(
-                                          height: size.height * 0.04,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              value.setSelectedUpdate(
-                                                updates.updateName ?? '',
-                                                updates.id ?? 0,
-                                              );
-                                            },
-                                            child: Card(
-                                              color:
-                                                  value.selectedUpdate ==
-                                                      updates!.updateName
-                                                          .toString()
-                                                  ? AppColors.primaryDarkColor
-                                                  : AppColors.secondaryColor,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(0),
-                                              ),
-                                              elevation: 2,
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  updates.updateName ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color:
-                                                        value.selectedUpdate ==
-                                                            updates.updateName
-                                                                .toString()
-                                                        ? AppColors.whiteColor
-                                                        : AppColors.blackColor,
-                                                    fontWeight: FontWeight.bold,
+                          child: SizedBox(
+                            height: size.height * 0.41,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            size.width *
+                                            0.45, // Set the width of the selection card
+                                        child: ListView.builder(
+                                          physics:
+                                              const ClampingScrollPhysics(),
+                                          padding: EdgeInsets.zero,
+                                          itemCount: responseData
+                                              .studentUpdateDetails
+                                              ?.length,
+                                          itemBuilder: (_, index) {
+                                            final updates = responseData
+                                                .studentUpdateDetails?[index];
+                                            return SizedBox(
+                                              height: size.height * 0.04,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  value.setSelectedUpdate(
+                                                    updates.updateName ?? '',
+                                                    updates.id ?? 0,
+                                                  );
+                                                },
+                                                child: Card(
+                                                  color:
+                                                      value.selectedUpdate ==
+                                                          updates!.updateName
+                                                              .toString()
+                                                      ? AppColors
+                                                            .primaryDarkColor
+                                                      : AppColors
+                                                            .secondaryColor,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          0,
+                                                        ),
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: size.width * 0.47,
-                                    height: size.height * 0.41,
-                                    child: ListView.builder(
-                                      physics: const ClampingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount:
-                                          responseData.studentDetails?.length,
-                                      itemBuilder: (_, index) {
-                                        final child =
-                                            responseData.studentDetails?[index];
-                                        return SizedBox(
-                                          height: size.height * 0.04,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              value.setSelectedChild(
-                                                child.studentName ?? '',
-                                                child.studentId ?? 0,
-                                              );
-                                            },
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(0),
-                                              ),
-                                              elevation: 0,
-                                              // ignore: unrelated_type_equality_checks
-                                              color:
-                                                  value.selectedChild ==
-                                                      child!.studentName
-                                                  ? AppColors.primaryDarkColor
-                                                  : const Color.fromARGB(
-                                                      255,
-                                                      212,
-                                                      210,
-                                                      210,
+                                                  elevation: 2,
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      updates.updateName ?? '',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color:
+                                                            value.selectedUpdate ==
+                                                                updates
+                                                                    .updateName
+                                                                    .toString()
+                                                            ? AppColors
+                                                                  .whiteColor
+                                                            : AppColors
+                                                                  .blackColor,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  child.studentName.toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    // ignore: unrelated_type_equality_checks
-                                                    color:
-                                                        value.selectedChild ==
-                                                            child.studentName
-                                                        ? AppColors.whiteColor
-                                                        : AppColors.blackColor,
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: size.width * 0.47,
+                                        // height: size.height * 0.41,
+                                        child: ListView.builder(
+                                          physics:
+                                              const ClampingScrollPhysics(),
+                                          padding: EdgeInsets.zero,
+                                          // shrinkWrap: true,
+                                          itemCount: responseData
+                                              .studentDetails
+                                              ?.length,
+                                          itemBuilder: (_, index) {
+                                            final child = responseData
+                                                .studentDetails?[index];
+                                            return SizedBox(
+                                              height: size.height * 0.04,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  value.setSelectedChild(
+                                                    child.studentName ?? '',
+                                                    child.studentId ?? 0,
+                                                  );
+                                                },
+                                                child: Card(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          0,
+                                                        ),
+                                                  ),
+                                                  elevation: 0,
+                                                  // ignore: unrelated_type_equality_checks
+                                                  color:
+                                                      value.selectedChild ==
+                                                          child!.studentName
+                                                      ? AppColors
+                                                            .primaryDarkColor
+                                                      : const Color.fromARGB(
+                                                          255,
+                                                          212,
+                                                          210,
+                                                          210,
+                                                        ),
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: SingleChildScrollView(
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.symmetric(
+                                                              horizontal: 8.0,
+                                                            ),
+                                                        child: Text(
+                                                          child.studentName
+                                                              .toString()
+                                                              .trim(),
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            // ignore: unrelated_type_equality_checks
+                                                            color:
+                                                                value.selectedChild ==
+                                                                    child
+                                                                        .studentName
+                                                                ? AppColors
+                                                                      .whiteColor
+                                                                : AppColors
+                                                                      .blackColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(height: size.height * 0.02),

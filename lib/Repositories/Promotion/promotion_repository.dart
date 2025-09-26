@@ -27,6 +27,23 @@ class PromotionRepository {
     }
   }
 
+  // Get active promotions
+  Future<List<PromotionModel>?> getActivePromotionList() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('promotions')
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        return snapshot.docs.map(fromFirestore).toList();
+      }
+      return null;
+    } catch (e) {
+      debugPrint('Failed to get active promotion: $e');
+      return null;
+    }
+  }
+
   // Stream active promotions
   Stream<PromotionModel?> streamActivePromotion() {
     return FirebaseFirestore.instance
@@ -39,5 +56,19 @@ class PromotionRepository {
           }
           return null;
         });
+  }
+
+  Future<void> addPromotion(PromotionModel promotion) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('promotions')
+          .doc(
+            promotion.id,
+          ) // you can also use .add() if you want Firestore to generate an ID
+          .set(promotion.toJson());
+      debugPrint("Promotion added successfully ✅");
+    } catch (e) {
+      debugPrint("Failed to add promotion: $e");
+    }
   }
 }

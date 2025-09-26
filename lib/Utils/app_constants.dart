@@ -1,13 +1,14 @@
 class AppConstants {
   static String apiBaseURL = "$baseUrl/api/";
-  static String baseUrl = apiTestBaseURL;
+  static String baseUrl = apiLiveBaseURL;
   // static String baseUrl = kDebugMode
   //     ? apiTestBaseURL
   //     : apiLiveBaseURL; // Use test URL in debug mode, live URL in release
 
   //We are using this URL for Firebase Remote Config "apiBaseUrl"
-  static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
-  static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
+  // static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
+  static const String apiLiveBaseURL = "https://cityzenapi.csn.edu.pk";
+  // static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
 
   static const String appVersion = '1.12.23';
   static const String exceptionMessage =
@@ -28,6 +29,8 @@ class AppConstants {
       "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
   static const String paymentGatewayURL =
       'https://billing.thecityschool.edu.pk/challan';
+
+  static const String appSupportEmail = 'appsupport@csn.edu.pk';
 
   /// Shared Preferences Keys
   static const String userDataKey = 'userData';

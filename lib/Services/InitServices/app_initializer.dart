@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
 import 'firebase_master.dart';
-import 'firestore_manager.dart';
 import 'push_notifications.dart';
 import '../../firebase_options.dart';
 
@@ -12,7 +11,6 @@ class AppInitializer {
   AppInitializer._();
 
   static final FirebaseMaster _firebaseMaster = FirebaseMaster.instance;
-  static final FirestoreManager _firestoreManager = FirestoreManager.instance;
   static final PushNotifications push = PushNotifications.instance;
 
   static FirebaseAnalyticsObserver get analyticsObserver =>
@@ -45,8 +43,6 @@ class AppInitializer {
       await _firebaseMaster.initialize();
       await push.init();
 
-      unawaited(_firestoreManager.start());
-
       _bootstrapped = true;
       _bootstrapCompleter!.complete();
       _log('[AppInit] bootstrapAll complete ✅');
@@ -64,7 +60,6 @@ class AppInitializer {
   static Future<void> dispose() async {
     if (!_bootstrapped) return;
     await _firebaseMaster.dispose();
-    await _firestoreManager.dispose();
     _bootstrapped = false;
     _bootstrapCompleter = null;
     _log('[AppInit] disposed');

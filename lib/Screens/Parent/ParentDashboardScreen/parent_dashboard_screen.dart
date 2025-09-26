@@ -50,7 +50,15 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
                 if (snapshot.hasData) {
                   return const MultiChildComponent();
                 } else {
-                  return ShowError(errorText: '${snapshot.error}');
+                  return SingleChildScrollView(
+                    child: SizedBox(
+                      height:
+                          MediaQuery.sizeOf(context).height -
+                          kToolbarHeight -
+                          MediaQuery.paddingOf(context).top,
+                      child: ShowError(errorText: '${snapshot.error}'),
+                    ),
+                  );
                 }
             }
           },

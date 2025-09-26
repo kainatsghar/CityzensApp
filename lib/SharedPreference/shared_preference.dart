@@ -1,12 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppLocalData {
-  static Future<void> setStringPrefValue({required String key,required String value}) async {
+  static Future<void> setStringPrefValue({
+    required String key,
+    required String value,
+  }) async {
     final pref = await SharedPreferences.getInstance();
     pref.setString(key, value);
   }
 
-  static Future<void> setBoolPrefValue({required String key,required bool value}) async {
+  static Future<void> setBoolPrefValue({
+    required String key,
+    required bool value,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool(key, value);
   }

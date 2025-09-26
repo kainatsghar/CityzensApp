@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -157,32 +158,38 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: _buildSkipButton(),
-      body: GestureDetector(
-        onTapDown: _handleTapDown,
-        onTapUp: _handleTapUp,
-        onTapCancel: _handleTapCancel,
-        child: Stack(
-          children: [
-            // Content (Image or Video)
-            if (widget.args.promotionModel.promotionType.toLowerCase() ==
-                    PromotionType.video.displayName.toLowerCase() &&
-                _videoController?.value.isInitialized == true)
-              Center(
-                child: AspectRatio(
-                  aspectRatio: _videoController!.value.aspectRatio,
-                  child: VideoPlayer(_videoController!),
-                ),
-              )
-            else if (widget.args.promotionModel.promotionType.toLowerCase() ==
-                PromotionType.image.displayName.toLowerCase())
-              FadeIn(
-                child: Center(
-                  child: SingleChildScrollView(
+    final insets = MediaQuery.of(context).systemGestureInsets;
+    bool isGestureNav = insets.left > 0 || insets.right > 0;
+    return SafeArea(
+      top: false,
+      bottom: Platform.isIOS ? false : !isGestureNav,
+      child: Scaffold(
+        floatingActionButton: _buildSkipButton(),
+        body: GestureDetector(
+          onTapDown: _handleTapDown,
+          onTapUp: _handleTapUp,
+          onTapCancel: _handleTapCancel,
+          child: Stack(
+            children: [
+              // Content (Image or Video)
+              if (widget.args.promotionModel.promotionType.toLowerCase() ==
+                      PromotionType.video.displayName.toLowerCase() &&
+                  _videoController?.value.isInitialized == true)
+                Center(
+                  child: AspectRatio(
+                    aspectRatio: _videoController!.value.aspectRatio,
+                    child: VideoPlayer(_videoController!),
+                  ),
+                )
+              else if (widget.args.promotionModel.promotionType.toLowerCase() ==
+                  PromotionType.image.displayName.toLowerCase())
+                Positioned.fill(
+                  child: FadeIn(
                     child: CachedNetworkImage(
                       imageUrl: widget.args.promotionModel.url!,
-                      fit: BoxFit.contain,
+                      fit: widget.args.promotionModel.isFullScreen
+                          ? BoxFit.fill
+                          : BoxFit.contain,
                       placeholder: (context, url) =>
                           const Center(child: CustomLoader()),
                       errorWidget: (context, url, error) =>
@@ -190,8 +197,8 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
