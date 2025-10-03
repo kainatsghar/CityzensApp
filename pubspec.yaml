@@ -16,7 +16,7 @@ description: "Cityzen Application."
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.12.23+80
+version: 1.12.23+83
 
 environment:
   sdk: ^3.8.1
@@ -131,19 +131,27 @@ flutter:
   fonts:
     - family: NexaText
       fonts:
-        - asset: assets/fonts/NexaText-Regular.ttf
+        - asset: assets/fonts/NexaText/NexaText-Regular.ttf
           weight: 500
-        - asset: assets/fonts/NexaText-Light.ttf
+        - asset: assets/fonts/NexaText/NexaText-Light.ttf
           weight: 400
-        - asset: assets/fonts/NexaText-Bold.ttf
+        - asset: assets/fonts/NexaText/NexaText-Bold.ttf
           weight: 700
     - family: Axiforma
       fonts:
-        - asset: assets/fonts/Axiforma-Regular.ttf
+        - asset: assets/fonts/Axiforma/Axiforma-Regular.ttf
           weight: 500
-        - asset: assets/fonts/Axiforma-Light.ttf
+        - asset: assets/fonts/Axiforma/Axiforma-Light.ttf
           weight: 400
-        - asset: assets/fonts/Axiforma-Bold.ttf
+        - asset: assets/fonts/Axiforma/Axiforma-Bold.ttf
+          weight: 700
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
+          weight: 500
+        - asset: assets/fonts/Nunito/Nunito-Light.ttf
+          weight: 400
+        - asset: assets/fonts/Nunito/Nunito-Bold.ttf
           weight: 700
     
   #

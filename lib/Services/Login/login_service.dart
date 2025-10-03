@@ -12,53 +12,53 @@ class LoginService {
     String userType,
   ) async {
     //String? fcmToken = await FirebaseMessaging.instance.getToken();
-
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-    // Request permission for notifications
-    // ignore: unused_local_variable
-    try {
-      NotificationSettings settings = await messaging.requestPermission(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-
-      if (settings.authorizationStatus != AuthorizationStatus.authorized &&
-          settings.authorizationStatus != AuthorizationStatus.provisional) {
-        debugPrint('User declined or has not accepted permission');
-      }
-    } on Exception catch (e) {
-      debugPrint('Error requesting notification permission: $e');
-    }
-
     String? fcmToken;
     String? iosFcmToken;
+    if (!kIsWeb) {
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    if (Platform.isIOS) {
-      // Ensure token is generated
+      // Request permission for notifications
+      // ignore: unused_local_variable
       try {
-        await Future.delayed(const Duration(seconds: 2));
-        fcmToken = await messaging.getAPNSToken();
-        // ignore: avoid_print
-        //print("APNS Token: $fcmToken");
-        iosFcmToken = await messaging.getToken();
-        // ignore: avoid_print
-        //print("FCM Token: $iosFcmToken");
+        NotificationSettings settings = await messaging.requestPermission(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
 
-        // if (fcmToken == null) {
-        //   //print("APNS Token has not been generated yet.");
-        // } else {
-        //   //print("APNS Token: $fcmToken");
-        // }
+        if (settings.authorizationStatus != AuthorizationStatus.authorized &&
+            settings.authorizationStatus != AuthorizationStatus.provisional) {
+          debugPrint('User declined or has not accepted permission');
+        }
       } on Exception catch (e) {
-        debugPrint('Error obtaining APNS Token: $e');
+        debugPrint('Error requesting notification permission: $e');
       }
-    }
-    try {
-      fcmToken = await messaging.getToken();
-    } on Exception catch (e) {
-      debugPrint('Error obtaining FCM Token: $e');
+
+      if (Platform.isIOS) {
+        // Ensure token is generated
+        try {
+          await Future.delayed(const Duration(seconds: 2));
+          fcmToken = await messaging.getAPNSToken();
+          // ignore: avoid_print
+          //print("APNS Token: $fcmToken");
+          iosFcmToken = await messaging.getToken();
+          // ignore: avoid_print
+          //print("FCM Token: $iosFcmToken");
+
+          // if (fcmToken == null) {
+          //   //print("APNS Token has not been generated yet.");
+          // } else {
+          //   //print("APNS Token: $fcmToken");
+          // }
+        } on Exception catch (e) {
+          debugPrint('Error obtaining APNS Token: $e');
+        }
+      }
+      try {
+        fcmToken = await messaging.getToken();
+      } on Exception catch (e) {
+        debugPrint('Error obtaining FCM Token: $e');
+      }
     }
 
     debugPrint("FCM Token: $fcmToken");
@@ -67,10 +67,11 @@ class LoginService {
       username: username,
       password: password,
       userType: userType,
-      fcmToken: fcmToken,
-      iosFcmToken: iosFcmToken,
-      isIOSDevice: Platform.isIOS,
+      fcmToken: fcmToken ?? '',
+      iosFcmToken: iosFcmToken ?? '',
+      isIOSDevice: kIsWeb ? false : Platform.isIOS,
     );
+
     var response = await ApiBaseHelper.httpPostRequest(
       "Auth",
       body: loginRequest.toJson(),

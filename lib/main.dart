@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:tcs_app/Utils/media_query_util.dart';
 
 import 'Provider/app_providers.dart';
 import 'Routes/app_navigation.dart';
@@ -20,11 +22,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  await AppInitializer.ensureCoreInitialized();
-  runApp(const TCSApp());
-  unawaited(AppInitializer.bootstrapAll());
+  if (kIsWeb) {
+    runApp(const TCSApp());
+  } else {
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    await AppInitializer.ensureCoreInitialized();
+    runApp(const TCSApp());
+    unawaited(AppInitializer.bootstrapAll());
+  }
 }
 
 class TCSApp extends StatelessWidget {
@@ -32,6 +37,7 @@ class TCSApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryUtil.init(context);
     return MultiProvider(
       providers: appProviders,
       child: MaterialApp(
@@ -42,7 +48,7 @@ class TCSApp extends StatelessWidget {
         initialRoute: AppNavRoutes.initialRoute,
         navigatorKey: AppNavigation.navigatorKey,
         onGenerateRoute: RouteGenerator.generateRoute,
-        navigatorObservers: [AppInitializer.analyticsObserver],
+        navigatorObservers: !kIsWeb ? [AppInitializer.analyticsObserver] : [],
       ),
     );
   }

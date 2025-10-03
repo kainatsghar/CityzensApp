@@ -57,6 +57,9 @@ class ApiBaseHelper {
     } on TimeoutException {
       throw FetchDataException(AppConstants.slowInternetMsg);
     } catch (e) {
+      if (kDebugMode) {
+        log('Error: ${e.toString()}');
+      }
       throw FetchDataException(AppConstants.exceptionMessage);
     }
     if (kDebugMode) {

@@ -4,17 +4,22 @@ class StudentProfileResponse {
   bool? isException;
   List<Profile>? profile;
 
-  StudentProfileResponse(
-      {this.isSuccessful, this.message, this.isException, this.profile});
+  StudentProfileResponse({
+    this.isSuccessful,
+    this.message,
+    this.isException,
+    this.profile,
+  });
 
   factory StudentProfileResponse.fromJson(Map json) {
-    var list = json['profile']as List;
+    var list = json['profile'] as List;
     List<Profile> profileList = list.map((i) => Profile.fromJson(i)).toList();
     return StudentProfileResponse(
-        isSuccessful: json['IsSuccessful'],
-        message: json['Message'],
-        isException: json['IsServerException'],
-        profile: profileList);
+      isSuccessful: json['IsSuccessful'],
+      message: json['Message'],
+      isException: json['IsServerException'],
+      profile: profileList,
+    );
   }
 }
 
@@ -30,17 +35,18 @@ class Profile {
   String? center;
   String? className;
 
-  Profile(
-      {this.studentId,
-      this.name,
-      this.dateOfBirth,
-      this.address,
-      this.contactNo,
-      this.city,
-      this.fatherEmail,
-      this.region,
-      this.center,
-      this.className});
+  Profile({
+    this.studentId,
+    this.name,
+    this.dateOfBirth,
+    this.address,
+    this.contactNo,
+    this.city,
+    this.fatherEmail,
+    this.region,
+    this.center,
+    this.className,
+  });
 
   factory Profile.fromJson(Map json) {
     return Profile(
@@ -48,7 +54,7 @@ class Profile {
       name: json['fullname'],
       dateOfBirth: json['Date_Of_Birth'],
       address: json['Address'],
-      contactNo: json['Telephone_No'],
+      contactNo: json['PrimaryContactNo'] ?? json['Telephone_No'],
       city: json['City'],
       className: json['Class_Name'],
       center: json['Center_Name'],

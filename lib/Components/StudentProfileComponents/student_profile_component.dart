@@ -7,6 +7,7 @@ import 'package:tcs_app/Provider/StudentProfile/student_profile_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/Utils/media_query_util.dart';
 
 class StudentProfileComponent extends StatelessWidget {
   const StudentProfileComponent({super.key});
@@ -43,10 +44,12 @@ class StudentProfileComponent extends StatelessWidget {
                             HelperFunction.noNullStringText(
                               profile.first.name,
                             ).toUpperCase(),
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppColors.primaryTitleColor,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
+                              fontSize: MediaQueryUtil.getResponsiveFontSize(
+                                16.0,
+                              ),
                             ),
                           ),
                         ),

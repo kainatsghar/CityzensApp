@@ -278,31 +278,34 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen> {
               ),
 
               SizedBox(height: size.height * 0.02),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Note:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              SizedBox(
+                width: size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Note:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '\u2023 Please attach screenshots or documents if necessary in the email that will be generated.',
-                      style: TextStyle(height: 1.5),
-                    ),
-                    Text(
-                      "\u2023 Please provide valid contact details so that we can get back to you.",
-                      style: TextStyle(height: 1.5),
-                    ),
-                    Text(
-                      '\u2023 Your feedback is important to us and will be kept confidential.',
-                      style: TextStyle(height: 1.5),
-                    ),
-                  ],
+                      Text(
+                        '\u2023 Please attach screenshots or documents if necessary in the email that will be generated.',
+                        style: TextStyle(height: 1.5),
+                      ),
+                      Text(
+                        "\u2023 Please provide valid contact details so that we can get back to you.",
+                        style: TextStyle(height: 1.5),
+                      ),
+                      Text(
+                        '\u2023 Your feedback is important to us and will be kept confidential.',
+                        style: TextStyle(height: 1.5),
+                      ),
+                    ],
+                  ),
                 ),
               ),
 

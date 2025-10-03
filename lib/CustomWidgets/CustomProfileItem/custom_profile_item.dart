@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/media_query_util.dart';
 
 import '../../Utils/helper_function.dart';
 
@@ -38,9 +39,10 @@ class CustomProfileItem extends StatelessWidget {
           children: <Widget>[
             Text(
               '$title',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: AppColors.primaryTitleColor,
+                fontSize: MediaQueryUtil.getResponsiveFontSize(14),
               ),
               textAlign: TextAlign.center,
             ),
@@ -48,7 +50,10 @@ class CustomProfileItem extends StatelessWidget {
             Text(
               HelperFunction.noNullStringText(value),
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.black54),
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: MediaQueryUtil.getResponsiveFontSize(12),
+              ),
               maxLines: maxLines ?? 1,
               overflow: TextOverflow.ellipsis,
             ),

@@ -27,26 +27,33 @@ class SplashScreenUIState extends State<SplashScreenUI> {
   void initState() {
     super.initState();
 
-    PromotionRepository().getActivePromotion().then((value) {
-      if (value != null) {
-        _activePromotion = value;
-      }
+    if (kIsWeb) {
+      // Handle web-specific initialization here if needed
       Future.delayed(const Duration(seconds: 3), () {
-        if (_activePromotion != null &&
-            ((_activePromotion!.isLive &&
-                    kReleaseMode &&
-                    _activePromotion!.startDate!.isBefore(DateTime.now()) &&
-                    _activePromotion!.endDate!.isAfter(DateTime.now())) ||
-                (kDebugMode && _activePromotion!.isTesting))) {
-          AppNavigation.pushReplacementTo(
-            AppNavRoutes.promotionRoute,
-            arguments: PromotionArgs(promotionModel: _activePromotion!),
-          );
-        } else {
-          AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
-        }
+        AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
       });
-    });
+    } else {
+      PromotionRepository().getActivePromotion().then((value) {
+        if (value != null) {
+          _activePromotion = value;
+        }
+        Future.delayed(const Duration(seconds: 3), () {
+          if (_activePromotion != null &&
+              ((_activePromotion!.isLive &&
+                      kReleaseMode &&
+                      _activePromotion!.startDate!.isBefore(DateTime.now()) &&
+                      _activePromotion!.endDate!.isAfter(DateTime.now())) ||
+                  (kDebugMode && _activePromotion!.isTesting))) {
+            AppNavigation.pushReplacementTo(
+              AppNavRoutes.promotionRoute,
+              arguments: PromotionArgs(promotionModel: _activePromotion!),
+            );
+          } else {
+            AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
+          }
+        });
+      });
+    }
   }
 
   @override

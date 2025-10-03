@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/media_query_util.dart';
 
 class CustomDashboardButton extends StatelessWidget {
   final VoidCallback? onTap; // Made nullable to disable the button
@@ -22,7 +23,6 @@ class CustomDashboardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return GestureDetector(
       onTap: onTap,
       child: FadeInUp(
@@ -76,7 +76,9 @@ class CustomDashboardButton extends StatelessWidget {
                   left: leftAlign ?? -5,
                   child: Image.asset(
                     'assets/images/$imageName',
-                    height: imageHeight ?? size.height * 0.12,
+                    height:
+                        imageHeight ??
+                        MediaQueryUtil.getResponsivePercentageSize(12),
                   ),
                 ),
               ],

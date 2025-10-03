@@ -11,6 +11,7 @@ import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:tcs_app/Utils/media_query_util.dart';
 
 import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
 import '../../../Utils/app_colors.dart';
@@ -51,8 +52,13 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 6;
-    final double itemWidth = size.width / 2;
+    final double itemHeight =
+        ((MediaQueryUtil.isLandscape() ? size.width : size.height) -
+            kToolbarHeight -
+            24) /
+        6;
+    final double itemWidth =
+        (MediaQueryUtil.isLandscape() ? size.height : size.width) / 2;
 
     return Consumer<LocalDataProvider>(
       builder: (context, value, _) {
@@ -106,7 +112,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         CustomDashboardButton(
                           title: 'ATTENDANCE',
                           bottomAlign: -25,
-                          imageHeight: size.height * 0.13,
+                          imageHeight:
+                              MediaQueryUtil.getResponsivePercentageSize(13),
                           onTap: () {
                             if (gradeId == '19' ||
                                 gradeId == '20' ||
@@ -137,7 +144,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                           title: 'CLASSWORK\nASSIGNMENTS',
                           bottomAlign: -65,
                           leftAlign: -50,
-                          imageHeight: size.height * 0.20,
+                          imageHeight:
+                              MediaQueryUtil.getResponsivePercentageSize(20),
                           onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.studentAssignmentRoute,
                           ),
@@ -175,7 +183,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                           title: 'CLASS TEST\nRESULTS',
                           bottomAlign: -65,
                           leftAlign: -65,
-                          imageHeight: size.height * 0.24,
+                          imageHeight:
+                              MediaQueryUtil.getResponsivePercentageSize(24),
                           onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.studentClassTestResultRoute,
                           ),
@@ -194,7 +203,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                           title: 'CIRCULARS',
                           leftAlign: 3.0,
                           bottomAlign: -3,
-                          imageHeight: size.height * 0.1,
+                          imageHeight:
+                              MediaQueryUtil.getResponsivePercentageSize(10),
                           onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.notificationsRoute,
                           ),
@@ -203,7 +213,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         CustomDashboardButton(
                           title: 'LIBRARY',
                           bottomAlign: -45,
-                          imageHeight: size.height * 0.14,
+                          imageHeight:
+                              MediaQueryUtil.getResponsivePercentageSize(14),
                           onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.libraryRoute,
                           ),
@@ -214,7 +225,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                           title: 'TIMETABLE',
                           bottomAlign: -22,
                           leftAlign: -10,
-                          imageHeight: size.height * 0.13,
+                          imageHeight:
+                              MediaQueryUtil.getResponsivePercentageSize(13),
                           onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.teacherTimeTableRoute,
                           ),
@@ -224,7 +236,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         //     title: 'EVENT\nCALENDAR',
                         //     bottomAlign: -22,
                         //     leftAlign: -10,
-                        //     imageHeight: size.height * 0.13,
+                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(13),
                         //     onTap: () => AppNavigation.navigateTo(
                         //         AppNavRoutes.studentSchoolEventsRoute),
                         //     imageName: 'calendar.png'),
@@ -233,7 +245,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         //     title: 'SURVEY',
                         //     bottomAlign: -14,
                         //     leftAlign: -10,
-                        //     imageHeight: size.height * 0.11,
+                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(11),
                         //     onTap: () => AppNavigation.navigateTo(
                         //         AppNavRoutes.studentSurveyRoute),
                         //     imageName: 'survey.png'),
@@ -241,7 +253,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         //     title: 'INDIVIDUAL\nEDUCATION PLAN',
                         //     bottomAlign: -65,
                         //     leftAlign: -65,
-                        //     imageHeight: size.height * 0.24,
+                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(24),
                         //     onTap: () => AppNavigation.navigateTo(
                         //         AppNavRoutes.individualEducationPlanRoute),
                         //     imageName: 'class_result.png'),
@@ -260,7 +272,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         //       title: 'BOOK AN\nAPPOINTMENT',
                         //       bottomAlign: -24,
                         //       leftAlign: 0,
-                        //       imageHeight: size.height * 0.10,
+                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(10),
                         //       onTap: () => AppNavigation.navigateTo(
                         //           AppNavRoutes.bookanAppointmentRoute),
                         //       imageName: 'calendar_appoointment.png'),
@@ -275,7 +287,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                           title: 'EYE ON\nYOUR CHILD',
                           bottomAlign: -22,
                           leftAlign: 0,
-                          imageHeight: size.height * 0.10,
+                          imageHeight:
+                              MediaQueryUtil.getResponsivePercentageSize(10),
                           onTap: () => AppNavigation.navigateTo(
                             AppNavRoutes.parentEyeOnYourChildRoute,
                           ),
@@ -286,7 +299,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         //       title: 'WITHDRAWAL\nREQUEST',
                         //       bottomAlign: -22,
                         //       leftAlign: -15, //0,
-                        //       imageHeight: size.height * 0.08,
+                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(8),
                         //       onTap: () => AppNavigation.navigateTo(
                         //           AppNavRoutes.withdrawalRequestRoute),
                         //       imageName: 'withdrawal.png'),
@@ -295,7 +308,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         //       title: 'COMPLAINT\nQUERY',
                         //       bottomAlign: -20,
                         //       leftAlign: -15, //0,
-                        //       imageHeight: size.height * 0.10,
+                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(10),
                         //       onTap: null,
                         //       // () => AppNavigation.navigateTo(
                         //       //     AppNavRoutes.complaintQueryRoute),
@@ -329,7 +342,7 @@ class AttendanceDashboardCard extends StatelessWidget {
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       child: Container(
-        height: size.height * 0.18,
+        height: MediaQueryUtil.getResponsivePercentageSize(18),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.primaryColor,
@@ -375,7 +388,7 @@ class AttendanceDashboardCard extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: ((size.height * 0.18) - 32),
+              height: MediaQueryUtil.getResponsivePercentageSize(18) - 32,
               child: FutureBuilder(
                 future: attendanceService,
                 builder: (context, snapshot) {
@@ -406,7 +419,10 @@ class AttendanceDashboardCard extends StatelessWidget {
                               margin: EdgeInsets.zero,
                               shape: CircleBorder(),
                               child: CircularPercentIndicator(
-                                radius: size.height * 0.065,
+                                radius:
+                                    MediaQueryUtil.getResponsivePercentageSize(
+                                      6.5,
+                                    ),
                                 lineWidth: (size.height) / 90,
                                 percent: data / 100,
                                 progressColor: AppColors.successGreenColor,

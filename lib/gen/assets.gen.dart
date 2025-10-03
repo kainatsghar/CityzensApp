@@ -13,34 +13,6 @@ import 'package:flutter/widgets.dart';
 
 class $AssetsFontsGen {
   const $AssetsFontsGen();
-
-  /// File path: assets/fonts/Axiforma-Bold.ttf
-  String get axiformaBold => 'assets/fonts/Axiforma-Bold.ttf';
-
-  /// File path: assets/fonts/Axiforma-Light.ttf
-  String get axiformaLight => 'assets/fonts/Axiforma-Light.ttf';
-
-  /// File path: assets/fonts/Axiforma-Regular.ttf
-  String get axiformaRegular => 'assets/fonts/Axiforma-Regular.ttf';
-
-  /// File path: assets/fonts/NexaText-Bold.ttf
-  String get nexaTextBold => 'assets/fonts/NexaText-Bold.ttf';
-
-  /// File path: assets/fonts/NexaText-Light.ttf
-  String get nexaTextLight => 'assets/fonts/NexaText-Light.ttf';
-
-  /// File path: assets/fonts/NexaText-Regular.ttf
-  String get nexaTextRegular => 'assets/fonts/NexaText-Regular.ttf';
-
-  /// List of all assets
-  List<String> get values => [
-    axiformaBold,
-    axiformaLight,
-    axiformaRegular,
-    nexaTextBold,
-    nexaTextLight,
-    nexaTextRegular,
-  ];
 }
 
 class $AssetsImagesGen {
@@ -85,6 +57,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/b_grade.png
   AssetGenImage get bGrade => const AssetGenImage('assets/images/b_grade.png');
+
+  /// File path: assets/images/bg_circular_colored.png
+  AssetGenImage get bgCircularColored =>
+      const AssetGenImage('assets/images/bg_circular_colored.png');
 
   /// File path: assets/images/booking.png
   AssetGenImage get booking => const AssetGenImage('assets/images/booking.png');
@@ -250,6 +226,7 @@ class $AssetsImagesGen {
     attachment,
     attendanceIcon,
     bGrade,
+    bgCircularColored,
     booking,
     cGrade,
     calendar,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -57,23 +58,31 @@ class LocalDataProvider with ChangeNotifier {
   Future<Widget> authDecider() async {
     await loadStoredData();
 
-    return UpgradeAlert(
-      barrierDismissible: true,
-      upgrader: Upgrader(minAppVersion: AppConstants.appVersion),
-      showLater: true,
-      showIgnore: false,
-      dialogStyle: Platform.isIOS
-          ? UpgradeDialogStyle.cupertino
-          : UpgradeDialogStyle.material,
-      navigatorKey: AppNavigation.navigatorKey,
-      child: (userData!.tokenId == null)
-          ? const LoginScreen()
-          : (userData!.userType == 'Student')
-          ? const StudentDashboardScreen()
-          : (userData!.userType == 'Teacher')
-          ? const TeacherDashboardScreen()
-          : const ParentDashboardScreen(),
-    );
+    return kIsWeb
+        ? (userData!.tokenId == null)
+              ? const LoginScreen()
+              : (userData!.userType == 'Student')
+              ? const StudentDashboardScreen()
+              : (userData!.userType == 'Teacher')
+              ? const TeacherDashboardScreen()
+              : const ParentDashboardScreen()
+        : UpgradeAlert(
+            barrierDismissible: true,
+            upgrader: Upgrader(minAppVersion: AppConstants.appVersion),
+            showLater: true,
+            showIgnore: false,
+            dialogStyle: Platform.isIOS
+                ? UpgradeDialogStyle.cupertino
+                : UpgradeDialogStyle.material,
+            navigatorKey: AppNavigation.navigatorKey,
+            child: (userData!.tokenId == null)
+                ? const LoginScreen()
+                : (userData!.userType == 'Student')
+                ? const StudentDashboardScreen()
+                : (userData!.userType == 'Teacher')
+                ? const TeacherDashboardScreen()
+                : const ParentDashboardScreen(),
+          );
   }
 
   void setUserImage(File file) {

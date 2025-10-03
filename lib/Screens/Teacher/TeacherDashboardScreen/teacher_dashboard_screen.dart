@@ -8,6 +8,7 @@ import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/Utils/media_query_util.dart';
 
 import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 
@@ -30,8 +31,13 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 6;
-    final double itemWidth = size.width / 2;
+    final double itemHeight =
+        ((MediaQueryUtil.isLandscape() ? size.width : size.height) -
+            kToolbarHeight -
+            24) /
+        6;
+    final double itemWidth =
+        (MediaQueryUtil.isLandscape() ? size.height : size.width) / 2;
     return Consumer<LocalDataProvider>(
       builder: (context, value, _) {
         // final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
@@ -77,7 +83,9 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         title: 'TIMETABLE',
                         bottomAlign: -22,
                         leftAlign: -10,
-                        imageHeight: size.height * 0.13,
+                        imageHeight: MediaQueryUtil.getResponsivePercentageSize(
+                          13,
+                        ),
                         onTap: () => AppNavigation.navigateTo(
                           AppNavRoutes.teacherTimeTableSectionRoute,
                         ),
@@ -86,7 +94,9 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                       CustomDashboardButton(
                         title: 'MARK STUDENT\nATTENDANCE',
                         bottomAlign: -30,
-                        imageHeight: size.height * 0.13,
+                        imageHeight: MediaQueryUtil.getResponsivePercentageSize(
+                          13,
+                        ),
                         onTap: () => AppNavigation.navigateTo(
                           AppNavRoutes.teacherSectionRoute,
                         ),
@@ -115,7 +125,9 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         title: 'CLASSWORK\nASSIGNMENTS',
                         bottomAlign: -65,
                         leftAlign: -50,
-                        imageHeight: size.height * 0.20,
+                        imageHeight: MediaQueryUtil.getResponsivePercentageSize(
+                          20,
+                        ),
                         onTap: () => AppNavigation.navigateTo(
                           AppNavRoutes.teacherAssignmentRoute,
                         ),
@@ -125,7 +137,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                       //     title: 'SCHOOL\nEVENTS',
                       //     bottomAlign: -22,
                       //     leftAlign: -10,
-                      //     imageHeight: size.height * 0.13,
+                      //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(13),
                       //     onTap: () => AppNavigation.navigateTo(
                       //         AppNavRoutes.teacherSchoolEventsRoute),
                       //     imageName: 'calendar.png'),
@@ -133,7 +145,9 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         title: 'CLASS TEST\nRESULTS',
                         bottomAlign: -65,
                         leftAlign: -65,
-                        imageHeight: size.height * 0.24,
+                        imageHeight: MediaQueryUtil.getResponsivePercentageSize(
+                          24,
+                        ),
                         onTap: () => AppNavigation.navigateTo(
                           AppNavRoutes.teacherClassTestResultRoute,
                         ),
@@ -143,7 +157,9 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         title: 'CIRCULAR',
                         bottomAlign: -14,
                         leftAlign: -10,
-                        imageHeight: size.height * 0.11,
+                        imageHeight: MediaQueryUtil.getResponsivePercentageSize(
+                          11,
+                        ),
                         onTap: () => AppNavigation.navigateTo(
                           AppNavRoutes.addCircularRoute,
                         ),
@@ -153,7 +169,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                       //     title: 'APPOINTMENTS',
                       //     bottomAlign: -12,
                       //     leftAlign: 0,
-                      //     imageHeight: size.height * 0.10,
+                      //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(10),
                       //     onTap: () => AppNavigation.navigateTo(
                       //         AppNavRoutes.parentAppointmentRoute),
                       //     imageName: 'calendar_appoointment.png'),
@@ -167,7 +183,9 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         title: 'EYE ON\nYOUR CHILD',
                         bottomAlign: -22,
                         leftAlign: 0,
-                        imageHeight: size.height * 0.10,
+                        imageHeight: MediaQueryUtil.getResponsivePercentageSize(
+                          10,
+                        ),
                         onTap: () => AppNavigation.navigateTo(
                           AppNavRoutes.eyeOnYourChildRoute,
                         ),
@@ -178,7 +196,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                       //     title: 'SURVEY',
                       //     bottomAlign: -14,
                       //     leftAlign: -10,
-                      //     imageHeight: size.height * 0.11,
+                      //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(11),
                       //     onTap: () => AppNavigation.navigateTo(
                       //         AppNavRoutes.teacherSurveyRoute),
                       //     imageName: 'survey.png'),
