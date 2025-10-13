@@ -30,6 +30,8 @@ class AppConstants {
       "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
   static const String paymentGatewayURL =
       'https://billing.thecityschool.edu.pk/challan';
+  static const String paymentGatewayURLForParent =
+      'https://billing.thecityschool.edu.pk/getdirectchallan/';
 
   static const String appSupportEmail = 'appsupport@csn.edu.pk';
 

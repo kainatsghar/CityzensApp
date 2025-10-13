@@ -229,7 +229,7 @@ class RegistrationProvider with ChangeNotifier {
         ? '00000-0000000-0'
         : '00000000';
     userNameController = MaskedTextController(mask: controllerMask);
-    userNameLabel = v == 'Parent' ? 'CNIC Number' : 'Roll Number';
+    userNameLabel = v == 'Parent' ? 'Father CNIC Number' : 'Roll Number';
     userNameHint = v == 'Parent' ? 'xxxxx-xxxxxxx-x' : 'xxxxxxxx';
     if (!isInitialization) {
       notifyListeners();

@@ -101,7 +101,7 @@ class LoginProvider extends ChangeNotifier {
     userNameLabel = v == 'Teacher'
         ? 'Employee Number'
         : v == 'Parent'
-        ? 'CNIC Number'
+        ? 'Father CNIC Number'
         : 'Roll Number';
   }
 

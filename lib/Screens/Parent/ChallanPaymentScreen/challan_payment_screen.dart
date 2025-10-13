@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -21,6 +24,11 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
     }
   }
 
+  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
+
   @override
   void initState() {
     controller = WebViewController()
@@ -32,7 +40,13 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
           onPageFinished: (String url) => onProgressChange(loadingPercentage),
         ),
       )
-      ..loadRequest(Uri.parse(AppConstants.paymentGatewayURL));
+      ..loadRequest(
+        Uri.parse(
+          localDataProvider.userData!.userType == 'Parent'
+              ? '${AppConstants.paymentGatewayURLForParent}${localDataProvider.userData!.userName}'
+              : AppConstants.paymentGatewayURL,
+        ),
+      );
     super.initState();
   }
 

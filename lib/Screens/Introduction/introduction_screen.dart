@@ -16,6 +16,7 @@ class IntroductionScreenPage extends StatefulWidget {
 
 class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
   late VideoPlayerController _controller;
+  var isVideoCompleted = false;
 
   @override
   void initState() {
@@ -42,11 +43,12 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
   }
 
   void _onVideoProgress() {
-    if (_controller.value.isCompleted && mounted) {
+    if (_controller.value.isCompleted && mounted && !isVideoCompleted) {
       Future.delayed(
         const Duration(milliseconds: 100),
         () => AppNavigation.pushReplacementTo(AppNavRoutes.registrationRoute),
       );
+      isVideoCompleted = true;
     }
   }
 

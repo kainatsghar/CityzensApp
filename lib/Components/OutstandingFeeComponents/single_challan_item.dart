@@ -50,14 +50,13 @@ class SingleChallanItem extends StatelessWidget {
             CustomTitleValue(
               title: 'Original Fee',
               value: 'PKR ${record.originalFee}',
+            ),
+            CustomTitleValue(
+              title: 'Outstanding Fee',
+              value: 'PKR ${record.outstandingFee}',
               showDivider: false,
             ),
-            SizedBox(height: 8.0),
-            CustomAppButton(
-              buttonTitle: 'Pay Now',
-              onTap: () =>
-                  AppNavigation.navigateTo(AppNavRoutes.challanPaymentRoute),
-            ),
+            // SizedBox(height: 8.0),
           ],
         ),
       ),
