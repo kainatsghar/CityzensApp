@@ -30,7 +30,6 @@ class ApiBaseHelper {
   static Future<Map<String, dynamic>> httpPostRequest(
     String endPoint, {
     Object? body,
-
     String? token,
   }) async {
     http.Response response;

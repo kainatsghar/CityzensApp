@@ -3,12 +3,12 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomExpansionTile/custom_expansion_tile.dart';
+import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
-import '../../CustomWidgets/ShowCustomMessage/show_custom_message.dart';
 import '../../Model/Diary/diary_response.dart';
 import '../../Provider/Diary/diary_provider.dart';
 import '../../Provider/LocalData/local_data_provider.dart';
@@ -61,7 +61,9 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
           padding: const EdgeInsets.all(10),
           // child: diaryRecords == null || diaryRecords.isEmpty
           child: diaryRecords.isEmpty
-              ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+              ? const ShowMessageOnImage(
+                  message: 'No recent homework\n uploaded',
+                )
               : Column(
                   children: [
                     const CustomCoverImage(

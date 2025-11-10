@@ -12,6 +12,10 @@ class FcmTokenRefreshService {
   static Future<bool> refreshToken() async {
     //String? fcmToken = await FirebaseMessaging.instance.getToken();
 
+    if (kDebugMode) {
+      return false;
+    }
+
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     // Request permission for notifications

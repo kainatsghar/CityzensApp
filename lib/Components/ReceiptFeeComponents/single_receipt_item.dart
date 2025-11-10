@@ -32,10 +32,13 @@ class SingleReceiptItem extends StatelessWidget {
               title: 'Receipt Date',
               value: HelperFunction.dateFormatter(record.receiptDate!),
             ),
-            CustomTitleValue(title: 'Amount', value: 'PKR ${record.amount}'),
+            CustomTitleValue(
+              title: 'Amount',
+              value: HelperFunction().formatCurrency(record.amount!),
+            ),
             CustomTitleValue(
               title: 'Over Receipt',
-              value: '${record.overReceipt}',
+              value: HelperFunction().formatCurrency(record.overReceipt!),
               showDivider: false,
             ),
           ],

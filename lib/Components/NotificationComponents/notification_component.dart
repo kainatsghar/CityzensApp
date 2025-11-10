@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/NotificationComponents/notification_item.dart';
-import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_custom_message.dart';
+import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/Provider/Notifications/notification_provider.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
 
 import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
 
@@ -20,7 +19,13 @@ class NotificationComponent extends StatelessWidget {
             margin: EdgeInsets.only(top: size.height * 0.03),
             padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
             child: value.notifications!.isEmpty
-                ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+                ? ShowMessageOnImage(
+                    message:
+                        value.currentNotificationGroup ==
+                            NotificationGroup.circulars
+                        ? 'No recent Circulars\nuploaded'
+                        : 'No ${value.currentNotificationGroup.name}\n notifications available',
+                  )
                 : Column(
                     children: [
                       const CustomCoverImage(

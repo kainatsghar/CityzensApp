@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/CustomWidgets/CustomTitleValue/custom_title_value.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/model/FeeChallan/outstanding_challan_response.dart';
 
@@ -10,7 +7,8 @@ import '../../Utils/app_colors.dart';
 
 class SingleChallanItem extends StatelessWidget {
   final OutstandingChallan record;
-  const SingleChallanItem({super.key, required this.record});
+  final List<OutstandingChallan>? arearMonths;
+  const SingleChallanItem({super.key, required this.record, this.arearMonths});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class SingleChallanItem extends StatelessWidget {
             CustomTitleValue(
               title: 'Challan No',
               value: record.challanNo!,
-              isCopyAllowed: true,
+              isSelectionAllowed: true,
             ),
             CustomTitleValue(
               title: 'Issue Date',
@@ -45,17 +43,40 @@ class SingleChallanItem extends StatelessWidget {
               title: 'Validity Date',
               value: HelperFunction.dateFormatter(record.validityDate!),
             ),
-            CustomTitleValue(title: 'Challan Type', value: record.challanType!),
-            CustomTitleValue(title: 'Period Name', value: record.periodName!),
+            // CustomTitleValue(title: 'Challan Type', value: record.challanType!),
+            CustomTitleValue(title: 'Billing Month', value: record.periodName!),
             CustomTitleValue(
-              title: 'Original Fee',
-              value: 'PKR ${record.originalFee}',
+              title: '${record.periodName} Fee',
+              value: HelperFunction().formatCurrency(record.outstandingFee!),
             ),
+            // CustomTitleValue(
+            //   title: 'Outstanding Fee',
+            //   value: 'PKR ${record.outstandingFee}',
+            //   showDivider: false,
+            // ),
+            if (arearMonths != null && arearMonths!.isNotEmpty) ...[
+              for (var month in arearMonths!) ...[
+                CustomTitleValue(
+                  title: 'Arrears ${month.periodName}',
+                  value: HelperFunction().formatCurrency(month.outstandingFee!),
+                ),
+              ],
+            ],
             CustomTitleValue(
-              title: 'Outstanding Fee',
-              value: 'PKR ${record.outstandingFee}',
+              title: 'Total Payable',
+              value: HelperFunction().formatCurrency(
+                record.outstandingFee! +
+                    (arearMonths != null
+                        ? arearMonths!.fold(
+                            0,
+                            (sum, item) => sum + item.outstandingFee!,
+                          )
+                        : 0),
+              ),
+              boldValue: true,
               showDivider: false,
             ),
+
             // SizedBox(height: 8.0),
           ],
         ),

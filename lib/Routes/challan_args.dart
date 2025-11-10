@@ -1,0 +1,11 @@
+class ChallanArgs {
+  const ChallanArgs({
+    required this.studentId,
+    required this.fatherCnic,
+    required this.primaryContactNo,
+  });
+
+  final String studentId;
+  final String fatherCnic;
+  final String primaryContactNo;
+}

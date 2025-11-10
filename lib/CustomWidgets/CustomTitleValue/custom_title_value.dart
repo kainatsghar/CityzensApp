@@ -5,14 +5,18 @@ import 'package:tcs_app/Utils/app_colors.dart';
 class CustomTitleValue extends StatelessWidget {
   final String value;
   final String title;
+  final bool boldValue;
   final bool showDivider;
   final bool isCopyAllowed;
+  final bool isSelectionAllowed;
 
   const CustomTitleValue({
     super.key,
     required this.value,
     required this.title,
+    this.boldValue = false,
     this.isCopyAllowed = false,
+    this.isSelectionAllowed = false,
     this.showDivider = true,
   });
 
@@ -27,7 +31,7 @@ class CustomTitleValue extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                width: size.width / 3.4,
+                width: size.width / 2.5,
                 child: Text(
                   '$title: ',
                   style: const TextStyle(
@@ -39,11 +43,15 @@ class CustomTitleValue extends StatelessWidget {
               Expanded(
                 child: SelectableText(
                   value,
-                  enableInteractiveSelection: isCopyAllowed,
-                  style: const TextStyle(color: Colors.black, fontSize: 13),
+                  enableInteractiveSelection: isSelectionAllowed,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 13,
+                    fontWeight: boldValue ? FontWeight.bold : FontWeight.normal,
+                  ),
                   contextMenuBuilder: (context, editableTextState) {
                     final List<ContextMenuButtonItem> buttonItems = [];
-
                     if (!editableTextState
                         .textEditingValue
                         .selection

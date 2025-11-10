@@ -1,14 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Routes/challan_args.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ChallanPaymentScreen extends StatefulWidget {
-  const ChallanPaymentScreen({super.key});
+  const ChallanPaymentScreen({super.key, required this.arguments});
+
+  final ChallanArgs? arguments;
 
   @override
   State<ChallanPaymentScreen> createState() => _ChallanPaymentScreenState();
@@ -17,6 +22,7 @@ class ChallanPaymentScreen extends StatefulWidget {
 class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
   int loadingPercentage = 0;
   late WebViewController controller;
+  late String urlLink;
 
   void onProgressChange(int value) {
     if (mounted) {
@@ -31,6 +37,10 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
 
   @override
   void initState() {
+    urlLink = widget.arguments != null
+        ? '${AppConstants.paymentGatewayNewURL}${widget.arguments!.fatherCnic}/${widget.arguments!.studentId}'
+        : AppConstants.paymentGatewayURL;
+    log(urlLink);
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -40,13 +50,7 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
           onPageFinished: (String url) => onProgressChange(loadingPercentage),
         ),
       )
-      ..loadRequest(
-        Uri.parse(
-          localDataProvider.userData!.userType == 'Parent'
-              ? '${AppConstants.paymentGatewayURLForParent}${localDataProvider.userData!.userName}'
-              : AppConstants.paymentGatewayURL,
-        ),
-      );
+      ..loadRequest(Uri.parse(urlLink));
     super.initState();
   }
 

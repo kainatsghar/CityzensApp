@@ -20,32 +20,37 @@ class LibraryNotificationScreenState extends State<LibraryNotificationScreen> {
   late Future _notificationService;
 
   var provider = Provider.of<NotificationProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
-    _notificationService = provider.loadNotificationData('2');
+    _notificationService = provider.loadNotificationData(
+      NotificationGroup.library,
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        child: FutureBuilder(
-            future: _notificationService,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return const CustomLoader();
-                default:
-                  if (snapshot.hasData) {
-                    return const NotificationComponent();
-                  } else {
-                    return ShowError(errorText: '${snapshot.error}');
-                  }
+      child: FutureBuilder(
+        future: _notificationService,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const NotificationComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
               }
-            }),
-        onRefresh: () => provider.loadNotificationData('2'));
+          }
+        },
+      ),
+      onRefresh: () => provider.loadNotificationData(NotificationGroup.library),
+    );
   }
 }

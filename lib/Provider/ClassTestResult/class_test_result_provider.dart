@@ -28,6 +28,7 @@ class ClassTestResultProvider with ChangeNotifier {
   final subjectController = TextEditingController();
   final sectionController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final testFormKey = GlobalKey<FormState>();
 
   int subjectId = 0;
   int categoryId = 0;
@@ -53,8 +54,9 @@ class ClassTestResultProvider with ChangeNotifier {
   List<Options> students = [];
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void initializeData(TickerProvider tickerProvider) {
     controller = TabController(length: 3, vsync: tickerProvider);
@@ -64,18 +66,20 @@ class ClassTestResultProvider with ChangeNotifier {
     subjectResponse = response;
     subjectController.clear();
     subjects = List.generate(
-        subjectResponse.sectionSubject!.length,
-        (index) => Options(
-              title: subjectResponse.sectionSubject![index].subjectName!,
-              value: subjectResponse.sectionSubject![index].subjectId!,
-            ));
+      subjectResponse.sectionSubject!.length,
+      (index) => Options(
+        title: subjectResponse.sectionSubject![index].subjectName!,
+        value: subjectResponse.sectionSubject![index].subjectId!,
+      ),
+    );
     notifyListeners();
   }
 
   void setSelectedSubject(String subjectName) {
     subjectId = subjects.singleWhere((e) => e.title == subjectName).value!;
-    selectedSubjectName =
-        subjects.singleWhere((e) => e.title == subjectName).title!;
+    selectedSubjectName = subjects
+        .singleWhere((e) => e.title == subjectName)
+        .title!;
     subjectController.text = subjectName;
     AppNavigation.goBack();
     notifyListeners();
@@ -83,24 +87,28 @@ class ClassTestResultProvider with ChangeNotifier {
 
   void subjectBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Subject',
-            controller: subjectController,
-            filterOptions: subjects,
-            onSelect: (v) => setSelectedSubject(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Subject',
+        controller: subjectController,
+        filterOptions: subjects,
+        onSelect: (v) => setSelectedSubject(v),
+      ),
+    );
   }
 
   void sectionBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Section',
-            controller: sectionController,
-            filterOptions: sections,
-            onSelect: (v) => setSelectedSection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Section',
+        controller: sectionController,
+        filterOptions: sections,
+        onSelect: (v) => setSelectedSection(v),
+      ),
+    );
   }
 
   Future<void> setSelectedSection(String sectionName) async {
@@ -117,10 +125,10 @@ class ClassTestResultProvider with ChangeNotifier {
     try {
       TeacherSectionResponse response =
           await TeacherSectionService.sectionRequest(
-        isDiary: true,
-        userName: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: true,
+            userName: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSectionData(response);
       return response;
     } catch (ex) {
@@ -133,11 +141,12 @@ class ClassTestResultProvider with ChangeNotifier {
     sectionController.clear();
     sectionId = null;
     sections = List.generate(
-        sectionResponse.section!.length,
-        (index) => Options(
-              title: sectionResponse.section![index].name,
-              value: sectionResponse.section![index].classSectionId,
-            ));
+      sectionResponse.section!.length,
+      (index) => Options(
+        title: sectionResponse.section![index].name,
+        value: sectionResponse.section![index].classSectionId,
+      ),
+    );
     notifyListeners();
   }
 
@@ -145,11 +154,11 @@ class ClassTestResultProvider with ChangeNotifier {
     try {
       SectionSubjectResponse response =
           await SectionSubjectService.getSubjectsRequest(
-        isDiary: true,
-        classSectionId: '$sectionId',
-        teacherId: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: true,
+            classSectionId: '$sectionId',
+            teacherId: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSubjectsData(response);
       return response;
     } catch (ex) {
@@ -169,11 +178,12 @@ class ClassTestResultProvider with ChangeNotifier {
     try {
       ClassTestResultStudentListResponse response =
           await ClassTestResultService.classTestResulStdListRequest(
-              id: localDataProvider.userData!.userName!,
-              subjectId: '$subjectId',
-              sectionId: '$sectionId',
-              categoryId: categoryId,
-              totalMarks: totalMarks);
+            id: localDataProvider.userData!.userName!,
+            subjectId: '$subjectId',
+            sectionId: '$sectionId',
+            categoryId: categoryId,
+            totalMarks: totalMarks,
+          );
       setClassTestStudentsData(response);
       return response;
     } catch (ex) {
@@ -192,11 +202,12 @@ class ClassTestResultProvider with ChangeNotifier {
     try {
       ClassTestResultStudentListResponse response =
           await ClassTestResultService.classTestResulStdListRequest(
-              id: localDataProvider.userData!.userName!,
-              subjectId: '$subjectId',
-              sectionId: '$sectionId',
-              categoryId: categoryId,
-              totalMarks: totalMarks);
+            id: localDataProvider.userData!.userName!,
+            subjectId: '$subjectId',
+            sectionId: '$sectionId',
+            categoryId: categoryId,
+            totalMarks: totalMarks,
+          );
       setStudentsTestResultData(response);
       return response;
     } catch (ex) {
@@ -226,38 +237,50 @@ class ClassTestResultProvider with ChangeNotifier {
 
   void clearLibraryData() {
     classTestResultStudentResponse = null;
+    totalMarks = 0;
   }
 
   Future<void> submitAllMarks() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (formKey.currentState!.validate()) {
+      if (formKey.currentState!.validate() &&
+          testFormKey.currentState!.validate()) {
         //studentMarks.clear();
 
         if (classTestResultStudentResponse != null &&
             classTestResultStudentResponse!.studentList != null) {
           for (var element in classTestResultStudentResponse!.studentList!) {
-            studentMarks.add(StudentMarks(
+            studentMarks.add(
+              StudentMarks(
                 studentId: element.studentId,
-                obtainedMarks: element.obtainedMarks));
+                obtainedMarks: element.obtainedMarks,
+              ),
+            );
           }
 
-          FocusScope.of(AppNavigation.currentContext!)
-              .requestFocus(FocusNode());
+          FocusScope.of(
+            AppNavigation.currentContext!,
+          ).requestFocus(FocusNode());
           ResponseMessage response =
               await ClassTestResultService.addStudentMarks(
-                  AddClassTestResultRequest(
-                      categoryId: categoryId,
-                      subjectId: subjectId,
-                      teacherId: localDataProvider.userData!.id,
-                      studentMarks: studentMarks,
-                      totalMarks: totalMarks));
+                AddClassTestResultRequest(
+                  categoryId: categoryId,
+                  subjectId: subjectId,
+                  teacherId: localDataProvider.userData!.id,
+                  studentMarks: studentMarks,
+                  totalMarks: totalMarks,
+                ),
+              );
           if (response.isSuccessful!) {
             await loadStudentsBySubject();
             Future.delayed(
-                const Duration(seconds: 1), () => AppNavigation.goBack());
-            showSnackBar('All Marks Added Successfully',
-                color: AppColors.successGreenColor);
+              const Duration(seconds: 1),
+              () => AppNavigation.goBack(),
+            );
+            showSnackBar(
+              'All Marks Added Successfully',
+              color: AppColors.successGreenColor,
+            );
           } else {
             showSnackBar(response.message);
           }
@@ -292,22 +315,22 @@ class ClassTestResultProvider with ChangeNotifier {
   }
 
   Future<StudentTestResultListResponse>
-      loadStudentsTestResultswithMarks() async {
+  loadStudentsTestResultswithMarks() async {
     int? userId = localDataProvider.userData!.userType == 'Student'
         ? int.tryParse(localDataProvider.studentId)
         : localDataProvider.userData!.userType == 'Parent'
-            ? int.tryParse(localDataProvider.studentId)
-            : localDataProvider.userData!.id;
+        ? int.tryParse(localDataProvider.studentId)
+        : localDataProvider.userData!.id;
     try {
       StudentTestResultListResponse response =
           await ClassTestResultService.studentsTestResultListRequest(
-        status: localDataProvider.userData!.userType == 'Student'
-            ? 0
-            : localDataProvider.userData!.userType == 'Parent'
+            status: localDataProvider.userData!.userType == 'Student'
+                ? 0
+                : localDataProvider.userData!.userType == 'Parent'
                 ? 0
                 : 1,
-        id: userId ?? 0,
-      );
+            id: userId ?? 0,
+          );
       setStudentsTestResultDataWithMarks(response);
       return response;
     } catch (ex) {
@@ -316,7 +339,8 @@ class ClassTestResultProvider with ChangeNotifier {
   }
 
   void setStudentsTestResultDataWithMarks(
-      StudentTestResultListResponse response) {
+    StudentTestResultListResponse response,
+  ) {
     studentTestResultListResponse = response;
 
     notifyListeners();

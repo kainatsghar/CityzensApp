@@ -21,30 +21,34 @@ class ChallanNotificationScreenState extends State<ChallanNotificationScreen> {
   late Future _notificationService;
 
   var provider = Provider.of<NotificationProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
-    _notificationService = provider.loadNotificationData('1');
+    _notificationService = provider.loadNotificationData(
+      NotificationGroup.challan,
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _notificationService,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const CustomLoader();
-            default:
-              if (snapshot.hasData) {
-                return const NotificationComponent();
-              } else {
-                return ShowError(errorText: '${snapshot.error}');
-              }
-          }
-        });
+      future: _notificationService,
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return const CustomLoader();
+          default:
+            if (snapshot.hasData) {
+              return const NotificationComponent();
+            } else {
+              return ShowError(errorText: '${snapshot.error}');
+            }
+        }
+      },
+    );
   }
 }

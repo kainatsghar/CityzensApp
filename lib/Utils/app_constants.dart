@@ -11,7 +11,9 @@ class AppConstants {
   static const String apiLiveBaseURL = "https://cityzenapi.csn.edu.pk";
   // static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
 
-  static const String appVersion = '1.12.23';
+  static const String appVersion = '1.12.24';
+
+  /// Error Messages
   static const String exceptionMessage =
       "Something Went Wrong, Please Try Again Later";
   static const String markAttendanceMessage = "Please Mark Complete Attendance";
@@ -25,13 +27,15 @@ class AppConstants {
   static const String noInternetMsg =
       'No Internet Connection, Connect Your Internet & Try Again';
   static const String noRecordFound = 'No Record Found';
+
+  /// Other Constants
   static const String textFontFamily = 'NexaText';
   static const String alumniAppURL =
       "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
   static const String paymentGatewayURL =
       'https://billing.thecityschool.edu.pk/challan';
-  static const String paymentGatewayURLForParent =
-      'https://billing.thecityschool.edu.pk/getdirectchallan/';
+  static const String paymentGatewayNewURL =
+      'https://billing.thecityschool.edu.pk/directpayment/';
 
   static const String appSupportEmail = 'appsupport@csn.edu.pk';
 

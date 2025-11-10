@@ -135,6 +135,20 @@ class HelperFunction {
     }
   }
 
+  /// Formats a double value into a currency string (e.g. "PKR 38,370")
+  String formatCurrency(
+    double amount, {
+    String symbol = 'PKR ',
+    int decimalDigits = 0,
+  }) {
+    final format = NumberFormat.currency(
+      locale: 'en_PK', // Locale for Pakistan (adjust if needed)
+      symbol: symbol, // You can pass '₨ ' or '' for no symbol
+      decimalDigits: decimalDigits,
+    );
+    return format.format(amount);
+  }
+
   static Future<void> sendEmail(String email) async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',

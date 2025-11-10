@@ -20,32 +20,38 @@ class MessageScreenState extends State<MessageScreen> {
   late Future _notificationService;
 
   var provider = Provider.of<NotificationProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
-    _notificationService = provider.loadNotificationData('3');
+    _notificationService = provider.loadNotificationData(
+      NotificationGroup.circulars,
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        child: FutureBuilder(
-            future: _notificationService,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return const CustomLoader();
-                default:
-                  if (snapshot.hasData) {
-                    return const NotificationComponent();
-                  } else {
-                    return ShowError(errorText: '${snapshot.error}');
-                  }
+      child: FutureBuilder(
+        future: _notificationService,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const NotificationComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
               }
-            }),
-        onRefresh: () => provider.loadNotificationData('3'));
+          }
+        },
+      ),
+      onRefresh: () =>
+          provider.loadNotificationData(NotificationGroup.circulars),
+    );
   }
 }

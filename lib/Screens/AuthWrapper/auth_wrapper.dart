@@ -18,9 +18,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
   @override
   void initState() {
-    _userData = Provider.of<LocalDataProvider>(AppNavigation.currentContext!,
-            listen: false)
-        .authDecider();
+    _userData = Provider.of<LocalDataProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    ).authDecider();
     super.initState();
   }
 
@@ -29,19 +30,20 @@ class _AuthWrapperState extends State<AuthWrapper> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: FutureBuilder(
-          future: _userData,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return snapshot.data as Widget; //return snapshot.data
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: _userData,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return snapshot.data as Widget; //return snapshot.data
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
     );
   }
 }

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/gen/assets.gen.dart';
 
 class ShowMessageOnImage extends StatelessWidget {
   final String message;
-  final String imagePath;
+  final String? imagePath;
 
-  const ShowMessageOnImage({
-    super.key,
-    required this.message,
-    required this.imagePath,
-  });
+  const ShowMessageOnImage({super.key, required this.message, this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +42,7 @@ class ShowMessageOnImage extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     Image.asset(
-                      imagePath,
+                      imagePath ?? Assets.images.bgCircularColored.path,
                       height: containerSize,
                       width: containerSize,
                       fit: BoxFit.contain,

@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class NotificationProvider with ChangeNotifier {
   List<Notifications>? notifications;
+  NotificationGroup currentNotificationGroup = NotificationGroup.challan;
 
   // ScrollController? scrollController;
   // TabController? controller;
@@ -34,13 +35,16 @@ class NotificationProvider with ChangeNotifier {
   //   controller = TabController(length: 2, vsync: tickerProvider);
   // }
 
-  Future<NotificationResponse> loadNotificationData(String group) async {
+  Future<NotificationResponse> loadNotificationData(
+    NotificationGroup group,
+  ) async {
     try {
+      currentNotificationGroup = group;
       NotificationResponse response =
           await NotificationService.notificationRequest(
             token: localDataProvider.userData!.tokenId!,
             userName: localDataProvider.studentId,
-            group: group,
+            group: group.groupId,
           );
       setNotificationData(response);
       return response;
@@ -48,4 +52,14 @@ class NotificationProvider with ChangeNotifier {
       rethrow;
     }
   }
+}
+
+enum NotificationGroup {
+  challan('1'),
+  library('2'),
+  circulars('3');
+
+  final String groupId; // custom field
+
+  const NotificationGroup(this.groupId); // const constructor
 }

@@ -97,7 +97,7 @@ class IndividualEducationPlanComponent extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: CustomAppButton(
-                                buttonTitle: 'ACHKOWLEDGE\nIEP/UNDERTAKING',
+                                buttonTitle: 'ACKNOWLEDGE\nIEP/UNDERTAKING',
                                 onTap: () => {},
                               ),
                             ),

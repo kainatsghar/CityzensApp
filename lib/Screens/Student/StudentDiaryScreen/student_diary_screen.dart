@@ -17,8 +17,10 @@ class StudentDiaryScreen extends StatefulWidget {
 
 class _StudentDiaryScreenState extends State<StudentDiaryScreen> {
   late Future _diaryRecords;
-  var provider =
-      Provider.of<DiaryProvider>(AppNavigation.currentContext!, listen: false);
+  var provider = Provider.of<DiaryProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -37,19 +39,20 @@ class _StudentDiaryScreenState extends State<StudentDiaryScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'HOMEWORK DIARY'),
       body: FutureBuilder(
-          future: _diaryRecords,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const DiaryRecordComponent();
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: _diaryRecords,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const DiaryRecordComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
     );
   }
 }

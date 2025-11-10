@@ -40,6 +40,7 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
       appBar: const CustomAppBar(title: 'CITYZENS'),
       drawer: const NavigationalDrawer(),
       body: RefreshIndicator(
+        onRefresh: () => provider.loadMultiChildData(),
         child: FutureBuilder(
           future: _multiChild,
           builder: (context, snapshot) {
@@ -56,14 +57,17 @@ class ParentHomepageState extends State<ParentDashboardScreen> {
                           MediaQuery.sizeOf(context).height -
                           kToolbarHeight -
                           MediaQuery.paddingOf(context).top,
-                      child: ShowError(errorText: '${snapshot.error}'),
+                      child: ShowError(
+                        errorText: '${snapshot.error}',
+                        showRetryOption: true,
+                        onTap: () => provider.loadMultiChildData(),
+                      ),
                     ),
                   );
                 }
             }
           },
         ),
-        onRefresh: () => provider.loadMultiChildData(),
       ),
     );
   }

@@ -35,8 +35,6 @@ class MarkAttendanceProvider with ChangeNotifier {
   int? classId;
   int subjectId = 0;
 
-  String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-
   TeacherSectionResponse sectionResponse = TeacherSectionResponse();
   SectionSubjectResponse subjectResponse = SectionSubjectResponse();
 
@@ -87,7 +85,7 @@ class MarkAttendanceProvider with ChangeNotifier {
         classSectionId: '$sectionId',
         subjectId: subjectId,
         tokenId: localDataProvider.userData!.tokenId!,
-        attendanceDate: formattedDate,
+        attendanceDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
       );
       setStudentList(response);
       return response;
@@ -216,7 +214,7 @@ class MarkAttendanceProvider with ChangeNotifier {
               SaveAttendanceRequest(
                 classSectionId: '$sectionId',
                 tokenId: localDataProvider.userData!.tokenId,
-                attendanceDate: formattedDate,
+                attendanceDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
                 subjectId: subjectId,
                 dailyAttendance: attendanceList,
               ),
