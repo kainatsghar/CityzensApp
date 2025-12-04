@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
@@ -6,6 +8,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final double appBarHeight;
   final Color backgroundColor;
+  final void Function()? onBackPressed;
 
   const CustomAppBar({
     super.key,
@@ -13,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title = '',
     this.backgroundColor = AppColors.whiteColor,
     this.appBarHeight = 56.0,
+    this.onBackPressed,
   });
 
   @override
@@ -32,6 +36,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
+      leading: onBackPressed == null
+          ? null
+          : IconButton(
+              icon: Icon(
+                Platform.isAndroid
+                    ? Icons.arrow_back
+                    : Icons.arrow_back_ios_new,
+                color: AppColors.primaryTitleColor,
+              ),
+              onPressed: onBackPressed,
+            ),
       actions:
           actions ??
           [

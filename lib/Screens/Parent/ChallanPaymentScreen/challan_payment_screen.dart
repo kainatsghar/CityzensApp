@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/challan_args.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
@@ -30,11 +30,6 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
     }
   }
 
-  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
-
   @override
   void initState() {
     urlLink =
@@ -58,7 +53,18 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'CHALLAN BILL'),
+      appBar: CustomAppBar(
+        title: 'CHALLAN BILL',
+        onBackPressed: () {
+          var provider = Provider.of<FeeChallanProvider>(
+            AppNavigation.currentContext!,
+            listen: false,
+          );
+
+          provider.loadOutstandingRecords();
+          Navigator.pop(context);
+        },
+      ),
       body: Column(
         children: [
           if (loadingPercentage < 100)
