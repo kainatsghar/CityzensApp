@@ -36,8 +36,9 @@ class WithdrawalRequestProvider with ChangeNotifier {
   late final formKey = GlobalKey<FormState>();
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setTownCityValue(String val) {
     townCity = val;
@@ -128,8 +129,9 @@ class WithdrawalRequestProvider with ChangeNotifier {
             showSnackBar("Please answer the questions.");
             return;
           } else {
-            request.isContactedBySchool =
-                isCommunicating == "Yes" ? true : false;
+            request.isContactedBySchool = isCommunicating == "Yes"
+                ? true
+                : false;
             request.isSatisfiedConcerns = isSatisfied == "Yes" ? true : false;
             request.isWithdrawal = isWithdraw == "Yes" ? true : false;
             if (isWithdraw == "Yes") {
@@ -142,8 +144,9 @@ class WithdrawalRequestProvider with ChangeNotifier {
             showSnackBar("Please select a reason.");
             return;
           } else {
-            String commaSeparatedIds =
-                selectedReasons.map((reason) => reason.id).join(',');
+            String commaSeparatedIds = selectedReasons
+                .map((reason) => reason.id)
+                .join(',');
 
             request.reasonId = commaSeparatedIds;
             request.isRelocated = isRelocationSelected;
@@ -187,8 +190,8 @@ class WithdrawalRequestProvider with ChangeNotifier {
       int? userId = localDataProvider.userData!.userType == 'Student'
           ? int.tryParse(localDataProvider.studentId)
           : localDataProvider.userData!.userType == 'Parent'
-              ? int.tryParse(localDataProvider.studentId)
-              : localDataProvider.userData!.id;
+          ? int.tryParse(localDataProvider.studentId)
+          : int.tryParse(localDataProvider.userData!.userName.toString());
 
       WithdrawalResponse response =
           await WithdrawalRequestService.getWithdrawalReasons(id: userId ?? 0);

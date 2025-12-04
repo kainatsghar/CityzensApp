@@ -39,9 +39,22 @@ class HelperFunction {
   ];
 
   static Future<void> launchURL(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
+    final uri = Uri.parse(url.trim());
+
+    // Decide launch mode automatically
+    final bool isExternal =
+        uri.scheme == 'http' || uri.scheme == 'https' || uri.scheme == 'mailto';
+
+    // Try launching directly (more reliable than canLaunchUrl)
+    try {
+      await launchUrl(
+        uri,
+        mode: isExternal
+            ? LaunchMode
+                  .externalApplication // Chrome/Safari/Gmail
+            : LaunchMode.platformDefault,
+      );
+    } catch (e) {
       throw 'Could not launch $url';
     }
   }

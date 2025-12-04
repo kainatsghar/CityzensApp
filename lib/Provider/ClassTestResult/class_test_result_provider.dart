@@ -266,7 +266,9 @@ class ClassTestResultProvider with ChangeNotifier {
                 AddClassTestResultRequest(
                   categoryId: categoryId,
                   subjectId: subjectId,
-                  teacherId: localDataProvider.userData!.id,
+                  teacherId: int.tryParse(
+                    localDataProvider.userData!.userName.toString(),
+                  ),
                   studentMarks: studentMarks,
                   totalMarks: totalMarks,
                 ),
@@ -320,7 +322,7 @@ class ClassTestResultProvider with ChangeNotifier {
         ? int.tryParse(localDataProvider.studentId)
         : localDataProvider.userData!.userType == 'Parent'
         ? int.tryParse(localDataProvider.studentId)
-        : localDataProvider.userData!.id;
+        : int.tryParse(localDataProvider.userData!.userName.toString());
     try {
       StudentTestResultListResponse response =
           await ClassTestResultService.studentsTestResultListRequest(

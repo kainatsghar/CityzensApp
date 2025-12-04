@@ -68,8 +68,27 @@ class PushNotifications {
     await _local.initialize(
       settings,
       onDidReceiveNotificationResponse: (details) {
+        final data = details.data;
+
+        if (data.isNotEmpty) {
+          _log('[PN] Handling data from local notification: $data');
+          final route = data['route'];
+          if (route != null) {
+            _handlePayload(route, extras: data);
+          } else if (data.containsKey('openUrl')) {
+            HelperFunction.launchURL(data['openUrl']!);
+          }
+        }
+
         final payload = details.payload;
-        if (payload != null) _handlePayload(payload);
+        if (payload != null) {
+          _log('[PN] Handling payload from local notification: $payload');
+          if (payload.startsWith('http')) {
+            _handleNotificationLink(payload);
+          } else {
+            _handlePayload(payload);
+          }
+        }
       },
     );
 
@@ -202,6 +221,14 @@ class PushNotifications {
           _log('[PN] Unknown payload: $route');
         }
     }
+  }
+
+  void _handleNotificationLink(String? link) {
+    if (link == null || link.isEmpty) return;
+
+    // Ensure it’s a proper URL
+    final url = link.startsWith('http') ? link : 'https://$link';
+    HelperFunction.launchURL(url);
   }
 
   // Future<void> handleNotificationTap(RemoteMessage message) async {

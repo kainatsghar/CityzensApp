@@ -5,11 +5,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final String title;
   final double appBarHeight;
+  final Color backgroundColor;
 
   const CustomAppBar({
     super.key,
     this.actions,
     this.title = '',
+    this.backgroundColor = AppColors.whiteColor,
     this.appBarHeight = 56.0,
   });
 
@@ -20,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0.0,
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: backgroundColor,
       centerTitle: true,
       title: Text(
         title,

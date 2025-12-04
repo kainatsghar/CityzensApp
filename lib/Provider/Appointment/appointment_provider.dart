@@ -38,23 +38,29 @@ class AppointmentProvider with ChangeNotifier {
 
   String addSuffixToDay(int day) {
     if (day >= 11 && day <= 13) {
-      return '$day' 'TH';
+      return '$day'
+          'TH';
     }
     switch (day % 10) {
       case 1:
-        return '$day' 'ST';
+        return '$day'
+            'ST';
       case 2:
-        return '$day' 'ND';
+        return '$day'
+            'ND';
       case 3:
-        return '$day' 'RD';
+        return '$day'
+            'RD';
       default:
-        return '$day' 'TH';
+        return '$day'
+            'TH';
     }
   }
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setAppointmentRecords(AppointmentResponse response) {
     appointmentResponse = response;
@@ -91,28 +97,34 @@ class AppointmentProvider with ChangeNotifier {
     int? userId = localDataProvider.userData!.userType == 'Student'
         ? int.tryParse(localDataProvider.studentId)
         : localDataProvider.userData!.userType == 'Parent'
-            ? int.tryParse(localDataProvider.studentId)
-            : localDataProvider.userData!.id;
+        ? int.tryParse(localDataProvider.studentId)
+        : int.tryParse(localDataProvider.userData!.userName!);
 
     try {
       if (formKey.currentState!.validate()) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         ResponseMessage response = await AddAppointmentService.addAppointment(
-            AddAppointmentRequest(
-                studentId: userId,
-                classSectionId: sectionId,
-                meetingPersonId: selectedTeacherType,
-                meetingTimeId: selectedTime,
-                meetingReasonId: selectedReason,
-                createdBy: localDataProvider.userData!.userName,
-                modifiedBy: localDataProvider.userData!.userName,
-                dayName: selectedDate));
+          AddAppointmentRequest(
+            studentId: userId,
+            classSectionId: sectionId,
+            meetingPersonId: selectedTeacherType,
+            meetingTimeId: selectedTime,
+            meetingReasonId: selectedReason,
+            createdBy: localDataProvider.userData!.userName,
+            modifiedBy: localDataProvider.userData!.userName,
+            dayName: selectedDate,
+          ),
+        );
         if (response.isSuccessful!) {
           await loadAppointmentConfig();
           Future.delayed(
-              const Duration(seconds: 1), () => AppNavigation.goBack());
-          showSnackBar('Appointment Added Successfully',
-              color: AppColors.successGreenColor);
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Appointment Added Successfully',
+            color: AppColors.successGreenColor,
+          );
         } else {
           showSnackBar(response.message);
         }
@@ -141,13 +153,14 @@ class AppointmentProvider with ChangeNotifier {
     int? userId = localDataProvider.userData!.userType == 'Student'
         ? int.tryParse(localDataProvider.studentId)
         : localDataProvider.userData!.userType == 'Parent'
-            ? int.tryParse(localDataProvider.studentId)
-            : localDataProvider.userData!.id;
+        ? int.tryParse(localDataProvider.studentId)
+        : int.tryParse(localDataProvider.userData!.userName!);
     try {
       AppointmentResponse response =
           await ParentBookanAppointmentService.getMeetingConfig(
-              userName: userId ?? 0,
-              tokenId: localDataProvider.userData!.tokenId!);
+            userName: userId ?? 0,
+            tokenId: localDataProvider.userData!.tokenId!,
+          );
       setAppointmentRecords(response);
       loadExistingAppointmentsForConfig();
       //setSelectedType(2);
@@ -161,21 +174,28 @@ class AppointmentProvider with ChangeNotifier {
     int? userId = int.tryParse(localDataProvider.studentId);
     try {
       MeetingResponse response = await AppointmentService.getMeetings(
-          userName: userId ?? 0, isStudent: true);
+        userName: userId ?? 0,
+        isStudent: true,
+      );
       setAppointments(response);
 
       if (meetingResponse != null &&
           meetingResponse!.meetingDetails != null &&
           meetingResponse!.meetingDetails!.isNotEmpty) {
         setSelectedType(
-            meetingResponse!.meetingDetails![0].meetingPersonId as int);
+          meetingResponse!.meetingDetails![0].meetingPersonId as int,
+        );
         setSelectedReason(
-            meetingResponse!.meetingDetails![0].meetingReasonId as int);
+          meetingResponse!.meetingDetails![0].meetingReasonId as int,
+        );
         setSelectedTime(
-            meetingResponse!.meetingDetails![0].meetingTimeId as int);
-        setSelectedDate(meetingResponse!.meetingDetails![0].meetingDay
-            .toString()
-            .toUpperCase());
+          meetingResponse!.meetingDetails![0].meetingTimeId as int,
+        );
+        setSelectedDate(
+          meetingResponse!.meetingDetails![0].meetingDay
+              .toString()
+              .toUpperCase(),
+        );
       }
 
       return response;
@@ -188,15 +208,17 @@ class AppointmentProvider with ChangeNotifier {
     int? userId = localDataProvider.userData!.userType == 'Student'
         ? int.tryParse(localDataProvider.studentId)
         : localDataProvider.userData!.userType == 'Parent'
-            ? int.tryParse(localDataProvider.studentId)
-            : localDataProvider.userData!.userType == 'Teacher'
-                ? int.tryParse(localDataProvider.userData!.userName.toString())
-                : localDataProvider.userData!.id;
+        ? int.tryParse(localDataProvider.studentId)
+        : localDataProvider.userData!.userType == 'Teacher'
+        ? int.tryParse(localDataProvider.userData!.userName.toString())
+        : localDataProvider.userData!.id;
     try {
       MeetingResponse response = await AppointmentService.getMeetings(
-          userName: userId ?? 0,
-          isStudent:
-              localDataProvider.userData!.userType == 'Parent' ? true : false);
+        userName: userId ?? 0,
+        isStudent: localDataProvider.userData!.userType == 'Parent'
+            ? true
+            : false,
+      );
       setAppointments(response);
       return response;
     } catch (ex) {

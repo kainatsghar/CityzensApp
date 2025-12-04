@@ -9,9 +9,9 @@ class AppConstants {
   //We are using this URL for Firebase Remote Config "apiBaseUrl"
   // static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
   static const String apiLiveBaseURL = "https://cityzenapi.csn.edu.pk";
-  // static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
+  static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
 
-  static const String appVersion = '1.12.24';
+  static const String appVersion = '1.13.0';
 
   /// Error Messages
   static const String exceptionMessage =

@@ -37,7 +37,8 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
 
   @override
   void initState() {
-    urlLink = widget.arguments != null
+    urlLink =
+        widget.arguments != null && widget.arguments!.isNewPaymentFlowEnabled
         ? '${AppConstants.paymentGatewayNewURL}${widget.arguments!.fatherCnic}/${widget.arguments!.studentId}'
         : AppConstants.paymentGatewayURL;
     log(urlLink);

@@ -18,7 +18,6 @@ class LibraryComponent extends StatelessWidget {
               ? const ShowMessageOnImage(message: 'No library records found')
               : ListView.builder(
                   itemCount: value.libraryResponse.listLibrary!.length + 1,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
                       return CustomStudentInfo(
@@ -26,7 +25,10 @@ class LibraryComponent extends StatelessWidget {
                       );
                     } else {
                       index -= 1;
-                      return SingleLibraryItem(record: responseData[index]);
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: SingleLibraryItem(record: responseData[index]),
+                      );
                     }
                   },
                 );

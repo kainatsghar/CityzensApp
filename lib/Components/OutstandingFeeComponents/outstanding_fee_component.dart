@@ -124,64 +124,83 @@ class OutstandingFeeComponent extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                IconButton.filled(
-                                  onPressed: () {
-                                    Clipboard.setData(
-                                      ClipboardData(
-                                        text:
-                                            '100827${responseData.first.challanNo!}',
-                                      ),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Copied to clipboard'),
-                                      ),
-                                    );
-                                  },
-                                  icon: Row(
-                                    children: [
-                                      const Icon(Icons.copy),
-                                      SizedBox(width: 4.0),
-                                      Text(
-                                        'For 1Link',
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
+                                if (responseData.first.challanNo != null &&
+                                    responseData.first.challanNo!.isNotEmpty &&
+                                    value
+                                            .outstandingChallans!
+                                            .info!
+                                            .centerName !=
+                                        null &&
+                                    (!value
+                                        .outstandingChallans!
+                                        .info!
+                                        .centerName!
+                                        .contains('C001'))) ...[
+                                  // Exclude 001-(TCS) DHA Campus LHR
+                                  IconButton.filled(
+                                    onPressed: () {
+                                      Clipboard.setData(
+                                        ClipboardData(
+                                          text:
+                                              '100827${responseData.first.challanNo!}',
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                IconButton.filled(
-                                  onPressed: () {
-                                    Clipboard.setData(
-                                      ClipboardData(
-                                        text:
-                                            '${value.outstandingChallans!.info!.centerName == 'C052-(TCS) Bahria Town Campus' ? '1003330241' : '1003330195'}${responseData.first.challanNo!}',
-                                      ),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Copied to clipboard'),
-                                      ),
-                                    );
-                                  },
-                                  icon: Row(
-                                    children: [
-                                      const Icon(Icons.copy),
-                                      SizedBox(width: 4.0),
-                                      Text(
-                                        'For 1Bill',
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
+                                      );
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Copied to clipboard'),
                                         ),
-                                      ),
-                                    ],
+                                      );
+                                    },
+                                    icon: Row(
+                                      children: [
+                                        const Icon(Icons.copy),
+                                        SizedBox(width: 4.0),
+                                        Text(
+                                          'For 1Link',
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                  IconButton.filled(
+                                    onPressed: () {
+                                      Clipboard.setData(
+                                        ClipboardData(
+                                          text:
+                                              '${value.outstandingChallans!.info!.centerName!.contains('C052') ? '1003330241' : '1003330195'}${responseData.first.challanNo!}',
+                                          //C052-(TCS) Bahria Town Campus
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Copied to clipboard'),
+                                        ),
+                                      );
+                                    },
+                                    icon: Row(
+                                      children: [
+                                        const Icon(Icons.copy),
+                                        SizedBox(width: 4.0),
+                                        Text(
+                                          'For 1Bill',
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ],
                             ),
                             SizedBox(height: 8.0),
@@ -203,6 +222,8 @@ class OutstandingFeeComponent extends StatelessWidget {
                                       .outstandingChallans!
                                       .info!
                                       .primaryContactNo!,
+                                  isNewPaymentFlowEnabled:
+                                      value.isNewPaymentFlowEnabled,
                                 ),
                               ),
                             ),

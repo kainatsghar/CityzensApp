@@ -4,12 +4,14 @@ import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ProgressButton/progress_button.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/Provider/Splash/splash_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Routes/promotion_args.dart';
+import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:video_player/video_player.dart';
 
 enum PromotionType { image, video }
@@ -26,9 +28,7 @@ extension PromotionTypeExtension on PromotionType {
 }
 
 class PromotionScreenUI extends StatefulWidget {
-  const PromotionScreenUI({super.key, required this.args});
-
-  final PromotionArgs args;
+  const PromotionScreenUI({super.key});
 
   @override
   State<PromotionScreenUI> createState() => _PromotionScreenUIState();
@@ -48,10 +48,18 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
   DateTime? _pauseStartTime;
   Duration _totalPausedDuration = Duration.zero;
 
+  late SplashProvider splashProvider;
+
   @override
   void initState() {
     super.initState();
-    if (widget.args.promotionModel.promotionType.toLowerCase() ==
+
+    splashProvider = Provider.of<SplashProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+
+    if (splashProvider.activePromotion!.promotionType.toLowerCase() ==
         PromotionType.video.displayName.toLowerCase()) {
       _initializeVideo();
     } else {
@@ -72,7 +80,7 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
 
   Future<void> _initializeVideo() async {
     _videoController = VideoPlayerController.asset(
-      widget.args.promotionModel.url!,
+      splashProvider.activePromotion!.url!,
     );
 
     try {
@@ -101,7 +109,7 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
           _progress =
               currentDuration.inMilliseconds /
               Duration(
-                seconds: widget.args.promotionModel.displayDuration,
+                seconds: splashProvider.activePromotion!.displayDuration,
               ).inMilliseconds;
           if (_progress >= 1.0) {
             _navigateToNextScreen();
@@ -172,7 +180,7 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
           child: Stack(
             children: [
               // Content (Image or Video)
-              if (widget.args.promotionModel.promotionType.toLowerCase() ==
+              if (splashProvider.activePromotion!.promotionType.toLowerCase() ==
                       PromotionType.video.displayName.toLowerCase() &&
                   _videoController?.value.isInitialized == true)
                 Center(
@@ -181,19 +189,35 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
                     child: VideoPlayer(_videoController!),
                   ),
                 )
-              else if (widget.args.promotionModel.promotionType.toLowerCase() ==
+              else if (splashProvider.activePromotion!.promotionType
+                      .toLowerCase() ==
                   PromotionType.image.displayName.toLowerCase())
                 Positioned.fill(
                   child: FadeIn(
-                    child: CachedNetworkImage(
-                      imageUrl: widget.args.promotionModel.url!,
-                      fit: widget.args.promotionModel.isFullScreen
-                          ? BoxFit.fill
-                          : BoxFit.contain,
-                      placeholder: (context, url) =>
-                          const Center(child: CustomLoader()),
-                      errorWidget: (context, url, error) =>
-                          Center(child: ShowError(errorText: error.toString())),
+                    child: InkWell(
+                      onTap:
+                          (splashProvider.activePromotion!.tapLinkURL == null &&
+                              splashProvider
+                                  .activePromotion!
+                                  .tapLinkURL!
+                                  .isEmpty)
+                          ? null
+                          : () {
+                              HelperFunction.launchURL(
+                                splashProvider.activePromotion!.tapLinkURL!,
+                              );
+                            },
+                      child: CachedNetworkImage(
+                        imageUrl: splashProvider.activePromotion!.url!,
+                        fit: splashProvider.activePromotion!.isFullScreen
+                            ? BoxFit.fill
+                            : BoxFit.contain,
+                        placeholder: (context, url) =>
+                            const Center(child: CustomLoader()),
+                        errorWidget: (context, url, error) => Center(
+                          child: ShowError(errorText: error.toString()),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -206,7 +230,7 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
 
   Widget _buildSkipButton() {
     final progress =
-        widget.args.promotionModel.promotionType.toLowerCase() ==
+        splashProvider.activePromotion!.promotionType.toLowerCase() ==
                 PromotionType.video.displayName.toLowerCase() &&
             _videoController?.value.duration != null
         ? (_videoController!.value.position.inMilliseconds.toDouble() /

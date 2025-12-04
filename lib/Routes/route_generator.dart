@@ -3,7 +3,6 @@ import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/challan_args.dart';
-import 'package:tcs_app/Routes/promotion_args.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Screens/AuthWrapper/auth_wrapper.dart';
 import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
@@ -68,9 +67,7 @@ class RouteGenerator {
       case AppNavRoutes.initialRoute:
         return routeScreen(child: const SplashScreenUI());
       case AppNavRoutes.promotionRoute:
-        return routeScreen(
-          child: PromotionScreenUI(args: settings.arguments as PromotionArgs),
-        );
+        return routeScreen(child: const PromotionScreenUI());
       case AppNavRoutes.loginRoute:
         return routeScreen(child: const LoginScreen());
       case AppNavRoutes.authWrapperRoute:

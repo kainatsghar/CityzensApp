@@ -64,24 +64,24 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       builder: (context, value, _) {
         final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
         final localGradeId = value.gradeId?.toString() ?? '';
-        return SafeArea(
-          top: false,
-          child: Scaffold(
-            appBar: CustomAppBar(
-              title: localData.userData!.userType == 'Parent'
-                  ? '${widget.args!.userName}'
-                  // ? '${widget.args.userName}'
-                  : HelperFunction.noNullStringText(
-                      '${localData.userData!.info!.name}',
-                    ),
-            ),
-            drawer: value.userData!.userType == 'Parent'
-                ? null
-                : const NavigationalDrawer(),
-            body: RefreshIndicator(
-              onRefresh: () {
-                return attendanceService = attendance.getAttendancePercentage();
-              },
+        return Scaffold(
+          appBar: CustomAppBar(
+            title: localData.userData!.userType == 'Parent'
+                ? '${widget.args!.userName}'
+                // ? '${widget.args.userName}'
+                : HelperFunction.noNullStringText(
+                    '${localData.userData!.info!.name}',
+                  ),
+          ),
+          drawer: value.userData!.userType == 'Parent'
+              ? null
+              : const NavigationalDrawer(),
+          body: RefreshIndicator(
+            onRefresh: () {
+              return attendanceService = attendance.getAttendancePercentage();
+            },
+            child: SafeArea(
+              top: false,
               child: CustomScrollView(
                 slivers: [
                   SliverToBoxAdapter(

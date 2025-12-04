@@ -4,11 +4,13 @@ import 'package:tcs_app/Utils/app_colors.dart';
 class CustomAppButton extends StatelessWidget {
   final String buttonTitle;
   final VoidCallback onTap;
+  final double? width;
 
   const CustomAppButton({
     super.key,
     required this.buttonTitle,
     required this.onTap,
+    this.width,
   });
 
   @override
@@ -18,7 +20,7 @@ class CustomAppButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 8,
         backgroundColor: AppColors.primaryColor,
-        minimumSize: Size(size.width * 0.85, 45.0),
+        minimumSize: Size(width ?? size.width * 0.85, 45.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),

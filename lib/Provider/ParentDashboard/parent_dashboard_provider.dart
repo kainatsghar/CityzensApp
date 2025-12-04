@@ -9,8 +9,9 @@ class ParentDashboardProvider with ChangeNotifier {
   MultiChildResponse? multiChildResponse;
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setMultiChildData(MultiChildResponse response) {
     multiChildResponse = response;
@@ -20,8 +21,9 @@ class ParentDashboardProvider with ChangeNotifier {
   Future<MultiChildResponse> loadMultiChildData() async {
     try {
       MultiChildResponse response = await MultiChildService.multiChildRequest(
-          token: localDataProvider.userData!.tokenId!,
-          userName: '${localDataProvider.userData!.id}');
+        token: localDataProvider.userData!.tokenId!,
+        userName: '${localDataProvider.userData!.id}',
+      );
       setMultiChildData(response);
       return response;
     } catch (ex) {

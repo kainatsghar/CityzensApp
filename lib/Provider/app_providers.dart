@@ -14,6 +14,7 @@ import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Provider/SchoolEvents/school_event_provider.dart';
+import 'package:tcs_app/Provider/Splash/splash_provider.dart';
 import 'package:tcs_app/Provider/StudentProfile/student_profile_provider.dart';
 import 'package:tcs_app/Provider/SupportForm/support_form_provider.dart';
 import 'package:tcs_app/Provider/TeacherProfile/teacher_profile_provider.dart';
@@ -61,4 +62,5 @@ List<SingleChildWidget> appProviders = [
   ChangeNotifierProvider(create: (_) => ComplaintQueryProvider()),
   ChangeNotifierProvider(create: (_) => CircularProvider()),
   ChangeNotifierProvider(create: (_) => SupportFormProvider()),
+  ChangeNotifierProvider(create: (_) => SplashProvider()),
 ];

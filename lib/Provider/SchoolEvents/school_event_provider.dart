@@ -35,8 +35,9 @@ class SchoolEventProvider with ChangeNotifier {
   TeacherSectionResponse sectionResponse = TeacherSectionResponse();
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   late DateTime selectedDate;
 
@@ -44,13 +45,15 @@ class SchoolEventProvider with ChangeNotifier {
 
   void sectionBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Section',
-            controller: sectionController,
-            filterOptions: sections,
-            onSelect: (v) => setSelectedSection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Section',
+        controller: sectionController,
+        filterOptions: sections,
+        onSelect: (v) => setSelectedSection(v),
+      ),
+    );
   }
 
   Future<void> setSelectedSection(String sectionName) async {
@@ -65,11 +68,12 @@ class SchoolEventProvider with ChangeNotifier {
     sectionController.clear();
     sectionId = null;
     sections = List.generate(
-        sectionResponse.section!.length,
-        (index) => Options(
-              title: sectionResponse.section![index].name,
-              value: sectionResponse.section![index].classSectionId,
-            ));
+      sectionResponse.section!.length,
+      (index) => Options(
+        title: sectionResponse.section![index].name,
+        value: sectionResponse.section![index].classSectionId,
+      ),
+    );
     notifyListeners();
   }
 
@@ -77,10 +81,10 @@ class SchoolEventProvider with ChangeNotifier {
     try {
       TeacherSectionResponse response =
           await TeacherSectionService.sectionRequest(
-        isDiary: false,
-        userName: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: false,
+            userName: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSectionData(response);
       return response;
     } catch (ex) {
@@ -94,20 +98,27 @@ class SchoolEventProvider with ChangeNotifier {
       if (formKey.currentState!.validate()) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
-        ResponseMessage response =
-            await AddSchoolEventService.addSchoolEvent(AddSchoolEventRequest(
-          classSectionId: sectionId.toString(),
-          classTeacherId: localDataProvider.userData!.id,
-          eventName: eventController.text.toString(),
-          eventNote: noteController.text.toString(),
-          eventDate: formattedDate,
-        ));
+        ResponseMessage response = await AddSchoolEventService.addSchoolEvent(
+          AddSchoolEventRequest(
+            classSectionId: sectionId.toString(),
+            classTeacherId: int.tryParse(
+              localDataProvider.userData!.userName.toString(),
+            ),
+            eventName: eventController.text.toString(),
+            eventNote: noteController.text.toString(),
+            eventDate: formattedDate,
+          ),
+        );
         if (response.isSuccessful!) {
           await loadEvents();
           Future.delayed(
-              const Duration(seconds: 1), () => AppNavigation.goBack());
-          showSnackBar('Event Added Successfully',
-              color: AppColors.successGreenColor);
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Event Added Successfully',
+            color: AppColors.successGreenColor,
+          );
         } else {
           showSnackBar(response.message);
         }
@@ -128,18 +139,19 @@ class SchoolEventProvider with ChangeNotifier {
       int? userId = localDataProvider.userData!.userType == 'Student'
           ? int.tryParse(localDataProvider.studentId)
           : localDataProvider.userData!.userType == 'Parent'
-              ? int.tryParse(localDataProvider.studentId)
-              : localDataProvider.userData!.id;
+          ? int.tryParse(localDataProvider.studentId)
+          : int.tryParse(localDataProvider.userData!.userName.toString());
 
       SchoolEeventsResponse response =
           await TeacherEventService.getEventRecords(
-              //id: 586114
-              id: userId ?? 0,
-              isStudent: localDataProvider.userData!.userType == 'Student'
-                  ? true
-                  : localDataProvider.userData!.userType == 'Parent'
-                      ? true
-                      : false);
+            //id: 586114
+            id: userId ?? 0,
+            isStudent: localDataProvider.userData!.userType == 'Student'
+                ? true
+                : localDataProvider.userData!.userType == 'Parent'
+                ? true
+                : false,
+          );
       setEventRecords(response);
       return response;
     } catch (ex) {

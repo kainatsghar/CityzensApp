@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PromotionModel {
 
- String get id; String? get title; String? get description; bool get isLive; bool get isTesting; bool get isFullScreen; String get promotionType; String? get url; int get displayDuration;@TimestampConverter() DateTime? get startDate;@TimestampConverter() DateTime? get endDate;
+ String get id; String? get title; String? get description; bool get isLive; bool get isTesting; bool get isFullScreen; String get promotionType; String? get url; String? get tapLinkURL; int get displayDuration;@TimestampConverter() DateTime? get startDate;@TimestampConverter() DateTime? get endDate;
 /// Create a copy of PromotionModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PromotionModelCopyWith<PromotionModel> get copyWith => _$PromotionModelCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PromotionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isLive, isLive) || other.isLive == isLive)&&(identical(other.isTesting, isTesting) || other.isTesting == isTesting)&&(identical(other.isFullScreen, isFullScreen) || other.isFullScreen == isFullScreen)&&(identical(other.promotionType, promotionType) || other.promotionType == promotionType)&&(identical(other.url, url) || other.url == url)&&(identical(other.displayDuration, displayDuration) || other.displayDuration == displayDuration)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PromotionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isLive, isLive) || other.isLive == isLive)&&(identical(other.isTesting, isTesting) || other.isTesting == isTesting)&&(identical(other.isFullScreen, isFullScreen) || other.isFullScreen == isFullScreen)&&(identical(other.promotionType, promotionType) || other.promotionType == promotionType)&&(identical(other.url, url) || other.url == url)&&(identical(other.tapLinkURL, tapLinkURL) || other.tapLinkURL == tapLinkURL)&&(identical(other.displayDuration, displayDuration) || other.displayDuration == displayDuration)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,isLive,isTesting,isFullScreen,promotionType,url,displayDuration,startDate,endDate);
+int get hashCode => Object.hash(runtimeType,id,title,description,isLive,isTesting,isFullScreen,promotionType,url,tapLinkURL,displayDuration,startDate,endDate);
 
 @override
 String toString() {
-  return 'PromotionModel(id: $id, title: $title, description: $description, isLive: $isLive, isTesting: $isTesting, isFullScreen: $isFullScreen, promotionType: $promotionType, url: $url, displayDuration: $displayDuration, startDate: $startDate, endDate: $endDate)';
+  return 'PromotionModel(id: $id, title: $title, description: $description, isLive: $isLive, isTesting: $isTesting, isFullScreen: $isFullScreen, promotionType: $promotionType, url: $url, tapLinkURL: $tapLinkURL, displayDuration: $displayDuration, startDate: $startDate, endDate: $endDate)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PromotionModelCopyWith<$Res>  {
   factory $PromotionModelCopyWith(PromotionModel value, $Res Function(PromotionModel) _then) = _$PromotionModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String? title, String? description, bool isLive, bool isTesting, bool isFullScreen, String promotionType, String? url, int displayDuration,@TimestampConverter() DateTime? startDate,@TimestampConverter() DateTime? endDate
+ String id, String? title, String? description, bool isLive, bool isTesting, bool isFullScreen, String promotionType, String? url, String? tapLinkURL, int displayDuration,@TimestampConverter() DateTime? startDate,@TimestampConverter() DateTime? endDate
 });
 
 
@@ -65,7 +65,7 @@ class _$PromotionModelCopyWithImpl<$Res>
 
 /// Create a copy of PromotionModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? isLive = null,Object? isTesting = null,Object? isFullScreen = null,Object? promotionType = null,Object? url = freezed,Object? displayDuration = null,Object? startDate = freezed,Object? endDate = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? isLive = null,Object? isTesting = null,Object? isFullScreen = null,Object? promotionType = null,Object? url = freezed,Object? tapLinkURL = freezed,Object? displayDuration = null,Object? startDate = freezed,Object? endDate = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -75,6 +75,7 @@ as bool,isTesting: null == isTesting ? _self.isTesting : isTesting // ignore: ca
 as bool,isFullScreen: null == isFullScreen ? _self.isFullScreen : isFullScreen // ignore: cast_nullable_to_non_nullable
 as bool,promotionType: null == promotionType ? _self.promotionType : promotionType // ignore: cast_nullable_to_non_nullable
 as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String?,tapLinkURL: freezed == tapLinkURL ? _self.tapLinkURL : tapLinkURL // ignore: cast_nullable_to_non_nullable
 as String?,displayDuration: null == displayDuration ? _self.displayDuration : displayDuration // ignore: cast_nullable_to_non_nullable
 as int,startDate: freezed == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,endDate: freezed == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
@@ -163,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  bool isLive,  bool isTesting,  bool isFullScreen,  String promotionType,  String? url,  int displayDuration, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  bool isLive,  bool isTesting,  bool isFullScreen,  String promotionType,  String? url,  String? tapLinkURL,  int displayDuration, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PromotionModel() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTesting,_that.isFullScreen,_that.promotionType,_that.url,_that.displayDuration,_that.startDate,_that.endDate);case _:
+return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTesting,_that.isFullScreen,_that.promotionType,_that.url,_that.tapLinkURL,_that.displayDuration,_that.startDate,_that.endDate);case _:
   return orElse();
 
 }
@@ -184,10 +185,10 @@ return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTest
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  bool isLive,  bool isTesting,  bool isFullScreen,  String promotionType,  String? url,  int displayDuration, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  bool isLive,  bool isTesting,  bool isFullScreen,  String promotionType,  String? url,  String? tapLinkURL,  int displayDuration, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)  $default,) {final _that = this;
 switch (_that) {
 case _PromotionModel():
-return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTesting,_that.isFullScreen,_that.promotionType,_that.url,_that.displayDuration,_that.startDate,_that.endDate);case _:
+return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTesting,_that.isFullScreen,_that.promotionType,_that.url,_that.tapLinkURL,_that.displayDuration,_that.startDate,_that.endDate);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +205,10 @@ return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTest
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? title,  String? description,  bool isLive,  bool isTesting,  bool isFullScreen,  String promotionType,  String? url,  int displayDuration, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? title,  String? description,  bool isLive,  bool isTesting,  bool isFullScreen,  String promotionType,  String? url,  String? tapLinkURL,  int displayDuration, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)?  $default,) {final _that = this;
 switch (_that) {
 case _PromotionModel() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTesting,_that.isFullScreen,_that.promotionType,_that.url,_that.displayDuration,_that.startDate,_that.endDate);case _:
+return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTesting,_that.isFullScreen,_that.promotionType,_that.url,_that.tapLinkURL,_that.displayDuration,_that.startDate,_that.endDate);case _:
   return null;
 
 }
@@ -219,7 +220,7 @@ return $default(_that.id,_that.title,_that.description,_that.isLive,_that.isTest
 @JsonSerializable()
 
 class _PromotionModel implements PromotionModel {
-   _PromotionModel({required this.id, this.title, this.description, this.isLive = false, this.isTesting = false, this.isFullScreen = false, this.promotionType = 'image', this.url, this.displayDuration = 10, @TimestampConverter() this.startDate, @TimestampConverter() this.endDate});
+   _PromotionModel({required this.id, this.title, this.description, this.isLive = false, this.isTesting = false, this.isFullScreen = false, this.promotionType = 'image', this.url, this.tapLinkURL, this.displayDuration = 10, @TimestampConverter() this.startDate, @TimestampConverter() this.endDate});
   factory _PromotionModel.fromJson(Map<String, dynamic> json) => _$PromotionModelFromJson(json);
 
 @override final  String id;
@@ -230,6 +231,7 @@ class _PromotionModel implements PromotionModel {
 @override@JsonKey() final  bool isFullScreen;
 @override@JsonKey() final  String promotionType;
 @override final  String? url;
+@override final  String? tapLinkURL;
 @override@JsonKey() final  int displayDuration;
 @override@TimestampConverter() final  DateTime? startDate;
 @override@TimestampConverter() final  DateTime? endDate;
@@ -247,16 +249,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PromotionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isLive, isLive) || other.isLive == isLive)&&(identical(other.isTesting, isTesting) || other.isTesting == isTesting)&&(identical(other.isFullScreen, isFullScreen) || other.isFullScreen == isFullScreen)&&(identical(other.promotionType, promotionType) || other.promotionType == promotionType)&&(identical(other.url, url) || other.url == url)&&(identical(other.displayDuration, displayDuration) || other.displayDuration == displayDuration)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PromotionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isLive, isLive) || other.isLive == isLive)&&(identical(other.isTesting, isTesting) || other.isTesting == isTesting)&&(identical(other.isFullScreen, isFullScreen) || other.isFullScreen == isFullScreen)&&(identical(other.promotionType, promotionType) || other.promotionType == promotionType)&&(identical(other.url, url) || other.url == url)&&(identical(other.tapLinkURL, tapLinkURL) || other.tapLinkURL == tapLinkURL)&&(identical(other.displayDuration, displayDuration) || other.displayDuration == displayDuration)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,isLive,isTesting,isFullScreen,promotionType,url,displayDuration,startDate,endDate);
+int get hashCode => Object.hash(runtimeType,id,title,description,isLive,isTesting,isFullScreen,promotionType,url,tapLinkURL,displayDuration,startDate,endDate);
 
 @override
 String toString() {
-  return 'PromotionModel(id: $id, title: $title, description: $description, isLive: $isLive, isTesting: $isTesting, isFullScreen: $isFullScreen, promotionType: $promotionType, url: $url, displayDuration: $displayDuration, startDate: $startDate, endDate: $endDate)';
+  return 'PromotionModel(id: $id, title: $title, description: $description, isLive: $isLive, isTesting: $isTesting, isFullScreen: $isFullScreen, promotionType: $promotionType, url: $url, tapLinkURL: $tapLinkURL, displayDuration: $displayDuration, startDate: $startDate, endDate: $endDate)';
 }
 
 
@@ -267,7 +269,7 @@ abstract mixin class _$PromotionModelCopyWith<$Res> implements $PromotionModelCo
   factory _$PromotionModelCopyWith(_PromotionModel value, $Res Function(_PromotionModel) _then) = __$PromotionModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? title, String? description, bool isLive, bool isTesting, bool isFullScreen, String promotionType, String? url, int displayDuration,@TimestampConverter() DateTime? startDate,@TimestampConverter() DateTime? endDate
+ String id, String? title, String? description, bool isLive, bool isTesting, bool isFullScreen, String promotionType, String? url, String? tapLinkURL, int displayDuration,@TimestampConverter() DateTime? startDate,@TimestampConverter() DateTime? endDate
 });
 
 
@@ -284,7 +286,7 @@ class __$PromotionModelCopyWithImpl<$Res>
 
 /// Create a copy of PromotionModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? isLive = null,Object? isTesting = null,Object? isFullScreen = null,Object? promotionType = null,Object? url = freezed,Object? displayDuration = null,Object? startDate = freezed,Object? endDate = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? isLive = null,Object? isTesting = null,Object? isFullScreen = null,Object? promotionType = null,Object? url = freezed,Object? tapLinkURL = freezed,Object? displayDuration = null,Object? startDate = freezed,Object? endDate = freezed,}) {
   return _then(_PromotionModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -294,6 +296,7 @@ as bool,isTesting: null == isTesting ? _self.isTesting : isTesting // ignore: ca
 as bool,isFullScreen: null == isFullScreen ? _self.isFullScreen : isFullScreen // ignore: cast_nullable_to_non_nullable
 as bool,promotionType: null == promotionType ? _self.promotionType : promotionType // ignore: cast_nullable_to_non_nullable
 as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String?,tapLinkURL: freezed == tapLinkURL ? _self.tapLinkURL : tapLinkURL // ignore: cast_nullable_to_non_nullable
 as String?,displayDuration: null == displayDuration ? _self.displayDuration : displayDuration // ignore: cast_nullable_to_non_nullable
 as int,startDate: freezed == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,endDate: freezed == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable

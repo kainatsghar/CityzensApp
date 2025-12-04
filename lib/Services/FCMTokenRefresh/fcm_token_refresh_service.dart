@@ -12,9 +12,9 @@ class FcmTokenRefreshService {
   static Future<bool> refreshToken() async {
     //String? fcmToken = await FirebaseMessaging.instance.getToken();
 
-    if (kDebugMode) {
-      return false;
-    }
+    // if (kDebugMode) {
+    //   return false;
+    // }
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -66,6 +66,9 @@ class FcmTokenRefreshService {
     }
 
     debugPrint("FCM Token: $fcmToken");
+    if (kDebugMode) {
+      return false;
+    }
     var localData = Provider.of<LocalDataProvider>(
       AppNavigation.currentContext!,
       listen: false,

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,17 +8,11 @@ import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart'
 import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
 import 'package:tcs_app/Services/Logout/logout_service.dart';
 import 'package:tcs_app/SharedPreference/shared_preference.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
-import 'package:upgrader/upgrader.dart';
-
-import '../../Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
-import '../../Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
-import '../../Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart';
 
 class LocalDataProvider with ChangeNotifier {
   LoginResponse? userData = LoginResponse();
@@ -27,7 +20,7 @@ class LocalDataProvider with ChangeNotifier {
   String studentId = '';
   int? gradeId = 0;
 
-  Future<void> loadStoredData() async {
+  Future<LoginResponse> loadStoredData({bool teacherForceLogIn = false}) async {
     String? localData = await AppLocalData.getStringPrefValue(
       key: AppConstants.userDataKey,
     );
@@ -38,11 +31,16 @@ class LocalDataProvider with ChangeNotifier {
         setSGradeId(userData!.info!.gradeId!);
       } else if (userData!.userType == 'Teacher') {
         setSGradeId(userData!.gradeId);
+        if (userData!.id == 0 && teacherForceLogIn) {
+          AppLocalData.removeKeyData(key: AppConstants.userDataKey);
+          userData = LoginResponse();
+        }
       }
       notifyListeners();
     } else {
       userData = LoginResponse();
     }
+    return userData!;
   }
 
   void setStudentId(String id) {
@@ -53,36 +51,6 @@ class LocalDataProvider with ChangeNotifier {
   void setSGradeId(int? gId) {
     gradeId = gId;
     notifyListeners();
-  }
-
-  Future<Widget> authDecider() async {
-    await loadStoredData();
-
-    return kIsWeb
-        ? (userData!.tokenId == null)
-              ? const LoginScreen()
-              : (userData!.userType == 'Student')
-              ? const StudentDashboardScreen()
-              : (userData!.userType == 'Teacher')
-              ? const TeacherDashboardScreen()
-              : const ParentDashboardScreen()
-        : UpgradeAlert(
-            barrierDismissible: true,
-            upgrader: Upgrader(minAppVersion: AppConstants.appVersion),
-            showLater: true,
-            showIgnore: false,
-            dialogStyle: Platform.isIOS
-                ? UpgradeDialogStyle.cupertino
-                : UpgradeDialogStyle.material,
-            navigatorKey: AppNavigation.navigatorKey,
-            child: (userData!.tokenId == null)
-                ? const LoginScreen()
-                : (userData!.userType == 'Student')
-                ? const StudentDashboardScreen()
-                : (userData!.userType == 'Teacher')
-                ? const TeacherDashboardScreen()
-                : const ParentDashboardScreen(),
-          );
   }
 
   void setUserImage(File file) {

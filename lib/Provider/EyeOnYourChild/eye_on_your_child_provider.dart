@@ -45,8 +45,9 @@ class EyeOnYourChildProvider with ChangeNotifier {
   List<File?> files = [];
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setStudentsUpdates(ParentEyeOnYourChildResponse response) {
     parentEyeOnChildResponse = response;
@@ -54,7 +55,7 @@ class EyeOnYourChildProvider with ChangeNotifier {
       imagePaths = [
         response.fileList![0].filePath1.toString(),
         response.fileList![0].filePath2.toString(),
-        response.fileList![0].filePath3.toString()
+        response.fileList![0].filePath3.toString(),
       ];
     }
 
@@ -85,24 +86,32 @@ class EyeOnYourChildProvider with ChangeNotifier {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
         AddEyeOnYourChildResponse response =
             await AddEyeOnYourChildService.saveStudentUpdatesForParent(
-          studentId: selectedChildId ?? 0,
-          updateId: selectedUpdateId ?? 0,
-          tokenId: localDataProvider.userData!.tokenId,
-          createdBy: localDataProvider.userData!.id,
-          modifiedBy: localDataProvider.userData!.id,
-          fileName1: fileName1 ?? '',
-          fileName2: fileName2 ?? '',
-          fileName3: fileName3 ?? '',
-          fileBaseString1: base64String1 ?? '',
-          fileBaseString2: base64String2 ?? '',
-          fileBaseString3: base64String3 ?? '',
-        );
+              studentId: selectedChildId ?? 0,
+              updateId: selectedUpdateId ?? 0,
+              tokenId: localDataProvider.userData!.tokenId,
+              createdBy: int.tryParse(
+                localDataProvider.userData!.userName.toString(),
+              ),
+              modifiedBy: int.tryParse(
+                localDataProvider.userData!.userName.toString(),
+              ),
+              fileName1: fileName1 ?? '',
+              fileName2: fileName2 ?? '',
+              fileName3: fileName3 ?? '',
+              fileBaseString1: base64String1 ?? '',
+              fileBaseString2: base64String2 ?? '',
+              fileBaseString3: base64String3 ?? '',
+            );
         if (response.isSuccess!) {
           await loadEyeOnChildConfig();
           Future.delayed(
-              const Duration(seconds: 1), () => AppNavigation.goBack());
-          showSnackBar('Record Added Successfully',
-              color: AppColors.successGreenColor);
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Record Added Successfully',
+            color: AppColors.successGreenColor,
+          );
         } else {
           showSnackBar(response.message);
         }
@@ -125,12 +134,13 @@ class EyeOnYourChildProvider with ChangeNotifier {
     int? userId = localDataProvider.userData!.userType == 'Student'
         ? int.tryParse(localDataProvider.studentId)
         : localDataProvider.userData!.userType == 'Parent'
-            ? int.tryParse(localDataProvider.studentId)
-            : int.tryParse(localDataProvider.userData!.userName ?? '');
+        ? int.tryParse(localDataProvider.studentId)
+        : int.tryParse(localDataProvider.userData!.userName ?? '');
     try {
       EyeOnYourChildResponse response =
           await EyeOnYourChildService.getEyeOnChildConfig(
-              userName: userId ?? 0);
+            userName: userId ?? 0,
+          );
       setEyeOnYourChildRecords(response);
       return response;
     } catch (ex) {
@@ -143,8 +153,9 @@ class EyeOnYourChildProvider with ChangeNotifier {
     try {
       ParentEyeOnYourChildResponse response =
           await ParentEyeOnYourChildService.getStudentUpdatesForParent(
-              userName: userId ?? 0,
-              tokenId: localDataProvider.userData!.tokenId ?? '');
+            userName: userId ?? 0,
+            tokenId: localDataProvider.userData!.tokenId ?? '',
+          );
       setStudentsUpdates(response);
       return response;
     } catch (ex) {
@@ -160,8 +171,9 @@ class EyeOnYourChildProvider with ChangeNotifier {
     );
 
     if (result != null) {
-      List<File> selectedFiles =
-          result.paths.map((path) => File(path!)).toList();
+      List<File> selectedFiles = result.paths
+          .map((path) => File(path!))
+          .toList();
 
       if (selectedFiles.length > 3) {
         showSnackBar('You can only select up to 3 images.');

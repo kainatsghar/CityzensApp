@@ -31,8 +31,9 @@ class ComplaintQueryProvider with ChangeNotifier {
   late final formKey = GlobalKey<FormState>();
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setStudentNameValue(String val) {
     studentName = val;
@@ -92,7 +93,9 @@ class ComplaintQueryProvider with ChangeNotifier {
   }
 
   Future<void> saveComplaintQueryRequest(
-      BuildContext context, bool isSaved) async {
+    BuildContext context,
+    bool isSaved,
+  ) async {
     DialogBuilder.showLoadingIndicator();
     try {
       if (formKey.currentState!.validate()) {
@@ -156,8 +159,8 @@ class ComplaintQueryProvider with ChangeNotifier {
       int? userId = localDataProvider.userData!.userType == 'Student'
           ? int.tryParse(localDataProvider.studentId)
           : localDataProvider.userData!.userType == 'Parent'
-              ? int.tryParse(localDataProvider.studentId)
-              : localDataProvider.userData!.id;
+          ? int.tryParse(localDataProvider.studentId)
+          : int.tryParse(localDataProvider.userData!.userName!);
 
       WithdrawalResponse response =
           await WithdrawalRequestService.getWithdrawalReasons(id: userId ?? 0);

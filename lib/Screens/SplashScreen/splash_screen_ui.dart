@@ -1,59 +1,30 @@
-import 'dart:async';
-
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Model/Firebase/Promotion/promotion_model.dart';
-// import 'package:tcs_app/PushNotifications/push_notifications_manager.dart';
-import 'package:tcs_app/Repositories/Promotion/promotion_repository.dart';
+import 'package:provider/provider.dart';
+import 'package:tcs_app/Provider/Splash/splash_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Routes/promotion_args.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_constants.dart';
 
 class SplashScreenUI extends StatefulWidget {
   const SplashScreenUI({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return SplashScreenUIState();
-  }
+  State<StatefulWidget> createState() => SplashScreenUIState();
 }
 
 class SplashScreenUIState extends State<SplashScreenUI> {
-  PromotionModel? _activePromotion;
+  late SplashProvider splashProvider;
 
   @override
   void initState() {
     super.initState();
 
-    if (kIsWeb) {
-      // Handle web-specific initialization here if needed
-      Future.delayed(const Duration(seconds: 3), () {
-        AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
-      });
-    } else {
-      PromotionRepository().getActivePromotion().then((value) {
-        if (value != null) {
-          _activePromotion = value;
-        }
-        Future.delayed(const Duration(seconds: 3), () {
-          if (_activePromotion != null &&
-              ((_activePromotion!.isLive &&
-                      kReleaseMode &&
-                      _activePromotion!.startDate!.isBefore(DateTime.now()) &&
-                      _activePromotion!.endDate!.isAfter(DateTime.now())) ||
-                  (kDebugMode && _activePromotion!.isTesting))) {
-            AppNavigation.pushReplacementTo(
-              AppNavRoutes.promotionRoute,
-              arguments: PromotionArgs(promotionModel: _activePromotion!),
-            );
-          } else {
-            AppNavigation.pushReplacementTo(AppNavRoutes.authWrapperRoute);
-          }
-        });
-      });
-    }
+    splashProvider = Provider.of<SplashProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+    splashProvider.loadInitialData();
   }
 
   @override
@@ -91,6 +62,12 @@ class SplashScreenUIState extends State<SplashScreenUI> {
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w500,
                     ),
+                  ),
+                  SizedBox(height: size.height * 0.33),
+                  Text(
+                    "Version: ${AppConstants.appVersion}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 12.0),
                   ),
                 ],
               ),

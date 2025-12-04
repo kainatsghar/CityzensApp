@@ -125,11 +125,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: <Widget>[
                               InkWell(
                                 child: const Text(
-                                  'Forgot Password?',
+                                  'Forgot your password?',
                                   style: TextStyle(
                                     color: AppColors.primaryTitleColor,
-                                    fontStyle: FontStyle.italic,
                                     decoration: TextDecoration.underline,
+                                    decorationColor:
+                                        AppColors.primaryTitleColor,
+                                    // shadows: [
+                                    //   Shadow(
+                                    //     color: AppColors.primaryColor,
+                                    //     blurRadius: 12,
+                                    //   ),
+                                    // ],
                                   ),
                                 ),
                                 onTap: () => AppNavigation.navigateTo(
@@ -143,31 +150,80 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonTitle: 'Login',
                             onTap: () => value.login(),
                           ),
-                          const SizedBox(height: 15),
-                          const Text('- OR -'),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: const [
+                              Expanded(
+                                child: Divider(
+                                  color: Colors.black26,
+                                  thickness: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Text("OR"),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  color: Colors.black26,
+                                  thickness: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          // const Text('- OR -'),
+                          const SizedBox(height: 16),
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               const Text('New user? '),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 8),
                               InkWell(
                                 // onTap: () => AppNavigation.navigateTo(
                                 //     AppNavRoutes.registrationRoute),
                                 onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.introductionRoute,
                                 ),
-                                child: const Text(
-                                  'Register here',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontStyle: FontStyle.italic,
-                                    decoration: TextDecoration.underline,
-                                    color: AppColors.primaryTitleColor,
-                                    fontWeight: FontWeight.w500,
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.paleYellow,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Text(
+                                    "Register here",
+                                    style: TextStyle(
+                                      color: AppColors.primaryTitleColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
+
+                                //  const Text(
+                                //   'Register here',
+                                //   style: TextStyle(
+                                //     fontSize: 16.0,
+                                //     fontStyle: FontStyle.italic,
+                                //     decoration: TextDecoration.underline,
+                                //     decorationColor:
+                                //         AppColors.primaryTitleColor,
+                                //     color: AppColors.primaryTitleColor,
+                                //     fontWeight: FontWeight.w500,
+                                //     shadows: [
+                                //       Shadow(
+                                //         color: AppColors.primaryColor,
+                                //         blurRadius: 4,
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
                               ),
                             ],
                           ),
@@ -198,6 +254,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.primaryTitleColor,
                                           decoration: TextDecoration.underline,
+                                          decorationColor:
+                                              AppColors.primaryTitleColor,
                                         ),
                                       ),
                                     ),

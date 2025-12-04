@@ -1,27 +1,32 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/Provider/Splash/splash_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
+import 'package:tcs_app/Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
+import 'package:tcs_app/Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
+import 'package:tcs_app/Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart';
+import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:upgrader/upgrader.dart';
 
 class AuthWrapper extends StatefulWidget {
   const AuthWrapper({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _AuthWrapperState createState() => _AuthWrapperState();
+  State<AuthWrapper> createState() => _AuthWrapperState();
 }
 
 class _AuthWrapperState extends State<AuthWrapper> {
-  Future? _userData;
-
   @override
   void initState() {
-    _userData = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false,
-    ).authDecider();
+    authDecider();
+
     super.initState();
   }
 
@@ -30,7 +35,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: FutureBuilder(
-        future: _userData,
+        future: authDecider(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -45,5 +50,59 @@ class _AuthWrapperState extends State<AuthWrapper> {
         },
       ),
     );
+  }
+
+  Future<Widget> authDecider() async {
+    final localDataProvider = Provider.of<LocalDataProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+    final splashProvider = Provider.of<SplashProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+    bool isTeacherForceLoginFeatureAvailable = false;
+
+    if (splashProvider.listOfFeatureConfig != null) {
+      try {
+        final teacherForceLoginFeature = splashProvider.listOfFeatureConfig!
+            .firstWhere((feature) => feature.id == 'teacherForceLogin');
+
+        isTeacherForceLoginFeatureAvailable =
+            (kReleaseMode && teacherForceLoginFeature.isLive) ||
+            (kDebugMode && teacherForceLoginFeature.isTest);
+      } catch (e) {
+        isTeacherForceLoginFeatureAvailable = false;
+      }
+    }
+
+    final userData = await localDataProvider.loadStoredData(
+      teacherForceLogIn: isTeacherForceLoginFeatureAvailable,
+    );
+    return kIsWeb
+        ? (userData.tokenId == null)
+              ? const LoginScreen()
+              : (userData.userType == 'Student')
+              ? const StudentDashboardScreen()
+              : (userData.userType == 'Teacher')
+              ? const TeacherDashboardScreen()
+              : const ParentDashboardScreen()
+        : UpgradeAlert(
+            barrierDismissible: true,
+            upgrader: Upgrader(minAppVersion: AppConstants.appVersion),
+            showLater: true,
+            showIgnore: false,
+            dialogStyle: Platform.isIOS
+                ? UpgradeDialogStyle.cupertino
+                : UpgradeDialogStyle.material,
+            navigatorKey: AppNavigation.navigatorKey,
+            child: (userData.tokenId == null)
+                ? const LoginScreen()
+                : (userData.userType == 'Student')
+                ? const StudentDashboardScreen()
+                : (userData.userType == 'Teacher')
+                ? const TeacherDashboardScreen()
+                : const ParentDashboardScreen(),
+          );
   }
 }

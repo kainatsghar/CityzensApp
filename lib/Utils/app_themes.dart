@@ -13,8 +13,11 @@ class AppThemes {
     // fontFamily: AppConstants.textFontFamily,
     drawerTheme: const DrawerThemeData(backgroundColor: AppColors.primaryColor),
     appBarTheme: const AppBarTheme(
-        iconTheme: IconThemeData(color: AppColors.primaryTitleColor)),
+      iconTheme: IconThemeData(color: AppColors.primaryTitleColor),
+    ),
     colorScheme: const ColorScheme.light(
-        primary: AppColors.primaryColor, secondary: AppColors.primaryColor),
+      primary: AppColors.primaryColor,
+      secondary: AppColors.primaryColor,
+    ),
   );
 }
