@@ -11,21 +11,9 @@ import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/Splash/splash_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/Services/FirebaseServices/ad_analytics_service.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:video_player/video_player.dart';
-
-enum PromotionType { image, video }
-
-extension PromotionTypeExtension on PromotionType {
-  String get displayName {
-    switch (this) {
-      case PromotionType.image:
-        return 'Image';
-      case PromotionType.video:
-        return 'Video';
-    }
-  }
-}
 
 class PromotionScreenUI extends StatefulWidget {
   const PromotionScreenUI({super.key});
@@ -60,11 +48,15 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
     );
 
     if (splashProvider.activePromotion!.promotionType.toLowerCase() ==
-        PromotionType.video.displayName.toLowerCase()) {
+        AdType.video.displayName.toLowerCase()) {
       _initializeVideo();
     } else {
       _startTimer();
     }
+    AdAnalyticsService.logAdImpression(
+      adId: splashProvider.activePromotion!.id,
+      position: AdPosition.launchPage.displayName,
+    );
   }
 
   @override
@@ -181,7 +173,7 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
             children: [
               // Content (Image or Video)
               if (splashProvider.activePromotion!.promotionType.toLowerCase() ==
-                      PromotionType.video.displayName.toLowerCase() &&
+                      AdType.video.displayName.toLowerCase() &&
                   _videoController?.value.isInitialized == true)
                 Center(
                   child: AspectRatio(
@@ -191,7 +183,7 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
                 )
               else if (splashProvider.activePromotion!.promotionType
                       .toLowerCase() ==
-                  PromotionType.image.displayName.toLowerCase())
+                  AdType.image.displayName.toLowerCase())
                 Positioned.fill(
                   child: FadeIn(
                     child: InkWell(
@@ -202,7 +194,19 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
                                   .tapLinkURL!
                                   .isEmpty)
                           ? null
-                          : () {
+                          : () async {
+                              // Track the tap
+                              await AdAnalyticsService.logAdTap(
+                                adId: splashProvider.activePromotion!.id,
+                                position: AdPosition.launchPage.displayName,
+                                adTitle: splashProvider.activePromotion!.title!,
+                              );
+
+                              // Track link open
+                              await AdAnalyticsService.logAdOpenLink(
+                                adId: splashProvider.activePromotion!.id,
+                                position: AdPosition.launchPage.displayName,
+                              );
                               HelperFunction.launchURL(
                                 splashProvider.activePromotion!.tapLinkURL!,
                               );
@@ -231,7 +235,7 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
   Widget _buildSkipButton() {
     final progress =
         splashProvider.activePromotion!.promotionType.toLowerCase() ==
-                PromotionType.video.displayName.toLowerCase() &&
+                AdType.video.displayName.toLowerCase() &&
             _videoController?.value.duration != null
         ? (_videoController!.value.position.inMilliseconds.toDouble() /
               _videoController!.value.duration.inMilliseconds.toDouble())
