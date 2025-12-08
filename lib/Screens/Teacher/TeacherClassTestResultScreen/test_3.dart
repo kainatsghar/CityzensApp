@@ -17,8 +17,9 @@ class Test3 extends StatefulWidget {
 class _Test3State extends State<Test3> {
   late Future studentRecords;
   var provider = Provider.of<ClassTestResultProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -38,25 +39,20 @@ class _Test3State extends State<Test3> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: studentRecords,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Test3Component(),
-                      ],
-                    ),
-                  );
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: studentRecords,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const Test3Component();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
     );
   }
 }

@@ -14,7 +14,7 @@ class Test2Component extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
       child: Consumer<ClassTestResultProvider>(
         builder: (context, value, _) {

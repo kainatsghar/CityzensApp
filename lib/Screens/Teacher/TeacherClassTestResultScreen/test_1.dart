@@ -18,8 +18,9 @@ class _Test1State extends State<Test1> {
   late Future studentRecords;
   late Future studentMarksRecords;
   var provider = Provider.of<ClassTestResultProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -38,26 +39,22 @@ class _Test1State extends State<Test1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: FutureBuilder(
-          future: studentRecords,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Test1Component(),
-                      ],
-                    ),
-                  );
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: studentRecords,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return Test1Component();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
     );
   }
 }

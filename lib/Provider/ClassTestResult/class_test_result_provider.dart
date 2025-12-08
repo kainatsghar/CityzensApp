@@ -287,6 +287,8 @@ class ClassTestResultProvider with ChangeNotifier {
             showSnackBar(response.message);
           }
         }
+      } else {
+        ;
       }
     } catch (ex) {
       showSnackBar(AppConstants.exceptionMessage);

@@ -21,8 +21,6 @@ class CenteredErrorTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FocusNode focusNode = FocusNode();
-
     return FormField<String>(
       validator: validator,
       builder: (field) {
@@ -38,7 +36,6 @@ class CenteredErrorTextFormField extends StatelessWidget {
               child: TextFormField(
                 canRequestFocus: true,
                 controller: controller,
-                focusNode: focusNode,
                 textAlign: TextAlign.center,
                 keyboardType: keyboardType,
                 inputFormatters: inputFormatters,
