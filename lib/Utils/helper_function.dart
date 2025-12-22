@@ -60,7 +60,7 @@ class HelperFunction {
   }
 
   static Future<DateTime?> openDatePicker({
-    @required TextEditingController? filterDate,
+    required TextEditingController filterDate,
   }) async {
     DateTime now = DateTime.now();
     DateTime initialDate = DateTime(now.year - 3, now.month, now.day);
@@ -73,7 +73,7 @@ class HelperFunction {
       builder: (ctx, child) => child!,
     );
     if (picked != null) {
-      filterDate!.text = dateFormatter('$picked', format: 'dd-MMM-yyyy');
+      filterDate.text = dateFormatter('$picked', format: 'dd-MMM-yyyy');
     }
     return picked;
   }

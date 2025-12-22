@@ -4,16 +4,22 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import 'package:tcs_app/Model/Results/results_response.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Services/ChangePassword/change_password_service.dart';
+import 'package:tcs_app/Services/Results/result_service.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DashboardProvider with ChangeNotifier {
   final changePasswordFormKey = GlobalKey<FormState>();
 
+  var localProvider = Provider.of<LocalDataProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
+  ResultsResponse resultsResponse = ResultsResponse();
   bool obscureText = true;
   bool obscureTextNewPassword = true;
   bool obscureTextConfirmPassword = true;
@@ -105,33 +111,30 @@ class DashboardProvider with ChangeNotifier {
         : '${localProvider.userData!.userName}';
   }
 
-  Future<void> launchPlayStore() async {
-    const url =
-        // ignore: prefer_adjacent_string_concatenation
-        'https://play.google.com/store/apps/details?id=' + 'com.tcs.tcsapp';
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      throw 'Could not launch $url';
+  Future<dynamic> loadResults({
+    required int academicYearId,
+    required int termId,
+  }) async {
+    try {
+      resultsResponse = ResultsResponse();
+
+      var response = await ResultService.resultsRequest(
+        userName: localProvider.studentId,
+        token: localProvider.userData!.tokenId!,
+        academicYearId: academicYearId,
+        termId: termId,
+      );
+      setResultsResponse(ResultsResponse.fromJson(response));
+      return response;
+    } catch (ex) {
+      rethrow;
     }
   }
 
-  // launchAppStore() {
-  //   LaunchReview.launch(writeReview: false, iOSAppId: '1630070364');
-  // }
-
-  // Future<void> launchEmail() async {
-  //   const address = 'mailto:appfeedback@csn.edu.pk';
-  //   try {
-  //     if (await canLaunchUrl(Uri.parse(address))) {
-  //       await launchUrl(Uri.parse(address));
-  //     } else {
-  //       throw 'Could not launch $address';
-  //     }
-  //   } catch (_) {
-  //     throw 'Could not launch $address';
-  //   }
-  // }
+  void setResultsResponse(ResultsResponse response) {
+    resultsResponse = response;
+    notifyListeners();
+  }
 
   Future<void> loadVersionName() async {
     try {

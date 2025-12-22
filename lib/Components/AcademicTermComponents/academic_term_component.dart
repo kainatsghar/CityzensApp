@@ -12,7 +12,6 @@ import '../../Utils/app_constants.dart';
 class AcademicTermComponent extends StatelessWidget {
   const AcademicTermComponent({super.key});
 
-  // AcademicTermComponent({super.key});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -72,32 +71,27 @@ class AcademicTermComponent extends StatelessWidget {
                         value.resultsResponse.pdfResultslist![0].url != null)
                       GestureDetector(
                         onTap: () {
-                          // Add logic to download PDF here
+                          //Handle null URL case using null-aware operator
+                          String url =
+                              value.resultsResponse.pdfResultslist![0].url!;
+                          HelperFunction.launchURL(url);
                         },
-                        child: GestureDetector(
-                          onTap: () {
-                            //Handle null URL case using null-aware operator
-                            String url =
-                                value.resultsResponse.pdfResultslist![0].url!;
-                            value.launchFile(url);
-                          },
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                'assets/images/pdf_download_icon.png',
-                                width: 100, // adjust width as needed
-                                height: 100, // adjust height as needed
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/pdf_download_icon.png',
+                              width: 100, // adjust width as needed
+                              height: 100, // adjust height as needed
+                            ),
+                            const SizedBox(height: 5),
+                            const Text(
+                              'CLICK TO VIEW RESULT',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
                               ),
-                              const SizedBox(height: 5),
-                              const Text(
-                                'CLICK TO DOWNLOAD PDF',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       )
                     else

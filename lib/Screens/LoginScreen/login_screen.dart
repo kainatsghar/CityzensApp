@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
@@ -243,7 +245,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: InkWell(
                                       onTap: () => HelperFunction.launchURL(
-                                        AppConstants.alumniAppURL,
+                                        Platform.isIOS
+                                            ? AppConstants.alumniIOSAppURL
+                                            : AppConstants.alumniAndroidAppURL,
                                       ),
                                       child: const Text(
                                         'The City School ALUMNI App',

@@ -9,7 +9,6 @@ import 'package:tcs_app/Services/Results/result_service.dart';
 import 'package:tcs_app/model/AcademicTerm/academic_term_response.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/Results/results_response.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ResultsProvider with ChangeNotifier {
   final academicYearController = TextEditingController(); //
@@ -29,8 +28,9 @@ class ResultsProvider with ChangeNotifier {
   ResultsResponse resultsResponse = ResultsResponse();
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setSelectedAcademicYear(String v) {
     selectAcademicYear = academicYears.singleWhere((e) => e.name == v).id!;
@@ -41,10 +41,15 @@ class ResultsProvider with ChangeNotifier {
 
   void setEyeResultResponse(Map eyeData) {
     eyeResult = eyeData.entries
-        .map((entry) => EyeResult(
+        .map(
+          (entry) => EyeResult(
             entry.key,
-            List.generate(entry.value.length,
-                (i) => SubjectDetails.fromJson(entry.value[i]))))
+            List.generate(
+              entry.value.length,
+              (i) => SubjectDetails.fromJson(entry.value[i]),
+            ),
+          ),
+        )
         .toList();
     notifyListeners();
   }
@@ -65,8 +70,9 @@ class ResultsProvider with ChangeNotifier {
     try {
       AcademicTermResponse response =
           await AcademicTermService.academicTermRequest(
-              userName: localDataProvider.studentId,
-              token: localDataProvider.userData!.tokenId!);
+            userName: localDataProvider.studentId,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setResponse(response);
       return response;
     } catch (ex) {
@@ -77,10 +83,11 @@ class ResultsProvider with ChangeNotifier {
   Future<dynamic> loadResults() async {
     try {
       var response = await ResultService.resultsRequest(
-          userName: localDataProvider.studentId,
-          token: localDataProvider.userData!.tokenId!,
-          academicYearId: selectAcademicYear,
-          termId: selectedTerm);
+        userName: localDataProvider.studentId,
+        token: localDataProvider.userData!.tokenId!,
+        academicYearId: selectAcademicYear,
+        termId: selectedTerm,
+      );
       setResultsResponse(ResultsResponse.fromJson(response));
       setEyeResultResponse(response['EyeResult']);
       return response;
@@ -103,26 +110,19 @@ class ResultsProvider with ChangeNotifier {
 
   void academicYearBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Academic Years',
-            controller: academicYearController,
-            filterOptions: List.generate(
-                academicYears.length,
-                (i) => Options(
-                    title: academicYears[i].name, value: academicYears[i].id)),
-            onSelect: (v) => setSelectedAcademicYear(v)));
-  }
-
-  Future<void> launchFile(String url) async {
-    // ignore: deprecated_member_use
-    if (await canLaunch(url)) {
-      // ignore: deprecated_member_use
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Academic Years',
+        controller: academicYearController,
+        filterOptions: List.generate(
+          academicYears.length,
+          (i) =>
+              Options(title: academicYears[i].name, value: academicYears[i].id),
+        ),
+        onSelect: (v) => setSelectedAcademicYear(v),
+      ),
+    );
   }
 
   // void termBottomSheet() {

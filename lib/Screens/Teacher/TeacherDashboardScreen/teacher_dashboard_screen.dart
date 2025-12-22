@@ -40,8 +40,8 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
         (MediaQueryUtil.isLandscape() ? size.height : size.width) / 2;
     return Consumer<LocalDataProvider>(
       builder: (context, value, _) {
-        // final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
-        // final localGradeId = value.gradeId?.toString() ?? '';
+        final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
+        final localGradeId = value.gradeId?.toString() ?? '';
         return SafeArea(
           child: Scaffold(
             appBar: CustomAppBar(
@@ -173,24 +173,23 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                       //     onTap: () => AppNavigation.navigateTo(
                       //         AppNavRoutes.parentAppointmentRoute),
                       //     imageName: 'calendar_appoointment.png'),
-                      // if (gradeId == '2' ||
-                      //     gradeId == '3' ||
-                      //     gradeId == '4' ||
-                      //     localGradeId == '2' ||
-                      //     localGradeId == '3' ||
-                      //     localGradeId == '4')
-                      CustomDashboardButton(
-                        title: 'EYE ON\nYOUR CHILD',
-                        bottomAlign: -22,
-                        leftAlign: 0,
-                        imageHeight: MediaQueryUtil.getResponsivePercentageSize(
-                          10,
+                      if (gradeId == '2' ||
+                          gradeId == '3' ||
+                          gradeId == '4' ||
+                          localGradeId == '2' ||
+                          localGradeId == '3' ||
+                          localGradeId == '4')
+                        CustomDashboardButton(
+                          title: 'EYE ON\nYOUR CHILD',
+                          bottomAlign: -22,
+                          leftAlign: 0,
+                          imageHeight:
+                              MediaQueryUtil.getResponsivePercentageSize(10),
+                          onTap: () => AppNavigation.navigateTo(
+                            AppNavRoutes.eyeOnYourChildRoute,
+                          ),
+                          imageName: 'shield.png',
                         ),
-                        onTap: () => AppNavigation.navigateTo(
-                          AppNavRoutes.eyeOnYourChildRoute,
-                        ),
-                        imageName: 'shield.png',
-                      ),
 
                       // CustomDashboardButton(
                       //     title: 'SURVEY',

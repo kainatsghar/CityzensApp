@@ -1,17 +1,17 @@
 class AppConstants {
   static String apiBaseURL = "$baseUrl/api/";
   static String baseUrl = apiLiveBaseURL;
-  // static String baseUrl = apiTestBaseURL;
-  // static String baseUrl = kDebugMode
-  //     ? apiTestBaseURL
-  //     : apiLiveBaseURL; // Use test URL in debug mode, live URL in release
+  //   static String baseUrl = apiTestBaseURL;
+  //   static String baseUrl = kDebugMode
+  //       ? apiTestBaseURL
+  //       : apiLiveBaseURL; // Use test URL in debug mode, live URL in release
 
   //We are using this URL for Firebase Remote Config "apiBaseUrl"
   // static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
   static const String apiLiveBaseURL = "https://cityzenapi.csn.edu.pk";
   static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
 
-  static const String appVersion = '1.13.0';
+  static const String appVersion = '1.13.1';
 
   /// Error Messages
   static const String exceptionMessage =
@@ -30,13 +30,18 @@ class AppConstants {
 
   /// Other Constants
   static const String textFontFamily = 'NexaText';
-  static const String alumniAppURL =
+
+  /// External Links
+  static const String alumniIOSAppURL =
+      "https://apps.apple.com/us/app/a-cityzen-for-life/id1660765260";
+  static const String alumniAndroidAppURL =
       "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
   static const String paymentGatewayURL =
       'https://billing.thecityschool.edu.pk/challan';
   static const String paymentGatewayNewURL =
       'https://billing.thecityschool.edu.pk/directpayment/';
 
+  /// Support Email
   static const String appSupportEmail = 'appsupport@csn.edu.pk';
 
   /// Shared Preferences Keys

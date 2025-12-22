@@ -13,9 +13,9 @@ part of 'feature_config_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$FeatureConfigModel {
+mixin _$FeatureConfigModel implements DiagnosticableTreeMixin {
 
- String get id; bool get isLive; bool get isTest;@TimestampConverter() DateTime? get startDate;@TimestampConverter() DateTime? get endDate;
+ String get id; bool get isLive; bool get isTest; bool get isTesting;@TimestampConverter() DateTime? get startDate;@TimestampConverter() DateTime? get endDate;
 /// Create a copy of FeatureConfigModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,19 +25,25 @@ $FeatureConfigModelCopyWith<FeatureConfigModel> get copyWith => _$FeatureConfigM
   /// Serializes this FeatureConfigModel to a JSON map.
   Map<String, dynamic> toJson();
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'FeatureConfigModel'))
+    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('isLive', isLive))..add(DiagnosticsProperty('isTest', isTest))..add(DiagnosticsProperty('isTesting', isTesting))..add(DiagnosticsProperty('startDate', startDate))..add(DiagnosticsProperty('endDate', endDate));
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeatureConfigModel&&(identical(other.id, id) || other.id == id)&&(identical(other.isLive, isLive) || other.isLive == isLive)&&(identical(other.isTest, isTest) || other.isTest == isTest)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeatureConfigModel&&(identical(other.id, id) || other.id == id)&&(identical(other.isLive, isLive) || other.isLive == isLive)&&(identical(other.isTest, isTest) || other.isTest == isTest)&&(identical(other.isTesting, isTesting) || other.isTesting == isTesting)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,isLive,isTest,startDate,endDate);
+int get hashCode => Object.hash(runtimeType,id,isLive,isTest,isTesting,startDate,endDate);
 
 @override
-String toString() {
-  return 'FeatureConfigModel(id: $id, isLive: $isLive, isTest: $isTest, startDate: $startDate, endDate: $endDate)';
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'FeatureConfigModel(id: $id, isLive: $isLive, isTest: $isTest, isTesting: $isTesting, startDate: $startDate, endDate: $endDate)';
 }
 
 
@@ -48,7 +54,7 @@ abstract mixin class $FeatureConfigModelCopyWith<$Res>  {
   factory $FeatureConfigModelCopyWith(FeatureConfigModel value, $Res Function(FeatureConfigModel) _then) = _$FeatureConfigModelCopyWithImpl;
 @useResult
 $Res call({
- String id, bool isLive, bool isTest,@TimestampConverter() DateTime? startDate,@TimestampConverter() DateTime? endDate
+ String id, bool isLive, bool isTest, bool isTesting,@TimestampConverter() DateTime? startDate,@TimestampConverter() DateTime? endDate
 });
 
 
@@ -65,11 +71,12 @@ class _$FeatureConfigModelCopyWithImpl<$Res>
 
 /// Create a copy of FeatureConfigModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? isLive = null,Object? isTest = null,Object? startDate = freezed,Object? endDate = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? isLive = null,Object? isTest = null,Object? isTesting = null,Object? startDate = freezed,Object? endDate = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,isLive: null == isLive ? _self.isLive : isLive // ignore: cast_nullable_to_non_nullable
 as bool,isTest: null == isTest ? _self.isTest : isTest // ignore: cast_nullable_to_non_nullable
+as bool,isTesting: null == isTesting ? _self.isTesting : isTesting // ignore: cast_nullable_to_non_nullable
 as bool,startDate: freezed == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,endDate: freezed == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,
@@ -157,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  bool isLive,  bool isTest, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  bool isLive,  bool isTest,  bool isTesting, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FeatureConfigModel() when $default != null:
-return $default(_that.id,_that.isLive,_that.isTest,_that.startDate,_that.endDate);case _:
+return $default(_that.id,_that.isLive,_that.isTest,_that.isTesting,_that.startDate,_that.endDate);case _:
   return orElse();
 
 }
@@ -178,10 +185,10 @@ return $default(_that.id,_that.isLive,_that.isTest,_that.startDate,_that.endDate
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  bool isLive,  bool isTest, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  bool isLive,  bool isTest,  bool isTesting, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)  $default,) {final _that = this;
 switch (_that) {
 case _FeatureConfigModel():
-return $default(_that.id,_that.isLive,_that.isTest,_that.startDate,_that.endDate);case _:
+return $default(_that.id,_that.isLive,_that.isTest,_that.isTesting,_that.startDate,_that.endDate);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +205,10 @@ return $default(_that.id,_that.isLive,_that.isTest,_that.startDate,_that.endDate
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  bool isLive,  bool isTest, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  bool isLive,  bool isTest,  bool isTesting, @TimestampConverter()  DateTime? startDate, @TimestampConverter()  DateTime? endDate)?  $default,) {final _that = this;
 switch (_that) {
 case _FeatureConfigModel() when $default != null:
-return $default(_that.id,_that.isLive,_that.isTest,_that.startDate,_that.endDate);case _:
+return $default(_that.id,_that.isLive,_that.isTest,_that.isTesting,_that.startDate,_that.endDate);case _:
   return null;
 
 }
@@ -212,13 +219,14 @@ return $default(_that.id,_that.isLive,_that.isTest,_that.startDate,_that.endDate
 /// @nodoc
 @JsonSerializable()
 
-class _FeatureConfigModel implements FeatureConfigModel {
-   _FeatureConfigModel({required this.id, this.isLive = false, this.isTest = false, @TimestampConverter() this.startDate, @TimestampConverter() this.endDate});
+class _FeatureConfigModel extends FeatureConfigModel with DiagnosticableTreeMixin {
+   _FeatureConfigModel({required this.id, this.isLive = false, this.isTest = false, this.isTesting = false, @TimestampConverter() this.startDate, @TimestampConverter() this.endDate}): super._();
   factory _FeatureConfigModel.fromJson(Map<String, dynamic> json) => _$FeatureConfigModelFromJson(json);
 
 @override final  String id;
 @override@JsonKey() final  bool isLive;
 @override@JsonKey() final  bool isTest;
+@override@JsonKey() final  bool isTesting;
 @override@TimestampConverter() final  DateTime? startDate;
 @override@TimestampConverter() final  DateTime? endDate;
 
@@ -232,19 +240,25 @@ _$FeatureConfigModelCopyWith<_FeatureConfigModel> get copyWith => __$FeatureConf
 Map<String, dynamic> toJson() {
   return _$FeatureConfigModelToJson(this, );
 }
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'FeatureConfigModel'))
+    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('isLive', isLive))..add(DiagnosticsProperty('isTest', isTest))..add(DiagnosticsProperty('isTesting', isTesting))..add(DiagnosticsProperty('startDate', startDate))..add(DiagnosticsProperty('endDate', endDate));
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeatureConfigModel&&(identical(other.id, id) || other.id == id)&&(identical(other.isLive, isLive) || other.isLive == isLive)&&(identical(other.isTest, isTest) || other.isTest == isTest)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeatureConfigModel&&(identical(other.id, id) || other.id == id)&&(identical(other.isLive, isLive) || other.isLive == isLive)&&(identical(other.isTest, isTest) || other.isTest == isTest)&&(identical(other.isTesting, isTesting) || other.isTesting == isTesting)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,isLive,isTest,startDate,endDate);
+int get hashCode => Object.hash(runtimeType,id,isLive,isTest,isTesting,startDate,endDate);
 
 @override
-String toString() {
-  return 'FeatureConfigModel(id: $id, isLive: $isLive, isTest: $isTest, startDate: $startDate, endDate: $endDate)';
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'FeatureConfigModel(id: $id, isLive: $isLive, isTest: $isTest, isTesting: $isTesting, startDate: $startDate, endDate: $endDate)';
 }
 
 
@@ -255,7 +269,7 @@ abstract mixin class _$FeatureConfigModelCopyWith<$Res> implements $FeatureConfi
   factory _$FeatureConfigModelCopyWith(_FeatureConfigModel value, $Res Function(_FeatureConfigModel) _then) = __$FeatureConfigModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, bool isLive, bool isTest,@TimestampConverter() DateTime? startDate,@TimestampConverter() DateTime? endDate
+ String id, bool isLive, bool isTest, bool isTesting,@TimestampConverter() DateTime? startDate,@TimestampConverter() DateTime? endDate
 });
 
 
@@ -272,11 +286,12 @@ class __$FeatureConfigModelCopyWithImpl<$Res>
 
 /// Create a copy of FeatureConfigModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? isLive = null,Object? isTest = null,Object? startDate = freezed,Object? endDate = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? isLive = null,Object? isTest = null,Object? isTesting = null,Object? startDate = freezed,Object? endDate = freezed,}) {
   return _then(_FeatureConfigModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,isLive: null == isLive ? _self.isLive : isLive // ignore: cast_nullable_to_non_nullable
 as bool,isTest: null == isTest ? _self.isTest : isTest // ignore: cast_nullable_to_non_nullable
+as bool,isTesting: null == isTesting ? _self.isTesting : isTesting // ignore: cast_nullable_to_non_nullable
 as bool,startDate: freezed == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,endDate: freezed == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,

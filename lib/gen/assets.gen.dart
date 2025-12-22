@@ -270,11 +270,25 @@ class $AssetsImagesGen {
   ];
 }
 
+class $AssetsLottiesGen {
+  const $AssetsLottiesGen();
+
+  /// File path: assets/lotties/diploma_certificate.json
+  String get diplomaCertificate => 'assets/lotties/diploma_certificate.json';
+
+  /// File path: assets/lotties/graduation.json
+  String get graduation => 'assets/lotties/graduation.json';
+
+  /// List of all assets
+  List<String> get values => [diplomaCertificate, graduation];
+}
+
 class Assets {
   const Assets._();
 
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
 }
 
 class AssetGenImage {

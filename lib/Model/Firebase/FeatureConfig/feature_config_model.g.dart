@@ -11,6 +11,7 @@ _FeatureConfigModel _$FeatureConfigModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       isLive: json['isLive'] as bool? ?? false,
       isTest: json['isTest'] as bool? ?? false,
+      isTesting: json['isTesting'] as bool? ?? false,
       startDate: const TimestampConverter().fromJson(json['startDate']),
       endDate: const TimestampConverter().fromJson(json['endDate']),
     );
@@ -20,6 +21,7 @@ Map<String, dynamic> _$FeatureConfigModelToJson(_FeatureConfigModel instance) =>
       'id': instance.id,
       'isLive': instance.isLive,
       'isTest': instance.isTest,
+      'isTesting': instance.isTesting,
       'startDate': const TimestampConverter().toJson(instance.startDate),
       'endDate': const TimestampConverter().toJson(instance.endDate),
     };

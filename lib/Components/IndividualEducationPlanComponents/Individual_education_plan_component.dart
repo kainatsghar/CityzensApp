@@ -82,7 +82,7 @@ class IndividualEducationPlanComponent extends StatelessWidget {
                           //Handle null URL case using null-aware operator
                           String url =
                               value.resultsResponse.pdfResultslist![0].url!;
-                          value.launchFile(url);
+                          HelperFunction.launchURL(url);
                         },
                         child: Column(
                           children: [
