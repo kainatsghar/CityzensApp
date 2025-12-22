@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -184,11 +185,20 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                   if (!isURLOpening) {
                                     isURLOpening = true;
                                     await HelperFunction.launchURL(url);
+                                    FirebaseAnalytics.instance.logEvent(
+                                      name: 'view_result_from_dashboard',
+                                      parameters: {
+                                        'student_id': localData.studentId,
+                                        'grade_id': localData.gradeId
+                                            .toString(),
+                                      },
+                                    );
                                     isURLOpening = false;
                                   }
                                 }
                               },
                         attendanceService: attendanceService,
+                        resultService: resultService,
                         size: size,
                       ),
                     ),
@@ -586,6 +596,7 @@ class DashboardTopSection extends StatefulWidget {
   final bool showResult;
   final DateTime resultReleaseTime;
   final void Function()? onViewResult;
+  final Future<dynamic>? resultService;
   final Future attendanceService;
   final Size size;
 
@@ -594,6 +605,7 @@ class DashboardTopSection extends StatefulWidget {
     required this.showResult,
     required this.resultReleaseTime,
     required this.onViewResult,
+    this.resultService,
     required this.attendanceService,
     required this.size,
   });
@@ -650,6 +662,7 @@ class _DashboardTopSectionState extends State<DashboardTopSection> {
                 child: ResultDashboardCard(
                   resultReleaseTime: widget.resultReleaseTime,
                   onViewResult: widget.onViewResult,
+                  loadResultsFuture: widget.resultService,
                 ),
               ),
 

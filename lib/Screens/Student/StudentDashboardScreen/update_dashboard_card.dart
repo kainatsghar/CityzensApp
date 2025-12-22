@@ -8,12 +8,14 @@ import 'package:lottie/lottie.dart';
 class ResultDashboardCard extends StatefulWidget {
   final DateTime resultReleaseTime;
   final void Function()? onViewResult;
+  final Future<dynamic>? loadResultsFuture;
   final NumberAnimationType animationType;
 
   const ResultDashboardCard({
     super.key,
     required this.resultReleaseTime,
     required this.onViewResult,
+    this.loadResultsFuture,
     this.animationType = NumberAnimationType.scale,
   });
 
@@ -171,28 +173,79 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
         ),
 
         const Spacer(),
-        SizedBox(
-          width: double.infinity,
-          height: buttonHeight,
-          child: ElevatedButton(
-            onPressed: widget.onViewResult,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.secondaryColor,
-              foregroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: Text(
-              'View Result',
-              style: TextStyle(
-                fontSize: MediaQueryUtil.getResponsiveFontSize(
-                  16,
-                ).clamp(14.0, 18.0),
-                color: AppColors.blackColor,
-              ),
-            ),
-          ),
+        Builder(
+          builder: (ctx) {
+            final future = widget.loadResultsFuture;
+            if (future == null) {
+              return SizedBox(
+                width: double.infinity,
+                height: buttonHeight,
+                child: ElevatedButton(
+                  onPressed: widget.onViewResult,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.secondaryColor,
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    'View Result',
+                    style: TextStyle(
+                      fontSize: MediaQueryUtil.getResponsiveFontSize(
+                        16,
+                      ).clamp(14.0, 18.0),
+                      color: AppColors.blackColor,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            return FutureBuilder<dynamic>(
+              future: future,
+              builder: (context, snapshot) {
+                final loading =
+                    snapshot.connectionState == ConnectionState.waiting;
+                return SizedBox(
+                  width: double.infinity,
+                  height: buttonHeight,
+                  child: ElevatedButton(
+                    onPressed: loading ? null : widget.onViewResult,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.secondaryColor,
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: loading
+                        ? SizedBox(
+                            height: MediaQueryUtil.getResponsivePercentageSize(
+                              2.5,
+                            ).clamp(18.0, 24.0),
+                            width: MediaQueryUtil.getResponsivePercentageSize(
+                              2.5,
+                            ).clamp(18.0, 24.0),
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 2.5,
+                              color: AppColors.secondaryColor,
+                            ),
+                          )
+                        : Text(
+                            'View Result',
+                            style: TextStyle(
+                              fontSize: MediaQueryUtil.getResponsiveFontSize(
+                                16,
+                              ).clamp(14.0, 18.0),
+                              color: AppColors.blackColor,
+                            ),
+                          ),
+                  ),
+                );
+              },
+            );
+          },
         ),
       ],
     );
