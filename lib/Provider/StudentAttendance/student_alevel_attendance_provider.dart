@@ -161,7 +161,7 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
         Event(
           title: 'Attendance',
           attendance: 'Leave',
-          color: Colors.amber.withOpacity(0.9),
+          color: Colors.amber.withAlpha(230),
           dateTime: DateTime.parse(data.attnDate!),
           studentId: localDataProvider.studentId,
           studentName: localDataProvider.userData!.name,

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 // import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
-import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
@@ -22,13 +21,11 @@ class LoginProvider extends ChangeNotifier {
   String userNameLabel = 'Roll Number';
   String controllerMask = '00000000';
   TextEditingController passwordController = TextEditingController();
-  TextEditingController userTypeController = TextEditingController(
-    text: 'Student',
-  );
+  String userType = 'Student';
   MaskedTextController? userNameController;
-  String? validator(String? text) => userTypeController.text == 'Teacher'
+  String? validator(String? text) => userType == 'Teacher'
       ? Validators.validator(text)
-      : userTypeController.text == 'Parent'
+      : userType == 'Parent'
       ? Validators.validatorForCNICNo(text)
       : Validators.validator(text);
 
@@ -45,13 +42,13 @@ class LoginProvider extends ChangeNotifier {
         LoginResponse loginResponse = await LoginService.loginRequest(
           userNameController?.text ?? '',
           passwordController.text,
-          userTypeController.text,
+          userType,
         );
         DialogBuilder.hideOpenDialog();
         if (loginResponse.isSuccessful ?? false) {
-          loginResponse.userType = userTypeController.text;
+          loginResponse.userType = userType;
           loginResponse.userName = userNameController?.text ?? '';
-          AppLocalData.setStringPrefValue(
+          await AppLocalData.setStringPrefValue(
             key: AppConstants.userDataKey,
             value: jsonEncode(loginResponse),
           );
@@ -85,7 +82,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void onUserTypeSelection(String v) {
-    userTypeController.text = v;
+    userType = v;
     changeUserNameInputField(v);
     notifyListeners();
     AppNavigation.goBack();
@@ -105,23 +102,29 @@ class LoginProvider extends ChangeNotifier {
         : 'Roll Number';
   }
 
-  void userTypeBottomSheet() {
-    showModalBottomSheet(
-      context: AppNavigation.currentContext!,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext bc) => CustomFilterBottomSheet(
-        controller: userTypeController,
-        filterOptions: userTypeList,
-        onSelect: (v) => onUserTypeSelection(v),
-      ),
-    );
+  // void userTypeBottomSheet() {
+  //   showModalBottomSheet(
+  //     context: AppNavigation.currentContext!,
+  //     backgroundColor: Colors.transparent,
+  //     builder: (BuildContext bc) => CustomFilterBottomSheet(
+  //       controller: userTypeController,
+  //       filterOptions: userTypeList,
+  //       onSelect: (v) => onUserTypeSelection(v),
+  //     ),
+  //   );
+  // }
+
+  void selectUserTypeInline(int index) {
+    userType = userTypeList[index].title!;
+    changeUserNameInputField(userTypeList[index].title!);
+    notifyListeners();
   }
 
   void disposeData() {
     userNameController?.clear();
     passwordController.clear();
     obscureText = true;
-    userTypeController = TextEditingController(text: 'Student');
-    changeUserNameInputField(userTypeController.text);
+    userType = 'Student';
+    changeUserNameInputField(userType);
   }
 }

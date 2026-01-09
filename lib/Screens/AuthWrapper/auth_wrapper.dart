@@ -70,7 +70,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
         isTeacherForceLoginFeatureAvailable =
             (kReleaseMode && teacherForceLoginFeature.isLive) ||
-            (kDebugMode && teacherForceLoginFeature.isTest);
+            (kDebugMode && teacherForceLoginFeature.isTesting);
       } catch (e) {
         isTeacherForceLoginFeatureAvailable = false;
       }

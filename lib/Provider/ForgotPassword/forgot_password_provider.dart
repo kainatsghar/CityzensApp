@@ -172,10 +172,8 @@ class ForgotPasswordProvider with ChangeNotifier {
     userNameController = MaskedTextController(mask: controllerMask);
     userTypeList = HelperFunction.userTypes().take(2).toList();
     onUserTypeSelection(
-      userTypeList.any(
-            (element) => element.title == loginProvider.userTypeController.text,
-          )
-          ? loginProvider.userTypeController.text
+      userTypeList.any((element) => element.title == loginProvider.userType)
+          ? loginProvider.userType
           : userTypeList.first.title!,
       isInitialization: true,
     );
@@ -227,6 +225,12 @@ class ForgotPasswordProvider with ChangeNotifier {
         onSelect: (v) => onUserTypeSelection(v),
       ),
     );
+  }
+
+  void selectUserTypeInline(int index) {
+    userTypeController.text = userTypeList[index].title!;
+    onUserTypeSelection(userTypeList[index].title!, isInitialization: true);
+    notifyListeners();
   }
 
   void disposeData() {

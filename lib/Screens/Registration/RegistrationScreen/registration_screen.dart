@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/CustomWidgets/UserTypeTabSelector/user_type_tab_selector.dart';
 import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
@@ -66,15 +67,24 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                       key: value.regFormKey,
                       child: Column(
                         children: <Widget>[
-                          CustomTextFormField(
-                            controller: value.userTypeController,
-                            readOnly: true,
-                            onTap: () => value.userTypeBottomSheet(),
-                            suffixWidget: const ImageIcon(
-                              AssetImage('assets/images/dropdown_icon.png'),
-                              color: AppColors.whiteColor,
+                          UserTypeTabSelector(
+                            options: value.userTypeList,
+                            initialIndex: value.userTypeList.indexWhere(
+                              (t) => t.title == value.userTypeController.text,
                             ),
+                            onChanged: (index) =>
+                                provider.selectUserTypeInline(index),
+                            height: 48,
                           ),
+                          // CustomTextFormField(
+                          //   controller: value.userTypeController,
+                          //   readOnly: true,
+                          //   onTap: () => value.userTypeBottomSheet(),
+                          //   suffixWidget: const ImageIcon(
+                          //     AssetImage('assets/images/dropdown_icon.png'),
+                          //     color: AppColors.whiteColor,
+                          //   ),
+                          // ),
                           SizedBox(height: size.height * 0.02),
                           CustomTextFormField(
                             controller: value.userNameController,

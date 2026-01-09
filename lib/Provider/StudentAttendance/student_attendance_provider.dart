@@ -23,22 +23,23 @@ import '../LocalData/local_data_provider.dart';
 
 class StudentAttendanceProvider with ChangeNotifier {
   //for student_attendance_subject_component
-//
+  //
   // final subjectController = TextEditingController();
   // final formKey = GlobalKey<FormState>();
   // int selectedSubject = 0;
 
   // List<SubjectsDtos> subjects = [];
-//\\
+  //\\
 
   StudentAttendanceResponse? studentAttendanceResponse;
   AttendancePercentageResponse? attendancePercentage;
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
-//
+  //
   // void setResponse(AttendanceSubjectsResponse? listResponse) {
   //   subjects = listResponse?.subjectsDtos ?? [];
   //   notifyListeners();
@@ -110,41 +111,47 @@ class StudentAttendanceProvider with ChangeNotifier {
         .where((e) => e.attnTypeId == 1)
         .toList();
     presentDates.forEach(
-        (data) => studentAttendance[DateTime.parse('${data.attnDate}Z')] = [
-              Event(
-                  title: 'Attendance',
-                  attendance: 'Present',
-                  color: AppColors.successGreenColor,
-                  dateTime: DateTime.parse(data.attnDate!),
-                  studentId: localDataProvider.studentId,
-                  studentName: localDataProvider.userData!.info!.name)
-            ]);
+      (data) => studentAttendance[DateTime.parse('${data.attnDate}Z')] = [
+        Event(
+          title: 'Attendance',
+          attendance: 'Present',
+          color: AppColors.successGreenColor,
+          dateTime: DateTime.parse(data.attnDate!),
+          studentId: localDataProvider.studentId,
+          studentName: localDataProvider.userData!.info!.name,
+        ),
+      ],
+    );
     absentDates = studentAttendanceResponse!.monthlyAttendance!
         .where((e) => e.attnTypeId == 2)
         .toList();
     absentDates.forEach(
-        (data) => studentAttendance[DateTime.parse('${data.attnDate}Z')] = [
-              Event(
-                  title: 'Attendance',
-                  attendance: 'Absent',
-                  color: AppColors.valuesRedColors,
-                  dateTime: DateTime.parse(data.attnDate!),
-                  studentId: localDataProvider.studentId,
-                  studentName: localDataProvider.userData!.name)
-            ]);
+      (data) => studentAttendance[DateTime.parse('${data.attnDate}Z')] = [
+        Event(
+          title: 'Attendance',
+          attendance: 'Absent',
+          color: AppColors.valuesRedColors,
+          dateTime: DateTime.parse(data.attnDate!),
+          studentId: localDataProvider.studentId,
+          studentName: localDataProvider.userData!.name,
+        ),
+      ],
+    );
     leaveDates = studentAttendanceResponse!.monthlyAttendance!
         .where((e) => e.attnTypeId == 3)
         .toList();
     leaveDates.forEach(
-        (data) => studentAttendance[DateTime.parse('${data.attnDate}Z')] = [
-              Event(
-                  title: 'Attendance',
-                  attendance: 'Leave',
-                  color: Colors.amber.withOpacity(0.9),
-                  dateTime: DateTime.parse(data.attnDate!),
-                  studentId: localDataProvider.studentId,
-                  studentName: localDataProvider.userData!.name)
-            ]);
+      (data) => studentAttendance[DateTime.parse('${data.attnDate}Z')] = [
+        Event(
+          title: 'Attendance',
+          attendance: 'Leave',
+          color: Colors.amber.withAlpha(230),
+          dateTime: DateTime.parse(data.attnDate!),
+          studentId: localDataProvider.studentId,
+          studentName: localDataProvider.userData!.name,
+        ),
+      ],
+    );
     presentDates.retainWhere((e) => sets.add(e.attnDate));
     absentDates.retainWhere((e) => sets.add(e.attnDate));
     leaveDates.retainWhere((e) => sets.add(e.attnDate));
@@ -160,10 +167,10 @@ class StudentAttendanceProvider with ChangeNotifier {
     try {
       StudentAttendanceResponse response =
           await StudentAttendanceService.studentAttendanceRequest(
-              tokenId: localDataProvider.userData!.tokenId!,
-              attendanceDate:
-                  DateFormat('yyyyMM').format(date ?? DateTime.now()),
-              userName: localDataProvider.studentId);
+            tokenId: localDataProvider.userData!.tokenId!,
+            attendanceDate: DateFormat('yyyyMM').format(date ?? DateTime.now()),
+            userName: localDataProvider.studentId,
+          );
       setAttendanceData(response);
       return response;
     } catch (ex) {
@@ -175,8 +182,9 @@ class StudentAttendanceProvider with ChangeNotifier {
     try {
       AttendancePercentageResponse response =
           await AttendancePercentageService.attendancePercentage(
-              tokenId: localDataProvider.userData!.tokenId!,
-              userName: localDataProvider.studentId);
+            tokenId: localDataProvider.userData!.tokenId!,
+            userName: localDataProvider.studentId,
+          );
       setAttendancePercentage(response);
       return response;
     } catch (ex) {
@@ -191,38 +199,43 @@ class StudentAttendanceProvider with ChangeNotifier {
 
   Future<void> reloadAttendance(DateTime dateTime) async {
     DialogBuilder.showLoadingIndicator();
-    await loadAttendance(date: dateTime)
-        .whenComplete(() => DialogBuilder.hideOpenDialog());
+    await loadAttendance(
+      date: dateTime,
+    ).whenComplete(() => DialogBuilder.hideOpenDialog());
     setSelectedDate(dateTime);
   }
 
   void generateAttendanceGraph() {
     pieData = [
       AttendanceGraph(
-          'Present',
-          presentDates.where((e) => e.attnTypeId == 1).toList().length,
-          AppColors.successGreenColor),
+        'Present',
+        presentDates.where((e) => e.attnTypeId == 1).toList().length,
+        AppColors.successGreenColor,
+      ),
       AttendanceGraph(
-          'Absent',
-          absentDates.where((e) => e.attnTypeId == 2).toList().length,
-          AppColors.valuesRedColors),
+        'Absent',
+        absentDates.where((e) => e.attnTypeId == 2).toList().length,
+        AppColors.valuesRedColors,
+      ),
       AttendanceGraph(
-          'Leave',
-          leaveDates.where((e) => e.attnTypeId == 3).toList().length,
-          Colors.amber),
+        'Leave',
+        leaveDates.where((e) => e.attnTypeId == 3).toList().length,
+        Colors.amber,
+      ),
     ];
   }
 
   List<PieChartSectionData> getSections() => List.generate(
-      pieData.length,
-      (index) => PieChartSectionData(
-          titleStyle:
-              const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
-          radius: 25,
-          titlePositionPercentageOffset: 1.6,
-          color: pieData[index].color!,
-          value: double.parse('${pieData[index].attendanceCount}'),
-          title: '${pieData[index].attendanceCount}'));
+    pieData.length,
+    (index) => PieChartSectionData(
+      titleStyle: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
+      radius: 25,
+      titlePositionPercentageOffset: 1.6,
+      color: pieData[index].color!,
+      value: double.parse('${pieData[index].attendanceCount}'),
+      title: '${pieData[index].attendanceCount}',
+    ),
+  );
 
   // Future<void> navigateToAttendance() async {
   //   //
@@ -232,14 +245,14 @@ class StudentAttendanceProvider with ChangeNotifier {
   //   }
   // }
 
-//\\
+  //\\
   // void clearData() {
   //   selectedSubject = 0;
   //   subjectController.clear();
   //   subjects = [];
   // }
 
-//\\
+  //\\
   void clearDate() {
     selectedDate = DateTime.now();
   }

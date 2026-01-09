@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/CustomWidgets/UserTypeTabSelector/user_type_tab_selector.dart';
 import 'package:tcs_app/Provider/Login/login_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
@@ -75,19 +76,29 @@ class _LoginScreenState extends State<LoginScreen> {
                               key: value.formKey,
                               child: Column(
                                 children: <Widget>[
-                                  CustomTextFormField(
-                                    controller: value.userTypeController,
-                                    hintText: 'User Type',
-                                    readOnly: true,
-                                    onTap: () => value.userTypeBottomSheet(),
-                                    suffixWidget: const ImageIcon(
-                                      AssetImage(
-                                        'assets/images/dropdown_icon.png',
-                                      ),
-                                      color: AppColors.whiteColor,
+                                  UserTypeTabSelector(
+                                    options: value.userTypeList,
+                                    initialIndex: value.userTypeList.indexWhere(
+                                      (t) => t.title == value.userType,
                                     ),
+                                    onChanged: (index) =>
+                                        provider.selectUserTypeInline(index),
+                                    height: 48,
                                   ),
-                                  const SizedBox(height: 10),
+
+                                  // CustomTextFormField(
+                                  //   controller: value.userTypeController,
+                                  //   hintText: 'User Type',
+                                  //   readOnly: true,
+                                  //   onTap: () => value.userTypeBottomSheet(),
+                                  //   suffixWidget: const ImageIcon(
+                                  //     AssetImage(
+                                  //       'assets/images/dropdown_icon.png',
+                                  //     ),
+                                  //     color: AppColors.whiteColor,
+                                  //   ),
+                                  // ),
+                                  const SizedBox(height: 12),
                                   CustomTextFormField(
                                     controller: value.userNameController,
                                     inputType: TextInputType.number,
@@ -97,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     prefixIcon: Icons.person,
                                     validator: value.validator,
                                   ),
-                                  const SizedBox(height: 15),
+                                  const SizedBox(height: 16),
                                   CustomTextFormField(
                                     controller: value.passwordController,
                                     obscureText: value.obscureText,

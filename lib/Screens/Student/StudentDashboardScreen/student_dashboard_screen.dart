@@ -55,8 +55,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   bool isDashboardResultCardViewFeatureEnabled = false;
   bool isAcademicResultPublishedFeatureEnable = false;
 
-  late Future attendanceService;
-  late Future resultService;
+  Future? attendanceService;
+  Future? resultService;
   bool isURLOpening = false;
   FeatureConfigModel? academicResultPublishedFeature;
 
@@ -442,12 +442,11 @@ class AttendanceDashboardCard extends StatelessWidget {
   const AttendanceDashboardCard({
     super.key,
     required this.size,
-    required this.attendanceService,
+    this.attendanceService,
   });
 
   final Size size;
-  final Future attendanceService;
-
+  final Future? attendanceService;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -597,7 +596,7 @@ class DashboardTopSection extends StatefulWidget {
   final DateTime resultReleaseTime;
   final void Function()? onViewResult;
   final Future<dynamic>? resultService;
-  final Future attendanceService;
+  final Future? attendanceService;
   final Size size;
 
   const DashboardTopSection({
@@ -606,7 +605,7 @@ class DashboardTopSection extends StatefulWidget {
     required this.resultReleaseTime,
     required this.onViewResult,
     this.resultService,
-    required this.attendanceService,
+    this.attendanceService,
     required this.size,
   });
 

@@ -27,7 +27,7 @@ class Test2Component extends StatelessWidget {
               children: [
                 SizedBox(height: size.height * 0.015),
                 CenteredErrorTextFormField(
-                  hintText: 'ADD MAX MARKS',
+                  labelText: 'ADD MAX MARKS',
                   controller: TextEditingController(
                     text: value.totalMarks != 0
                         ? value.totalMarks.toString()

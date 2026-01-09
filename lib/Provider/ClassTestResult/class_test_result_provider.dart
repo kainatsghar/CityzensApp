@@ -288,7 +288,7 @@ class ClassTestResultProvider with ChangeNotifier {
           }
         }
       } else {
-        ;
+        showSnackBar('Please fill all required fields');
       }
     } catch (ex) {
       showSnackBar(AppConstants.exceptionMessage);

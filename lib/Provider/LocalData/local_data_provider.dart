@@ -33,7 +33,7 @@ class LocalDataProvider with ChangeNotifier {
         setSGradeId(userData!.gradeId);
         if (userData!.id == 0 && teacherForceLogIn) {
           AppLocalData.removeKeyData(key: AppConstants.userDataKey);
-          userData = LoginResponse();
+          userData = LoginResponse(userType: 'Teacher');
         }
       }
       notifyListeners();

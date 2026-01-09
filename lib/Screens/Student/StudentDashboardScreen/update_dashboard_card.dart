@@ -310,12 +310,12 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.12),
+            color: Colors.black.withValues(alpha: 31),
             offset: const Offset(3, 3),
             blurRadius: 6,
           ),
           BoxShadow(
-            color: Colors.white.withOpacity(0.6),
+            color: Colors.white.withValues(alpha: 153),
             offset: const Offset(-2, -2),
             blurRadius: 4,
           ),
@@ -399,7 +399,7 @@ class AnimatedNumber extends StatelessWidget {
   Widget _counter() => TweenAnimationBuilder<double>(
     tween: Tween(begin: 0, end: value.toDouble()),
     duration: const Duration(milliseconds: 300),
-    builder: (_, val, __) => Text(
+    builder: (_, val, _) => Text(
       val.toInt().toString().padLeft(2, '0'),
       style: TextStyle(
         fontSize: MediaQueryUtil.getResponsiveFontSize(18).clamp(16.0, 22.0),

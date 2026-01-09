@@ -28,7 +28,7 @@ class ComplaintQueryProvider with ChangeNotifier {
   String controllerMask = '00000000';
   MaskedTextController? rollNumberController;
 
-  late final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
     AppNavigation.currentContext!,
