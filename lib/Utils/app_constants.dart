@@ -46,6 +46,7 @@ class AppConstants {
 
   /// Shared Preferences Keys
   static const String userDataKey = 'userData';
+  static const String teacherProfileData = 'teacherProfileData';
 
   static const Map<String, String> appHeaders = {
     'Content-Type': 'application/json; charset=UTF-8',

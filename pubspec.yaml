@@ -61,11 +61,11 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   table_calendar: ^3.2.0
   grouped_list: ^6.0.0
-  webview_flutter: ^4.13.0
+  webview_flutter: ^4.13.1
   introduction_screen: ^4.0.0
   video_player: ^2.10.1
   file_picker: ^10.3.8
-  open_file: ^3.5.10
+  open_file: ^3.5.11
   cached_network_image: ^3.4.1
   upgrader: ^12.3.0
   animate_do: ^4.2.0
@@ -78,8 +78,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.10.4
-  json_serializable: ^6.11.1
-  freezed: ^3.2.3
+  json_serializable: ^6.11.3
+  freezed: ^3.2.4
   flutter_gen: ^5.12.0
 
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -6,17 +6,20 @@ import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/gen/assets.gen.dart';
 
 class CustomUserImage extends StatelessWidget {
   final bool disableUploadImage;
   final double? imageSize;
   final String userId;
+  final bool isMale;
 
   const CustomUserImage({
     super.key,
     this.disableUploadImage = true,
     this.imageSize,
     required this.userId,
+    this.isMale = true,
   });
 
   @override
@@ -42,7 +45,9 @@ class CustomUserImage extends StatelessWidget {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                           return Image.asset(
-                            'assets/images/profile_avatar_yellow.png',
+                            isMale
+                                ? Assets.images.profileAvatarYellow.path
+                                : Assets.images.profileAvatarFemale.path,
                             fit: BoxFit.cover,
                           );
                         default:
@@ -53,12 +58,19 @@ class CustomUserImage extends StatelessWidget {
                                     fit: BoxFit.cover,
                                   )
                                 : Image.asset(
-                                    'assets/images/profile_avatar_yellow.png',
+                                    isMale
+                                        ? Assets.images.profileAvatarYellow.path
+                                        : Assets
+                                              .images
+                                              .profileAvatarFemale
+                                              .path,
                                     fit: BoxFit.cover,
                                   );
                           } else {
                             return Image.asset(
-                              'assets/images/profile_avatar_yellow.png',
+                              isMale
+                                  ? Assets.images.profileAvatarYellow.path
+                                  : Assets.images.profileAvatarFemale.path,
                               fit: BoxFit.cover,
                             );
                           }

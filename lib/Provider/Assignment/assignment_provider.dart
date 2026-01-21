@@ -46,11 +46,12 @@ class AssignmentProvider with ChangeNotifier {
     sectionController.clear();
     sectionId = null;
     sections = List.generate(
-        sectionResponse.section!.length,
-        (index) => Options(
-              title: sectionResponse.section![index].name,
-              value: sectionResponse.section![index].classSectionId,
-            ));
+      sectionResponse.section!.length,
+      (index) => Options(
+        title: sectionResponse.section![index].name,
+        value: sectionResponse.section![index].classSectionId,
+      ),
+    );
     notifyListeners();
   }
 
@@ -58,11 +59,12 @@ class AssignmentProvider with ChangeNotifier {
     subjectResponse = response;
     subjectController.clear();
     subjects = List.generate(
-        subjectResponse.sectionSubject!.length,
-        (index) => Options(
-              title: subjectResponse.sectionSubject![index].subjectName!,
-              value: subjectResponse.sectionSubject![index].subjectId!,
-            ));
+      subjectResponse.sectionSubject!.length,
+      (index) => Options(
+        title: subjectResponse.sectionSubject![index].subjectName!,
+        value: subjectResponse.sectionSubject![index].subjectId!,
+      ),
+    );
     notifyListeners();
   }
 
@@ -70,10 +72,10 @@ class AssignmentProvider with ChangeNotifier {
     try {
       TeacherSectionResponse response =
           await TeacherSectionService.sectionRequest(
-        isDiary: true,
-        userName: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: true,
+            userName: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSectionData(response);
       return response;
     } catch (ex) {
@@ -85,11 +87,11 @@ class AssignmentProvider with ChangeNotifier {
     try {
       SectionSubjectResponse response =
           await SectionSubjectService.getSubjectsRequest(
-        isDiary: true,
-        classSectionId: '$sectionId',
-        teacherId: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: true,
+            classSectionId: '$sectionId',
+            teacherId: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSubjectsData(response);
       return response;
     } catch (ex) {
@@ -98,8 +100,9 @@ class AssignmentProvider with ChangeNotifier {
   }
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setAssignmentRecords(AssignmentResponse response) {
     assignmentResponse = response;
@@ -121,23 +124,28 @@ class AssignmentProvider with ChangeNotifier {
     try {
       if (formKey.currentState!.validate()) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
-        ResponseMessage response =
-            await AddAssignmentService.addAssignment(AddAssignmentRequest(
-          subject: subjectController.text,
-          sectionId: sectionId,
-          classTeacherId: localDataProvider.userData!.userName,
-          classWorkDate: formattedDate,
-          description: descriptionController.text,
-          tokenId: localDataProvider.userData!.tokenId,
-          fileName: fileName ?? '',
-          filePath: base64String ?? '',
-        ));
+        ResponseMessage response = await AddAssignmentService.addAssignment(
+          AddAssignmentRequest(
+            subject: subjectController.text,
+            sectionId: sectionId,
+            classTeacherId: localDataProvider.userData!.userName,
+            classWorkDate: formattedDate,
+            description: descriptionController.text,
+            tokenId: localDataProvider.userData!.tokenId,
+            fileName: fileName ?? '',
+            filePath: base64String ?? '',
+          ),
+        );
         if (response.isSuccess!) {
           await loadTeacherAssignment();
           Future.delayed(
-              const Duration(seconds: 1), () => AppNavigation.goBack());
-          showSnackBar('Assignment Added Successfully',
-              color: AppColors.successGreenColor);
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Assignment Added Successfully',
+            color: AppColors.successGreenColor,
+          );
         } else {
           showSnackBar(response.message);
         }
@@ -156,32 +164,37 @@ class AssignmentProvider with ChangeNotifier {
 
   void sectionBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Section',
-            controller: sectionController,
-            filterOptions: sections,
-            onSelect: (v) => setSelectedSection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Section',
+        controller: sectionController,
+        filterOptions: sections,
+        onSelect: (v) => setSelectedSection(v),
+      ),
+    );
   }
 
   void subjectBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Subject',
-            controller: subjectController,
-            filterOptions: subjects,
-            onSelect: (v) => setSelectedSubject(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Subject',
+        controller: subjectController,
+        filterOptions: subjects,
+        onSelect: (v) => setSelectedSubject(v),
+      ),
+    );
   }
 
   Future<AssignmentResponse> loadTeacherAssignment() async {
     try {
       AssignmentResponse response =
           await TeacherAssignmentService.getAssignmentRecords(
-              userName: localDataProvider.userData!.userName!,
-              tokenId: localDataProvider.userData!.tokenId!);
+            userName: localDataProvider.userData!.userName!,
+            tokenId: localDataProvider.userData!.tokenId!,
+          );
       setAssignmentRecords(response);
       return response;
     } catch (ex) {
@@ -193,9 +206,9 @@ class AssignmentProvider with ChangeNotifier {
     try {
       AssignmentResponse response =
           await StudentAssignmentService.getAssignmentRecords(
-        userName: localDataProvider.studentId,
-        tokenId: localDataProvider.userData!.tokenId!,
-      );
+            userName: localDataProvider.studentId,
+            tokenId: localDataProvider.userData!.tokenId!,
+          );
       setAssignmentRecords(response);
       return response;
     } catch (ex) {

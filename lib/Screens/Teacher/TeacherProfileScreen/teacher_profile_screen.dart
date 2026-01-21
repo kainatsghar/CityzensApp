@@ -17,7 +17,7 @@ class TeacherProfileScreen extends StatefulWidget {
 }
 
 class TeacherProfileScreenState extends State<TeacherProfileScreen> {
-  late Future _teacherProfile;
+  Future? _teacherProfile;
   var provider = Provider.of<TeacherProfileProvider>(
     AppNavigation.currentContext!,
     listen: false,
@@ -25,7 +25,10 @@ class TeacherProfileScreenState extends State<TeacherProfileScreen> {
 
   @override
   void initState() {
-    _teacherProfile = provider.loadTeacherProfile();
+    if (provider.profileResponse != null) {
+      _teacherProfile = provider.loadTeacherProfile();
+    }
+
     super.initState();
   }
 
@@ -34,21 +37,23 @@ class TeacherProfileScreenState extends State<TeacherProfileScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'PROFILE'),
       body: RefreshIndicator(
-        child: FutureBuilder(
-          future: _teacherProfile,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const TeacherProfileComponent();
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          },
-        ),
+        child: provider.profileResponse != null
+            ? const TeacherProfileComponent()
+            : FutureBuilder(
+                future: _teacherProfile,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const CustomLoader();
+                    default:
+                      if (snapshot.hasData) {
+                        return const TeacherProfileComponent();
+                      } else {
+                        return ShowError(errorText: '${snapshot.error}');
+                      }
+                  }
+                },
+              ),
         onRefresh: () => provider.loadTeacherProfile(),
       ),
     );

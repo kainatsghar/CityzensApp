@@ -30,6 +30,7 @@ class TeacherProfileComponent extends StatelessWidget {
                         CustomUserImage(
                           userId: '${value.profileResponse!.employeeCode}',
                           disableUploadImage: false,
+                          isMale: value.profileResponse!.gender == 'Male',
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),

@@ -164,6 +164,10 @@ class $AssetsImagesGen {
   AssetGenImage get profileAvatar =>
       const AssetGenImage('assets/images/profile_avatar.png');
 
+  /// File path: assets/images/profile_avatar_female.png
+  AssetGenImage get profileAvatarFemale =>
+      const AssetGenImage('assets/images/profile_avatar_female.png');
+
   /// File path: assets/images/profile_avatar_yellow.png
   AssetGenImage get profileAvatarYellow =>
       const AssetGenImage('assets/images/profile_avatar_yellow.png');
@@ -171,6 +175,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/profile_icon.png
   AssetGenImage get profileIcon =>
       const AssetGenImage('assets/images/profile_icon.png');
+
+  /// File path: assets/images/profile_icon_female.png
+  AssetGenImage get profileIconFemale =>
+      const AssetGenImage('assets/images/profile_icon_female.png');
 
   /// File path: assets/images/result_icon.png
   AssetGenImage get resultIcon =>
@@ -254,8 +262,10 @@ class $AssetsImagesGen {
     pdfDownloadIcon,
     planner,
     profileAvatar,
+    profileAvatarFemale,
     profileAvatarYellow,
     profileIcon,
+    profileIconFemale,
     resultIcon,
     shield,
     survey,

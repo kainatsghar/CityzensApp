@@ -17,8 +17,10 @@ class AddAssignmentScreen extends StatefulWidget {
 
 class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
   late Future sections;
-  var provider = Provider.of<AssignmentProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var provider = Provider.of<AssignmentProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -35,20 +37,22 @@ class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'ADD ASSIGNMENT'),
-        body: FutureBuilder(
-            future: sections,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return const CustomLoader();
-                default:
-                  if (snapshot.hasData) {
-                    return const AddAssignmentComponent();
-                  } else {
-                    return ShowError(errorText: '${snapshot.error}');
-                  }
+      appBar: const CustomAppBar(title: 'ADD ASSIGNMENT'),
+      body: FutureBuilder(
+        future: sections,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const AddAssignmentComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
               }
-            }));
+          }
+        },
+      ),
+    );
   }
 }
