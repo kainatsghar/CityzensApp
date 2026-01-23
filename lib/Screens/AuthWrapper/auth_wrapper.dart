@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Provider/Splash/splash_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
 import 'package:tcs_app/Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
@@ -57,28 +56,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
       AppNavigation.currentContext!,
       listen: false,
     );
-    final splashProvider = Provider.of<SplashProvider>(
-      AppNavigation.currentContext!,
-      listen: false,
-    );
-    bool isTeacherForceLoginFeatureAvailable = false;
 
-    if (splashProvider.listOfFeatureConfig != null) {
-      try {
-        final teacherForceLoginFeature = splashProvider.listOfFeatureConfig!
-            .firstWhere((feature) => feature.id == 'teacherForceLogin');
-
-        isTeacherForceLoginFeatureAvailable =
-            (kReleaseMode && teacherForceLoginFeature.isLive) ||
-            (kDebugMode && teacherForceLoginFeature.isTest);
-      } catch (e) {
-        isTeacherForceLoginFeatureAvailable = false;
-      }
-    }
-
-    final userData = await localDataProvider.loadStoredData(
-      teacherForceLogIn: isTeacherForceLoginFeatureAvailable,
-    );
+    final userData = await localDataProvider.loadStoredData();
     return kIsWeb
         ? (userData.tokenId == null)
               ? const LoginScreen()
