@@ -1,14 +1,10 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Components/DashboardComponents/navigational_drawer.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_button.dart';
-import 'package:tcs_app/Model/Firebase/FeatureConfig/feature_config_model.dart';
-import 'package:tcs_app/Provider/Dashboard/dashboard_provider.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Provider/Splash/splash_provider.dart';
 import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
@@ -43,22 +39,22 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     AppNavigation.currentContext!,
     listen: false,
   );
-  var dashboardProvider = Provider.of<DashboardProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
+  // var dashboardProvider = Provider.of<DashboardProvider>(
+  //   AppNavigation.currentContext!,
+  //   listen: false,
+  // );
 
-  final splashProvider = Provider.of<SplashProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
-  bool isDashboardResultCardViewFeatureEnabled = false;
-  bool isAcademicResultPublishedFeatureEnable = false;
+  // final splashProvider = Provider.of<SplashProvider>(
+  //   AppNavigation.currentContext!,
+  //   listen: false,
+  // );
+  // bool isDashboardResultCardViewFeatureEnabled = false;
+  // bool isAcademicResultPublishedFeatureEnable = false;
 
   Future? attendanceService;
-  Future? resultService;
-  bool isURLOpening = false;
-  FeatureConfigModel? academicResultPublishedFeature;
+  // Future? resultService;
+  // bool isURLOpening = false;
+  // FeatureConfigModel? academicResultPublishedFeature;
 
   @override
   void initState() {
@@ -67,38 +63,38 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     }
     attendanceService = attendance.getAttendancePercentage();
 
-    if (splashProvider.listOfFeatureConfig != null) {
-      try {
-        academicResultPublishedFeature = splashProvider.listOfFeatureConfig!
-            .firstWhere((feature) => feature.id == 'academicResultPublished');
+    // if (splashProvider.listOfFeatureConfig != null) {
+    //   try {
+    //     academicResultPublishedFeature = splashProvider.listOfFeatureConfig!
+    //         .firstWhere((feature) => feature.id == 'academicResultPublished');
 
-        if (academicResultPublishedFeature == null) {
-          isAcademicResultPublishedFeatureEnable = false;
-        } else {
-          isAcademicResultPublishedFeatureEnable =
-              academicResultPublishedFeature!.isActive;
-        }
-      } catch (e) {
-        isAcademicResultPublishedFeatureEnable = false;
-      }
-      try {
-        final dashboardResultCardViewFeature = splashProvider
-            .listOfFeatureConfig!
-            .firstWhere((feature) => feature.id == 'dashboardResultCardView');
+    //     if (academicResultPublishedFeature == null) {
+    //       isAcademicResultPublishedFeatureEnable = false;
+    //     } else {
+    //       isAcademicResultPublishedFeatureEnable =
+    //           academicResultPublishedFeature!.isActive;
+    //     }
+    //   } catch (e) {
+    //     isAcademicResultPublishedFeatureEnable = false;
+    //   }
+    //   try {
+    //     final dashboardResultCardViewFeature = splashProvider
+    //         .listOfFeatureConfig!
+    //         .firstWhere((feature) => feature.id == 'dashboardResultCardView');
 
-        isDashboardResultCardViewFeatureEnabled =
-            dashboardResultCardViewFeature.isActive;
-      } catch (e) {
-        isDashboardResultCardViewFeatureEnabled = false;
-      }
-    }
+    //     isDashboardResultCardViewFeatureEnabled =
+    //         dashboardResultCardViewFeature.isActive;
+    //   } catch (e) {
+    //     isDashboardResultCardViewFeatureEnabled = false;
+    //   }
+    // }
 
-    if (isDashboardResultCardViewFeatureEnabled) {
-      resultService = dashboardProvider.loadResults(
-        academicYearId: 17,
-        termId: 1,
-      );
-    }
+    // if (isDashboardResultCardViewFeatureEnabled) {
+    //   resultService = dashboardProvider.loadResults(
+    //     academicYearId: 17,
+    //     termId: 1,
+    //   );
+    // }
 
     super.initState();
   }
@@ -153,52 +149,54 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: DashboardTopSection(
-                        showResult:
-                            (gradeId != '2' &&
-                            gradeId != '3' &&
-                            gradeId != '4' &&
-                            localGradeId != '2' &&
-                            localGradeId != '3' &&
-                            localGradeId != '4' &&
-                            isDashboardResultCardViewFeatureEnabled),
+                        showResult: false,
+                        // (gradeId != '2' &&
+                        // gradeId != '3' &&
+                        // gradeId != '4' &&
+                        // localGradeId != '2' &&
+                        // localGradeId != '3' &&
+                        // localGradeId != '4' &&
+                        // isDashboardResultCardViewFeatureEnabled),
                         resultReleaseTime:
-                            academicResultPublishedFeature?.startDate ??
+                            // academicResultPublishedFeature?.startDate ??
                             DateTime(2025, 12, 22, 17, 12, 0),
-                        onViewResult: !isAcademicResultPublishedFeatureEnable
-                            ? null
-                            : () async {
-                                final url =
-                                    dashboardProvider
-                                                .resultsResponse
-                                                .pdfResultslist !=
-                                            null &&
-                                        dashboardProvider
-                                            .resultsResponse
-                                            .pdfResultslist!
-                                            .isNotEmpty
-                                    ? dashboardProvider
-                                          .resultsResponse
-                                          .pdfResultslist![0]
-                                          .url!
-                                    : '';
-                                if (url.isNotEmpty) {
-                                  if (!isURLOpening) {
-                                    isURLOpening = true;
-                                    await HelperFunction.launchURL(url);
-                                    FirebaseAnalytics.instance.logEvent(
-                                      name: 'view_result_from_dashboard',
-                                      parameters: {
-                                        'student_id': localData.studentId,
-                                        'grade_id': localData.gradeId
-                                            .toString(),
-                                      },
-                                    );
-                                    isURLOpening = false;
-                                  }
-                                }
-                              },
-                        attendanceService: attendanceService,
-                        resultService: resultService,
+                        onViewResult: null,
+                        //  !isAcademicResultPublishedFeatureEnable
+                        //     ? null
+                        //     : () async {
+                        //         final url =
+                        //             dashboardProvider
+                        //                         .resultsResponse
+                        //                         .pdfResultslist !=
+                        //                     null &&
+                        //                 dashboardProvider
+                        //                     .resultsResponse
+                        //                     .pdfResultslist!
+                        //                     .isNotEmpty
+                        //             ? dashboardProvider
+                        //                   .resultsResponse
+                        //                   .pdfResultslist![0]
+                        //                   .url!
+                        //             : '';
+                        //         if (url.isNotEmpty) {
+                        //           if (!isURLOpening) {
+                        //             isURLOpening = true;
+                        //             await HelperFunction.launchURL(url);
+                        //             FirebaseAnalytics.instance.logEvent(
+                        //               name: 'view_result_from_dashboard',
+                        //               parameters: {
+                        //                 'student_id': localData.studentId,
+                        //                 'grade_id': localData.gradeId
+                        //                     .toString(),
+                        //               },
+                        //             );
+                        //             isURLOpening = false;
+                        //           }
+                        //         }
+                        //       },
+                        attendanceService: attendanceService!,
+                        resultService: null,
+                        // resultService,
                         size: size,
                       ),
                     ),

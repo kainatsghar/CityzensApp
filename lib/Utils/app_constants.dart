@@ -11,7 +11,7 @@ class AppConstants {
   static const String apiLiveBaseURL = "https://cityzenapi.csn.edu.pk";
   static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
 
-  static const String appVersion = '1.13.1';
+  static const String appVersion = '1.13.2';
 
   /// Error Messages
   static const String exceptionMessage =

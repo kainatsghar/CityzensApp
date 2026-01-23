@@ -10,6 +10,7 @@ import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Services/Logout/logout_service.dart';
 import 'package:tcs_app/SharedPreference/shared_preference.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
@@ -20,7 +21,7 @@ class LocalDataProvider with ChangeNotifier {
   String studentId = '';
   int? gradeId = 0;
 
-  Future<LoginResponse> loadStoredData({bool teacherForceLogIn = false}) async {
+  Future<LoginResponse> loadStoredData() async {
     String? localData = await AppLocalData.getStringPrefValue(
       key: AppConstants.userDataKey,
     );
@@ -31,9 +32,13 @@ class LocalDataProvider with ChangeNotifier {
         setSGradeId(userData!.info!.gradeId!);
       } else if (userData!.userType == 'Teacher') {
         setSGradeId(userData!.gradeId);
-        if (userData!.id == 0 && teacherForceLogIn) {
+        if (userData!.id == 0) {
           AppLocalData.removeKeyData(key: AppConstants.userDataKey);
-          userData = LoginResponse(userType: 'Teacher');
+          userData = LoginResponse();
+          showSnackBar(
+            'Please login again. Your data needs to be refreshed.',
+            color: AppColors.primary,
+          );
         }
       }
       notifyListeners();
