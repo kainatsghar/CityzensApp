@@ -5,26 +5,30 @@ import '../../Model/ClassTestResult/class_test_student_list_request.dart';
 import '../../Model/ClassTestResult/class_test_student_list_response.dart';
 import '../../Model/ClassTestResult/student_test_result_list_request.dart';
 import '../../Model/ClassTestResult/student_test_result_list_response.dart';
-import '../../Network/api_base_helper.dart';
+import '../../network/api_base_helper.dart';
 import '../../model/ResponseMessage/response_message.dart';
 
 class ClassTestResultService {
   static Future<ClassTestResultStudentListResponse>
-      classTestResulStdListRequest(
-          {required String id,
-          required String subjectId,
-          required String sectionId,
-          required int categoryId,
-          required int totalMarks}) async {
+  classTestResulStdListRequest({
+    required String id,
+    required String subjectId,
+    required String sectionId,
+    required int categoryId,
+    required int totalMarks,
+  }) async {
     ClassTestResultStudentListRequest request =
         ClassTestResultStudentListRequest(
-            teacherId: id,
-            subjectId: subjectId,
-            sectionId: sectionId,
-            categoryId: categoryId,
-            totalMarks: totalMarks);
-    var response = await ApiBaseHelper.httpPostRequest("GetStudentBySubjectId",
-        body: request.toJson());
+          teacherId: id,
+          subjectId: subjectId,
+          sectionId: sectionId,
+          categoryId: categoryId,
+          totalMarks: totalMarks,
+        );
+    var response = await ApiBaseHelper.httpPostRequest(
+      "GetStudentBySubjectId",
+      body: request.toJson(),
+    );
     if (kDebugMode) {
       //print(response);
     }
@@ -32,18 +36,27 @@ class ClassTestResultService {
   }
 
   static Future<ResponseMessage> addStudentMarks(
-      AddClassTestResultRequest addClassTestResultRequest) async {
-    var response = await ApiBaseHelper.httpPostRequest("InsertUpdateTestResult",
-        body: addClassTestResultRequest.toJson());
+    AddClassTestResultRequest addClassTestResultRequest,
+  ) async {
+    var response = await ApiBaseHelper.httpPostRequest(
+      "InsertUpdateTestResult",
+      body: addClassTestResultRequest.toJson(),
+    );
     return ResponseMessage.fromJson(response);
   }
 
-  static Future<StudentTestResultListResponse> studentsTestResultListRequest(
-      {required int status, required int id}) async {
-    StudentTestResultListRequest request =
-        StudentTestResultListRequest(status: status, id: id);
-    var response = await ApiBaseHelper.httpPostRequest("GetTestResult",
-        body: request.toJson());
+  static Future<StudentTestResultListResponse> studentsTestResultListRequest({
+    required int status,
+    required int id,
+  }) async {
+    StudentTestResultListRequest request = StudentTestResultListRequest(
+      status: status,
+      id: id,
+    );
+    var response = await ApiBaseHelper.httpPostRequest(
+      "GetTestResult",
+      body: request.toJson(),
+    );
     if (kDebugMode) {
       //print(response);
     }

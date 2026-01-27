@@ -1,4 +1,4 @@
-import 'package:tcs_app/Network/api_base_helper.dart';
+import 'package:tcs_app/network/api_base_helper.dart';
 import 'package:tcs_app/model/Results/results_request.dart';
 
 class ResultService {

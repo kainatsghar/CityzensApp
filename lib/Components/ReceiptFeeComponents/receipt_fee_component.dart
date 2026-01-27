@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/ReceiptFeeComponents/single_receipt_item.dart';
-import 'package:tcs_app/CustomWidgets/CustomStudentInfo/custom_student_info.dart';
-import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_custom_message.dart';
+import 'package:tcs_app/components/ReceiptFeeComponents/single_receipt_item.dart';
+import 'package:tcs_app/custom_widgets/CustomStudentInfo/custom_student_info.dart';
+import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 

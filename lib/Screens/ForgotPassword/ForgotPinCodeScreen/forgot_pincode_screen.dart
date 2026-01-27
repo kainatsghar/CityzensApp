@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/ForgotPassword/forgot_password_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/validators.dart';
-import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class ForgotPinCodeScreen extends StatefulWidget {

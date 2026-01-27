@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/Provider/SchoolEvents/school_event_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
-import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
-import '../../CustomWidgets/ShowCustomMessage/show_custom_message.dart';
+import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
+import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import '../../Utils/app_constants.dart';
 
 class SchoolEventsComponent extends StatelessWidget {
@@ -24,15 +24,18 @@ class SchoolEventsComponent extends StatelessWidget {
               : Column(
                   children: [
                     const CustomCoverImage(
-                        title: 'SCHOOL EVENTS', imagePath: 'calendar.png'),
+                      title: 'SCHOOL EVENTS',
+                      imagePath: 'calendar.png',
+                    ),
                     SizedBox(height: size.height * 0.01),
                     Flexible(
                       child: ListView.builder(
                         itemCount: eventList.length,
                         itemBuilder: (context, index) {
                           var event = eventList[index];
-                          String formattedDate = DateFormat('EEEE, d MMMM yyyy')
-                              .format(event.eventDate!);
+                          String formattedDate = DateFormat(
+                            'EEEE, d MMMM yyyy',
+                          ).format(event.eventDate!);
 
                           return Column(
                             children: [
@@ -84,7 +87,7 @@ class SchoolEventsComponent extends StatelessWidget {
                           );
                         },
                       ),
-                    )
+                    ),
                   ],
                 ),
         );

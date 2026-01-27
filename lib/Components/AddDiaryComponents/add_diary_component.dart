@@ -4,9 +4,10 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../CustomWidgets/CustomAppButton/custom_app_button.dart';
-import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
-import '../../CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
+import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
+import '../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
+import '../../custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import '../../Provider/Diary/diary_provider.dart';
 import '../../Utils/app_colors.dart';
 import '../../Utils/helper_function.dart';
@@ -183,15 +184,7 @@ class _AddDiaryComponentState extends State<AddDiaryComponent> {
                   ],
                 ),
                 SizedBox(height: size.height * 0.01),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 25.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
+                CustomCard(
                   child: Form(
                     key: value.formKey,
                     child: Column(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/CustomWidgets/ProgressButton/progress_button.dart';
+import 'package:tcs_app/custom_widgets/ProgressButton/progress_button.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
+import '../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../Routes/app_navigation.dart';
 import '../../Routes/app_navigation_routes.dart';
 

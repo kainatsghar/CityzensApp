@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/challan_args.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';

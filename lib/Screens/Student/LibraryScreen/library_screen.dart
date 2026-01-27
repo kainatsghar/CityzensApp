@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomTabBar/custom_tab_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomTabBar/custom_tab_bar.dart';
 import 'package:tcs_app/Provider/Library/library_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Screens/Student/LibraryScreen/library_notification_screen.dart';
@@ -18,8 +18,10 @@ class LibraryScreen extends StatefulWidget {
 
 class LibraryScreenState extends State<LibraryScreen>
     with SingleTickerProviderStateMixin {
-  var provider = Provider.of<LibraryProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var provider = Provider.of<LibraryProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -30,8 +32,9 @@ class LibraryScreenState extends State<LibraryScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<LibraryProvider>(builder: (context, value, _) {
-        return CustomTabBar(
+      body: Consumer<LibraryProvider>(
+        builder: (context, value, _) {
+          return CustomTabBar(
             scrollController: value.scrollController,
             appBarTitle: 'Library',
             tabs: const [
@@ -42,8 +45,10 @@ class LibraryScreenState extends State<LibraryScreen>
               LibraryDetailsScreen(),
               LibraryNotificationScreen(),
             ],
-            controller: value.tabController);
-      }),
+            controller: value.tabController,
+          );
+        },
+      ),
     );
   }
 }

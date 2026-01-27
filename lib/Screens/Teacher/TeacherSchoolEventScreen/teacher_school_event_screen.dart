@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/SchoolEventsComponents/school_events_component.dart';
+import 'package:tcs_app/components/SchoolEventsComponents/school_events_component.dart';
 import 'package:tcs_app/Provider/SchoolEvents/school_event_provider.dart';
 
-import '../../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
-import '../../../CustomWidgets/ShowError/show_error.dart';
+import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
+import '../../../custom_widgets/CustomLoader/custom_loader.dart';
+import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../Routes/app_navigation.dart';
 import '../../../Routes/app_navigation_routes.dart';
 import '../../../Utils/app_colors.dart';
@@ -20,8 +20,10 @@ class TeacherSchoolEventScreen extends StatefulWidget {
 
 class _TeacherSchoolEventScreenState extends State<TeacherSchoolEventScreen> {
   late Future eventRecords;
-  var provider = Provider.of<SchoolEventProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var provider = Provider.of<SchoolEventProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -40,27 +42,25 @@ class _TeacherSchoolEventScreenState extends State<TeacherSchoolEventScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'SCHOOL EVENTS'),
       body: FutureBuilder(
-          future: eventRecords,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const SchoolEventsComponent();
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: eventRecords,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const SchoolEventsComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             AppNavigation.navigateTo(AppNavRoutes.addSchoolEventRoute),
         backgroundColor: AppColors.primaryColor,
-        child: const Icon(
-          Icons.add,
-          color: AppColors.whiteColor,
-        ),
+        child: const Icon(Icons.add, color: AppColors.whiteColor),
       ),
     );
   }

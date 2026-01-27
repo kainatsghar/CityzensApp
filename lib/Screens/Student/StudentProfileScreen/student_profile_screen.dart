@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/StudentProfileComponents/student_profile_component.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
-import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/components/StudentProfileComponents/student_profile_component.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
+import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/StudentProfile/student_profile_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
-import '../../CustomWidgets/CustomAppButton/custom_app_button.dart';
-import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
-import '../../CustomWidgets/ShowCustomMessage/show_custom_message.dart';
+import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
+import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
+import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import '../../Provider/ComplaintQuery/complaint_query_provider.dart';
 import '../../Utils/app_constants.dart';
 

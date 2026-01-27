@@ -7,9 +7,9 @@ import 'package:tcs_app/Services/AddDiary/add_diary_service.dart';
 import 'package:tcs_app/Services/StudentDiary/student_diary_service.dart';
 import 'package:tcs_app/Services/TeacherDiary/teacher_diary_service.dart';
 
-import '../../CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddDiary/add_diary_request.dart';
 import '../../Model/Diary/diary_response.dart';
 import '../../Model/ResponseMessage/response_message.dart';
@@ -47,11 +47,12 @@ class DiaryProvider with ChangeNotifier {
     sectionController.clear();
     sectionId = null;
     sections = List.generate(
-        sectionResponse.section!.length,
-        (index) => Options(
-              title: sectionResponse.section![index].name,
-              value: sectionResponse.section![index].classSectionId,
-            ));
+      sectionResponse.section!.length,
+      (index) => Options(
+        title: sectionResponse.section![index].name,
+        value: sectionResponse.section![index].classSectionId,
+      ),
+    );
     notifyListeners();
   }
 
@@ -59,11 +60,12 @@ class DiaryProvider with ChangeNotifier {
     subjectResponse = response;
     subjectController.clear();
     subjects = List.generate(
-        subjectResponse.sectionSubject!.length,
-        (index) => Options(
-              title: subjectResponse.sectionSubject![index].subjectName!,
-              value: subjectResponse.sectionSubject![index].subjectId!,
-            ));
+      subjectResponse.sectionSubject!.length,
+      (index) => Options(
+        title: subjectResponse.sectionSubject![index].subjectName!,
+        value: subjectResponse.sectionSubject![index].subjectId!,
+      ),
+    );
     notifyListeners();
   }
 
@@ -71,10 +73,10 @@ class DiaryProvider with ChangeNotifier {
     try {
       TeacherSectionResponse response =
           await TeacherSectionService.sectionRequest(
-        isDiary: true,
-        userName: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: true,
+            userName: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSectionData(response);
       return response;
     } catch (ex) {
@@ -86,11 +88,11 @@ class DiaryProvider with ChangeNotifier {
     try {
       SectionSubjectResponse response =
           await SectionSubjectService.getSubjectsRequest(
-        isDiary: true,
-        classSectionId: '$sectionId',
-        teacherId: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: true,
+            classSectionId: '$sectionId',
+            teacherId: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSubjectsData(response);
       return response;
     } catch (ex) {
@@ -99,8 +101,9 @@ class DiaryProvider with ChangeNotifier {
   }
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setDiaryRecords(DiaryResponse response) {
     diaryResponse = response;
@@ -122,23 +125,28 @@ class DiaryProvider with ChangeNotifier {
     try {
       if (formKey.currentState!.validate()) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
-        ResponseMessage response =
-            await AddDiaryService.addDiary(AddDiaryRequest(
-          subject: subjectController.text,
-          sectionId: sectionId,
-          classTeacherId: localDataProvider.userData!.userName,
-          diaryDate: formattedDate,
-          description: descriptionController.text,
-          tokenId: localDataProvider.userData!.tokenId,
-          fileName: fileName ?? '',
-          filePath: base64String ?? '',
-        ));
+        ResponseMessage response = await AddDiaryService.addDiary(
+          AddDiaryRequest(
+            subject: subjectController.text,
+            sectionId: sectionId,
+            classTeacherId: localDataProvider.userData!.userName,
+            diaryDate: formattedDate,
+            description: descriptionController.text,
+            tokenId: localDataProvider.userData!.tokenId,
+            fileName: fileName ?? '',
+            filePath: base64String ?? '',
+          ),
+        );
         if (response.isSuccess!) {
           await loadTeacherDiary();
           Future.delayed(
-              const Duration(seconds: 1), () => AppNavigation.goBack());
-          showSnackBar('Diary Added Successfully',
-              color: AppColors.successGreenColor);
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Diary Added Successfully',
+            color: AppColors.successGreenColor,
+          );
         } else {
           showSnackBar(response.message);
         }
@@ -157,31 +165,36 @@ class DiaryProvider with ChangeNotifier {
 
   void sectionBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Section',
-            controller: sectionController,
-            filterOptions: sections,
-            onSelect: (v) => setSelectedSection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Section',
+        controller: sectionController,
+        filterOptions: sections,
+        onSelect: (v) => setSelectedSection(v),
+      ),
+    );
   }
 
   void subjectBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Subject',
-            controller: subjectController,
-            filterOptions: subjects,
-            onSelect: (v) => setSelectedSubject(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Subject',
+        controller: subjectController,
+        filterOptions: subjects,
+        onSelect: (v) => setSelectedSubject(v),
+      ),
+    );
   }
 
   Future<DiaryResponse> loadTeacherDiary() async {
     try {
       DiaryResponse response = await TeacherDiaryService.getDiaryRecords(
-          userName: localDataProvider.userData!.userName!,
-          tokenId: localDataProvider.userData!.tokenId!);
+        userName: localDataProvider.userData!.userName!,
+        tokenId: localDataProvider.userData!.tokenId!,
+      );
       setDiaryRecords(response);
       return response;
     } catch (ex) {
@@ -192,8 +205,9 @@ class DiaryProvider with ChangeNotifier {
   Future<DiaryResponse> loadStudentDiary() async {
     try {
       DiaryResponse response = await StudentDiaryService.getDiaryRecords(
-          userName: localDataProvider.studentId,
-          tokenId: localDataProvider.userData!.tokenId!);
+        userName: localDataProvider.studentId,
+        tokenId: localDataProvider.userData!.tokenId!,
+      );
       setDiaryRecords(response);
       return response;
     } catch (ex) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
+import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/Model/MarkUnverified/mark_unverified_request.dart';
 import 'package:tcs_app/Model/ResponseMessage/response_message.dart';
 import 'package:tcs_app/Model/UnverifiedReasons/unverified_reasons_response.dart';
@@ -12,8 +12,8 @@ import 'package:tcs_app/Services/UnverifiedReasons/unverified_reasons_service.da
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
 
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Utils/app_colors.dart';
 import '../../Utils/app_constants.dart';
 
@@ -42,20 +42,34 @@ class MarkUnverifiedProvider with ChangeNotifier {
     }
   }
 
-  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(AppNavigation.currentContext!, listen: false);
+  LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setSectionData(TeacherSectionResponse response) {
     sectionResponse = response;
     sectionController.clear();
     sectionId = null;
-    sections = List.generate(sectionResponse.section!.length, (index) => Options(title: sectionResponse.section![index].name, value: sectionResponse.section![index].classSectionId));
+    sections = List.generate(
+      sectionResponse.section!.length,
+      (index) => Options(
+        title: sectionResponse.section![index].name,
+        value: sectionResponse.section![index].classSectionId,
+      ),
+    );
     notifyListeners();
   }
 
   void setReasonsData(UnverifiedReasonsResponse response) {
     unverifiedReasons = response;
-    reasons = List.generate(unverifiedReasons.verificationReasons!.length,
-        (index) => Options(title: unverifiedReasons.verificationReasons![index].reasonDescription!, value: unverifiedReasons.verificationReasons![index].reasonId!));
+    reasons = List.generate(
+      unverifiedReasons.verificationReasons!.length,
+      (index) => Options(
+        title: unverifiedReasons.verificationReasons![index].reasonDescription!,
+        value: unverifiedReasons.verificationReasons![index].reasonId!,
+      ),
+    );
     notifyListeners();
   }
 
@@ -75,7 +89,11 @@ class MarkUnverifiedProvider with ChangeNotifier {
 
   Future<TeacherSectionResponse> loadSections() async {
     try {
-      TeacherSectionResponse response = await TeacherSectionService.sectionRequest(userName: localDataProvider.userData!.userName!, token: localDataProvider.userData!.tokenId!);
+      TeacherSectionResponse response =
+          await TeacherSectionService.sectionRequest(
+            userName: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSectionData(response);
       return response;
     } catch (ex) {
@@ -85,7 +103,10 @@ class MarkUnverifiedProvider with ChangeNotifier {
 
   Future<UnverifiedReasonsResponse> loadReasons() async {
     try {
-      UnverifiedReasonsResponse response = await UnverifiedReasonsService.getReasons(tokenId: localDataProvider.userData!.tokenId!);
+      UnverifiedReasonsResponse response =
+          await UnverifiedReasonsService.getReasons(
+            tokenId: localDataProvider.userData!.tokenId!,
+          );
       setReasonsData(response);
       return response;
     } catch (ex) {
@@ -98,19 +119,28 @@ class MarkUnverifiedProvider with ChangeNotifier {
     try {
       if (formKey.currentState!.validate()) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
-        ResponseMessage response = await MarkUnverifiedService.markUnverified(MarkUnverifiedRequest(
+        ResponseMessage response = await MarkUnverifiedService.markUnverified(
+          MarkUnverifiedRequest(
             employeeId: localDataProvider.userData!.userName,
             sectionId: sectionId,
             reasonId: reasonId,
             studentName: studentNameController.text,
             studentId: studentIdController.text,
             teacherRemarks: remarksController.text,
-            tokenId: localDataProvider.userData!.tokenId));
+            tokenId: localDataProvider.userData!.tokenId,
+          ),
+        );
 
         // if (response.isSuccess) {
         if (response.isSuccess == true) {
-          Future.delayed(const Duration(seconds: 1), () => AppNavigation.goBack());
-          showSnackBar('Unverified Student Added Successfully', color: AppColors.successGreenColor);
+          Future.delayed(
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Unverified Student Added Successfully',
+            color: AppColors.successGreenColor,
+          );
         } else {
           showSnackBar(response.message);
         }
@@ -123,16 +153,28 @@ class MarkUnverifiedProvider with ChangeNotifier {
 
   void sectionBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(title: 'Sections', controller: sectionController, filterOptions: sections, onSelect: (v) => setSelectedSection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Sections',
+        controller: sectionController,
+        filterOptions: sections,
+        onSelect: (v) => setSelectedSection(v),
+      ),
+    );
   }
 
   void reasonsBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(title: 'Reasons', controller: reasonController, filterOptions: reasons, onSelect: (v) => setSelectedReason(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Reasons',
+        controller: reasonController,
+        filterOptions: reasons,
+        onSelect: (v) => setSelectedReason(v),
+      ),
+    );
   }
 
   void clearData() {

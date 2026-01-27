@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/AcademicTermComponents/academic_term_component.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
-import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/components/AcademicTermComponents/academic_term_component.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
+import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
@@ -18,8 +18,10 @@ class AcademicTermScreen extends StatefulWidget {
 
 class AcademicTermScreenState extends State<AcademicTermScreen> {
   late Future _academicTermService;
-  var provider = Provider.of<ResultsProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var provider = Provider.of<ResultsProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -36,22 +38,25 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'ACADEMIC YEAR & TERM'),
-        body: RefreshIndicator(
-            child: FutureBuilder(
-                future: _academicTermService,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const CustomLoader();
-                    default:
-                      if (snapshot.hasData) {
-                        return const AcademicTermComponent();
-                      } else {
-                        return ShowError(errorText: '${snapshot.error}');
-                      }
-                  }
-                }),
-            onRefresh: () => provider.loadAcademicTerm()));
+      appBar: const CustomAppBar(title: 'ACADEMIC YEAR & TERM'),
+      body: RefreshIndicator(
+        child: FutureBuilder(
+          future: _academicTermService,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const CustomLoader();
+              default:
+                if (snapshot.hasData) {
+                  return const AcademicTermComponent();
+                } else {
+                  return ShowError(errorText: '${snapshot.error}');
+                }
+            }
+          },
+        ),
+        onRefresh: () => provider.loadAcademicTerm(),
+      ),
+    );
   }
 }

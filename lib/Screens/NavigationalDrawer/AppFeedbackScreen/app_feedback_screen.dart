@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
-import 'package:tcs_app/CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
-import 'package:tcs_app/CustomWidgets/CustomUserImage/custom_user_image.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
+import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/custom_widgets/CustomLogoCover/custom_logo_cover.dart';
+import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/Provider/SupportForm/support_form_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';

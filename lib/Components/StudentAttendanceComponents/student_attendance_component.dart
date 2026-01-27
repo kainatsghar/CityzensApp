@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/StudentAttendanceComponents/student_attendance.dart';
+import 'package:tcs_app/components/StudentAttendanceComponents/student_attendance.dart';
 // import 'package:tcs_app/Provider/StudentAttendance/student_alevel_attendance_provider.dart';
 
 import '../../Provider/StudentAttendance/student_attendance_provider.dart';

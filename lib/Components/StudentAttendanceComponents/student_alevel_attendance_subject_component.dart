@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
+import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/StudentAttendance/student_alevel_attendance_provider.dart';
 // import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:provider/provider.dart';
 
-import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+import '../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../Utils/app_colors.dart';
 
 class StudentALevelAttendanceSubjectComponent extends StatelessWidget {

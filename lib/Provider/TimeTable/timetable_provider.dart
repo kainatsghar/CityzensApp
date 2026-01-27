@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Services/TeacherSection/teacher_section_service.dart';
-import '../../CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddTimeTable/add_timetable_request.dart';
 import '../../Model/TimeTable/timetable_response.dart';
 import '../../Routes/app_navigation_routes.dart';
@@ -22,7 +22,7 @@ import '../LocalData/local_data_provider.dart';
 class TimeTableProvider with ChangeNotifier {
   TimeTableResponse? timeTableResponse;
   final sectionController = TextEditingController();
-  late final formKey = GlobalKey<FormState>();
+  // late final formKey = GlobalKey<FormState>();
 
   bool? isInitial;
 
@@ -39,19 +39,21 @@ class TimeTableProvider with ChangeNotifier {
   TeacherSectionResponse sectionResponse = TeacherSectionResponse();
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setSectionData(TeacherSectionResponse response) {
     sectionResponse = response;
     sectionController.clear();
     sectionId = null;
     sections = List.generate(
-        sectionResponse.section!.length,
-        (index) => Options(
-              title: sectionResponse.section![index].name,
-              value: sectionResponse.section![index].classSectionId,
-            ));
+      sectionResponse.section!.length,
+      (index) => Options(
+        title: sectionResponse.section![index].name,
+        value: sectionResponse.section![index].classSectionId,
+      ),
+    );
     notifyListeners();
   }
 
@@ -59,13 +61,8 @@ class TimeTableProvider with ChangeNotifier {
     if (isInitial == true) {
       timetablelistValues.update(
         day,
-        (value) => {
-          ...value,
-          periodIndex + 1: marks,
-        },
-        ifAbsent: () => {
-          periodIndex + 1: marks,
-        },
+        (value) => {...value, periodIndex + 1: marks},
+        ifAbsent: () => {periodIndex + 1: marks},
       );
     } else {
       if (timeTableResponse == null ||
@@ -118,13 +115,15 @@ class TimeTableProvider with ChangeNotifier {
           return;
       }
 
-      if (!timeTableResponse!.classTimeTableDTO!.dayLists!
-          .any((dayList) => dayList.dayOfWeek == day)) {
+      if (!timeTableResponse!.classTimeTableDTO!.dayLists!.any(
+        (dayList) => dayList.dayOfWeek == day,
+      )) {
         timeTableResponse!.classTimeTableDTO!.dayLists!.add(dayList);
       }
 
-      if (!timeTableResponse!.classTimeTableDTO!.dayLists!
-          .any((dayList) => dayList.dayOfWeek == day)) {
+      if (!timeTableResponse!.classTimeTableDTO!.dayLists!.any(
+        (dayList) => dayList.dayOfWeek == day,
+      )) {
         timeTableResponse!.classTimeTableDTO!.dayLists!.add(dayList);
       }
 
@@ -155,8 +154,9 @@ class TimeTableProvider with ChangeNotifier {
     try {
       TeacherSectionResponse response =
           await TeacherSectionService.sectionRequest(
-              userName: localDataProvider.userData!.userName!,
-              token: localDataProvider.userData!.tokenId!);
+            userName: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSectionData(response);
       return response;
     } catch (ex) {
@@ -165,16 +165,16 @@ class TimeTableProvider with ChangeNotifier {
   }
 
   Future<void> navigateToMarkTimeTable() async {
-    if (formKey.currentState!.validate()) {
-      FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
-      AppNavigation.navigateTo(AppNavRoutes.teacherTimeTableRoute);
-    }
+    // if (formKey.currentState!.validate()) {
+    FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
+    AppNavigation.navigateTo(AppNavRoutes.teacherTimeTableRoute);
+    // }
   }
 
   Future<void> saveTimeTable() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (formKey.currentState!.validate()) {
+      if (sectionId != null && sectionId != 0) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
 
         List<DayListResponse> currentDayLists =
@@ -189,7 +189,7 @@ class TimeTableProvider with ChangeNotifier {
           'Tuesday',
           'Wednesday',
           'Thursday',
-          'Friday'
+          'Friday',
         ];
 
         for (var day in weekdays) {
@@ -274,8 +274,10 @@ class TimeTableProvider with ChangeNotifier {
             }
           }
 
-          currentDayMap[day] =
-              DayListResponse(dayOfWeek: day, periods: existingPeriods);
+          currentDayMap[day] = DayListResponse(
+            dayOfWeek: day,
+            periods: existingPeriods,
+          );
         }
 
         int? id = int.tryParse(localDataProvider.userData!.userName ?? '');
@@ -307,8 +309,9 @@ class TimeTableProvider with ChangeNotifier {
           }).toList(),
         );
 
-        ResponseMessage response =
-            await AddTimetableService.addTimetable(request);
+        ResponseMessage response = await AddTimetableService.addTimetable(
+          request,
+        );
 
         if (response.isSuccessful!) {
           await loadTimeTable();
@@ -333,13 +336,27 @@ class TimeTableProvider with ChangeNotifier {
 
   void sectionBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Section',
-            controller: sectionController,
-            filterOptions: sections,
-            onSelect: (v) => setSelectedSection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Section',
+        controller: sectionController,
+        filterOptions: sections,
+        onSelect: (v) => setSelectedSection(v),
+      ),
+    );
+  }
+
+  /// Set section ID and class ID from section object
+  void setSectionId(int? id) {
+    sectionId = id;
+    notifyListeners();
+  }
+
+  /// Set class ID from section object
+  void setClassId(int? id) {
+    classId = id;
+    notifyListeners();
   }
 
   Future<TimeTableResponse> loadTimeTable() async {
@@ -347,14 +364,16 @@ class TimeTableProvider with ChangeNotifier {
       int? userId = localDataProvider.userData!.userType == 'Student'
           ? int.tryParse(localDataProvider.studentId)
           : localDataProvider.userData!.userType == 'Parent'
-              ? int.tryParse(localDataProvider.studentId)
-              : int.tryParse(localDataProvider.userData!.userName ?? '');
+          ? int.tryParse(localDataProvider.studentId)
+          : int.tryParse(localDataProvider.userData!.userName ?? '');
 
       TimeTableResponse response = await TimeTableService.getTimeTableRecords(
-          classSectionId: sectionId,
-          id: userId ?? 0,
-          isTeacher:
-              localDataProvider.userData!.userType == "Teacher" ? true : false);
+        classSectionId: sectionId,
+        id: userId ?? 0,
+        isTeacher: localDataProvider.userData!.userType == "Teacher"
+            ? true
+            : false,
+      );
       setTimeTableRecords(response);
       return response;
     } catch (ex) {

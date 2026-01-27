@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Provider/ComplaintQuery/complaint_query_provider.dart';
 
-import '../../../Components/ComplaintQueryComponents/complaint_query_componet.dart';
-import '../../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
-import '../../../CustomWidgets/ShowError/show_error.dart';
+import '../../../components/ComplaintQueryComponents/complaint_query_componet.dart';
+import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
+import '../../../custom_widgets/CustomLoader/custom_loader.dart';
+import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../Routes/app_navigation.dart';
 
 class ComplaintQueryScreen extends StatefulWidget {
@@ -18,8 +18,9 @@ class ComplaintQueryScreen extends StatefulWidget {
 class _ComplaintQueryScreenState extends State<ComplaintQueryScreen> {
   late Future withdrawalReasonsRecords;
   var provider = Provider.of<ComplaintQueryProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -40,19 +41,20 @@ class _ComplaintQueryScreenState extends State<ComplaintQueryScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'COMPLAINT/QUERY'),
       body: FutureBuilder(
-          future: withdrawalReasonsRecords,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const ComplaintQueryComponents();
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: withdrawalReasonsRecords,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const ComplaintQueryComponents();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
     );
   }
 }

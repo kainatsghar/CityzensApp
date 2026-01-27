@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/centeredErrorTextFormField.dart';
+import 'package:tcs_app/custom_widgets/CustomTextFormField/centeredErrorTextFormField.dart';
 
-import '../../CustomWidgets/CustomAppButton/custom_app_button.dart';
-import '../../CustomWidgets/CustomTestResultFormField/custom_test_result_form_field.dart';
+import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
+import '../../custom_widgets/CustomTestResultFormField/custom_test_result_form_field.dart';
 import '../../Model/ClassTestResult/class_test_student_list_response.dart';
 import '../../Provider/ClassTestResult/class_test_result_provider.dart';
 import '../../Utils/app_colors.dart';

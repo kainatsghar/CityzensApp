@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Model/Appointment/appointment_response.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddAppointment/add_appointment_request.dart';
 import '../../Services/AddAppointment/add_appointment_service.dart';
 import '../../Services/Appointment/appointment_service.dart';

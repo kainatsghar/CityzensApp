@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
-import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
+import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/Model/Results/results_response.dart';
 import 'package:tcs_app/Model/SectionSubject/section_subject_response.dart';
 import 'package:tcs_app/Provider/TeacherProfile/teacher_profile_provider.dart';
@@ -364,5 +364,13 @@ class DashboardProvider with ChangeNotifier {
     } else {
       return diaryFalseSectionsResponse?.section;
     }
+  }
+
+  void teacherDataDispose() {
+    diaryTrueSectionsResponse = null;
+    diaryFalseSectionsResponse = null;
+    sectionSubjectsMap.clear();
+    _isDashboardDataInitialized = false;
+    _isDashboardDataLoading = false;
   }
 }

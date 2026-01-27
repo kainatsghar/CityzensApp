@@ -4,9 +4,9 @@ import 'package:tcs_app/Model/ClassTestResult/student_test_result_list_response.
 import 'package:tcs_app/Services/ClassTestResult/class_test_result_service.dart';
 import 'package:tcs_app/model/Options/options.dart';
 
-import '../../CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddClassTestResult/add_class_test_result_request.dart';
 import '../../Model/ClassTestResult/class_test_student_list_response.dart';
 import '../../Model/SectionSubject/section_subject_response.dart';

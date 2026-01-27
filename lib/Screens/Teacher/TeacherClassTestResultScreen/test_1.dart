@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/ClassTestResultComponents/test1_component.dart';
+import 'package:tcs_app/components/ClassTestResultComponents/test1_component.dart';
 import 'package:tcs_app/Provider/ClassTestResult/class_test_result_provider.dart';
 
-import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
-import '../../../CustomWidgets/ShowError/show_error.dart';
+import '../../../custom_widgets/CustomLoader/custom_loader.dart';
+import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../Routes/app_navigation.dart';
 
 class Test1 extends StatefulWidget {

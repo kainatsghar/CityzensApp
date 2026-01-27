@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/ClassTestResultComponents/test2_component.dart';
+import 'package:tcs_app/components/ClassTestResultComponents/test2_component.dart';
 
-import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
-import '../../../CustomWidgets/ShowError/show_error.dart';
+import '../../../custom_widgets/CustomLoader/custom_loader.dart';
+import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../Provider/ClassTestResult/class_test_result_provider.dart';
 import '../../../Routes/app_navigation.dart';
 

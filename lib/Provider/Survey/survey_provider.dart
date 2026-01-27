@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddSurvey/add_survey_request.dart';
 import '../../Model/Survey/survey_response.dart';
 import '../../Services/AddSurveyAnswer/add_survey_answer_service.dart';
@@ -20,8 +20,9 @@ class SurveyProvider with ChangeNotifier {
   List<SurveyQuestionAnswerDto> surveyAnswers = [];
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   void setSurveyRecords(SurveyResponse response) {
     surveyResponse = response;
@@ -29,7 +30,10 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void updateSelectedAnswer(
-      int? questionId, int? answerId, String? answerString) {
+    int? questionId,
+    int? answerId,
+    String? answerString,
+  ) {
     final existingAnswer = surveyAnswers.firstWhere(
       (answer) => answer.questionId == questionId,
       orElse: () => SurveyQuestionAnswerDto(),
@@ -39,14 +43,16 @@ class SurveyProvider with ChangeNotifier {
       existingAnswer.answerId = answerId;
       existingAnswer.answer = answerString;
     } else {
-      surveyAnswers.add(SurveyQuestionAnswerDto(
-        userId: localDataProvider.userData!.userName ?? '',
-        userType: localDataProvider.userData!.userType ?? '',
-        questionId: questionId,
-        answerId: answerId,
-        answer: answerString,
-        createdBy: localDataProvider.userData!.userName ?? '',
-      ));
+      surveyAnswers.add(
+        SurveyQuestionAnswerDto(
+          userId: localDataProvider.userData!.userName ?? '',
+          userType: localDataProvider.userData!.userType ?? '',
+          questionId: questionId,
+          answerId: answerId,
+          answer: answerString,
+          createdBy: localDataProvider.userData!.userName ?? '',
+        ),
+      );
     }
     notifyListeners();
   }
@@ -94,11 +100,12 @@ class SurveyProvider with ChangeNotifier {
       String? userId = localDataProvider.userData!.userType == 'Student'
           ? localDataProvider.studentId.toString()
           : localDataProvider.userData!.userType == 'Parent'
-              ? localDataProvider.userData!.userName.toString()
-              : localDataProvider.userData!.userName ?? '';
+          ? localDataProvider.userData!.userName.toString()
+          : localDataProvider.userData!.userName ?? '';
 
-      SurveyResponse response =
-          await SurveyService.getSurveyRecords(userId: userId);
+      SurveyResponse response = await SurveyService.getSurveyRecords(
+        userId: userId,
+      );
       setSurveyRecords(response);
       return response;
     } catch (ex) {

@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
-import '../../CustomWidgets/CustomAppButton/custom_app_button.dart';
-import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
-import '../../CustomWidgets/CustomTimeTableFormField/custom_timetable_form_field.dart';
+import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
+import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
+import '../../custom_widgets/CustomTimeTableFormField/custom_timetable_form_field.dart';
 import '../../Model/TimeTable/timetable_response.dart';
 import '../../Provider/TimeTable/timetable_provider.dart';
 

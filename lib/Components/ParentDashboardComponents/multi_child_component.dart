@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomUserImage/custom_user_image.dart';
+import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
-import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+import '../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../Provider/ParentDashboard/parent_dashboard_provider.dart';
 
 class MultiChildComponent extends StatelessWidget {

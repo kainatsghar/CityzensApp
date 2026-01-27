@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/NotificationComponents/notification_component.dart';
-import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
-import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/components/NotificationComponents/notification_component.dart';
+import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
+import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/Notifications/notification_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 

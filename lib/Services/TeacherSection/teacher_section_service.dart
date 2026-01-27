@@ -1,4 +1,4 @@
-import 'package:tcs_app/Network/api_base_helper.dart';
+import 'package:tcs_app/network/api_base_helper.dart';
 import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
 import 'package:tcs_app/model/UserData/user_data_request.dart';
 

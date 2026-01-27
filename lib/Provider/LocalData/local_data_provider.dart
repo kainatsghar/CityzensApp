@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
-import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
+import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Services/Logout/logout_service.dart';
@@ -80,6 +80,9 @@ class LocalDataProvider with ChangeNotifier {
         userData!.tokenId!,
       );
       if (response.isSuccessful ?? false) {
+        if (userData!.userType == 'Teacher') {
+          AppLocalData.removeKeyData(key: AppConstants.teacherProfileData);
+        }
         AppLocalData.removeKeyData(key: AppConstants.userDataKey);
         Future.delayed(
           Duration.zero,

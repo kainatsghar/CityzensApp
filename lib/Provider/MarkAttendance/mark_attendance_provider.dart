@@ -2,9 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
-import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
+import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
+import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/Model/SectionSubject/section_subject_response.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
@@ -63,6 +63,25 @@ class MarkAttendanceProvider with ChangeNotifier {
         value: sectionResponse.section![index].classSectionId,
       ),
     );
+    notifyListeners();
+  }
+
+  /// Set section ID and class ID from section object
+  void setSectionId(int? id) {
+    sectionId = id;
+    notifyListeners();
+  }
+
+  /// Set class ID from section object
+  void setClassId(int? id) {
+    classId = id;
+    notifyListeners();
+  }
+
+  /// Set subject ID and name from subject object
+  void setSubjectId(int? id, String? name) {
+    subjectId = id ?? 0;
+    subjectController.text = name ?? '';
     notifyListeners();
   }
 

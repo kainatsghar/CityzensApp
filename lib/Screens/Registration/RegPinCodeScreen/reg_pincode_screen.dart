@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
+import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/validators.dart';
 
-import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
-import '../../../Utils/app_colors.dart';
+import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 
 class RegPinCodeScreen extends StatefulWidget {
   const RegPinCodeScreen({super.key});
@@ -44,15 +44,7 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
               children: <Widget>[
                 const CustomLogoCover(),
                 SizedBox(height: size.height * 0.02),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 25.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
+                CustomCard(
                   child: Column(
                     children: <Widget>[
                       Form(

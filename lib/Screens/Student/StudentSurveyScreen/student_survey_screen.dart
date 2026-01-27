@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../Components/SurveyComponents/survey_component.dart';
-import '../../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
-import '../../../CustomWidgets/ShowError/show_error.dart';
+import '../../../components/SurveyComponents/survey_component.dart';
+import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
+import '../../../custom_widgets/CustomLoader/custom_loader.dart';
+import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../Provider/Survey/survey_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
@@ -17,8 +17,10 @@ class StudentSurveyScreen extends StatefulWidget {
 
 class _StudentSurveyScreenState extends State<StudentSurveyScreen> {
   late Future surveyQuestionRecords;
-  var provider =
-      Provider.of<SurveyProvider>(AppNavigation.currentContext!, listen: false);
+  var provider = Provider.of<SurveyProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -38,19 +40,20 @@ class _StudentSurveyScreenState extends State<StudentSurveyScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'SURVEY'),
       body: FutureBuilder(
-          future: surveyQuestionRecords,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const SurveyComponent();
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: surveyQuestionRecords,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const SurveyComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
     );
   }
 }

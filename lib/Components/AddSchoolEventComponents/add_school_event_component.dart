@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
 import 'package:tcs_app/Provider/SchoolEvents/school_event_provider.dart';
 
-import '../../CustomWidgets/CustomAppButton/custom_app_button.dart';
-import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
-import '../../CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
+import '../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
+import '../../custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import '../../Utils/app_colors.dart';
 import '../../Utils/helper_function.dart';
 
@@ -46,15 +47,7 @@ class _AddSchoolEventComponentState extends State<AddSchoolEventComponent> {
               children: [
                 const CustomLogoCover(),
                 SizedBox(height: size.height * 0.02),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 25.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
+                CustomCard(
                   child: Form(
                     key: value.formKey,
                     child: Column(

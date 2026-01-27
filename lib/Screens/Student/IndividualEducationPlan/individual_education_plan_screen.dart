@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
-import '../../../Components/IndividualEducationPlanComponents/Individual_education_plan_component.dart';
+import '../../../components/IndividualEducationPlanComponents/Individual_education_plan_component.dart';
 
 class IndividualEducationPlanScreen extends StatefulWidget {
   const IndividualEducationPlanScreen({super.key});
@@ -19,8 +19,10 @@ class IndividualEducationPlanScreen extends StatefulWidget {
 class IndividualEducationPlanState
     extends State<IndividualEducationPlanScreen> {
   late Future _academicTermService;
-  var provider = Provider.of<ResultsProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var provider = Provider.of<ResultsProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -37,23 +39,26 @@ class IndividualEducationPlanState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'INDIVIDUAL EDUCATION PLAN'),
-        body: RefreshIndicator(
-            child: FutureBuilder(
-                future: _academicTermService,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const CustomLoader();
-                    default:
-                      if (snapshot.hasData) {
-                        return const IndividualEducationPlanComponent();
-                      } else {
-                        return const IndividualEducationPlanComponent();
-                        //return ShowError(errorText: '${snapshot.error}');
-                      }
-                  }
-                }),
-            onRefresh: () => provider.loadAcademicTerm()));
+      appBar: const CustomAppBar(title: 'INDIVIDUAL EDUCATION PLAN'),
+      body: RefreshIndicator(
+        child: FutureBuilder(
+          future: _academicTermService,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const CustomLoader();
+              default:
+                if (snapshot.hasData) {
+                  return const IndividualEducationPlanComponent();
+                } else {
+                  return const IndividualEducationPlanComponent();
+                  //return ShowError(errorText: '${snapshot.error}');
+                }
+            }
+          },
+        ),
+        onRefresh: () => provider.loadAcademicTerm(),
+      ),
+    );
   }
 }

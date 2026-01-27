@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddEyeOnYourChild/add_eye_on_your_child_response.dart';
 import '../../Model/EyeOnYourChild/eye_on_your_child_response.dart';
 import '../../Model/ParentEyeOnYourChild/parent_eye_on_your_child_response.dart';

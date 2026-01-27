@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field_v2.dart';
+import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field_v2.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
-import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
-import '../../CustomWidgets/ShowCustomMessage/show_custom_message.dart';
+import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
+import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import '../../Utils/app_colors.dart';
 import '../../Utils/app_constants.dart';
 

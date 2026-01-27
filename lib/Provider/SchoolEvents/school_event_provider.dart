@@ -6,9 +6,9 @@ import 'package:tcs_app/Model/ResponseMessage/response_message.dart';
 import 'package:tcs_app/Model/SchoolEvents/school_events_response.dart';
 import 'package:tcs_app/Services/TeacherEvent/teacher_event_service.dart';
 
-import '../../CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Routes/app_navigation.dart';
 import '../../Services/AddSchoolEvent/add_school_event_service.dart';
 import '../../Services/TeacherSection/teacher_section_service.dart';

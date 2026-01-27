@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
+import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/Model/Assignment/assignment_response.dart';
 import 'package:tcs_app/Provider/Assignment/assignment_provider.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
-import '../../CustomWidgets/CustomExpansionTile/custom_expansion_tile.dart';
+import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
+import '../../custom_widgets/CustomExpansionTile/custom_expansion_tile.dart';
 import '../../Routes/app_navigation.dart';
 import '../../Utils/app_constants.dart';
 

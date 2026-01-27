@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
-import '../../CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddCircular/add_circular_request.dart';
 import '../../Model/ResponseMessage/response_message.dart';
 import '../../Model/SectionSubject/section_subject_response.dart';
@@ -41,11 +41,12 @@ class CircularProvider with ChangeNotifier {
     sectionController.clear();
     sectionId = null;
     sections = List.generate(
-        sectionResponse.section!.length,
-        (index) => Options(
-              title: sectionResponse.section![index].name,
-              value: sectionResponse.section![index].classSectionId,
-            ));
+      sectionResponse.section!.length,
+      (index) => Options(
+        title: sectionResponse.section![index].name,
+        value: sectionResponse.section![index].classSectionId,
+      ),
+    );
     notifyListeners();
   }
 
@@ -53,11 +54,12 @@ class CircularProvider with ChangeNotifier {
     subjectResponse = response;
     subjectController.clear();
     subjects = List.generate(
-        subjectResponse.sectionSubject!.length,
-        (index) => Options(
-              title: subjectResponse.sectionSubject![index].subjectName!,
-              value: subjectResponse.sectionSubject![index].subjectId!,
-            ));
+      subjectResponse.sectionSubject!.length,
+      (index) => Options(
+        title: subjectResponse.sectionSubject![index].subjectName!,
+        value: subjectResponse.sectionSubject![index].subjectId!,
+      ),
+    );
     notifyListeners();
   }
 
@@ -65,10 +67,10 @@ class CircularProvider with ChangeNotifier {
     try {
       TeacherSectionResponse response =
           await TeacherSectionService.sectionRequest(
-        isDiary: true,
-        userName: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: true,
+            userName: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSectionData(response);
       return response;
     } catch (ex) {
@@ -80,11 +82,11 @@ class CircularProvider with ChangeNotifier {
     try {
       SectionSubjectResponse response =
           await SectionSubjectService.getSubjectsRequest(
-        isDiary: true,
-        classSectionId: '$sectionId',
-        teacherId: localDataProvider.userData!.userName!,
-        token: localDataProvider.userData!.tokenId!,
-      );
+            isDiary: true,
+            classSectionId: '$sectionId',
+            teacherId: localDataProvider.userData!.userName!,
+            token: localDataProvider.userData!.tokenId!,
+          );
       setSubjectsData(response);
       return response;
     } catch (ex) {
@@ -93,8 +95,9 @@ class CircularProvider with ChangeNotifier {
   }
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   Future<void> setSelectedSection(String sectionName) async {
     AppNavigation.goBack();
@@ -111,22 +114,27 @@ class CircularProvider with ChangeNotifier {
     try {
       if (formKey.currentState!.validate()) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
-        ResponseMessage response =
-            await AddCircularService.addCircular(AddCircularRequest(
-          title: titleController.text,
-          body: descriptionController.text,
-          subject: subjectController.text,
-          sectionId: sectionId,
-          classTeacherId: localDataProvider.userData!.userName,
-          tokenId: localDataProvider.userData!.tokenId,
-          fileName: fileName ?? '',
-          filePath: base64String ?? '',
-        ));
+        ResponseMessage response = await AddCircularService.addCircular(
+          AddCircularRequest(
+            title: titleController.text,
+            body: descriptionController.text,
+            subject: subjectController.text,
+            sectionId: sectionId,
+            classTeacherId: localDataProvider.userData!.userName,
+            tokenId: localDataProvider.userData!.tokenId,
+            fileName: fileName ?? '',
+            filePath: base64String ?? '',
+          ),
+        );
         if (response.isSuccess!) {
           Future.delayed(
-              const Duration(seconds: 1), () => AppNavigation.goBack());
-          showSnackBar('Circular Added Successfully',
-              color: AppColors.successGreenColor);
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Circular Added Successfully',
+            color: AppColors.successGreenColor,
+          );
         } else {
           showSnackBar(response.message);
         }
@@ -145,24 +153,28 @@ class CircularProvider with ChangeNotifier {
 
   void sectionBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Section',
-            controller: sectionController,
-            filterOptions: sections,
-            onSelect: (v) => setSelectedSection(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Section',
+        controller: sectionController,
+        filterOptions: sections,
+        onSelect: (v) => setSelectedSection(v),
+      ),
+    );
   }
 
   void subjectBottomSheet() {
     showModalBottomSheet(
-        context: AppNavigation.currentContext!,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) => CustomFilterBottomSheet(
-            title: 'Select Subject',
-            controller: subjectController,
-            filterOptions: subjects,
-            onSelect: (v) => setSelectedSubject(v)));
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Subject',
+        controller: subjectController,
+        filterOptions: subjects,
+        onSelect: (v) => setSelectedSubject(v),
+      ),
+    );
   }
 
   void clearData() {

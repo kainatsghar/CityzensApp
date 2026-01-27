@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 
 import 'message_screen.dart';
 

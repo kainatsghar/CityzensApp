@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/DashboardComponents/navigational_drawer.dart';
-import 'package:tcs_app/Components/ParentDashboardComponents/multi_child_component.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
-import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart';
+import 'package:tcs_app/components/ParentDashboardComponents/multi_child_component.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
+import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/ParentDashboard/parent_dashboard_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';

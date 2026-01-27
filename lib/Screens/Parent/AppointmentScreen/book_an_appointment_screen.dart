@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../Components/AppointmentComponents/book_an_appointment_component.dart';
-import '../../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
-import '../../../CustomWidgets/ShowError/show_error.dart';
+import '../../../components/AppointmentComponents/book_an_appointment_component.dart';
+import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
+import '../../../custom_widgets/CustomLoader/custom_loader.dart';
+import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../Provider/Appointment/appointment_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
@@ -18,8 +18,10 @@ class BookanAppointmentScreen extends StatefulWidget {
 
 class _BookanAppointmentScreenState extends State<BookanAppointmentScreen> {
   late Future appointmentRecords;
-  var provider = Provider.of<AppointmentProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var provider = Provider.of<AppointmentProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -38,19 +40,20 @@ class _BookanAppointmentScreenState extends State<BookanAppointmentScreen> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'BOOK AN APPOINTMENT'),
       body: FutureBuilder(
-          future: appointmentRecords,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const CustomLoader();
-              default:
-                if (snapshot.hasData) {
-                  return const BookAnAppointmentComponent();
-                } else {
-                  return ShowError(errorText: '${snapshot.error}');
-                }
-            }
-          }),
+        future: appointmentRecords,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const BookAnAppointmentComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
+              }
+          }
+        },
+      ),
     );
   }
 }

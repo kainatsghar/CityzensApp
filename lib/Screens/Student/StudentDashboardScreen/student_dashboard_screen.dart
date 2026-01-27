@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/DashboardComponents/navigational_drawer.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_button.dart';
+import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomDashboardButton/custom_dashboard_button.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
@@ -14,7 +14,7 @@ import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart'
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tcs_app/Utils/media_query_util.dart';
 
-import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
+import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../Utils/app_colors.dart';
 import '../../../Utils/helper_function.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomTabBar/custom_tab_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomTabBar/custom_tab_bar.dart';
 import 'package:tcs_app/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 
@@ -18,8 +18,10 @@ class ResultsScreen extends StatefulWidget {
 
 class ResultsScreenState extends State<ResultsScreen>
     with SingleTickerProviderStateMixin {
-  var provider = Provider.of<ResultsProvider>(AppNavigation.currentContext!,
-      listen: false);
+  var provider = Provider.of<ResultsProvider>(
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -29,21 +31,24 @@ class ResultsScreenState extends State<ResultsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Consumer<ResultsProvider>(
-      builder: (context, value, _) {
-        return CustomTabBar(
+    return Scaffold(
+      body: Consumer<ResultsProvider>(
+        builder: (context, value, _) {
+          return CustomTabBar(
             scrollController: value.scrollController,
             appBarTitle: 'RESULTS',
             tabs: const [
               Tab(child: Text('DETAILS RESULT')),
-              Tab(child: Text('OVERALL RESULT'))
+              Tab(child: Text('OVERALL RESULT')),
             ],
             widgets: const <Widget>[
               DetailResultScreen(),
-              OverallResultScreen()
+              OverallResultScreen(),
             ],
-            controller: value.controller);
-      },
-    ));
+            controller: value.controller,
+          );
+        },
+      ),
+    );
   }
 }

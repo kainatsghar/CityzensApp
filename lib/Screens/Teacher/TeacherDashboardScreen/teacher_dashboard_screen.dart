@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/DashboardComponents/navigational_drawer.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_button.dart';
-import 'package:tcs_app/CustomWidgets/ShimmerEffect/dashboard_shimmer.dart';
+import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomDashboardButton/custom_dashboard_button.dart';
+import 'package:tcs_app/custom_widgets/ShimmerEffect/dashboard_shimmer.dart';
 import 'package:tcs_app/Provider/Dashboard/dashboard_provider.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
@@ -12,7 +12,7 @@ import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart'
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/Utils/media_query_util.dart';
 
-import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 
 class TeacherDashboardScreen extends StatefulWidget {
   const TeacherDashboardScreen({super.key});

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
+import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
+import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
 import '../../Provider/EyeOnYourChild/eye_on_your_child_provider.dart';
 
 class ParentEyeOnYourChildComponent extends StatefulWidget {

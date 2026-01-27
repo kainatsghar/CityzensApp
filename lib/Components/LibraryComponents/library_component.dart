@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/LibraryComponents/single_library_item.dart';
-import 'package:tcs_app/CustomWidgets/CustomStudentInfo/custom_student_info.dart';
-import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
+import 'package:tcs_app/components/LibraryComponents/single_library_item.dart';
+import 'package:tcs_app/custom_widgets/CustomStudentInfo/custom_student_info.dart';
+import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/Provider/Library/library_provider.dart';
 
 class LibraryComponent extends StatelessWidget {

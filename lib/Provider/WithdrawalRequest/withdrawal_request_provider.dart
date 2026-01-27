@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../CustomWidgets/CustomAppButton/custom_app_button.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/AddWithdrawalRequest/add_withdrawal_request.dart';
 import '../../Model/WithdrawalRequest/withdrawal_response.dart';
 import '../../Services/AddWithdrawalRequest/add_withdrawal_request_service.dart';

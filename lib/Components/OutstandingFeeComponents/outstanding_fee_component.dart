@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/OutstandingFeeComponents/single_challan_item.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/CustomWidgets/CustomStudentInfo/custom_student_info.dart';
-import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
+import 'package:tcs_app/components/OutstandingFeeComponents/single_challan_item.dart';
+import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
+import 'package:tcs_app/custom_widgets/CustomStudentInfo/custom_student_info.dart';
+import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';

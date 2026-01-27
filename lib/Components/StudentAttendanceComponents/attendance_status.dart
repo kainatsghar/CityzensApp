@@ -5,17 +5,21 @@ class AttendanceStatus extends StatelessWidget {
   final String? day;
   final Color? textColor;
 
-  const AttendanceStatus(
-      {super.key,
-      required this.backgroundColor,
-      required this.day,
-      required this.textColor});
+  const AttendanceStatus({
+    super.key,
+    required this.backgroundColor,
+    required this.day,
+    required this.textColor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-        backgroundColor: backgroundColor ?? Colors.white,
-        child: Text(day ?? '',
-            style: TextStyle(color: textColor ?? Colors.black)));
+      backgroundColor: backgroundColor ?? Colors.white,
+      child: Text(
+        day ?? '',
+        style: TextStyle(color: textColor ?? Colors.black),
+      ),
+    );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
+import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/Model/ClassTestResult/student_test_result_list_response.dart';
 import 'package:tcs_app/Provider/ClassTestResult/class_test_result_provider.dart';
 
-import '../../CustomWidgets/CustomCoverImage/custom_cover_image.dart';
+import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
 import '../../Utils/app_colors.dart';
 
 class StudentClassTestResultComponent extends StatelessWidget {

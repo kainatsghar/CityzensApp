@@ -277,7 +277,7 @@ flowchart TD
 ```plaintext
 lib/
 ├── Components/        # Reusable UI components
-├── CustomWidgets/     # Custom widgets
+├── custom_widgets/     # Custom widgets
 ├── Model/            # Data models
 ├── Network/          # API services
 ├── Provider/         # State management

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomToggleButton/custom_toggle_button.dart';
+import 'package:tcs_app/custom_widgets/CustomToggleButton/custom_toggle_button.dart';
 import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/model/Options/options.dart';

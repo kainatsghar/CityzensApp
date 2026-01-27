@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
+import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
+import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/Provider/Registration/registration_provider.dart';
 
-import '../../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../../Utils/app_colors.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
@@ -24,74 +24,86 @@ class CreatePasswordScreenState extends State<CreatePasswordScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: const CustomAppBar(title: 'CREATE PASSWORD'),
-        body: LayoutBuilder(builder: (context, boxConstraints) {
+      appBar: const CustomAppBar(title: 'CREATE PASSWORD'),
+      body: LayoutBuilder(
+        builder: (context, boxConstraints) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: SingleChildScrollView(
-              child:
-                  Consumer<RegistrationProvider>(builder: (context, value, _) {
-                return Column(
-                  children: <Widget>[
-                    const CustomLogoCover(),
-                    SizedBox(height: size.height * 0.02),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 25.0),
-                      decoration: BoxDecoration(
+              child: Consumer<RegistrationProvider>(
+                builder: (context, value, _) {
+                  return Column(
+                    children: <Widget>[
+                      const CustomLogoCover(),
+                      SizedBox(height: size.height * 0.02),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 25.0,
+                        ),
+                        decoration: BoxDecoration(
                           color: AppColors.secondaryColor,
-                          borderRadius: BorderRadius.circular(20.0)),
-                      child: Column(
-                        children: <Widget>[
-                          Form(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Form(
                               key: value.createPasswordFormKey,
                               child: Column(
                                 children: <Widget>[
                                   CustomTextFormField(
-                                      isEnable: false,
-                                      hintText: value.userNameController.text,
-                                      prefixIcon: Icons.person),
+                                    isEnable: false,
+                                    hintText: value.userNameController.text,
+                                    prefixIcon: Icons.person,
+                                  ),
                                   SizedBox(height: size.height * 0.02),
                                   CustomTextFormField(
-                                      controller: value.passwordController,
-                                      obscureText: true,
-                                      inputType: TextInputType.text,
-                                      inputAction: TextInputAction.next,
-                                      hintText: 'Password',
-                                      prefixIcon: Icons.lock,
-                                      validator: value.passwordValidator),
+                                    controller: value.passwordController,
+                                    obscureText: true,
+                                    inputType: TextInputType.text,
+                                    inputAction: TextInputAction.next,
+                                    hintText: 'Password',
+                                    prefixIcon: Icons.lock,
+                                    validator: value.passwordValidator,
+                                  ),
                                   SizedBox(height: size.height * 0.02),
                                   CustomTextFormField(
-                                      obscureText: value.obscureText,
-                                      controller:
-                                          value.confirmPasswordController,
-                                      inputType: TextInputType.text,
-                                      inputAction: TextInputAction.done,
-                                      hintText: 'Confirm Password',
-                                      prefixIcon: Icons.lock,
-                                      suffixWidget: GestureDetector(
-                                          onTap: () => value.showHidePassword(),
-                                          child: Icon(
-                                              value.obscureText
-                                                  ? Icons.visibility_off
-                                                  : Icons.visibility,
-                                              color: AppColors.whiteColor)),
-                                      validator:
-                                          value.confirmPasswordValidator),
+                                    obscureText: value.obscureText,
+                                    controller: value.confirmPasswordController,
+                                    inputType: TextInputType.text,
+                                    inputAction: TextInputAction.done,
+                                    hintText: 'Confirm Password',
+                                    prefixIcon: Icons.lock,
+                                    suffixWidget: GestureDetector(
+                                      onTap: () => value.showHidePassword(),
+                                      child: Icon(
+                                        value.obscureText
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: AppColors.whiteColor,
+                                      ),
+                                    ),
+                                    validator: value.confirmPasswordValidator,
+                                  ),
                                 ],
-                              )),
-                        ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    CustomAppButton(
+                      SizedBox(height: size.height * 0.02),
+                      CustomAppButton(
                         buttonTitle: 'Save',
-                        onTap: () => value.createPassword())
-                  ],
-                );
-              }),
+                        onTap: () => value.createPassword(),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

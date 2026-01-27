@@ -7,10 +7,10 @@ import 'package:tcs_app/Services/AddAssignment/add_assignment_service.dart';
 import 'package:tcs_app/Services/StudentAssignment/student_assignment_service.dart';
 import 'package:tcs_app/Services/TeacherAssignment/teacher_assignment_service.dart';
 import 'package:tcs_app/Services/TeacherSection/teacher_section_service.dart';
-import '../../CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import '../../CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
+import '../../custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
+import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
-import '../../CustomWidgets/CustomSnackbar/custom_snackbar.dart';
+import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import '../../Model/SectionSubject/section_subject_response.dart';
 import '../../model/TeacherSection/teacher_section_response.dart';
 import '../../Routes/app_navigation.dart';

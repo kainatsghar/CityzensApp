@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../Components/StudentAttendanceComponents/student_attendance_component.dart';
-import '../../../CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import '../../../CustomWidgets/CustomLoader/custom_loader.dart';
-import '../../../CustomWidgets/ShowError/show_error.dart';
+import '../../../components/StudentAttendanceComponents/student_attendance_component.dart';
+import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
+import '../../../custom_widgets/CustomLoader/custom_loader.dart';
+import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../Provider/StudentAttendance/student_attendance_provider.dart';
 import '../../../Routes/app_navigation.dart';
 
@@ -19,8 +19,9 @@ class StudentAttendanceScreen extends StatefulWidget {
 class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
   late Future attendanceData;
   var attendanceProvider = Provider.of<StudentAttendanceProvider>(
-      AppNavigation.currentContext!,
-      listen: false);
+    AppNavigation.currentContext!,
+    listen: false,
+  );
 
   @override
   void initState() {
@@ -37,20 +38,22 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: "ATTENDANCE"),
-        body: FutureBuilder(
-            future: attendanceData,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return const CustomLoader();
-                default:
-                  if (snapshot.hasData) {
-                    return const StudentAttendanceComponent();
-                  } else {
-                    return ShowError(errorText: '${snapshot.error}');
-                  }
+      appBar: const CustomAppBar(title: "ATTENDANCE"),
+      body: FutureBuilder(
+        future: attendanceData,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const CustomLoader();
+            default:
+              if (snapshot.hasData) {
+                return const StudentAttendanceComponent();
+              } else {
+                return ShowError(errorText: '${snapshot.error}');
               }
-            }));
+          }
+        },
+      ),
+    );
   }
 }

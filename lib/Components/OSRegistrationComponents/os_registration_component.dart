@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Components/OSRegistrationComponents/guardian_info_form.dart';
-import 'package:tcs_app/Components/OSRegistrationComponents/previous_school_form.dart';
-import 'package:tcs_app/Components/OSRegistrationComponents/student_admission_form.dart';
-import 'package:tcs_app/Components/OSRegistrationComponents/student_info_form.dart';
+import 'package:tcs_app/components/OSRegistrationComponents/guardian_info_form.dart';
+import 'package:tcs_app/components/OSRegistrationComponents/previous_school_form.dart';
+import 'package:tcs_app/components/OSRegistrationComponents/student_admission_form.dart';
+import 'package:tcs_app/components/OSRegistrationComponents/student_info_form.dart';
 import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
 
 class OSRegistrationComponent extends StatelessWidget {

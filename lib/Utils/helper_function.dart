@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tcs_app/CustomWidgets/CustomBottomSheets/imagepicker_bottom_sheet.dart';
+import 'package:tcs_app/custom_widgets/CustomBottomSheets/imagepicker_bottom_sheet.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/model/Options/options.dart';
