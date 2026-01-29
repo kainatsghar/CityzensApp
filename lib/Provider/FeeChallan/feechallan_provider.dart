@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Provider/Splash/splash_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Services/FeeChallan/feechallan_service.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/provider/Splash/splash_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/FeeChallan/feechallan_service.dart';
 import 'package:tcs_app/model/FeeChallan/challan_receipts_response.dart';
 import 'package:tcs_app/model/FeeChallan/outstanding_challan_response.dart';
 

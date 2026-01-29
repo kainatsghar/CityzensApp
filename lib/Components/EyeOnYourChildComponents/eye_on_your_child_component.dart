@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
 import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
-import '../../Provider/EyeOnYourChild/eye_on_your_child_provider.dart';
-import '../../Utils/app_constants.dart';
+import '../../provider/EyeOnYourChild/eye_on_your_child_provider.dart';
+import '../../utils/app_constants.dart';
 
 class EyeOnYourChildComponent extends StatefulWidget {
   const EyeOnYourChildComponent({super.key});
@@ -188,11 +188,11 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                                                       ? AppColors
                                                             .primaryDarkColor
                                                       : AppColors
-                                                            .secondaryColor,
+                                                            .primaryLightBlue,
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                          0,
+                                                          8,
                                                         ),
                                                   ),
                                                   elevation: 2,
@@ -249,7 +249,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                          0,
+                                                          8,
                                                         ),
                                                   ),
                                                   elevation: 0,

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tcs_app/Model/Firebase/timestamp_converter.dart';
+import 'package:tcs_app/model/Firebase/timestamp_converter.dart';
 
 part 'feature_config_model.freezed.dart';
 part 'feature_config_model.g.dart';

@@ -4,15 +4,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomExpansionTile/custom_expansion_tile.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
-import '../../Model/Diary/diary_response.dart';
-import '../../Provider/Diary/diary_provider.dart';
-import '../../Provider/LocalData/local_data_provider.dart';
-import '../../Routes/app_navigation.dart';
+import '../../model/Diary/diary_response.dart';
+import '../../provider/Diary/diary_provider.dart';
+import '../../provider/LocalData/local_data_provider.dart';
+import '../../routes/app_navigation.dart';
 
 class DiaryRecordComponent extends StatefulWidget {
   const DiaryRecordComponent({super.key});

@@ -4,8 +4,8 @@ import 'package:tcs_app/components/MarkAttendanceComponents/attendance_graph_com
 import 'package:tcs_app/components/MarkAttendanceComponents/attendance_list_item.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_custom_message.dart';
-import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/provider/MarkAttendance/mark_attendance_provider.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 
 class StudentListComponent extends StatelessWidget {
   const StudentListComponent({super.key});

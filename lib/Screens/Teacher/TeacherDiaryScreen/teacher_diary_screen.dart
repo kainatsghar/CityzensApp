@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 import '../../../components/DiaryRecordComponents/diary_record_component.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/Diary/diary_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/Diary/diary_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class TeacherDiaryScreen extends StatefulWidget {
   const TeacherDiaryScreen({super.key});

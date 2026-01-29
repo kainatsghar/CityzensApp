@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/custom_widgets/CustomTitleValue/custom_title_value.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/model/FeeChallan/challan_receipts_response.dart';
 
 class SingleReceiptItem extends StatelessWidget {

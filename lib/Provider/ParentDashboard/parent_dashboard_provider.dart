@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Services/MultiChild/multi_child_service.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/MultiChild/multi_child_service.dart';
 import 'package:tcs_app/model/MultiChild/multi_child_response.dart';
 
 class ParentDashboardProvider with ChangeNotifier {

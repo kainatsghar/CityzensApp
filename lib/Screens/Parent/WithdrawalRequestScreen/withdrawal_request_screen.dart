@@ -5,8 +5,8 @@ import '../../../components/WithdrawalRequestComponents/withdrawal_request_compo
 import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/WithdrawalRequest/withdrawal_request_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/WithdrawalRequest/withdrawal_request_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class WithdrawalRequestScreen extends StatefulWidget {
   const WithdrawalRequestScreen({super.key});

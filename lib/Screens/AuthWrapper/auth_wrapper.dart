@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
-import 'package:tcs_app/Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
-import 'package:tcs_app/Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
-import 'package:tcs_app/Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/screens/LoginScreen/login_screen.dart';
+import 'package:tcs_app/screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
+import 'package:tcs_app/screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
+import 'package:tcs_app/screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 import 'package:upgrader/upgrader.dart';
 
 class AuthWrapper extends StatefulWidget {

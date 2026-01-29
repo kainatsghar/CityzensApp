@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/ClassTestResultComponents/student_class_test_result_component.dart';
-import 'package:tcs_app/Provider/ClassTestResult/class_test_result_provider.dart';
+import 'package:tcs_app/provider/ClassTestResult/class_test_result_provider.dart';
 
 import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../routes/app_navigation.dart';
 
 class StudentClassResultScreen extends StatefulWidget {
   const StudentClassResultScreen({super.key});

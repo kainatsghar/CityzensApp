@@ -3,15 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:tcs_app/Utils/media_query_util.dart';
+import 'package:tcs_app/utils/media_query_util.dart';
 
-import 'Provider/app_providers.dart';
-import 'Routes/app_navigation.dart';
-import 'Routes/app_navigation_routes.dart';
-import 'Routes/route_generator.dart';
-import 'Screens/SplashScreen/splash_screen_ui.dart';
-import 'Services/InitServices/app_initializer.dart';
-import 'Utils/app_themes.dart';
+import 'provider/app_providers.dart';
+import 'routes/app_navigation.dart';
+import 'routes/app_navigation_routes.dart';
+import 'routes/route_generator.dart';
+import 'screens/SplashScreen/splash_screen_ui.dart';
+import 'services/InitServices/app_initializer.dart';
+import 'utils/app_themes.dart';
 
 // Background FCM handler
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

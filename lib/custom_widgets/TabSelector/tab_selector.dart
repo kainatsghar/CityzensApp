@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class TabSelector<T> extends StatefulWidget {
   final List<T>? items;
@@ -94,73 +94,65 @@ class _TabSelectorState<T> extends State<TabSelector<T>>
       );
     }
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(widget.items!.length, (index) {
-          final item = widget.items![index];
-          final displayText = widget.getDisplayText(item);
-          final isSelected = _selectedIndex == index;
+    return Wrap(
+      runSpacing: 8,
+      spacing: 8,
+      alignment: WrapAlignment.start,
 
-          return ScaleTransition(
-            scale: Tween<double>(begin: 1.0, end: 1.08).animate(
-              CurvedAnimation(
-                parent: _scaleControllers[index]!,
-                curve: Curves.easeInOut,
-              ),
+      children: List.generate(widget.items!.length, (index) {
+        final item = widget.items![index];
+        final displayText = widget.getDisplayText(item);
+        final isSelected = _selectedIndex == index;
+
+        return ScaleTransition(
+          scale: Tween<double>(begin: 1.0, end: 1.08).animate(
+            CurvedAnimation(
+              parent: _scaleControllers[index]!,
+              curve: Curves.easeInOut,
             ),
-            child: GestureDetector(
-              onTap: () => _selectItem(index),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                margin: EdgeInsets.only(
-                  left: index == 0 ? 0 : 8,
-                  right: index == widget.items!.length - 1 ? 0 : 0,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 10,
-                ),
-                decoration: BoxDecoration(
+          ),
+          child: GestureDetector(
+            onTap: () => _selectItem(index),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              margin: EdgeInsets.only(
+                // left: index == 0 ? 0 : 8,
+                // right: index == widget.items!.length - 1 ? 0 : 0,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: BoxDecoration(
+                color: isSelected ? AppColors.primaryColor : AppColors.white,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
                   color: isSelected ? AppColors.primaryColor : AppColors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: isSelected
-                        ? AppColors.primaryColor
-                        : AppColors.white,
-                    width: isSelected ? 2.0 : 1.5,
-                  ),
-                  boxShadow: isSelected
-                      ? [
-                          BoxShadow(
-                            color: AppColors.primaryColor.withValues(
-                              alpha: 0.3,
-                            ),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ]
-                      : [],
+                  width: isSelected ? 2.0 : 1.5,
                 ),
-                child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 300),
-                  style: TextStyle(
-                    color: isSelected
-                        ? AppColors.whiteColor
-                        : Colors.grey.shade800,
-                    fontWeight: isSelected
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                    fontSize: 12,
-                  ),
-                  child: Text(displayText),
+                boxShadow: isSelected
+                    ? [
+                        BoxShadow(
+                          color: AppColors.primaryColor.withValues(alpha: 0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ]
+                    : [],
+              ),
+              child: AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 300),
+                style: TextStyle(
+                  color: isSelected
+                      ? AppColors.whiteColor
+                      : Colors.grey.shade800,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  fontSize: 12,
                 ),
+                child: Text(displayText),
               ),
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }

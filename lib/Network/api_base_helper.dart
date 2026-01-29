@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 import 'app_exceptions.dart';
 
 class ApiBaseHelper {

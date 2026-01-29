@@ -4,10 +4,10 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import 'package:tcs_app/Model/OSRegistration/os_registration_response.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Services/OSRegistration/os_registration_service.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/model/OSRegistration/os_registration_response.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/OSRegistration/os_registration_service.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/UserData/user_data_request.dart';
 

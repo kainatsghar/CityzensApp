@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/Results/results_provider.dart';
+import 'package:tcs_app/provider/Results/results_provider.dart';
 
 class EyeOverallResult extends StatelessWidget {
   const EyeOverallResult({super.key});

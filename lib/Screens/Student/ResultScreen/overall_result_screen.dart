@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/components/ResultsComponents/overall_result_view_decider.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/Results/results_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/provider/Results/results_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
 
 class OverallResultScreen extends StatefulWidget {
   const OverallResultScreen({super.key});

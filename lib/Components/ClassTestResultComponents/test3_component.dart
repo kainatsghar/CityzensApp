@@ -5,9 +5,9 @@ import 'package:tcs_app/custom_widgets/CustomTextFormField/centeredErrorTextForm
 
 import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
 import '../../custom_widgets/CustomTestResultFormField/custom_test_result_form_field.dart';
-import '../../Model/ClassTestResult/class_test_student_list_response.dart';
-import '../../Provider/ClassTestResult/class_test_result_provider.dart';
-import '../../Utils/app_colors.dart';
+import '../../model/ClassTestResult/class_test_student_list_response.dart';
+import '../../provider/ClassTestResult/class_test_result_provider.dart';
+import '../../utils/app_colors.dart';
 
 class Test3Component extends StatelessWidget {
   const Test3Component({super.key});

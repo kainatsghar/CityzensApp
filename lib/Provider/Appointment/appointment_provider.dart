@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Model/Appointment/appointment_response.dart';
+import 'package:tcs_app/model/Appointment/appointment_response.dart';
 import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
 import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import '../../Model/AddAppointment/add_appointment_request.dart';
-import '../../Services/AddAppointment/add_appointment_service.dart';
-import '../../Services/Appointment/appointment_service.dart';
-import '../../Services/ParentAppointment/parent_book_an_appointment_service.dart';
-import '../../Routes/app_navigation.dart';
-import '../../Utils/app_colors.dart';
-import '../../Utils/app_constants.dart';
+import '../../model/AddAppointment/add_appointment_request.dart';
+import '../../services/AddAppointment/add_appointment_service.dart';
+import '../../services/Appointment/appointment_service.dart';
+import '../../services/ParentAppointment/parent_book_an_appointment_service.dart';
+import '../../routes/app_navigation.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_constants.dart';
 import '../../model/ResponseMessage/response_message.dart';
 import '../LocalData/local_data_provider.dart';
 

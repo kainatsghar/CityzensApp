@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
-import 'package:tcs_app/Provider/OSRegistration/os_registration_provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/provider/OSRegistration/os_registration_provider.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 
 class StudentAdmissionForm extends StatelessWidget {
   const StudentAdmissionForm({super.key});

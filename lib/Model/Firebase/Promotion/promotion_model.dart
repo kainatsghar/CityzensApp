@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tcs_app/Model/Firebase/timestamp_converter.dart';
+import 'package:tcs_app/model/Firebase/timestamp_converter.dart';
 
 part 'promotion_model.freezed.dart';
 part 'promotion_model.g.dart';

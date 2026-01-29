@@ -5,8 +5,8 @@ import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/ClassTestResult/class_test_result_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/ClassTestResult/class_test_result_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class TeacherAddClassResultScreen extends StatefulWidget {
   const TeacherAddClassResultScreen({super.key});

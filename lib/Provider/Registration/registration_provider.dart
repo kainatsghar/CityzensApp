@@ -6,15 +6,15 @@ import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_s
 import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/custom_widgets/CustomDialogBoxes/success_dialog_box.dart';
 import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import 'package:tcs_app/Provider/Login/login_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Services/Registration/registration_service.dart';
-import 'package:tcs_app/Services/UpdatePassword/update_password_service.dart';
-import 'package:tcs_app/Services/VerifyPinCode/verify_pincode_service.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
-import 'package:tcs_app/Utils/validators.dart';
+import 'package:tcs_app/provider/Login/login_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/services/Registration/registration_service.dart';
+import 'package:tcs_app/services/UpdatePassword/update_password_service.dart';
+import 'package:tcs_app/services/VerifyPinCode/verify_pincode_service.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/helper_function.dart';
+import 'package:tcs_app/utils/validators.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 

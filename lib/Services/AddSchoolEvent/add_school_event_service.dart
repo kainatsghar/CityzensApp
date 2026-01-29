@@ -1,6 +1,6 @@
-import 'package:tcs_app/Model/AddSchoolEvent/add_school_event_request.dart';
+import 'package:tcs_app/model/AddSchoolEvent/add_school_event_request.dart';
 
-import '../../Model/ResponseMessage/response_message.dart';
+import '../../model/ResponseMessage/response_message.dart';
 import '../../network/api_base_helper.dart';
 
 class AddSchoolEventService {

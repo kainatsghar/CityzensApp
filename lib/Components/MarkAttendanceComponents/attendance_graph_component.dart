@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
+import 'package:tcs_app/provider/MarkAttendance/mark_attendance_provider.dart';
 
 class AttendanceGraphComponent extends StatelessWidget {
   const AttendanceGraphComponent({super.key});

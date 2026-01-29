@@ -1,5 +1,5 @@
-import 'package:tcs_app/Model/Assignment/assignment_request.dart';
-import 'package:tcs_app/Model/Assignment/assignment_response.dart';
+import 'package:tcs_app/model/Assignment/assignment_request.dart';
+import 'package:tcs_app/model/Assignment/assignment_response.dart';
 
 import '../../network/api_base_helper.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_bottom_sheet.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/model/Options/options.dart';
 
 class CustomFilterBottomSheet extends StatelessWidget {

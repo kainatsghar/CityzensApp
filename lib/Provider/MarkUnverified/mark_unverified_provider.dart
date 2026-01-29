@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import 'package:tcs_app/Model/MarkUnverified/mark_unverified_request.dart';
-import 'package:tcs_app/Model/ResponseMessage/response_message.dart';
-import 'package:tcs_app/Model/UnverifiedReasons/unverified_reasons_response.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Services/MarkUnverified/mark_unverified_service.dart';
-import 'package:tcs_app/Services/TeacherSection/teacher_section_service.dart';
-import 'package:tcs_app/Services/UnverifiedReasons/unverified_reasons_service.dart';
+import 'package:tcs_app/model/MarkUnverified/mark_unverified_request.dart';
+import 'package:tcs_app/model/ResponseMessage/response_message.dart';
+import 'package:tcs_app/model/UnverifiedReasons/unverified_reasons_response.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/MarkUnverified/mark_unverified_service.dart';
+import 'package:tcs_app/services/TeacherSection/teacher_section_service.dart';
+import 'package:tcs_app/services/UnverifiedReasons/unverified_reasons_service.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
 
 import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import '../../Utils/app_colors.dart';
-import '../../Utils/app_constants.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_constants.dart';
 
 class MarkUnverifiedProvider with ChangeNotifier {
   final sectionController = TextEditingController();
@@ -187,5 +187,15 @@ class MarkUnverifiedProvider with ChangeNotifier {
     studentNameController.clear();
     unverifiedReasons = UnverifiedReasonsResponse();
     sectionResponse = TeacherSectionResponse();
+  }
+
+  void setSectionId(int? id) {
+    sectionId = id;
+    notifyListeners();
+  }
+
+  void setReasonId(int? id) {
+    reasonId = id;
+    notifyListeners();
   }
 }

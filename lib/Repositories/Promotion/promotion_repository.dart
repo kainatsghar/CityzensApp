@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tcs_app/Model/Firebase/Promotion/promotion_model.dart';
+import 'package:tcs_app/model/Firebase/Promotion/promotion_model.dart';
 
 class PromotionRepository {
   PromotionRepository() : super();

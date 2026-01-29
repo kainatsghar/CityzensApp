@@ -5,8 +5,8 @@ import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../components/AddCircularComponents/add_circular_component.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/Circular/circular_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/Circular/circular_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class AddCircularScreen extends StatefulWidget {
   const AddCircularScreen({super.key});

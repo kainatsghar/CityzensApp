@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/SchoolEvents/school_event_provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/provider/SchoolEvents/school_event_provider.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
 import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
-import '../../Utils/app_constants.dart';
+import '../../utils/app_constants.dart';
 
 class SchoolEventsComponent extends StatelessWidget {
   const SchoolEventsComponent({super.key});

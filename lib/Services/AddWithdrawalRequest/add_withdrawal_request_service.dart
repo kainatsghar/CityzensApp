@@ -1,4 +1,4 @@
-import '../../Model/AddWithdrawalRequest/add_withdrawal_request.dart';
+import '../../model/AddWithdrawalRequest/add_withdrawal_request.dart';
 import '../../network/api_base_helper.dart';
 import '../../model/ResponseMessage/response_message.dart';
 

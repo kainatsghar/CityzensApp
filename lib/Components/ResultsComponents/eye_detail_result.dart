@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomExpansionTile/custom_expansion_tile.dart';
-import 'package:tcs_app/Provider/Results/results_provider.dart';
+import 'package:tcs_app/provider/Results/results_provider.dart';
 
 class EyeDetailResult extends StatelessWidget {
   final int index;

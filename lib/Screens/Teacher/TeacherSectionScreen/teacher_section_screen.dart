@@ -4,9 +4,9 @@ import 'package:tcs_app/components/MarkAttendanceComponents/teacher_section_comp
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/Dashboard/dashboard_provider.dart';
-import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/provider/Dashboard/dashboard_provider.dart';
+import 'package:tcs_app/provider/MarkAttendance/mark_attendance_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
 
 class TeacherSectionScreen extends StatefulWidget {
   const TeacherSectionScreen({super.key});

@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
-import 'package:tcs_app/Provider/ForgotPassword/forgot_password_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Utils/validators.dart';
+import 'package:tcs_app/provider/ForgotPassword/forgot_password_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/utils/validators.dart';
 import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
-import '../../../Utils/app_colors.dart';
+import '../../../utils/app_colors.dart';
 
 class ForgotPinCodeScreen extends StatefulWidget {
   const ForgotPinCodeScreen({super.key});

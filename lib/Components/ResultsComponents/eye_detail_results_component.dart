@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/components/ResultsComponents/eye_detail_result.dart';
 import 'package:tcs_app/components/ResultsComponents/result_card_info.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_custom_message.dart';
-import 'package:tcs_app/Provider/Results/results_provider.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/provider/Results/results_provider.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 
 class EyeDetailResultsComponent extends StatelessWidget {
   const EyeDetailResultsComponent({super.key});

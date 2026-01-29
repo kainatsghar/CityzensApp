@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomProfileItem/custom_profile_item.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_custom_message.dart';
-import 'package:tcs_app/Provider/StudentProfile/student_profile_provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
-import 'package:tcs_app/Utils/media_query_util.dart';
+import 'package:tcs_app/provider/StudentProfile/student_profile_provider.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/app_constants.dart';
+import 'package:tcs_app/utils/helper_function.dart';
+import 'package:tcs_app/utils/media_query_util.dart';
 
 class StudentProfileComponent extends StatelessWidget {
   const StudentProfileComponent({super.key});

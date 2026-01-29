@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/components/NotificationComponents/notification_component.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/Notifications/notification_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/provider/Notifications/notification_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
 
 class ChallanNotificationScreen extends StatefulWidget {
   const ChallanNotificationScreen({super.key});

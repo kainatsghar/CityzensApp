@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/gen/assets.gen.dart';
 
 class CustomUserImage extends StatelessWidget {

@@ -1,5 +1,5 @@
-import '../../Model/Appointment/Appointment_request.dart';
-import '../../Model/Appointment/appointment_response.dart';
+import '../../model/Appointment/Appointment_request.dart';
+import '../../model/Appointment/appointment_response.dart';
 import '../../network/api_base_helper.dart';
 
 class ParentBookanAppointmentService {

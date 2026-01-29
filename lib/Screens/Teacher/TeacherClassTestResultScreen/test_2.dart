@@ -4,8 +4,8 @@ import 'package:tcs_app/components/ClassTestResultComponents/test2_component.dar
 
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/ClassTestResult/class_test_result_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/ClassTestResult/class_test_result_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class Test2 extends StatefulWidget {
   const Test2({super.key});

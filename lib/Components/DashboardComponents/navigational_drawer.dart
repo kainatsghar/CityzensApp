@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomListTile/custom_list_tile.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
-import 'package:tcs_app/Provider/Dashboard/dashboard_provider.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/provider/Dashboard/dashboard_provider.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/app_constants.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 
 import '../../custom_widgets/CustomDivider/custom_divider.dart';
 

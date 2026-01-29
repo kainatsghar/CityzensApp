@@ -5,12 +5,12 @@ import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
-import 'package:tcs_app/Provider/SupportForm/support_form_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
-import 'package:tcs_app/Utils/input_formatters.dart';
-import 'package:tcs_app/Utils/validators.dart';
+import 'package:tcs_app/provider/SupportForm/support_form_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/helper_function.dart';
+import 'package:tcs_app/utils/input_formatters.dart';
+import 'package:tcs_app/utils/validators.dart';
 
 class AppFeedbackScreen extends StatefulWidget {
   const AppFeedbackScreen({super.key});

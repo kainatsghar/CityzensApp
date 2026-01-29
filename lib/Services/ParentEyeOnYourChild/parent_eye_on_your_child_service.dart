@@ -1,5 +1,5 @@
-import '../../Model/ParentEyeOnYourChild/parent_eye_on_your_child_request.dart';
-import '../../Model/ParentEyeOnYourChild/parent_eye_on_your_child_response.dart';
+import '../../model/ParentEyeOnYourChild/parent_eye_on_your_child_request.dart';
+import '../../model/ParentEyeOnYourChild/parent_eye_on_your_child_response.dart';
 import '../../network/api_base_helper.dart';
 
 class ParentEyeOnYourChildService {

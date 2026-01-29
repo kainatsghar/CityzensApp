@@ -5,12 +5,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field_v2.dart';
-import 'package:tcs_app/Provider/Results/results_provider.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/provider/Results/results_provider.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 
 import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
-import '../../Utils/app_colors.dart';
+import '../../utils/app_colors.dart';
 
 class IndividualEducationPlanComponent extends StatelessWidget {
   const IndividualEducationPlanComponent({super.key});

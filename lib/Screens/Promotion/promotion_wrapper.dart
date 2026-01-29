@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Model/Firebase/Promotion/promotion_model.dart';
-import 'package:tcs_app/Screens/Promotion/promotion_dialog.dart';
+import 'package:tcs_app/model/Firebase/Promotion/promotion_model.dart';
+import 'package:tcs_app/screens/Promotion/promotion_dialog.dart';
 
 class PromoWrapper extends StatefulWidget {
   const PromoWrapper({super.key, required this.child, this.promotionModel});

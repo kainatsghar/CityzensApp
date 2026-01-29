@@ -6,12 +6,12 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Services/Logout/logout_service.dart';
-import 'package:tcs_app/SharedPreference/shared_preference.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/services/Logout/logout_service.dart';
+import 'package:tcs_app/shared_preference/shared_preference.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 

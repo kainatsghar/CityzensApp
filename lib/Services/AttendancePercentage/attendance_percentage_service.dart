@@ -1,5 +1,5 @@
-import '../../Model/StudentAttendance/attendance_percentage_response.dart';
-import '../../Model/StudentAttendance/student_attendance_request.dart';
+import '../../model/StudentAttendance/attendance_percentage_response.dart';
+import '../../model/StudentAttendance/student_attendance_request.dart';
 import '../../network/api_base_helper.dart';
 
 class AttendancePercentageService {

@@ -5,11 +5,11 @@ import 'package:tcs_app/components/OutstandingFeeComponents/single_challan_item.
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/CustomStudentInfo/custom_student_info.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
-import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Routes/challan_args.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/routes/challan_args.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/gen/assets.gen.dart';
 
 class OutstandingFeeComponent extends StatelessWidget {

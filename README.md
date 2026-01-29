@@ -281,7 +281,7 @@ lib/
 ├── Model/            # Data models
 ├── Network/          # API services
 ├── Provider/         # State management
-├── Routes/           # Navigation
+├── routes/           # Navigation
 ├── Screens/          # Feature screens
 │   ├── Student/      # Student features
 │   ├── Teacher/      # Teacher features

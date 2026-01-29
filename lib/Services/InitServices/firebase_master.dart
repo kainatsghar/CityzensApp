@@ -5,8 +5,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Services/InitServices/push_notifications.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/services/InitServices/push_notifications.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 
 class FirebaseMaster {
   FirebaseMaster._internal();

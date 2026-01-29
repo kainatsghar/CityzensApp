@@ -5,12 +5,16 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
+import 'package:tcs_app/custom_widgets/TabSelector/tab_selector.dart';
+import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
+import 'package:tcs_app/model/SectionSubject/section_subject_response.dart';
 import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
 import '../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../custom_widgets/CustomTextFormField/custom_text_form_field.dart';
-import '../../Provider/Diary/diary_provider.dart';
-import '../../Utils/app_colors.dart';
-import '../../Utils/helper_function.dart';
+import '../../provider/Dashboard/dashboard_provider.dart';
+import '../../provider/Diary/diary_provider.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/helper_function.dart';
 
 class AddDiaryComponent extends StatefulWidget {
   const AddDiaryComponent({super.key});
@@ -188,29 +192,62 @@ class _AddDiaryComponentState extends State<AddDiaryComponent> {
                   child: Form(
                     key: value.formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomTextFormField(
-                          hintText: 'Select Section',
-                          controller: value.sectionController,
-                          onTap: () => value.sectionBottomSheet(),
-                          readOnly: true,
-                          validator: HelperFunction.validator,
-                          suffixWidget: const ImageIcon(
-                            AssetImage('assets/images/dropdown_icon.png'),
-                            color: AppColors.whiteColor,
+                        const Text(
+                          'Select Section',
+                          style: TextStyle(
+                            color: AppColors.primaryDarkColor,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
+                        SizedBox(height: size.height * 0.01),
+                        Consumer<DashboardProvider>(
+                          builder: (context, dashboardValue, _) {
+                            return TabSelector<Section>(
+                              items: dashboardValue.getSectionsWithDiary(true),
+                              getDisplayText: (section) =>
+                                  section.name ?? 'N/A',
+                              onItemSelected: (section) {
+                                value.sectionController.text =
+                                    section.name ?? '';
+                                value.setSectionId(section.classSectionId ?? 0);
+                                // Reset subject when section changes
+                                value.subjectController.clear();
+                                value.setSubjectId(null, null);
+                              },
+                              initialItemName: value.sectionController.text,
+                            );
+                          },
+                        ),
                         SizedBox(height: size.height * 0.02),
-                        CustomTextFormField(
-                          hintText: 'Select Subject',
-                          controller: value.subjectController,
-                          onTap: () => value.subjectBottomSheet(),
-                          readOnly: true,
-                          validator: HelperFunction.validator,
-                          suffixWidget: const ImageIcon(
-                            AssetImage('assets/images/dropdown_icon.png'),
-                            color: AppColors.whiteColor,
+                        const Text(
+                          'Select Subject',
+                          style: TextStyle(
+                            color: AppColors.primaryDarkColor,
+                            fontWeight: FontWeight.w500,
                           ),
+                        ),
+                        SizedBox(height: size.height * 0.01),
+                        Consumer<DashboardProvider>(
+                          builder: (context, dashboardValue, _) {
+                            return TabSelector<SectionSubject>(
+                              key: ValueKey(value.sectionId),
+                              items: dashboardValue.getSubjectsForSection(
+                                classSectionId: value.sectionId ?? 0,
+                                isDiary: true,
+                              ),
+                              getDisplayText: (subject) =>
+                                  subject.subjectName ?? 'N/A',
+                              onItemSelected: (subject) {
+                                value.setSubjectId(
+                                  subject.subjectId,
+                                  subject.subjectName,
+                                );
+                              },
+                              initialItemName: value.subjectController.text,
+                            );
+                          },
                         ),
                         SizedBox(height: size.height * 0.02),
                         CustomTextFormField(

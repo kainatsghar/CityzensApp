@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:tcs_app/network/api_base_helper.dart';
 
-import '../../Model/ClassTestResult/class_test_student_list_request.dart';
-import '../../Model/ClassTestResult/class_test_student_list_response.dart';
+import '../../model/ClassTestResult/class_test_student_list_request.dart';
+import '../../model/ClassTestResult/class_test_student_list_response.dart';
 
 class ClassTestStudentListService {
   static Future<ClassTestResultStudentListResponse>

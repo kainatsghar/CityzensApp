@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/AddSchoolEventComponents/add_school_event_component.dart';
-import 'package:tcs_app/Provider/SchoolEvents/school_event_provider.dart';
+import 'package:tcs_app/provider/SchoolEvents/school_event_provider.dart';
 
 import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../routes/app_navigation.dart';
 
 class AddSchoolEventScreen extends StatefulWidget {
   const AddSchoolEventScreen({super.key});

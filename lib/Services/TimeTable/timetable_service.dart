@@ -1,6 +1,6 @@
 import 'package:tcs_app/network/api_base_helper.dart';
-import '../../Model/TimeTable/timetable_request.dart';
-import '../../Model/TimeTable/timetable_response.dart';
+import '../../model/TimeTable/timetable_request.dart';
+import '../../model/TimeTable/timetable_response.dart';
 
 class TimeTableService {
   static Future<TimeTableResponse> getTimeTableRecords({

@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ProgressButton/progress_button.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/Splash/splash_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Services/FirebaseServices/ad_analytics_service.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/provider/Splash/splash_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/services/FirebaseServices/ad_analytics_service.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:video_player/video_player.dart';
 
 class PromotionScreenUI extends StatefulWidget {

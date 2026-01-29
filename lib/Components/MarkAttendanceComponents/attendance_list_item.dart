@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomToggleButton/custom_toggle_button.dart';
-import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/provider/MarkAttendance/mark_attendance_provider.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/StudentAttendance/student_list_response.dart';
 

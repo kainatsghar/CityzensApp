@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
 import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
-import 'package:tcs_app/Provider/Dashboard/dashboard_provider.dart';
+import 'package:tcs_app/provider/Dashboard/dashboard_provider.dart';
 
 import '../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import '../../custom_widgets/TabSelector/tab_selector.dart';
-import '../../Provider/TimeTable/timetable_provider.dart';
-import '../../Utils/app_colors.dart';
+import '../../provider/TimeTable/timetable_provider.dart';
+import '../../utils/app_colors.dart';
 
 class TeacherTimeTableSectionComponent extends StatelessWidget {
   const TeacherTimeTableSectionComponent({super.key});

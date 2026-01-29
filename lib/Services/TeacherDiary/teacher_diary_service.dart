@@ -1,7 +1,7 @@
 import 'package:tcs_app/network/api_base_helper.dart';
 
-import '../../Model/Diary/diary_request.dart';
-import '../../Model/Diary/diary_response.dart';
+import '../../model/Diary/diary_request.dart';
+import '../../model/Diary/diary_response.dart';
 
 class TeacherDiaryService {
   static Future<DiaryResponse> getDiaryRecords({

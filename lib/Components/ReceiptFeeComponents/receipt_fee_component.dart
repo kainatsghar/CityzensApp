@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/components/ReceiptFeeComponents/single_receipt_item.dart';
 import 'package:tcs_app/custom_widgets/CustomStudentInfo/custom_student_info.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_custom_message.dart';
-import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 
 class ReceiptFeeComponent extends StatelessWidget {
   const ReceiptFeeComponent({super.key});

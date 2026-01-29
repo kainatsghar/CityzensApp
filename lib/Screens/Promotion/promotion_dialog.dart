@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/Model/Firebase/Promotion/promotion_model.dart';
+import 'package:tcs_app/model/Firebase/Promotion/promotion_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PromotionalDialog {

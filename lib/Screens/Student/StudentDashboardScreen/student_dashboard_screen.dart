@@ -4,19 +4,19 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomDashboardButton/custom_dashboard_button.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Routes/screen_arguments.dart';
-import 'package:tcs_app/Screens/Student/StudentDashboardScreen/update_dashboard_card.dart';
-import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/provider/StudentAttendance/student_attendance_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/routes/screen_arguments.dart';
+import 'package:tcs_app/screens/Student/StudentDashboardScreen/update_dashboard_card.dart';
+import 'package:tcs_app/services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:tcs_app/Utils/media_query_util.dart';
+import 'package:tcs_app/utils/media_query_util.dart';
 
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
-import '../../../Utils/app_colors.dart';
-import '../../../Utils/helper_function.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/helper_function.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   final ScreenArguments? args;

@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:tcs_app/Model/AddClassTestResult/add_class_test_result_request.dart';
+import 'package:tcs_app/model/AddClassTestResult/add_class_test_result_request.dart';
 
-import '../../Model/ClassTestResult/class_test_student_list_request.dart';
-import '../../Model/ClassTestResult/class_test_student_list_response.dart';
-import '../../Model/ClassTestResult/student_test_result_list_request.dart';
-import '../../Model/ClassTestResult/student_test_result_list_response.dart';
+import '../../model/ClassTestResult/class_test_student_list_request.dart';
+import '../../model/ClassTestResult/class_test_student_list_response.dart';
+import '../../model/ClassTestResult/student_test_result_list_request.dart';
+import '../../model/ClassTestResult/student_test_result_list_response.dart';
 import '../../network/api_base_helper.dart';
 import '../../model/ResponseMessage/response_message.dart';
 

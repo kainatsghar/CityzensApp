@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Services/AcademicTerm/academic_term_service.dart';
-import 'package:tcs_app/Services/Results/result_service.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/services/AcademicTerm/academic_term_service.dart';
+import 'package:tcs_app/services/Results/result_service.dart';
 import 'package:tcs_app/model/AcademicTerm/academic_term_response.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/Results/results_response.dart';

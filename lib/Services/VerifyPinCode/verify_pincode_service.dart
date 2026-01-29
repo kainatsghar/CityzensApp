@@ -1,5 +1,5 @@
 import 'package:tcs_app/network/api_base_helper.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/model/Registration/registration_request.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 

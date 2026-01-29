@@ -4,9 +4,9 @@ import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
-import 'package:tcs_app/Provider/Registration/registration_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Utils/validators.dart';
+import 'package:tcs_app/provider/Registration/registration_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/utils/validators.dart';
 
 import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 

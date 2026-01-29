@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/NotificationComponents/notification_item.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
-import 'package:tcs_app/Provider/Notifications/notification_provider.dart';
+import 'package:tcs_app/provider/Notifications/notification_provider.dart';
 
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
 

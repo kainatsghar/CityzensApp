@@ -3,13 +3,13 @@ import 'package:provider/provider.dart';
 import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
 import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import '../../Model/AddSurvey/add_survey_request.dart';
-import '../../Model/Survey/survey_response.dart';
-import '../../Services/AddSurveyAnswer/add_survey_answer_service.dart';
-import '../../Services/Survey/survey_service.dart';
-import '../../Routes/app_navigation.dart';
-import '../../Utils/app_colors.dart';
-import '../../Utils/app_constants.dart';
+import '../../model/AddSurvey/add_survey_request.dart';
+import '../../model/Survey/survey_response.dart';
+import '../../services/AddSurveyAnswer/add_survey_answer_service.dart';
+import '../../services/Survey/survey_service.dart';
+import '../../routes/app_navigation.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_constants.dart';
 import '../../model/ResponseMessage/response_message.dart';
 import '../LocalData/local_data_provider.dart';
 

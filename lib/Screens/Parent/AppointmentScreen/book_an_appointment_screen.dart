@@ -5,8 +5,8 @@ import '../../../components/AppointmentComponents/book_an_appointment_component.
 import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/Appointment/appointment_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/Appointment/appointment_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class BookanAppointmentScreen extends StatefulWidget {
   const BookanAppointmentScreen({super.key});

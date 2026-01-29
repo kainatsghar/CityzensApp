@@ -7,15 +7,15 @@ import 'package:provider/provider.dart';
 import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
 import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import '../../Model/AddEyeOnYourChild/add_eye_on_your_child_response.dart';
-import '../../Model/EyeOnYourChild/eye_on_your_child_response.dart';
-import '../../Model/ParentEyeOnYourChild/parent_eye_on_your_child_response.dart';
-import '../../Services/AddEyeOnYourChild/add_eye_on_your_child_service.dart';
-import '../../Services/EyeOnYourChild/eye_on_your_child_service.dart';
-import '../../Routes/app_navigation.dart';
-import '../../Services/ParentEyeOnYourChild/parent_eye_on_your_child_service.dart';
-import '../../Utils/app_colors.dart';
-import '../../Utils/app_constants.dart';
+import '../../model/AddEyeOnYourChild/add_eye_on_your_child_response.dart';
+import '../../model/EyeOnYourChild/eye_on_your_child_response.dart';
+import '../../model/ParentEyeOnYourChild/parent_eye_on_your_child_response.dart';
+import '../../services/AddEyeOnYourChild/add_eye_on_your_child_service.dart';
+import '../../services/EyeOnYourChild/eye_on_your_child_service.dart';
+import '../../routes/app_navigation.dart';
+import '../../services/ParentEyeOnYourChild/parent_eye_on_your_child_service.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_constants.dart';
 import '../LocalData/local_data_provider.dart';
 
 class EyeOnYourChildProvider with ChangeNotifier {

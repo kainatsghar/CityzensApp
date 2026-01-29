@@ -4,8 +4,8 @@ import 'package:tcs_app/components/ReceiptFeeComponents/receipt_fee_component.da
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'dart:async';
-import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
 
 class ReceiptFeeScreen extends StatefulWidget {
   const ReceiptFeeScreen({super.key});

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
 import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
-import '../../Provider/WithdrawalRequest/withdrawal_request_provider.dart';
-import '../../Utils/app_constants.dart';
+import '../../provider/WithdrawalRequest/withdrawal_request_provider.dart';
+import '../../utils/app_constants.dart';
 
 class WithdrawalRequestComponent extends StatefulWidget {
   const WithdrawalRequestComponent({super.key});

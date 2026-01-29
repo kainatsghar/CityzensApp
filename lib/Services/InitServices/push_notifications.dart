@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Routes/app_navigation.dart';
-import '../../Routes/app_navigation_routes.dart';
-import '../../Utils/helper_function.dart';
+import '../../routes/app_navigation.dart';
+import '../../routes/app_navigation_routes.dart';
+import '../../utils/helper_function.dart';
 
 class PushNotifications {
   PushNotifications._();

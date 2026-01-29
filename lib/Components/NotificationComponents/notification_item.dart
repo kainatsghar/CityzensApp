@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:tcs_app/custom_widgets/CustomExpansionTile/custom_expansion_tile.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/app_constants.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/model/Notifications/notification_response.dart';
 import 'package:url_launcher/url_launcher.dart';
 

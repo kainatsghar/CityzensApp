@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/media_query_util.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/media_query_util.dart';
 
 class CustomDashboardButton extends StatelessWidget {
   final VoidCallback? onTap; // Made nullable to disable the button

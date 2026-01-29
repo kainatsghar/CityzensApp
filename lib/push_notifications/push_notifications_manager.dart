@@ -4,10 +4,10 @@
 // import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:tcs_app/Utils/helper_function.dart';
+// import 'package:tcs_app/utils/helper_function.dart';
 
-// import '../Routes/app_navigation.dart';
-// import '../Routes/app_navigation_routes.dart';
+// import '../routes/app_navigation.dart';
+// import '../routes/app_navigation_routes.dart';
 
 // // ignore: constant_identifier_names
 // enum AppState { Foreground, Background, Terminated }

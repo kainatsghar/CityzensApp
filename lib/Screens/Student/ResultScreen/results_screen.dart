@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomTabBar/custom_tab_bar.dart';
-import 'package:tcs_app/Provider/Results/results_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/provider/Results/results_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
 
 import 'detail_result_screen.dart';
 import 'overall_result_screen.dart';

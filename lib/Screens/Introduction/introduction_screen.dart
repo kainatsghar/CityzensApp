@@ -3,8 +3,8 @@ import 'package:tcs_app/custom_widgets/ProgressButton/progress_button.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../custom_widgets/CustomAppBar/custom_app_bar.dart';
-import '../../Routes/app_navigation.dart';
-import '../../Routes/app_navigation_routes.dart';
+import '../../routes/app_navigation.dart';
+import '../../routes/app_navigation_routes.dart';
 
 class IntroductionScreenPage extends StatefulWidget {
   const IntroductionScreenPage({super.key});

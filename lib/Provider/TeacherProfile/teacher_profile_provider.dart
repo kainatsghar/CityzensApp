@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Services/TeacherProfile/teacher_profile_service.dart';
-import 'package:tcs_app/SharedPreference/shared_preference.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/TeacherProfile/teacher_profile_service.dart';
+import 'package:tcs_app/shared_preference/shared_preference.dart';
+import 'package:tcs_app/utils/app_constants.dart';
 import 'package:tcs_app/model/TeacherProfile/teacher_profile_response.dart';
 
 class TeacherProfileProvider with ChangeNotifier {

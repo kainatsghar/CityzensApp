@@ -1,7 +1,7 @@
 // import 'package:flutter/cupertino.dart';
-import 'package:tcs_app/Model/UserData/user_data_request.dart';
+import 'package:tcs_app/model/UserData/user_data_request.dart';
 
-import '../../Model/UnverifiedReasons/unverified_reasons_response.dart';
+import '../../model/UnverifiedReasons/unverified_reasons_response.dart';
 import '../../network/api_base_helper.dart';
 
 class UnverifiedReasonsService {

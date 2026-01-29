@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/ResultsComponents/eye_overall_results_component.dart';
 import 'package:tcs_app/components/ResultsComponents/overall_results_component.dart';
-import 'package:tcs_app/Provider/Results/results_provider.dart';
+import 'package:tcs_app/provider/Results/results_provider.dart';
 
 class OverallResultViewDecider extends StatelessWidget {
   const OverallResultViewDecider({super.key});

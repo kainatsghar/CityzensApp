@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
-import 'package:tcs_app/Provider/Registration/registration_provider.dart';
+import 'package:tcs_app/provider/Registration/registration_provider.dart';
 
 import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
-import '../../../Utils/app_colors.dart';
+import '../../../utils/app_colors.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
   final String? userType;

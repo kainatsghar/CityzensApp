@@ -32,6 +32,10 @@ class AppConstants {
   static const String textFontFamily = 'NexaText';
 
   /// External Links
+  static const String cityzensAppAndroidLink =
+      'https://play.google.com/store/apps/details?id=com.tcs.tcsapp&pli=1';
+  static const String cityzensAppIOSLink =
+      'https://apps.apple.com/us/app/cityzens/id1630070364';
   static const String alumniIOSAppURL =
       "https://apps.apple.com/us/app/a-cityzen-for-life/id1660765260";
   static const String alumniAndroidAppURL =

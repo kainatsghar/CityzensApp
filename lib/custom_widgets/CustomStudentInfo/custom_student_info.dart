@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class CustomStudentInfo extends StatelessWidget {
   final dynamic info;

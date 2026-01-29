@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Routes/screen_arguments.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/routes/screen_arguments.dart';
 
 class AppNavigation {
   static final GlobalKey<NavigatorState> navigatorKey =

@@ -1,4 +1,4 @@
-import '../../Model/AddAppointment/add_appointment_request.dart';
+import '../../model/AddAppointment/add_appointment_request.dart';
 import '../../network/api_base_helper.dart';
 import '../../model/ResponseMessage/response_message.dart';
 

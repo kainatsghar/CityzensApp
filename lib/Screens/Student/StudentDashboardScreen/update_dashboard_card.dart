@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/media_query_util.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/media_query_util.dart';
 import 'package:tcs_app/gen/assets.gen.dart';
 import 'package:lottie/lottie.dart';
 

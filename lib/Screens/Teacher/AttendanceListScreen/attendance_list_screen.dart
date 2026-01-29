@@ -4,8 +4,8 @@ import 'package:tcs_app/components/MarkAttendanceComponents/student_list_compone
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/MarkAttendance/mark_attendance_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/provider/MarkAttendance/mark_attendance_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
 
 import 'dart:async';
 

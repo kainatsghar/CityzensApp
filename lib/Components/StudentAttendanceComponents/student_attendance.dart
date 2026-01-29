@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:tcs_app/Provider/StudentAttendance/student_attendance_provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/provider/StudentAttendance/student_attendance_provider.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class StudentAttendance extends StatelessWidget {
   const StudentAttendance({super.key});

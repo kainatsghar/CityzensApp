@@ -5,8 +5,8 @@ import '../../../components/SurveyComponents/survey_component.dart';
 import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/Survey/survey_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/Survey/survey_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class TeacherSurveyScreen extends StatefulWidget {
   const TeacherSurveyScreen({super.key});

@@ -4,13 +4,13 @@ import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
 import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 
 import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import '../../Model/AddWithdrawalRequest/add_withdrawal_request.dart';
-import '../../Model/WithdrawalRequest/withdrawal_response.dart';
-import '../../Services/AddWithdrawalRequest/add_withdrawal_request_service.dart';
-import '../../Routes/app_navigation.dart';
-import '../../Services/WithdrawalRequest/withdrawal_request_service.dart';
-import '../../Utils/app_colors.dart';
-import '../../Utils/app_constants.dart';
+import '../../model/AddWithdrawalRequest/add_withdrawal_request.dart';
+import '../../model/WithdrawalRequest/withdrawal_response.dart';
+import '../../services/AddWithdrawalRequest/add_withdrawal_request_service.dart';
+import '../../routes/app_navigation.dart';
+import '../../services/WithdrawalRequest/withdrawal_request_service.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_constants.dart';
 import '../../model/ResponseMessage/response_message.dart';
 import '../LocalData/local_data_provider.dart';
 

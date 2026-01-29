@@ -1,6 +1,6 @@
 import 'package:tcs_app/network/api_base_helper.dart';
-import '../../Model/WithdrawalRequest/withdrawal_request.dart';
-import '../../Model/WithdrawalRequest/withdrawal_response.dart';
+import '../../model/WithdrawalRequest/withdrawal_request.dart';
+import '../../model/WithdrawalRequest/withdrawal_response.dart';
 
 class WithdrawalRequestService {
   static Future<WithdrawalResponse> getWithdrawalReasons({

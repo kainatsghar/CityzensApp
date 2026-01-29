@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../custom_widgets/CustomTestResultFormField/custom_test_result_form_field.dart';
-import '../../Model/ClassTestResult/class_test_student_list_response.dart';
-import '../../Provider/ClassTestResult/class_test_result_provider.dart';
+import '../../model/ClassTestResult/class_test_student_list_response.dart';
+import '../../provider/ClassTestResult/class_test_result_provider.dart';
 
 class StudentListItem extends StatelessWidget {
   final ClassTestStudent student;

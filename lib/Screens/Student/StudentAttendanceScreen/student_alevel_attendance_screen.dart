@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/StudentAttendanceComponents/student_alevel_attendance_component.dart';
-// import 'package:tcs_app/Components/StudentAttendanceComponents/student_attendance_component.dart';
+// import 'package:tcs_app/components/StudentAttendanceComponents/student_attendance_component.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/StudentAttendance/student_alevel_attendance_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/provider/StudentAttendance/student_alevel_attendance_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
 
 class StudentAlevelAttendanceScreen extends StatefulWidget {
   const StudentAlevelAttendanceScreen({super.key});

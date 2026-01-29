@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/ClassTestResultComponents/teacher_add_class_result_component.dart';
-import 'package:tcs_app/Provider/ClassTestResult/class_test_result_provider.dart';
+import 'package:tcs_app/provider/ClassTestResult/class_test_result_provider.dart';
 
 import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
-import '../../../custom_widgets/CustomLoader/custom_loader.dart';
-import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../routes/app_navigation.dart';
 
 class TeacherClassTestResultScreen extends StatefulWidget {
   const TeacherClassTestResultScreen({super.key});
@@ -18,7 +16,7 @@ class TeacherClassTestResultScreen extends StatefulWidget {
 
 class _TeacherClassTestResultScreenState
     extends State<TeacherClassTestResultScreen> {
-  late Future sections;
+  // late Future sections;
   var provider = Provider.of<ClassTestResultProvider>(
     AppNavigation.currentContext!,
     listen: false,
@@ -26,7 +24,7 @@ class _TeacherClassTestResultScreenState
 
   @override
   void initState() {
-    sections = provider.loadSections();
+    // sections = provider.loadSections();
     super.initState();
   }
 
@@ -40,21 +38,22 @@ class _TeacherClassTestResultScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'CLASS TEST RESULTS'),
-      body: FutureBuilder(
-        future: sections,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const CustomLoader();
-            default:
-              if (snapshot.hasData) {
-                return const TeacherAddClassResultComponent();
-              } else {
-                return ShowError(errorText: '${snapshot.error}');
-              }
-          }
-        },
-      ),
+      body: const TeacherAddClassResultComponent(),
+      // FutureBuilder(
+      //   future: sections,
+      //   builder: (context, snapshot) {
+      //     switch (snapshot.connectionState) {
+      //       case ConnectionState.waiting:
+      //         return const CustomLoader();
+      //       default:
+      //         if (snapshot.hasData) {
+      //           return const TeacherAddClassResultComponent();
+      //         } else {
+      //           return ShowError(errorText: '${snapshot.error}');
+      //         }
+      //     }
+      //   },
+      // ),
     );
   }
 }

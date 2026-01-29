@@ -1,4 +1,4 @@
-import '../../Model/AddSurvey/add_survey_request.dart';
+import '../../model/AddSurvey/add_survey_request.dart';
 import '../../network/api_base_helper.dart';
 import '../../model/ResponseMessage/response_message.dart';
 

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Services/AddDiary/add_diary_service.dart';
-import 'package:tcs_app/Services/StudentDiary/student_diary_service.dart';
-import 'package:tcs_app/Services/TeacherDiary/teacher_diary_service.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/AddDiary/add_diary_service.dart';
+import 'package:tcs_app/services/StudentDiary/student_diary_service.dart';
+import 'package:tcs_app/services/TeacherDiary/teacher_diary_service.dart';
 
 import '../../custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import '../../Model/AddDiary/add_diary_request.dart';
-import '../../Model/Diary/diary_response.dart';
-import '../../Model/ResponseMessage/response_message.dart';
-import '../../Model/SectionSubject/section_subject_response.dart';
-import '../../Services/SectionSubject/section_subject_service.dart';
-import '../../Services/TeacherSection/teacher_section_service.dart';
-import '../../Utils/app_colors.dart';
-import '../../Utils/app_constants.dart';
+import '../../model/AddDiary/add_diary_request.dart';
+import '../../model/Diary/diary_response.dart';
+import '../../model/ResponseMessage/response_message.dart';
+import '../../model/SectionSubject/section_subject_response.dart';
+import '../../services/SectionSubject/section_subject_service.dart';
+import '../../services/TeacherSection/teacher_section_service.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_constants.dart';
 import '../../model/Options/options.dart';
 import '../../model/TeacherSection/teacher_section_response.dart';
 
@@ -30,6 +30,7 @@ class DiaryProvider with ChangeNotifier {
   final formKey = GlobalKey<FormState>();
 
   int? sectionId;
+  int? subjectId;
 
   List<Options> sections = [];
   List<Options> subjects = [];
@@ -217,6 +218,7 @@ class DiaryProvider with ChangeNotifier {
 
   void clearData() {
     sectionId = null;
+    subjectId = null;
     subjectController.clear();
     sectionController.clear();
     descriptionController.clear();
@@ -224,6 +226,17 @@ class DiaryProvider with ChangeNotifier {
     subjects = [];
     subjectResponse = SectionSubjectResponse();
     sectionResponse = TeacherSectionResponse();
+  }
+
+  void setSectionId(int? id) {
+    sectionId = id;
+    notifyListeners();
+  }
+
+  void setSubjectId(int? id, String? name) {
+    subjectId = id;
+    subjectController.text = name ?? '';
+    notifyListeners();
   }
 
   void clearLibraryData() {

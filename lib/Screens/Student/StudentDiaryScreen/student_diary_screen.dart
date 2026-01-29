@@ -5,8 +5,8 @@ import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../components/DiaryRecordComponents/diary_record_component.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/Diary/diary_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/Diary/diary_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class StudentDiaryScreen extends StatefulWidget {
   const StudentDiaryScreen({super.key});

@@ -3,10 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 
 import '../../../components/AddDiaryComponents/add_diary_component.dart';
-import '../../../custom_widgets/CustomLoader/custom_loader.dart';
-import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/Diary/diary_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/Diary/diary_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class AddDiaryScreen extends StatefulWidget {
   const AddDiaryScreen({super.key});
@@ -16,7 +14,7 @@ class AddDiaryScreen extends StatefulWidget {
 }
 
 class _AddDiaryScreenState extends State<AddDiaryScreen> {
-  late Future _sections;
+  // late Future _sections;
   var provider = Provider.of<DiaryProvider>(
     AppNavigation.currentContext!,
     listen: false,
@@ -24,7 +22,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
 
   @override
   void initState() {
-    _sections = provider.loadSections();
+    // _sections = provider.loadSections();
     super.initState();
   }
 
@@ -38,21 +36,22 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'ADD HOMEWORK'),
-      body: FutureBuilder(
-        future: _sections,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const CustomLoader();
-            default:
-              if (snapshot.hasData) {
-                return const AddDiaryComponent();
-              } else {
-                return ShowError(errorText: '${snapshot.error}');
-              }
-          }
-        },
-      ),
+      body: const AddDiaryComponent(),
+      // FutureBuilder(
+      //   future: _sections,
+      //   builder: (context, snapshot) {
+      //     switch (snapshot.connectionState) {
+      //       case ConnectionState.waiting:
+      //         return const CustomLoader();
+      //       default:
+      //         if (snapshot.hasData) {
+      //           return const AddDiaryComponent();
+      //         } else {
+      //           return ShowError(errorText: '${snapshot.error}');
+      //         }
+      //     }
+      //   },
+      // ),
     );
   }
 }

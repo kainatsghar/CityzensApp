@@ -1,6 +1,6 @@
-import 'package:tcs_app/Model/StudentAttendance/student_alevel_attendance_request.dart';
-import 'package:tcs_app/Model/StudentAttendance/student_attendance_response.dart';
-// import '../../Model/StudentAttendance/student_attendance_request.dart';
+import 'package:tcs_app/model/StudentAttendance/student_alevel_attendance_request.dart';
+import 'package:tcs_app/model/StudentAttendance/student_attendance_response.dart';
+// import '../../model/StudentAttendance/student_attendance_request.dart';
 import '../../network/api_base_helper.dart';
 
 class StudentALevelAttendanceService {

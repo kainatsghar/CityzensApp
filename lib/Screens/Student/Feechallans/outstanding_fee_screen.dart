@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/components/OutstandingFeeComponents/outstanding_fee_component.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/FeeChallan/feechallan_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
 
 class OutstandingFeeScreen extends StatefulWidget {
   const OutstandingFeeScreen({super.key});

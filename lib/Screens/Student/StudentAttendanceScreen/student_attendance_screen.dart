@@ -5,8 +5,8 @@ import '../../../components/StudentAttendanceComponents/student_attendance_compo
 import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Provider/StudentAttendance/student_attendance_provider.dart';
-import '../../../Routes/app_navigation.dart';
+import '../../../provider/StudentAttendance/student_attendance_provider.dart';
+import '../../../routes/app_navigation.dart';
 
 class StudentAttendanceScreen extends StatefulWidget {
   const StudentAttendanceScreen({super.key});

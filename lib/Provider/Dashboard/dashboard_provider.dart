@@ -4,17 +4,19 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import 'package:tcs_app/Model/Results/results_response.dart';
-import 'package:tcs_app/Model/SectionSubject/section_subject_response.dart';
-import 'package:tcs_app/Provider/TeacherProfile/teacher_profile_provider.dart';
+import 'package:tcs_app/model/Results/results_response.dart';
+import 'package:tcs_app/model/SectionSubject/section_subject_response.dart';
+import 'package:tcs_app/model/UnverifiedReasons/unverified_reasons_response.dart';
+import 'package:tcs_app/provider/TeacherProfile/teacher_profile_provider.dart';
 import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Services/ChangePassword/change_password_service.dart';
-import 'package:tcs_app/Services/Results/result_service.dart';
-import 'package:tcs_app/Services/SectionSubject/section_subject_service.dart';
-import 'package:tcs_app/Services/TeacherSection/teacher_section_service.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/ChangePassword/change_password_service.dart';
+import 'package:tcs_app/services/Results/result_service.dart';
+import 'package:tcs_app/services/SectionSubject/section_subject_service.dart';
+import 'package:tcs_app/services/TeacherSection/teacher_section_service.dart';
+import 'package:tcs_app/services/UnverifiedReasons/unverified_reasons_service.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 
 class DashboardProvider with ChangeNotifier {
@@ -38,6 +40,7 @@ class DashboardProvider with ChangeNotifier {
   // Dashboard cached data
   TeacherSectionResponse? diaryTrueSectionsResponse;
   TeacherSectionResponse? diaryFalseSectionsResponse;
+  UnverifiedReasonsResponse? unverifiedReasonsResponse;
 
   // Map to store subjects for each section: {classSectionId: {isDiary: subjects}}
   Map<int, Map<bool, List<SectionSubject>?>> sectionSubjectsMap = {};
@@ -205,24 +208,8 @@ class DashboardProvider with ChangeNotifier {
         teacherProfileProvider.loadTeacherProfile(),
         loadSectionsWithDiary(userName: userName, token: token, isDiary: true),
         loadSectionsWithDiary(userName: userName, token: token, isDiary: false),
+        loadUnverifiedReasons(token: token),
       ]);
-
-      // // Load teacher profile
-      // await teacherProfileProvider.loadTeacherProfile();
-
-      // // Fetch sections for isDiary = true
-      // await loadSectionsWithDiary(
-      //   userName: userName,
-      //   token: token,
-      //   isDiary: true,
-      // );
-
-      // // Fetch sections for isDiary = false
-      // await loadSectionsWithDiary(
-      //   userName: userName,
-      //   token: token,
-      //   isDiary: false,
-      // );
 
       // Fetch subjects for all sections
       await loadSubjectsForAllSections(userName: userName, token: token);
@@ -342,6 +329,13 @@ class DashboardProvider with ChangeNotifier {
             teacherId: userName,
             isDiary: isDiary,
           );
+
+      // Exclude subject ID 55 (General Performance); auto-assigned to class teacher, not an academic subject.
+      //{"SubjectId":55,"SubjectName":"General Performance"}
+      response.sectionSubject!.removeWhere(
+        (section) => section.subjectId == 55,
+      );
+
       sectionSubjectsMap[classSectionId]![isDiary] = response.sectionSubject;
     } catch (ex) {
       // Store empty list on error
@@ -357,6 +351,24 @@ class DashboardProvider with ChangeNotifier {
     return sectionSubjectsMap[classSectionId]?[isDiary];
   }
 
+  /// Load unverified reasons for teacher
+  Future<void> loadUnverifiedReasons({required String token}) async {
+    try {
+      UnverifiedReasonsResponse response =
+          await UnverifiedReasonsService.getReasons(tokenId: token);
+      unverifiedReasonsResponse = response;
+      notifyListeners();
+    } catch (ex) {
+      unverifiedReasonsResponse = UnverifiedReasonsResponse();
+      rethrow;
+    }
+  }
+
+  ///Get unverified reasons list
+  List<VerificationReason>? getUnverifiedReasons() {
+    return unverifiedReasonsResponse?.verificationReasons;
+  }
+
   /// Get all sections with isDiary = true
   List<Section>? getSectionsWithDiary(bool isDiary) {
     if (isDiary) {
@@ -369,6 +381,7 @@ class DashboardProvider with ChangeNotifier {
   void teacherDataDispose() {
     diaryTrueSectionsResponse = null;
     diaryFalseSectionsResponse = null;
+    unverifiedReasonsResponse = null;
     sectionSubjectsMap.clear();
     _isDashboardDataInitialized = false;
     _isDashboardDataLoading = false;

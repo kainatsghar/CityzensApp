@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/custom_widgets/CustomTitleValue/custom_title_value.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/model/FeeChallan/outstanding_challan_response.dart';
 
-import '../../Utils/app_colors.dart';
+import '../../utils/app_colors.dart';
 
 class SingleChallanItem extends StatelessWidget {
   final OutstandingChallan record;

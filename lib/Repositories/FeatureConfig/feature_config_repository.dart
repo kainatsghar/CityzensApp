@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tcs_app/Model/Firebase/FeatureConfig/feature_config_model.dart';
+import 'package:tcs_app/model/Firebase/FeatureConfig/feature_config_model.dart';
 
 class FeatureConfigRepository {
   FeatureConfigRepository() : super();

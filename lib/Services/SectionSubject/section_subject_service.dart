@@ -1,6 +1,6 @@
-import 'package:tcs_app/Model/SectionSubject/section_subject_request.dart';
+import 'package:tcs_app/model/SectionSubject/section_subject_request.dart';
 
-import '../../Model/SectionSubject/section_subject_response.dart';
+import '../../model/SectionSubject/section_subject_response.dart';
 import '../../network/api_base_helper.dart';
 
 class SectionSubjectService {

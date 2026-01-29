@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/ClassTestResult/class_test_result_provider.dart';
-import 'package:tcs_app/Screens/Teacher/TeacherClassTestResultScreen/test_1.dart';
-import 'package:tcs_app/Screens/Teacher/TeacherClassTestResultScreen/test_2.dart';
-import 'package:tcs_app/Screens/Teacher/TeacherClassTestResultScreen/test_3.dart';
+import 'package:tcs_app/provider/ClassTestResult/class_test_result_provider.dart';
+import 'package:tcs_app/screens/Teacher/TeacherClassTestResultScreen/test_1.dart';
+import 'package:tcs_app/screens/Teacher/TeacherClassTestResultScreen/test_2.dart';
+import 'package:tcs_app/screens/Teacher/TeacherClassTestResultScreen/test_3.dart';
 
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
-import '../../Utils/app_colors.dart';
+import '../../utils/app_colors.dart';
 
 class TestResultComponent extends StatelessWidget {
   const TestResultComponent({super.key});
@@ -43,7 +43,7 @@ class TestResultComponent extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: Text(
-                          value.selectedSubjectName.toUpperCase(),
+                          value.subjectController.text.toUpperCase(),
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

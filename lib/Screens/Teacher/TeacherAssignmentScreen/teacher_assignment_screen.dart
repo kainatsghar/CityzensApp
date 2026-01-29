@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/AssignmentComponents/class_assignment_component.dart';
-import 'package:tcs_app/Provider/Assignment/assignment_provider.dart';
+import 'package:tcs_app/provider/Assignment/assignment_provider.dart';
 
 import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
-import '../../../Routes/app_navigation.dart';
-import '../../../Routes/app_navigation_routes.dart';
-import '../../../Utils/app_colors.dart';
+import '../../../routes/app_navigation.dart';
+import '../../../routes/app_navigation_routes.dart';
+import '../../../utils/app_colors.dart';
 
 class TeacherAssignmentScreen extends StatefulWidget {
   const TeacherAssignmentScreen({super.key});

@@ -6,9 +6,9 @@ import 'package:tcs_app/components/ParentDashboardComponents/multi_child_compone
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/ParentDashboard/parent_dashboard_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
+import 'package:tcs_app/provider/ParentDashboard/parent_dashboard_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 
 class ParentDashboardScreen extends StatefulWidget {
   const ParentDashboardScreen({super.key});

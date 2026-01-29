@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomTabBar/custom_tab_bar.dart';
-import 'package:tcs_app/Provider/Library/library_provider.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Screens/Student/LibraryScreen/library_notification_screen.dart';
+import 'package:tcs_app/provider/Library/library_provider.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/screens/Student/LibraryScreen/library_notification_screen.dart';
 
 import 'library_records_screen.dart';
 

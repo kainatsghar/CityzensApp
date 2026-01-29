@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:tcs_app/Model/Firebase/FeatureConfig/feature_config_model.dart';
-import 'package:tcs_app/Model/Firebase/Promotion/promotion_model.dart';
-import 'package:tcs_app/Repositories/FeatureConfig/feature_config_repository.dart';
-import 'package:tcs_app/Repositories/Promotion/promotion_repository.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/model/Firebase/FeatureConfig/feature_config_model.dart';
+import 'package:tcs_app/model/Firebase/Promotion/promotion_model.dart';
+import 'package:tcs_app/repositories/FeatureConfig/feature_config_repository.dart';
+import 'package:tcs_app/repositories/Promotion/promotion_repository.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/routes/app_navigation_routes.dart';
 
 class SplashProvider with ChangeNotifier {
   PromotionModel? _activePromotion;

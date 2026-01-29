@@ -1,4 +1,4 @@
-import '../../Model/AddAssignment/add_assignment_request.dart';
+import '../../model/AddAssignment/add_assignment_request.dart';
 import '../../network/api_base_helper.dart';
 import '../../model/ResponseMessage/response_message.dart';
 

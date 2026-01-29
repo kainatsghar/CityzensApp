@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
-import 'package:tcs_app/Provider/TeacherProfile/teacher_profile_provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/provider/TeacherProfile/teacher_profile_provider.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomProfileItem/custom_profile_item.dart';
-import 'package:tcs_app/Utils/app_constants.dart';
-import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/utils/app_constants.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 
 class TeacherProfileComponent extends StatelessWidget {
   const TeacherProfileComponent({super.key});

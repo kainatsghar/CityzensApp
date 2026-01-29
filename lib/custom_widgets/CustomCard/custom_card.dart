@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({super.key, required this.child});

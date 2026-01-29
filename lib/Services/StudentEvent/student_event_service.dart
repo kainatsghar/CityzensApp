@@ -1,5 +1,5 @@
-import 'package:tcs_app/Model/SchoolEvents/school_events_request.dart';
-import 'package:tcs_app/Model/SchoolEvents/school_events_response.dart';
+import 'package:tcs_app/model/SchoolEvents/school_events_request.dart';
+import 'package:tcs_app/model/SchoolEvents/school_events_response.dart';
 
 import '../../network/api_base_helper.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/Utils/media_query_util.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/media_query_util.dart';
 
-import '../../Utils/helper_function.dart';
+import '../../utils/helper_function.dart';
 
 class CustomProfileItem extends StatelessWidget {
   final double? width;

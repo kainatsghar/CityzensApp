@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 
-import '../../Utils/app_constants.dart';
+import '../../utils/app_constants.dart';
 
 class ShowError extends StatelessWidget {
   final String? errorText;

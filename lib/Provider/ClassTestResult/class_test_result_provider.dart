@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Model/ClassTestResult/student_test_result_list_response.dart';
-import 'package:tcs_app/Services/ClassTestResult/class_test_result_service.dart';
+import 'package:tcs_app/model/ClassTestResult/student_test_result_list_response.dart';
+import 'package:tcs_app/services/ClassTestResult/class_test_result_service.dart';
 import 'package:tcs_app/model/Options/options.dart';
 
 import '../../custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import '../../custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import '../../custom_widgets/CustomSnackbar/custom_snackbar.dart';
-import '../../Model/AddClassTestResult/add_class_test_result_request.dart';
-import '../../Model/ClassTestResult/class_test_student_list_response.dart';
-import '../../Model/SectionSubject/section_subject_response.dart';
-import '../../Routes/app_navigation.dart';
-import '../../Routes/app_navigation_routes.dart';
-import '../../Services/SectionSubject/section_subject_service.dart';
-import '../../Services/TeacherSection/teacher_section_service.dart';
-import '../../Utils/app_colors.dart';
-import '../../Utils/app_constants.dart';
+import '../../model/AddClassTestResult/add_class_test_result_request.dart';
+import '../../model/ClassTestResult/class_test_student_list_response.dart';
+import '../../model/SectionSubject/section_subject_response.dart';
+import '../../routes/app_navigation.dart';
+import '../../routes/app_navigation_routes.dart';
+import '../../services/SectionSubject/section_subject_service.dart';
+import '../../services/TeacherSection/teacher_section_service.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_constants.dart';
 import '../../model/ResponseMessage/response_message.dart';
 import '../../model/TeacherSection/teacher_section_response.dart';
 import '../LocalData/local_data_provider.dart';
@@ -40,7 +40,7 @@ class ClassTestResultProvider with ChangeNotifier {
   List<ClassTestStudent> studentList =
       []; // Added to store student marks temporarily
 
-  late String selectedSubjectName;
+  // late String selectedSubjectName;
 
   int? sectionId;
 
@@ -75,28 +75,28 @@ class ClassTestResultProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedSubject(String subjectName) {
-    subjectId = subjects.singleWhere((e) => e.title == subjectName).value!;
-    selectedSubjectName = subjects
-        .singleWhere((e) => e.title == subjectName)
-        .title!;
-    subjectController.text = subjectName;
-    AppNavigation.goBack();
-    notifyListeners();
-  }
+  // void setSelectedSubject(String subjectName) {
+  //   subjectId = subjects.singleWhere((e) => e.title == subjectName).value!;
+  //   selectedSubjectName = subjects
+  //       .singleWhere((e) => e.title == subjectName)
+  //       .title!;
+  //   subjectController.text = subjectName;
+  //   AppNavigation.goBack();
+  //   notifyListeners();
+  // }
 
-  void subjectBottomSheet() {
-    showModalBottomSheet(
-      context: AppNavigation.currentContext!,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext bc) => CustomFilterBottomSheet(
-        title: 'Select Subject',
-        controller: subjectController,
-        filterOptions: subjects,
-        onSelect: (v) => setSelectedSubject(v),
-      ),
-    );
-  }
+  // void subjectBottomSheet() {
+  //   showModalBottomSheet(
+  //     context: AppNavigation.currentContext!,
+  //     backgroundColor: Colors.transparent,
+  //     builder: (BuildContext bc) => CustomFilterBottomSheet(
+  //       title: 'Select Subject',
+  //       controller: subjectController,
+  //       filterOptions: subjects,
+  //       onSelect: (v) => setSelectedSubject(v),
+  //     ),
+  //   );
+  // }
 
   void sectionBottomSheet() {
     showModalBottomSheet(
@@ -347,6 +347,17 @@ class ClassTestResultProvider with ChangeNotifier {
   ) {
     studentTestResultListResponse = response;
 
+    notifyListeners();
+  }
+
+  void setSectionId(int? id) {
+    sectionId = id;
+    notifyListeners();
+  }
+
+  void setSubjectId(int? id, String? name) {
+    subjectId = id ?? 0;
+    subjectController.text = name ?? '';
     notifyListeners();
   }
 }

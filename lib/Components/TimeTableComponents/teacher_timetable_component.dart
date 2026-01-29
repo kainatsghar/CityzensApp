@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
 import '../../custom_widgets/CustomTimeTableFormField/custom_timetable_form_field.dart';
-import '../../Model/TimeTable/timetable_response.dart';
-import '../../Provider/TimeTable/timetable_provider.dart';
+import '../../model/TimeTable/timetable_response.dart';
+import '../../provider/TimeTable/timetable_provider.dart';
 
 class TeacherTimeTableComponent extends StatefulWidget {
   const TeacherTimeTableComponent({super.key});

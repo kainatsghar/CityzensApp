@@ -6,19 +6,19 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 // import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
-// import 'package:tcs_app/Model/StudentAttendance/student_alevel_attendance_subjects_response.dart';
+// import 'package:tcs_app/model/StudentAttendance/student_alevel_attendance_subjects_response.dart';
 // import 'package:tcs_app/model/Options/options.dart';
-import 'package:tcs_app/Model/StudentAttendance/attendance_percentage_response.dart';
-import 'package:tcs_app/Model/StudentAttendance/student_attendance_response.dart';
-// import 'package:tcs_app/Routes/app_navigation_routes.dart';
-// import 'package:tcs_app/Services/Attendance/attendance_subjects_service.dart';
-import 'package:tcs_app/Services/AttendancePercentage/attendance_percentage_service.dart';
-import 'package:tcs_app/Routes/app_navigation.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/model/StudentAttendance/attendance_percentage_response.dart';
+import 'package:tcs_app/model/StudentAttendance/student_attendance_response.dart';
+// import 'package:tcs_app/routes/app_navigation_routes.dart';
+// import 'package:tcs_app/services/Attendance/attendance_subjects_service.dart';
+import 'package:tcs_app/services/AttendancePercentage/attendance_percentage_service.dart';
+import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
-import '../../Model/StudentAttendance/save_attendance_request.dart';
-// import '../../Routes/app_navigation.dart';
-import '../../Services/StudentAttendance/student_attendance_service.dart';
+import '../../model/StudentAttendance/save_attendance_request.dart';
+// import '../../routes/app_navigation.dart';
+import '../../services/StudentAttendance/student_attendance_service.dart';
 import '../LocalData/local_data_provider.dart';
 
 class StudentAttendanceProvider with ChangeNotifier {
