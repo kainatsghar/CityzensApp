@@ -66,7 +66,7 @@ class PushNotifications {
     final settings = InitializationSettings(android: android, iOS: ios);
 
     await _local.initialize(
-      settings,
+      settings: settings,
       onDidReceiveNotificationResponse: (details) {
         final data = details.data;
 
@@ -161,10 +161,10 @@ class PushNotifications {
     );
 
     await _local.show(
-      Random().nextInt(0x7FFFFFFF),
-      title,
-      body,
-      details,
+      id: Random().nextInt(0x7FFFFFFF),
+      title: title,
+      body: body,
+      notificationDetails: details,
       payload: payload,
     );
     _log('[PN] Notification shown (title: $title)');
