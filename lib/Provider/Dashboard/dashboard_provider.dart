@@ -13,11 +13,13 @@ import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/services/ChangePassword/change_password_service.dart';
 import 'package:tcs_app/services/Results/result_service.dart';
-import 'package:tcs_app/services/SectionSubject/section_subject_service.dart';
-import 'package:tcs_app/services/TeacherSection/teacher_section_service.dart';
 import 'package:tcs_app/services/UnverifiedReasons/unverified_reasons_service.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
+import 'package:tcs_app/model/OfflineState/data_state.dart';
+import 'package:tcs_app/repositories/TeacherSection/teacher_section_repository.dart';
+import 'package:tcs_app/repositories/SectionSubject/section_subject_repository.dart';
+import 'package:tcs_app/services/LocalCache/local_cache_manager.dart';
 
 class DashboardProvider with ChangeNotifier {
   final changePasswordFormKey = GlobalKey<FormState>();
@@ -37,13 +39,19 @@ class DashboardProvider with ChangeNotifier {
   TextEditingController userTypeController = TextEditingController();
   String projectVersion = '';
 
-  // Dashboard cached data
-  TeacherSectionResponse? diaryTrueSectionsResponse;
-  TeacherSectionResponse? diaryFalseSectionsResponse;
-  UnverifiedReasonsResponse? unverifiedReasonsResponse;
+  // ============= Repository Instances =============
+  late TeacherSectionRepository _teacherSectionRepository;
+  late SectionSubjectRepository _sectionSubjectRepository;
 
-  // Map to store subjects for each section: {classSectionId: {isDiary: subjects}}
-  Map<int, Map<bool, List<SectionSubject>?>> sectionSubjectsMap = {};
+  // ============= Offline-First State Management =============
+  // Track data states for both diary true and false sections
+  DataState<TeacherSectionResponse> _diaryTrueSectionsState =
+      const DataLoading();
+  DataState<TeacherSectionResponse> _diaryFalseSectionsState =
+      const DataLoading();
+
+  // Map to store subject states: {classSectionId: {isDiary: state}}
+  Map<int, Map<bool, DataState<SectionSubjectResponse>>> subjectStatesMap = {};
 
   // Flag to track if dashboard data has been initialized
   bool _isDashboardDataInitialized = false;
@@ -51,9 +59,27 @@ class DashboardProvider with ChangeNotifier {
   // Flag to track if dashboard data is currently loading
   bool _isDashboardDataLoading = false;
 
-  bool get isDashboardDataInitialized => _isDashboardDataInitialized;
+  // Legacy compatibility: Direct access to cached data
+  TeacherSectionResponse? diaryTrueSectionsResponse;
+  TeacherSectionResponse? diaryFalseSectionsResponse;
+  UnverifiedReasonsResponse? unverifiedReasonsResponse;
+  Map<int, Map<bool, List<SectionSubject>?>> sectionSubjectsMap = {};
 
+  // ============= Getters for New States =============
+  DataState<TeacherSectionResponse> get diaryTrueSectionsState =>
+      _diaryTrueSectionsState;
+
+  DataState<TeacherSectionResponse> get diaryFalseSectionsState =>
+      _diaryFalseSectionsState;
+
+  bool get isDashboardDataInitialized => _isDashboardDataInitialized;
   bool get isDashboardDataLoading => _isDashboardDataLoading;
+
+  /// Initialize repositories in constructor
+  DashboardProvider() {
+    _teacherSectionRepository = TeacherSectionRepository();
+    _sectionSubjectRepository = SectionSubjectRepository();
+  }
 
   void showHidePassword() {
     obscureText = !obscureText;
@@ -186,9 +212,10 @@ class DashboardProvider with ChangeNotifier {
     listen: false,
   );
 
+  /// ============= OFFLINE-FIRST: New initialization method =============
   /// Fetch all sections and subjects data for dashboard initialization
-  /// Fetches both isDiary=true and isDiary=false sections and their respective subjects
-  /// Only fetches once - subsequent calls use cached data
+  /// Uses offline-first strategy: local cache first, background sync
+  /// Fetches both isDiary=true and isDiary=false sections and their subjects
   Future<void> initializeDashboardDataForTeacher() async {
     // Skip if data is already initialized
     if (_isDashboardDataInitialized) {
@@ -204,15 +231,27 @@ class DashboardProvider with ChangeNotifier {
       final userName = localProvider.userData!.userName!;
       final token = localProvider.userData!.tokenId!;
 
+      // Load all data in parallel using offline-first approach
       await Future.wait([
         teacherProfileProvider.loadTeacherProfile(),
-        loadSectionsWithDiary(userName: userName, token: token, isDiary: true),
-        loadSectionsWithDiary(userName: userName, token: token, isDiary: false),
+        _loadSectionsWithDiaryOfflineFirst(
+          userName: userName,
+          token: token,
+          isDiary: true,
+        ),
+        _loadSectionsWithDiaryOfflineFirst(
+          userName: userName,
+          token: token,
+          isDiary: false,
+        ),
         loadUnverifiedReasons(token: token),
       ]);
 
-      // Fetch subjects for all sections
-      await loadSubjectsForAllSections(userName: userName, token: token);
+      // Fetch subjects for all sections using offline-first
+      await _loadSubjectsForAllSectionsOfflineFirst(
+        userName: userName,
+        token: token,
+      );
 
       // Mark data as initialized
       _isDashboardDataInitialized = true;
@@ -226,35 +265,40 @@ class DashboardProvider with ChangeNotifier {
     }
   }
 
-  /// Load sections for a specific isDiary value
-  Future<void> loadSectionsWithDiary({
+  /// Load sections for a specific isDiary value (offline-first)
+  Future<void> _loadSectionsWithDiaryOfflineFirst({
     required String userName,
     required String token,
     required bool isDiary,
   }) async {
     try {
-      TeacherSectionResponse response =
-          await TeacherSectionService.sectionRequest(
-            userName: userName,
-            token: token,
-            isDiary: isDiary,
-          );
-
-      if (isDiary) {
-        diaryTrueSectionsResponse = response;
-      } else {
-        diaryFalseSectionsResponse = response;
-      }
-
-      notifyListeners();
+      await _teacherSectionRepository.getSectionsOfflineFirst(
+        userName: userName,
+        token: token,
+        isDiary: isDiary,
+        onStateChange: (state) {
+          if (isDiary) {
+            _diaryTrueSectionsState = state;
+            // Keep legacy data in sync for compatibility
+            if (state.data != null) {
+              diaryTrueSectionsResponse = state.data;
+            }
+          } else {
+            _diaryFalseSectionsState = state;
+            if (state.data != null) {
+              diaryFalseSectionsResponse = state.data;
+            }
+          }
+          notifyListeners();
+        },
+      );
     } catch (ex) {
       rethrow;
     }
   }
 
-  /// Load subjects for all sections in both isDiary states
-  /// Fetches subjects in parallel for all sections to improve performance
-  Future<void> loadSubjectsForAllSections({
+  /// Load subjects for all sections using offline-first
+  Future<void> _loadSubjectsForAllSectionsOfflineFirst({
     required String userName,
     required String token,
   }) async {
@@ -281,12 +325,13 @@ class DashboardProvider with ChangeNotifier {
       for (final section in uniqueSections.values) {
         final classSectionId = section.classSectionId!;
 
-        // Initialize the map for this section if not exists
+        // Initialize the maps for this section if not exists
         sectionSubjectsMap.putIfAbsent(classSectionId, () => {});
+        subjectStatesMap.putIfAbsent(classSectionId, () => {});
 
         // Fetch subjects for isDiary = true
         subjectFutures.add(
-          _fetchAndStoreSubjects(
+          _fetchAndStoreSubjectsOfflineFirst(
             classSectionId: classSectionId,
             isDiary: true,
             userName: userName,
@@ -296,7 +341,7 @@ class DashboardProvider with ChangeNotifier {
 
         // Fetch subjects for isDiary = false
         subjectFutures.add(
-          _fetchAndStoreSubjects(
+          _fetchAndStoreSubjectsOfflineFirst(
             classSectionId: classSectionId,
             isDiary: false,
             userName: userName,
@@ -314,41 +359,111 @@ class DashboardProvider with ChangeNotifier {
     }
   }
 
-  /// Helper method to fetch and store subjects for a specific section
-  Future<void> _fetchAndStoreSubjects({
+  /// Helper method to fetch and store subjects using offline-first
+  Future<void> _fetchAndStoreSubjectsOfflineFirst({
     required int classSectionId,
     required bool isDiary,
     required String userName,
     required String token,
   }) async {
     try {
-      SectionSubjectResponse response =
-          await SectionSubjectService.getSubjectsRequest(
-            classSectionId: classSectionId.toString(),
-            token: token,
-            teacherId: userName,
-            isDiary: isDiary,
-          );
+      await _sectionSubjectRepository.getSubjectsOfflineFirst(
+        classSectionId: classSectionId,
+        token: token,
+        teacherId: userName,
+        isDiary: isDiary,
+        onStateChange: (state) {
+          subjectStatesMap[classSectionId]![isDiary] = state;
 
-      // Exclude subject ID 55 (General Performance); auto-assigned to class teacher, not an academic subject.
-      //{"SubjectId":55,"SubjectName":"General Performance"}
-      response.sectionSubject!.removeWhere(
-        (section) => section.subjectId == 55,
+          // Keep legacy data in sync
+          if (state.data != null) {
+            sectionSubjectsMap[classSectionId]![isDiary] =
+                state.data!.sectionSubject;
+          } else {
+            sectionSubjectsMap[classSectionId]![isDiary] = [];
+          }
+
+          notifyListeners();
+        },
       );
-
-      sectionSubjectsMap[classSectionId]![isDiary] = response.sectionSubject;
     } catch (ex) {
       // Store empty list on error
       sectionSubjectsMap[classSectionId]![isDiary] = [];
     }
   }
 
-  /// Get cached subjects for a specific section and isDiary value
-  List<SectionSubject>? getSubjectsForSection({
+  /// Force refresh dashboard data (for pull-to-refresh)
+  Future<void> refreshDashboardData() async {
+    final userName = localProvider.userData!.userName!;
+    final token = localProvider.userData!.tokenId!;
+
+    try {
+      await Future.wait([
+        _refreshSectionsWithDiary(
+          userName: userName,
+          token: token,
+          isDiary: true,
+        ),
+        _refreshSectionsWithDiary(
+          userName: userName,
+          token: token,
+          isDiary: false,
+        ),
+        loadUnverifiedReasons(token: token),
+      ]);
+
+      await _loadSubjectsForAllSectionsOfflineFirst(
+        userName: userName,
+        token: token,
+      );
+    } catch (ex) {
+      showSnackBar('Failed to refresh data: $ex');
+      rethrow;
+    }
+  }
+
+  /// Force refresh sections for a specific isDiary value
+  Future<void> _refreshSectionsWithDiary({
+    required String userName,
+    required String token,
+    required bool isDiary,
+  }) async {
+    try {
+      await _teacherSectionRepository.forceRefresh(
+        userName: userName,
+        token: token,
+        isDiary: isDiary,
+        onStateChange: (state) {
+          if (isDiary) {
+            _diaryTrueSectionsState = state;
+            if (state.data != null) {
+              diaryTrueSectionsResponse = state.data;
+            }
+          } else {
+            _diaryFalseSectionsState = state;
+            if (state.data != null) {
+              diaryFalseSectionsResponse = state.data;
+            }
+          }
+          notifyListeners();
+        },
+      );
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  /// Get subject state for a specific section
+  DataState<SectionSubjectResponse>? getSubjectsState({
     required int classSectionId,
     required bool isDiary,
   }) {
-    return sectionSubjectsMap[classSectionId]?[isDiary];
+    return subjectStatesMap[classSectionId]?[isDiary];
+  }
+
+  /// Get formatted last sync time for display
+  String getLastSyncDisplayText(DateTime? lastSyncedAt) {
+    return LocalCacheManager.getTimeSinceLastSync(lastSyncedAt);
   }
 
   /// Load unverified reasons for teacher
@@ -369,7 +484,7 @@ class DashboardProvider with ChangeNotifier {
     return unverifiedReasonsResponse?.verificationReasons;
   }
 
-  /// Get all sections with isDiary = true
+  /// Get all sections with isDiary = true (backward compatible)
   List<Section>? getSectionsWithDiary(bool isDiary) {
     if (isDiary) {
       return diaryTrueSectionsResponse?.section;
@@ -378,11 +493,20 @@ class DashboardProvider with ChangeNotifier {
     }
   }
 
+  /// Get cached subjects for a specific section and isDiary value (backward compatible)
+  List<SectionSubject>? getSubjectsForSection({
+    required int classSectionId,
+    required bool isDiary,
+  }) {
+    return sectionSubjectsMap[classSectionId]?[isDiary];
+  }
+
   void teacherDataDispose() {
     diaryTrueSectionsResponse = null;
     diaryFalseSectionsResponse = null;
     unverifiedReasonsResponse = null;
     sectionSubjectsMap.clear();
+    subjectStatesMap.clear();
     _isDashboardDataInitialized = false;
     _isDashboardDataLoading = false;
   }

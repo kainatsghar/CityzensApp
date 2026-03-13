@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
+import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
@@ -61,15 +62,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen> {
               const CustomLogoCover(),
               SizedBox(height: size.height * 0.03),
 
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.secondaryColor,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
+              CustomCard(
                 child: Form(
                   key: provider.formKey,
                   child: Column(

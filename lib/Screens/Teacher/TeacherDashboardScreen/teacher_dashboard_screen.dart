@@ -4,6 +4,7 @@ import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart'
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomDashboardButton/custom_dashboard_button.dart';
 import 'package:tcs_app/custom_widgets/ShimmerEffect/dashboard_shimmer.dart';
+import 'package:tcs_app/custom_widgets/TeacherProfileCard/teacher_profile_card.dart';
 import 'package:tcs_app/provider/Dashboard/dashboard_provider.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
@@ -115,16 +116,55 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                 // Show actual content when loaded
                 return CustomScrollView(
                   slivers: [
+                    // SliverToBoxAdapter(
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.symmetric(
+                    //       horizontal: 16.0,
+                    //       vertical: 0,
+                    //     ),
+                    //     child: const CustomLogoCover(),
+                    //   ),
+                    // ),
+
+                    // Teacher Profile Card
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 0,
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: TeacherProfileCard(
+                          isMale:
+                              dashboardValue
+                                      .teacherProfileProvider
+                                      .profileResponse !=
+                                  null &&
+                              dashboardValue
+                                  .teacherProfileProvider
+                                  .profileResponse!
+                                  .isMale,
+                          onTap: () => AppNavigation.navigateTo(
+                            AppNavRoutes.teacherProfileRoute,
+                          ),
                         ),
-                        child: const CustomLogoCover(),
                       ),
                     ),
 
+                    // SliverToBoxAdapter(
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(
+                    //       top: 16.0,
+                    //       left: 16.0,
+                    //       right: 16.0,
+                    //     ),
+                    //     child: CustomDashboardButton(
+                    //       title: 'HOMEWORK\nDIARY',
+                    //       bottomAlign: -20,
+                    //       leftAlign: -10,
+                    //       onTap: () => AppNavigation.navigateTo(
+                    //         AppNavRoutes.teacherDiaryRoute,
+                    //       ),
+                    //       imageName: 'diary_icon.png',
+                    //     ),
+                    //   ),
+                    // ),
                     SliverPadding(
                       padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32),
                       sliver: SliverGrid.count(
@@ -133,24 +173,24 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         crossAxisCount: 2,
                         childAspectRatio: (itemWidth / itemHeight),
                         children: <Widget>[
-                          CustomDashboardButton(
-                            title: 'PROFILE',
-                            bottomAlign: -20,
-                            onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.teacherProfileRoute,
-                            ),
-                            imageName:
-                                dashboardValue
-                                            .teacherProfileProvider
-                                            .profileResponse !=
-                                        null &&
-                                    dashboardValue
-                                        .teacherProfileProvider
-                                        .profileResponse!
-                                        .isMale
-                                ? 'profile_icon.png'
-                                : 'profile_icon_female.png',
-                          ),
+                          // CustomDashboardButton(
+                          //   title: 'PROFILE',
+                          //   bottomAlign: -20,
+                          //   onTap: () => AppNavigation.navigateTo(
+                          //     AppNavRoutes.teacherProfileRoute,
+                          //   ),
+                          //   imageName:
+                          //       dashboardValue
+                          //                   .teacherProfileProvider
+                          //                   .profileResponse !=
+                          //               null &&
+                          //           dashboardValue
+                          //               .teacherProfileProvider
+                          //               .profileResponse!
+                          //               .isMale
+                          //       ? 'profile_icon.png'
+                          //       : 'profile_icon_female.png',
+                          // ),
                           if (dashboardValue.diaryFalseSectionsResponse !=
                                   null &&
                               dashboardValue

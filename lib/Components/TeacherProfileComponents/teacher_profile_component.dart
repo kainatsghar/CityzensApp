@@ -27,10 +27,13 @@ class TeacherProfileComponent extends StatelessWidget {
                     ),
                     child: Column(
                       children: <Widget>[
-                        CustomUserImage(
-                          userId: '${value.profileResponse!.employeeCode}',
-                          disableUploadImage: false,
-                          isMale: value.profileResponse!.gender == 'Male',
+                        Hero(
+                          tag: 'teacher_profile_image',
+                          child: CustomUserImage(
+                            userId: '${value.profileResponse!.employeeCode}',
+                            disableUploadImage: false,
+                            isMale: value.profileResponse!.gender == 'Male',
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),

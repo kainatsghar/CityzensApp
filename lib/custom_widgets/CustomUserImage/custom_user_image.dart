@@ -44,12 +44,7 @@ class CustomUserImage extends StatelessWidget {
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return Image.asset(
-                            isMale
-                                ? Assets.images.profileAvatarYellow.path
-                                : Assets.images.profileAvatarFemale.path,
-                            fit: BoxFit.cover,
-                          );
+                          return profileAvatar();
                         default:
                           if (snapshot.hasData) {
                             return snapshot.data != null
@@ -57,22 +52,9 @@ class CustomUserImage extends StatelessWidget {
                                     File('${snapshot.data}'),
                                     fit: BoxFit.cover,
                                   )
-                                : Image.asset(
-                                    isMale
-                                        ? Assets.images.profileAvatarYellow.path
-                                        : Assets
-                                              .images
-                                              .profileAvatarFemale
-                                              .path,
-                                    fit: BoxFit.cover,
-                                  );
+                                : profileAvatar();
                           } else {
-                            return Image.asset(
-                              isMale
-                                  ? Assets.images.profileAvatarYellow.path
-                                  : Assets.images.profileAvatarFemale.path,
-                              fit: BoxFit.cover,
-                            );
+                            return profileAvatar();
                           }
                       }
                     },
@@ -110,6 +92,29 @@ class CustomUserImage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget profileAvatar() {
+    return Card(
+      color: AppColors.purpleColor,
+      shape: CircleBorder(),
+      child: Padding(
+        padding: EdgeInsets.only(top: 8, bottom: 2),
+        child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            ClipOval(
+              child: Image.asset(
+                isMale
+                    ? Assets.images.profileIcon.path
+                    : Assets.images.profileIconFemale.path,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -20,8 +20,13 @@ class StudentAttendance extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.only(bottom: 8.0),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor,
+              // color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(16.0),
+              gradient: const LinearGradient(
+                colors: [AppColors.primaryColor, AppColors.primaryDarkColor],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             child: TableCalendar(
               eventLoader: (v) => value.getAttendance(v),

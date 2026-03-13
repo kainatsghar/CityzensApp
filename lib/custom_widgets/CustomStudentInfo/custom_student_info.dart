@@ -11,7 +11,7 @@ class CustomStudentInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Card(
-      color: AppColors.ultraLightGrey,
+      color: AppColors.primaryLightBlue,
       margin: const EdgeInsets.all(16.0),
       elevation: 4,
       child: Container(

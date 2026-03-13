@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/OutstandingFeeComponents/single_challan_item.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
@@ -29,205 +28,90 @@ class OutstandingFeeComponent extends StatelessWidget {
                   message: 'No Pending Challan. \nCheck back later!',
                   imagePath: Assets.images.bgCircularColored.path,
                 )
-              : ListView(
+              : Column(
                   children: [
-                    value.outstandingChallans!.info == null
-                        ? const SizedBox.shrink()
-                        : CustomStudentInfo(
-                            info: value.outstandingChallans!.info,
-                          ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        children: [
-                          SingleChallanItem(
-                            record: responseData.first,
-                            arearMonths: responseData.length > 1
-                                ? responseData.sublist(1).map((e) => e).toList()
-                                : null,
-                          ),
-                          SizedBox(height: 8.0),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.info,
-                                  size: 16.0,
-                                  color: AppColors.primaryTitleColor,
-                                ),
-                                SizedBox(width: 4.0),
-                                Expanded(
-                                  child: Text(
-                                    'Late payment surcharge @Rs 50/- per day (to be calculated and charged by the bank)',
-                                    style: const TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w600,
-                                      // color: AppColors.primaryTitleColor,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                        ],
-                      ),
-                    ),
-                    Card(
-                      margin: const EdgeInsets.all(16.0),
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        // margin: EdgeInsets.symmetric(vertical: 16.0),
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
-                          color: AppColors.secondaryColor,
-                        ),
+                    Expanded(
+                      child: SingleChildScrollView(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                IconButton.filled(
-                                  onPressed: () {
-                                    Clipboard.setData(
-                                      ClipboardData(
-                                        text: responseData.first.challanNo!,
-                                      ),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Copied to clipboard'),
-                                      ),
-                                    );
-                                  },
-                                  icon: Row(
-                                    children: [
-                                      const Icon(Icons.copy),
-                                      SizedBox(width: 4.0),
-                                      Text(
-                                        'Challan No',
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
+                            value.outstandingChallans!.info == null
+                                ? const SizedBox.shrink()
+                                : CustomStudentInfo(
+                                    info: value.outstandingChallans!.info,
                                   ),
-                                ),
-                                if (responseData.first.challanNo != null &&
-                                    responseData.first.challanNo!.isNotEmpty &&
-                                    value
-                                            .outstandingChallans!
-                                            .info!
-                                            .centerName !=
-                                        null &&
-                                    (!value
-                                        .outstandingChallans!
-                                        .info!
-                                        .centerName!
-                                        .contains('C001'))) ...[
-                                  // Exclude 001-(TCS) DHA Campus LHR
-                                  IconButton.filled(
-                                    onPressed: () {
-                                      Clipboard.setData(
-                                        ClipboardData(
-                                          text:
-                                              '100827${responseData.first.challanNo!}',
-                                        ),
-                                      );
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Copied to clipboard'),
-                                        ),
-                                      );
-                                    },
-                                    icon: Row(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              child: Column(
+                                children: [
+                                  SingleChallanItem(
+                                    record: responseData.first,
+                                    arearMonths: responseData.length > 1
+                                        ? responseData
+                                              .sublist(1)
+                                              .map((e) => e)
+                                              .toList()
+                                        : null,
+                                    studentInfo:
+                                        value.outstandingChallans!.info!,
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        const Icon(Icons.copy),
+                                        Icon(
+                                          Icons.info,
+                                          size: 16.0,
+                                          color: AppColors.primaryTitleColor,
+                                        ),
                                         SizedBox(width: 4.0),
-                                        Text(
-                                          'For 1Link',
-                                          style: TextStyle(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
+                                        Expanded(
+                                          child: Text(
+                                            'Late payment surcharge @Rs 50/- per day (to be calculated and charged by the bank)',
+                                            style: const TextStyle(
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.w600,
+                                              // color: AppColors.primaryTitleColor,
+                                            ),
+                                            textAlign: TextAlign.left,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  IconButton.filled(
-                                    onPressed: () {
-                                      Clipboard.setData(
-                                        ClipboardData(
-                                          text:
-                                              '${value.outstandingChallans!.info!.centerName!.contains('C052') ? '1003330241' : '1003330195'}${responseData.first.challanNo!}',
-                                          //C052-(TCS) Bahria Town Campus
-                                        ),
-                                      );
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Copied to clipboard'),
-                                        ),
-                                      );
-                                    },
-                                    icon: Row(
-                                      children: [
-                                        const Icon(Icons.copy),
-                                        SizedBox(width: 4.0),
-                                        Text(
-                                          'For 1Bill',
-                                          style: TextStyle(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  SizedBox(height: 8.0),
                                 ],
-                              ],
-                            ),
-                            SizedBox(height: 8.0),
-                            CustomAppButton(
-                              buttonTitle: 'Pay Now',
-                              onTap: () => AppNavigation.navigateTo(
-                                AppNavRoutes.challanPaymentRoute,
-                                arguments: ChallanArgs(
-                                  fatherCnic: value
-                                      .outstandingChallans!
-                                      .info!
-                                      .fatherCnic!,
-                                  studentId: value
-                                      .outstandingChallans!
-                                      .info!
-                                      .rollNo!
-                                      .toString(),
-                                  primaryContactNo: value
-                                      .outstandingChallans!
-                                      .info!
-                                      .primaryContactNo!,
-                                  isNewPaymentFlowEnabled:
-                                      value.isNewPaymentFlowEnabled,
-                                ),
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 8,
+                      ),
+                      child: CustomAppButton(
+                        buttonTitle: 'Pay Now',
+                        onTap: () => AppNavigation.navigateTo(
+                          AppNavRoutes.challanPaymentRoute,
+                          arguments: ChallanArgs(
+                            fatherCnic:
+                                value.outstandingChallans!.info!.fatherCnic!,
+                            studentId: value.outstandingChallans!.info!.rollNo!
+                                .toString(),
+                            primaryContactNo: value
+                                .outstandingChallans!
+                                .info!
+                                .primaryContactNo!,
+                            isNewPaymentFlowEnabled:
+                                value.isNewPaymentFlowEnabled,
+                          ),
                         ),
                       ),
                     ),

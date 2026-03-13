@@ -8,7 +8,13 @@ import '../../utils/app_colors.dart';
 class SingleChallanItem extends StatelessWidget {
   final OutstandingChallan record;
   final List<OutstandingChallan>? arearMonths;
-  const SingleChallanItem({super.key, required this.record, this.arearMonths});
+  final StudentInfo studentInfo;
+  const SingleChallanItem({
+    super.key,
+    required this.record,
+    this.arearMonths,
+    required this.studentInfo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,7 @@ class SingleChallanItem extends StatelessWidget {
         decoration: BoxDecoration(
           // border: Border.all(color: AppColors.primaryTitleColor),
           borderRadius: BorderRadius.circular(16.0),
-          color: AppColors.secondaryColor,
+          color: AppColors.primaryLightBlue,
         ),
         child: Column(
           children: <Widget>[
@@ -30,6 +36,20 @@ class SingleChallanItem extends StatelessWidget {
               title: 'Challan No',
               value: record.challanNo!,
               isSelectionAllowed: true,
+              isCopyAllowed: true,
+            ),
+            CustomTitleValue(
+              title: '1LINK Challan No',
+              value: '100827${record.challanNo!}',
+              isSelectionAllowed: true,
+              isCopyAllowed: true,
+            ),
+            CustomTitleValue(
+              title: '1BILL Challan No',
+              value:
+                  '${studentInfo.centerName!.contains('C052') ? '1003330241' : '1003330195'}${record.challanNo!}',
+              isSelectionAllowed: true,
+              isCopyAllowed: true,
             ),
             CustomTitleValue(
               title: 'Issue Date',
@@ -43,7 +63,7 @@ class SingleChallanItem extends StatelessWidget {
               title: 'Validity Date',
               value: HelperFunction.dateFormatter(record.validityDate!),
             ),
-            // CustomTitleValue(title: 'Challan Type', value: record.challanType!),
+            CustomTitleValue(title: 'Challan Type', value: record.challanType!),
             CustomTitleValue(title: 'Billing Month', value: record.periodName!),
             CustomTitleValue(
               title: '${record.periodName} Fee',

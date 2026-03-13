@@ -26,7 +26,10 @@ class LibraryComponent extends StatelessWidget {
                     } else {
                       index -= 1;
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8.0,
+                        ),
                         child: SingleLibraryItem(record: responseData[index]),
                       );
                     }

@@ -18,20 +18,15 @@ class AttendanceListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     List<Options> attendanceOptions = HelperFunction.attendanceOptions();
     return Consumer<MarkAttendanceProvider>(
       builder: (context, value, _) {
         return Card(
           child: ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-            leading: SizedBox(
-              width: size.width / 8,
-              height: size.width / 8,
-              child: const Image(
-                image: AssetImage('assets/images/profile_avatar.png'),
-                fit: BoxFit.cover,
-              ),
+            leading: const Image(
+              image: AssetImage('assets/images/profile_avatar.png'),
+              fit: BoxFit.cover,
             ),
             title: Text(
               student.name!.toUpperCase(),

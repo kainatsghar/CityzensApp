@@ -108,16 +108,14 @@ class CustomTitleValue extends StatelessWidget {
               if (isCopyAllowed)
                 SizedBox(
                   height: 16,
-                  child: IconButton(
-                    iconSize: 16,
-                    padding: EdgeInsets.zero,
-                    icon: const Icon(Icons.copy, size: 16),
-                    onPressed: () {
+                  child: InkWell(
+                    onTap: () {
                       Clipboard.setData(ClipboardData(text: value));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Copied to clipboard')),
                       );
                     },
+                    child: const Icon(Icons.copy, size: 16),
                   ),
                 ),
             ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/custom_widgets/UserTypeTabSelector/user_type_tab_selector.dart';
 import 'package:tcs_app/provider/ForgotPassword/forgot_password_provider.dart';
@@ -9,7 +10,6 @@ import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/utils/input_formatters.dart';
 import 'package:tcs_app/utils/validators.dart';
 import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
-import '../../../utils/app_colors.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -52,15 +52,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 children: <Widget>[
                   const CustomLogoCover(),
                   SizedBox(height: size.height * 0.02),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 25.0,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.secondaryColor,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
+                  CustomCard(
                     child: Form(
                       key: value.forgotFormKey,
                       child: Column(

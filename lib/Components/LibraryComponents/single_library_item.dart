@@ -16,7 +16,7 @@ class SingleLibraryItem extends StatelessWidget {
       decoration: BoxDecoration(
         // border: Border.all(color: AppColors.primaryTitleColor),
         borderRadius: BorderRadius.circular(16.0),
-        color: AppColors.secondaryColor,
+        color: AppColors.primaryLightBlue,
       ),
       child: Column(
         children: <Widget>[

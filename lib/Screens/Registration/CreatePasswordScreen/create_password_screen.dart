@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
+import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/provider/Registration/registration_provider.dart';
 
@@ -36,15 +37,7 @@ class CreatePasswordScreenState extends State<CreatePasswordScreen> {
                     children: <Widget>[
                       const CustomLogoCover(),
                       SizedBox(height: size.height * 0.02),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 25.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.secondaryColor,
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
+                      CustomCard(
                         child: Column(
                           children: <Widget>[
                             Form(

@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 
 import '../../../components/AddCircularComponents/add_circular_component.dart';
-import '../../../custom_widgets/CustomLoader/custom_loader.dart';
-import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../provider/Circular/circular_provider.dart';
 import '../../../routes/app_navigation.dart';
 
@@ -16,7 +14,7 @@ class AddCircularScreen extends StatefulWidget {
 }
 
 class _AddCircularScreenState extends State<AddCircularScreen> {
-  late Future _sections;
+  // late Future _sections;
   var provider = Provider.of<CircularProvider>(
     AppNavigation.currentContext!,
     listen: false,
@@ -24,7 +22,7 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
 
   @override
   void initState() {
-    _sections = provider.loadSections();
+    // _sections = provider.loadSections();
     super.initState();
   }
 
@@ -38,21 +36,22 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'ADD CIRCULARS'),
-      body: FutureBuilder(
-        future: _sections,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const CustomLoader();
-            default:
-              if (snapshot.hasData) {
-                return const AddCircularComponent();
-              } else {
-                return ShowError(errorText: '${snapshot.error}');
-              }
-          }
-        },
-      ),
+      body: const AddCircularComponent(),
+      //  FutureBuilder(
+      //   future: _sections,
+      //   builder: (context, snapshot) {
+      //     switch (snapshot.connectionState) {
+      //       case ConnectionState.waiting:
+      //         return const CustomLoader();
+      //       default:
+      //         if (snapshot.hasData) {
+      //           return const AddCircularComponent();
+      //         } else {
+      //           return ShowError(errorText: '${snapshot.error}');
+      //         }
+      //     }
+      //   },
+      // ),
     );
   }
 }
