@@ -132,14 +132,14 @@ flutter:
   # example:
   # fonts:
   fonts:
-    - family: NexaText
-      fonts:
-        - asset: assets/fonts/NexaText/NexaText-Regular.ttf
-          weight: 500
-        - asset: assets/fonts/NexaText/NexaText-Light.ttf
-          weight: 400
-        - asset: assets/fonts/NexaText/NexaText-Bold.ttf
-          weight: 700
+    # - family: NexaText
+    #   fonts:
+    #     - asset: assets/fonts/NexaText/NexaText-Regular.ttf
+    #       weight: 500
+    #     - asset: assets/fonts/NexaText/NexaText-Light.ttf
+    #       weight: 400
+    #     - asset: assets/fonts/NexaText/NexaText-Bold.ttf
+    #       weight: 700
     - family: Axiforma
       fonts:
         - asset: assets/fonts/Axiforma/Axiforma-Regular.ttf

@@ -24,7 +24,7 @@ class _ComplaintQueryScreenState extends State<ComplaintQueryScreen> {
 
   @override
   void initState() {
-    provider.changeRollNumberInputField();
+    provider.initializeUserData();
     withdrawalReasonsRecords = provider.loadComplaintQuery();
 
     super.initState();

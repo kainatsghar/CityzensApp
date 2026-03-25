@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 
 import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
+import '../../custom_widgets/CustomCard/custom_card.dart';
 import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
+import '../../custom_widgets/CustomTextFormField/custom_text_form_field.dart';
 import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import '../../provider/ComplaintQuery/complaint_query_provider.dart';
 import '../../utils/app_constants.dart';
@@ -51,7 +53,7 @@ class _ComplaintQueryComponentsState extends State<ComplaintQueryComponents> {
       builder: (context, value, _) {
         var responseData = value.withdrawalResponse;
 
-        var type = ['Complaint', 'Inquiry'];
+        var type = ['Complaint', 'Enquiry'];
 
         return SingleChildScrollView(
           child: Padding(
@@ -60,443 +62,276 @@ class _ComplaintQueryComponentsState extends State<ComplaintQueryComponents> {
                 ? const ShowCustomMessage(message: AppConstants.noRecordFound)
                 : Form(
                     key: value.formKey,
-                    child: Column(
-                      children: [
-                        const CustomCoverImage(
-                          title: 'COMPLAINT/QUERY',
-                          imagePath: 'lightbulb.png',
-                        ),
-                        SizedBox(height: size.height * 0.02),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0,
-                            vertical: 10,
+                    child: CustomCard(
+                      child: Column(
+                        children: [
+                          const CustomCoverImage(
+                            title: 'COMPLAINT/QUERY',
+                            imagePath: 'lightbulb.png',
                           ),
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: size.width * 0.45,
-                                    child: const Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'STUDENT NAME:',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: AppColors.primaryTitleColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                          SizedBox(height: size.height * 0.02),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0,
+                              vertical: 10,
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                CustomTextFormField(
+                                  controller: value.nameController,
+                                  prefixIcon: Icons.person,
+                                  hintText: 'User Name',
+                                  validator: value.validator,
+                                ),
+                                SizedBox(height: size.height * 0.02),
+                                if (value.userType.isNotEmpty) ...[
+                                  CustomTextFormField(
+                                    hintText: value.userType,
+                                    prefixIcon: Icons.account_circle,
+                                    isEnable: false,
                                   ),
+                                  SizedBox(height: size.height * 0.02),
                                 ],
-                              ),
-                              SizedBox(
-                                height: size.height * 0.05,
-                                child: TextFormField(
-                                  //validator: value.validator,
-                                  decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.only(
-                                      left: 10,
-                                    ),
-                                    labelText: '',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      borderSide: const BorderSide(
-                                        color: AppColors.whiteColor,
-                                      ),
-                                    ),
+                                CustomTextFormField(
+                                  controller: value.idController,
+                                  prefixIcon: Icons.badge,
+                                  hintText: 'Roll No / ERP / CNIC',
+                                  inputType: TextInputType.text,
+                                  validator: value.validator,
+                                ),
+                                SizedBox(height: size.height * 0.02),
+                                CustomTextFormField(
+                                  controller: value.emailController,
+                                  prefixIcon: Icons.email,
+                                  hintText: 'Contact Email',
+                                  inputType: TextInputType.emailAddress,
+                                  validator: value.validator,
+                                ),
+                                SizedBox(height: size.height * 0.02),
+                                CustomTextFormField(
+                                  controller: value.mobileController,
+                                  prefixIcon: Icons.phone_iphone,
+                                  hintText: 'Mobile Number',
+                                  inputType: TextInputType.phone,
+                                  validator: value.validator,
+                                ),
+                                SizedBox(height: size.height * 0.02),
+                                if (value.userType == 'Student') ...[
+                                  CustomTextFormField(
+                                    controller: value.classController,
+                                    prefixIcon: Icons.school,
+                                    hintText: 'Class',
                                   ),
-                                  onChanged: (values) {
-                                    value.setStudentNameValue(values);
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: size.width * 0.45,
-                                      child: const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'STUDENT ID:',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color:
-                                                  AppColors.primaryTitleColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(height: 2.0),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: size.height * 0.05,
-                                child: TextFormField(
-                                  controller: value.rollNumberController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    //labelText: value.rollNumberLabel,
-                                    //hintText: value.rollNumberLabel,
-                                    contentPadding: const EdgeInsets.only(
-                                      left: 10,
-                                    ),
-                                    //labelText: '',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      borderSide: const BorderSide(
-                                        color: AppColors.whiteColor,
-                                      ),
-                                    ),
+                                  SizedBox(height: size.height * 0.02),
+                                ],
+                                if (value.userType != 'Parent') ...[
+                                  CustomTextFormField(
+                                    controller: value.campusController,
+                                    prefixIcon: Icons.business,
+                                    hintText: 'Campus',
                                   ),
-                                  onChanged: (values) {
-                                    value.setStudentRollNumberValue(values);
-                                  },
+                                  SizedBox(height: size.height * 0.02),
+                                  CustomTextFormField(
+                                    controller: value.regionController,
+                                    prefixIcon: Icons.location_city,
+                                    hintText: 'Region',
+                                  ),
+                                  SizedBox(height: size.height * 0.02),
+                                ],
+                                CustomTextFormField(
+                                  controller: value.descriptionController,
+                                  hintText: 'Description',
+                                  maxLines: 4,
+                                  inputType: TextInputType.multiline,
+                                  inputAction: TextInputAction.newline,
+                                  validator: value.validator,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0,
-                            vertical: 0,
-                          ),
-                          child: Column(
-                            children: [
-                              const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
+                                SizedBox(height: size.height * 0.02),
+                                SizedBox(height: size.height * 0.03),
+                                // Type selection
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
                                     'Type',
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                    textAlign: TextAlign.start,
                                   ),
-                                ],
-                              ),
-
-                              Stack(
-                                children: [
-                                  Divider(
-                                    color: AppColors.primaryColor,
-                                    height: 20,
-                                    thickness: 4,
-                                    indent: size.width * 0.1,
-                                    endIndent: size.width * 0.1,
-                                  ),
-                                  Stack(
-                                    children: [
-                                      Divider(
-                                        color: AppColors.primaryColor,
-                                        height: 20,
-                                        thickness: 4,
-                                        indent: size.width * 0.1,
-                                        endIndent: size.width * 0.1,
-                                      ),
-                                      const Center(
-                                        child: Icon(
-                                          Icons.arrow_drop_down_sharp,
-                                          size: 32,
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              //SizedBox(height: size.height * 0.01),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 0.0,
-                                  right: 0.0,
-                                  left: 0.0,
                                 ),
-                                child: Column(
-                                  children: [
-                                    ListView.builder(
-                                      physics: const ClampingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: type.length,
-                                      itemBuilder: (_, index) {
-                                        final options = type[index];
-                                        return SizedBox(
-                                          height: size.height * 0.04,
-                                          width: size.width * 0.8,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              value.setTypeValue(options);
-                                            },
-                                            child: Card(
-                                              color: value.type == options
-                                                  ? AppColors.primaryDarkColor
-                                                  : AppColors.secondaryColor,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(0),
-                                              ),
-                                              elevation: 2,
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  options,
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: value.type == options
-                                                        ? AppColors.whiteColor
-                                                        : AppColors.blackColor,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.03),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0,
-                            vertical: 0,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Category',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                              //SizedBox(height: size.height * 0.01),
-                              Stack(
-                                children: [
-                                  Divider(
-                                    color: AppColors.primaryColor,
-                                    height: 20,
-                                    thickness: 4,
-                                    indent: size.width * 0.1,
-                                    endIndent: size.width * 0.1,
-                                  ),
-                                  Stack(
-                                    children: [
-                                      Divider(
-                                        color: AppColors.primaryColor,
-                                        height: 20,
-                                        thickness: 4,
-                                        indent: size.width * 0.1,
-                                        endIndent: size.width * 0.1,
-                                      ),
-                                      const Center(
-                                        child: Icon(
-                                          Icons.arrow_drop_down_sharp,
-                                          size: 32,
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              //SizedBox(height: size.height * 0.01),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0,
-                            vertical: 0,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ListView.builder(
-                                physics: const ClampingScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: categoryMap.keys.length,
-                                itemBuilder: (_, index) {
-                                  final category = categoryMap.keys.elementAt(
-                                    index,
-                                  );
-                                  value.isSelected = value.subCategory.contains(
-                                    category,
-                                  );
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          value.setCategory(category);
-                                          // setState(() {
-                                          //   value.selectedCategory =
-                                          //       value.selectedCategory ==
-                                          //               category
-                                          //           ? null
-                                          //           : category;
-                                          // });
-                                        },
+                                SizedBox(height: size.height * 0.01),
+                                Row(
+                                  children: type.map((option) {
+                                    final isSelected = value.type == option;
+                                    return Expanded(
+                                      child: GestureDetector(
+                                        onTap: () => value.setTypeValue(option),
                                         child: Card(
-                                          color: value.category == category
-                                              ? AppColors.successGreenColor
+                                          color: isSelected
+                                              ? AppColors.primaryDarkColor
                                               : AppColors.secondaryColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
-                                              0,
+                                              8.0,
                                             ),
                                           ),
                                           elevation: 2,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    category,
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      color:
-                                                          value.category ==
-                                                              category
-                                                          ? AppColors.blackColor
-                                                          : AppColors
-                                                                .blackColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  // if (value.category ==
-                                                  //     category)
-                                                  //   Positioned(
-                                                  //     top: 1,
-                                                  //     left:
-                                                  //         size.width * 0.5 -
-                                                  //             30,
-                                                  //     child: const Icon(
-                                                  //       Icons
-                                                  //           .arrow_drop_down_sharp,
-                                                  //       size: 32,
-                                                  //       color: AppColors
-                                                  //           .primaryDarkColor,
-                                                  //     ),
-                                                  //   ),
-                                                ],
+                                            padding: const EdgeInsets.all(10),
+                                            child: Text(
+                                              option,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: isSelected
+                                                    ? Colors.white
+                                                    : AppColors
+                                                          .primaryTitleColor,
+                                                fontSize: 14,
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      if (value.selectedCategory == category)
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: categoryMap[category]!
-                                              .map(
-                                                (subCategory) => SizedBox(
-                                                  width: size.width * 0.8,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      value
-                                                          .setCategoryAndSubCategory(
-                                                            category,
-                                                            subCategory,
-                                                          );
-                                                    },
-                                                    child: Card(
-                                                      color:
-                                                          value.subCategory ==
-                                                              subCategory
-                                                          ? AppColors
-                                                                .primaryDarkColor
-                                                          : AppColors
-                                                                .secondaryColor,
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              0,
-                                                            ),
-                                                      ),
-                                                      elevation: 2,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets.all(
-                                                              8.0,
-                                                            ),
-                                                        child: Center(
-                                                          child: Text(
-                                                            subCategory,
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              color:
-                                                                  value.subCategory ==
-                                                                      subCategory
-                                                                  ? AppColors
-                                                                        .whiteColor
-                                                                  : AppColors
-                                                                        .blackColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                              .toList(),
+                                    );
+                                  }).toList(),
+                                ),
+                                SizedBox(height: size.height * 0.03),
+                                // Category dropdown
+                                DropdownButtonFormField<String>(
+                                  isExpanded: true,
+                                  initialValue: value.category.isEmpty
+                                      ? null
+                                      : value.category,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  decoration: InputDecoration(
+                                    prefixIcon: Container(
+                                      margin: const EdgeInsets.only(right: 3.0),
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(8.0),
+                                          bottomLeft: Radius.circular(8.0),
                                         ),
-                                    ],
-                                  );
-                                },
+                                      ),
+                                      child: const Icon(
+                                        Icons.category,
+                                        color: AppColors.whiteColor,
+                                      ),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                  hint: const Text('Select Category'),
+                                  items: categoryMap.keys
+                                      .map(
+                                        (cat) => DropdownMenuItem(
+                                          value: cat,
+                                          child: Text(cat),
+                                        ),
+                                      )
+                                      .toList(),
+                                  validator: (val) {
+                                    if (val == null || val.isEmpty) {
+                                      return 'Please select a category';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (val) {
+                                    if (val != null) {
+                                      value.setCategory(val);
+                                    }
+                                  },
+                                ),
+                                SizedBox(height: size.height * 0.02),
+                                DropdownButtonFormField<String>(
+                                  isExpanded: true,
+                                  initialValue: value.subCategory.isEmpty
+                                      ? null
+                                      : value.subCategory,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  decoration: InputDecoration(
+                                    prefixIcon: Container(
+                                      margin: const EdgeInsets.only(right: 3.0),
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.primaryColor,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(8.0),
+                                          bottomLeft: Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.list,
+                                        color: AppColors.whiteColor,
+                                      ),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                  hint: Text(
+                                    value.category.isEmpty
+                                        ? 'Select Category First'
+                                        : 'Select Subcategory',
+                                  ),
+                                  items: value.category.isEmpty
+                                      ? []
+                                      : (categoryMap[value.category] ?? [])
+                                            .map(
+                                              (sub) => DropdownMenuItem(
+                                                value: sub,
+                                                child: Text(sub),
+                                              ),
+                                            )
+                                            .toList(),
+                                  validator: (val) {
+                                    if (val == null || val.isEmpty) {
+                                      return 'Please select a subcategory';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: value.category.isEmpty
+                                      ? null
+                                      : (val) {
+                                          if (val != null) {
+                                            value.setCategoryAndSubCategory(
+                                              value.category,
+                                              val,
+                                            );
+                                          }
+                                        },
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.01),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomAppButton(
+                              buttonTitle: 'SAVE',
+                              onTap: () => value.saveComplaintQueryRequest(
+                                context,
+                                true,
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomAppButton(
-                            buttonTitle: 'SAVE',
-                            onTap: () => {
-                              value.saveComplaintQueryRequest(context, true),
-                            },
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.02),
-                      ],
+                          SizedBox(height: size.height * 0.02),
+                        ],
+                      ),
                     ),
                   ),
           ),

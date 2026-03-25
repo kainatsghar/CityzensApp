@@ -415,14 +415,18 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         //       imageName: 'withdrawal.png'),
                         // if (value.userData!.userType == 'Parent')
                         //   CustomDashboardButton(
-                        //       title: 'COMPLAINT\nQUERY',
-                        //       bottomAlign: -20,
-                        //       leftAlign: -15, //0,
-                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(10),
-                        //       onTap: null,
-                        //       // () => AppNavigation.navigateTo(
-                        //       //     AppNavRoutes.complaintQueryRoute),
-                        //       imageName: 'lightbulb.png'),
+                        //     title: 'COMPLAINT\nQUERY',
+                        //     bottomAlign: -20,
+                        //     leftAlign: -15, //0,
+                        //     imageHeight:
+                        //         MediaQueryUtil.getResponsivePercentageSize(10),
+                        //     onTap:
+                        //         //  null,
+                        //         () => AppNavigation.navigateTo(
+                        //           AppNavRoutes.complaintQueryRoute,
+                        //         ),
+                        //     imageName: 'lightbulb.png',
+                        //   ),
                       ],
                     ),
                   ),
