@@ -93,6 +93,25 @@ class HelperFunction {
       ? '-'
       : DateFormat(format ?? 'MMMM dd, yyyy').format(DateTime.parse(date));
 
+  /// Converts a date string to a SQL-safe format (YYYY-MM-DDTHH:MM:SS).
+  static String? toSqlDate(String? date) {
+    if (date == null || date.isEmpty || date == 'null' || date == '-') {
+      return null;
+    }
+    try {
+      return DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.parse(date));
+    } catch (e) {
+      if (!date.contains(':')) {
+        try {
+          return DateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss",
+          ).format(DateTime.parse('${date}T00:00:00'));
+        } catch (_) {}
+      }
+      return date;
+    }
+  }
+
   static void imagePickerBottomSheet() {
     showModalBottomSheet(
       context: AppNavigation.currentContext!,

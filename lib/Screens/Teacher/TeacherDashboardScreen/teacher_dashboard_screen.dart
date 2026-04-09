@@ -302,7 +302,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                             imageHeight:
                                 MediaQueryUtil.getResponsivePercentageSize(11),
                             onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.addCircularRoute,
+                              AppNavRoutes.teacherCircularRoute,
                             ),
                             imageName: 'notification_icon.png',
                           ),

@@ -1,3 +1,5 @@
+import 'package:tcs_app/utils/helper_function.dart';
+
 class AddAssignmentRequest {
   String? subject;
   String? description;
@@ -34,7 +36,7 @@ class AddAssignmentRequest {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Subject'] = subject;
     data['Description'] = description;
-    data['ClassWorkDate'] = classWorkDate;
+    data['ClassWorkDate'] = HelperFunction.toSqlDate(classWorkDate);
     data['ClassTeacherId'] = classTeacherId;
     data['SectionId'] = sectionId;
     data['tokenId'] = tokenId;

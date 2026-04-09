@@ -1,3 +1,6 @@
+import 'package:tcs_app/model/TeacherActions/delete_action_request.dart';
+import 'package:tcs_app/model/TeacherActions/update_diary_request.dart';
+import 'package:tcs_app/model/ResponseMessage/response_message.dart';
 import 'package:tcs_app/network/api_base_helper.dart';
 
 import '../../model/Diary/diary_request.dart';
@@ -17,5 +20,25 @@ class TeacherDiaryService {
       body: request.toJson(),
     );
     return DiaryResponse.fromJson(response);
+  }
+
+  static Future<ResponseMessage> updateDiary(
+    UpdateDiaryRequest request,
+  ) async {
+    var response = await ApiBaseHelper.httpPostRequest(
+      "UpdateDiary",
+      body: request.toJson(),
+    );
+    return ResponseMessage.fromJson(response);
+  }
+
+  static Future<ResponseMessage> deleteDiary(
+    DeleteActionRequest request,
+  ) async {
+    var response = await ApiBaseHelper.httpPostRequest(
+      "DeleteDiary",
+      body: request.toJson(),
+    );
+    return ResponseMessage.fromJson(response);
   }
 }

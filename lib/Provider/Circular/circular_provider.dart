@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
@@ -16,8 +17,15 @@ import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 import '../../model/Options/options.dart';
 import '../../model/TeacherSection/teacher_section_response.dart';
+import '../../model/CircularAnnouncement/circular_announcement_response.dart';
+import '../../services/CircularAnnouncement/circular_announcement_service.dart';
+import '../../model/TeacherActions/update_announcement_request.dart';
+import '../../model/TeacherActions/delete_action_request.dart';
 
 class CircularProvider with ChangeNotifier {
+  CircularAnnouncementResponse? circularResponse;
+  bool isEdit = false;
+
   final sectionController = TextEditingController();
   final subjectController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -33,6 +41,17 @@ class CircularProvider with ChangeNotifier {
 
   String? fileName;
   String? base64String;
+
+  String? selectedDate;
+
+  CircularProvider() {
+    selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  }
+
+  void setSelectedDate(DateTime date) {
+    selectedDate = DateFormat('yyyy-MM-dd').format(date);
+    notifyListeners();
+  }
 
   TeacherSectionResponse sectionResponse = TeacherSectionResponse();
   SectionSubjectResponse subjectResponse = SectionSubjectResponse();
@@ -125,6 +144,7 @@ class CircularProvider with ChangeNotifier {
             tokenId: localDataProvider.userData!.tokenId,
             fileName: fileName ?? '',
             filePath: base64String ?? '',
+            announcementDate: selectedDate,
           ),
         );
         if (response.isSuccess!) {
@@ -146,6 +166,102 @@ class CircularProvider with ChangeNotifier {
     DialogBuilder.hideOpenDialog();
   }
 
+  Future<void> updateCircular(
+    CircularAnnouncementRecords existingRecord,
+  ) async {
+    isEdit = true;
+    DialogBuilder.showLoadingIndicator();
+    try {
+      if (formKey.currentState!.validate()) {
+        FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
+        ResponseMessage response =
+            await CircularAnnouncementService.updateAnnouncement(
+              UpdateAnnouncementRequest(
+                tokenId: localDataProvider.userData!.tokenId,
+                id: existingRecord.id.toString(),
+                subject:
+                    titleController.text, // "Subject" field for Announcement
+                description: descriptionController.text,
+                announcementDate: selectedDate,
+                classTeacherId: existingRecord.classTeacherId.toString(),
+                sectionId: existingRecord.sectionId,
+                fileName: fileName ?? '',
+                base64String: base64String,
+              ),
+            );
+        if (response.isSuccess!) {
+          await loadTeacherCircular();
+          Future.delayed(
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Circular Updated Successfully',
+            color: AppColors.successGreenColor,
+          );
+        } else {
+          showSnackBar(response.message);
+        }
+      }
+    } catch (ex) {
+      showSnackBar(AppConstants.exceptionMessage);
+    }
+    DialogBuilder.hideOpenDialog();
+  }
+
+  Future<void> deleteCircular(int id) async {
+    DialogBuilder.showLoadingIndicator();
+    try {
+      ResponseMessage response =
+          await CircularAnnouncementService.deleteAnnouncement(
+            DeleteActionRequest(
+              tokenId: localDataProvider.userData!.tokenId,
+              id: id,
+            ),
+          );
+      if (response.isSuccess!) {
+        await loadTeacherCircular();
+        showSnackBar(
+          'Circular Deleted Successfully',
+          color: AppColors.successGreenColor,
+        );
+      } else {
+        showSnackBar(response.message);
+      }
+    } catch (ex) {
+      showSnackBar(AppConstants.exceptionMessage);
+    }
+    DialogBuilder.hideOpenDialog();
+  }
+
+  /// Populates form fields for edit mode.
+  /// IMPORTANT: Does NOT call notifyListeners — resolveIds fires the notification.
+  void initForEdit(CircularAnnouncementRecords record) {
+    isEdit = true;
+    titleController.text = record.title ?? '';
+    descriptionController.text = record.description ?? '';
+    sectionController.text = record.sectionName ?? '';
+    fileName = record.fileName;
+    selectedDate = record.announcementDate;
+    base64String = null;
+    // No notifyListeners here — resolveIds will do it once.
+  }
+
+  /// Resolves sectionId from the section name, then fires a SINGLE notifyListeners.
+  void resolveIds(List<Section> availableSections) {
+    if (sectionController.text.isNotEmpty) {
+      final matchedSection = availableSections.cast<Section?>().firstWhere(
+        (s) => s?.name == sectionController.text,
+        orElse: () => null,
+      );
+      if (matchedSection != null) {
+        sectionId = matchedSection.classSectionId;
+      }
+    }
+    // Single notification fires after all mutations are complete.
+    notifyListeners();
+  }
+
   void setSelectedSubject(String subjectName) {
     subjectController.text = subjectName;
     AppNavigation.goBack();
@@ -153,6 +269,7 @@ class CircularProvider with ChangeNotifier {
   }
 
   void sectionBottomSheet() {
+    if (isEdit) return;
     showModalBottomSheet(
       context: AppNavigation.currentContext!,
       backgroundColor: Colors.transparent,
@@ -178,7 +295,9 @@ class CircularProvider with ChangeNotifier {
     );
   }
 
+  /// Clears all form state. Safe to call from dispose().
   void clearData() {
+    isEdit = false;
     sectionId = null;
     subjectId = null;
     subjectController.clear();
@@ -189,16 +308,57 @@ class CircularProvider with ChangeNotifier {
     subjects = [];
     subjectResponse = SectionSubjectResponse();
     sectionResponse = TeacherSectionResponse();
+    fileName = null;
+    base64String = null;
+    selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // Do NOT notify — called from dispose(), widget tree may be locked.
+  }
+
+  void removeAttachment() {
+    fileName = null;
+    base64String = null;
+    notifyListeners();
+  }
+
+  void setAttachment(String name, String base64) {
+    fileName = name;
+    base64String = base64;
+    notifyListeners();
   }
 
   void setSectionId(int? id) {
+    if (sectionId == id) return;
     sectionId = id;
     notifyListeners();
   }
 
   void setSubjectId(int? id, String? name) {
+    if (subjectId == id && subjectController.text == (name ?? '')) return;
     subjectId = id;
     subjectController.text = name ?? '';
     notifyListeners();
+  }
+
+  void setCircularRecords(CircularAnnouncementResponse response) {
+    circularResponse = response;
+    notifyListeners();
+  }
+
+  Future<CircularAnnouncementResponse> loadTeacherCircular() async {
+    try {
+      CircularAnnouncementResponse response =
+          await CircularAnnouncementService.getCircularAnnouncement(
+            classTeacherId: localDataProvider.userData!.userName!,
+            tokenId: localDataProvider.userData!.tokenId!,
+          );
+      setCircularRecords(response);
+      return response;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  void clearLibraryData() {
+    circularResponse = null;
   }
 }

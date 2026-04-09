@@ -40,6 +40,7 @@ class _TeacherAssignmentScreenState extends State<TeacherAssignmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.ultraLightGrey,
       appBar: const CustomAppBar(title: 'CLASSWORK ASSIGNMENTS'),
       body: FutureBuilder(
         future: assignmentRecords,

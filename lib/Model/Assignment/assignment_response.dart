@@ -1,3 +1,5 @@
+import 'package:tcs_app/utils/helper_function.dart';
+
 class AssignmentResponse {
   List<AssignmentRecords>? assignmentRecords;
   String? message;
@@ -28,34 +30,49 @@ class AssignmentResponse {
 }
 
 class AssignmentRecords {
+  int? id;
   String? subject;
   String? description;
   int? classTeacherId;
   String? classWorkDate;
   String? fileName;
+  String? sectionName;
+  int? sectionId;
 
   AssignmentRecords(
-      {this.subject,
+      {this.id,
+      this.subject,
       this.description,
       this.classTeacherId,
       this.classWorkDate,
-      this.fileName});
+      this.fileName,
+      this.sectionName,
+      this.sectionId});
 
   AssignmentRecords.fromJson(Map<String, dynamic> json) {
+    id = json['Id'];
     subject = json['Subject'];
     description = json['Description'];
     classTeacherId = json['ClassTeacherId'];
     classWorkDate = json['ClassWorkDate'];
     fileName = json['FileName'];
+    sectionName = json['SectionName'];
+    sectionId = json['SectionId'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['Id'] = id;
     data['Subject'] = subject;
     data['Description'] = description;
     data['ClassTeacherId'] = classTeacherId;
-    data['ClassWorkDate'] = classWorkDate;
+    data['ClassWorkDate'] = HelperFunction.toSqlDate(classWorkDate);
     data['FileName'] = fileName;
+    data['SectionName'] = sectionName;
+    data['SectionId'] = sectionId;
     return data;
   }
+
+  /// Helper to get only the date part (YYYY-MM-DD) for grouping/display
+  String get classWorkDateOnly => (classWorkDate ?? '').split('T')[0];
 }

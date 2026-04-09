@@ -39,6 +39,7 @@ class _TeacherDiaryScreenState extends State<TeacherDiaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.ultraLightGrey,
       appBar: const CustomAppBar(title: 'HOMEWORK DIARY'),
       body: FutureBuilder(
         future: _diaryRecords,

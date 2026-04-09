@@ -19,10 +19,13 @@ import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 import '../../model/Options/options.dart';
 import '../../model/ResponseMessage/response_message.dart';
+import '../../model/TeacherActions/update_assignment_request.dart';
+import '../../model/TeacherActions/delete_action_request.dart';
 import '../LocalData/local_data_provider.dart';
 
 class AssignmentProvider with ChangeNotifier {
   AssignmentResponse? assignmentResponse;
+  bool isEdit = false;
   final sectionController = TextEditingController();
   final subjectController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -35,7 +38,16 @@ class AssignmentProvider with ChangeNotifier {
   List<Options> sections = [];
   List<Options> subjects = [];
 
-  String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  String? selectedDate;
+
+  AssignmentProvider() {
+    selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  }
+
+  void setSelectedDate(DateTime date) {
+    selectedDate = DateFormat('yyyy-MM-dd').format(date);
+    notifyListeners();
+  }
   String? fileName;
   String? base64String;
 
@@ -130,7 +142,7 @@ class AssignmentProvider with ChangeNotifier {
             subject: subjectController.text,
             sectionId: sectionId,
             classTeacherId: localDataProvider.userData!.userName,
-            classWorkDate: formattedDate,
+            classWorkDate: selectedDate,
             description: descriptionController.text,
             tokenId: localDataProvider.userData!.tokenId,
             fileName: fileName ?? '',
@@ -157,6 +169,114 @@ class AssignmentProvider with ChangeNotifier {
     DialogBuilder.hideOpenDialog();
   }
 
+  Future<void> updateAssignment(AssignmentRecords existingRecord) async {
+    isEdit = true;
+    DialogBuilder.showLoadingIndicator();
+    try {
+      if (formKey.currentState!.validate()) {
+        FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
+        ResponseMessage response =
+            await TeacherAssignmentService.updateAssignment(
+              UpdateAssignmentRequest(
+                tokenId: localDataProvider.userData!.tokenId,
+                id: existingRecord.id.toString(),
+                subject: subjectController.text,
+                description: descriptionController.text,
+                classWorkDate: selectedDate,
+                classTeacherId: existingRecord.classTeacherId.toString(),
+                sectionId: existingRecord.sectionId,
+                fileName: fileName ?? '',
+                base64String: base64String,
+              ),
+            );
+        if (response.isSuccess!) {
+          await loadTeacherAssignment();
+          Future.delayed(
+            const Duration(seconds: 1),
+            () => AppNavigation.goBack(),
+          );
+          showSnackBar(
+            'Assignment Updated Successfully',
+            color: AppColors.successGreenColor,
+          );
+        } else {
+          showSnackBar(response.message);
+        }
+      }
+    } catch (ex) {
+      showSnackBar(AppConstants.exceptionMessage);
+    }
+    DialogBuilder.hideOpenDialog();
+  }
+
+  Future<void> deleteAssignment(int id) async {
+    DialogBuilder.showLoadingIndicator();
+    try {
+      ResponseMessage response =
+          await TeacherAssignmentService.deleteAssignment(
+            DeleteActionRequest(
+              tokenId: localDataProvider.userData!.tokenId,
+              id: id,
+            ),
+          );
+      if (response.isSuccess!) {
+        await loadTeacherAssignment();
+        showSnackBar(
+          'Assignment Deleted Successfully',
+          color: AppColors.successGreenColor,
+        );
+      } else {
+        showSnackBar(response.message);
+      }
+    } catch (ex) {
+      showSnackBar(AppConstants.exceptionMessage);
+    }
+    DialogBuilder.hideOpenDialog();
+  }
+
+  /// Populates form fields for edit mode.
+  /// IMPORTANT: Does NOT call notifyListeners — resolveIds fires the notification.
+  void initForEdit(AssignmentRecords record) {
+    isEdit = true;
+    subjectController.text = record.subject ?? '';
+    descriptionController.text = record.description ?? '';
+    sectionController.text = record.sectionName ?? '';
+    selectedDate = record.classWorkDate;
+    fileName = record.fileName;
+    base64String = null;
+    // No notifyListeners here — resolveIds will do it once.
+  }
+
+  /// Resolves IDs from name strings, then fires a SINGLE notifyListeners.
+  void resolveIds(
+    List<Section> availableSections,
+    List<SectionSubject> availableSubjects,
+  ) {
+    if (sectionController.text.isNotEmpty) {
+      final matchedSection = availableSections.cast<Section?>().firstWhere(
+        (s) => s?.name == sectionController.text,
+        orElse: () => null,
+      );
+      if (matchedSection != null) {
+        sectionId = matchedSection.classSectionId;
+      }
+    }
+
+    if (subjectController.text.isNotEmpty) {
+      final matchedSubject = availableSubjects
+          .cast<SectionSubject?>()
+          .firstWhere(
+            (s) => s?.subjectName == subjectController.text,
+            orElse: () => null,
+          );
+      if (matchedSubject != null) {
+        subjectId = matchedSubject.subjectId;
+      }
+    }
+    // Single notification fires after all mutations are complete.
+    notifyListeners();
+  }
+
   void setSelectedSubject(String subjectName) {
     subjectController.text = subjectName;
     AppNavigation.goBack();
@@ -164,6 +284,7 @@ class AssignmentProvider with ChangeNotifier {
   }
 
   void sectionBottomSheet() {
+    if (isEdit) return;
     showModalBottomSheet(
       context: AppNavigation.currentContext!,
       backgroundColor: Colors.transparent,
@@ -217,7 +338,9 @@ class AssignmentProvider with ChangeNotifier {
     }
   }
 
+  /// Clears all form state. Safe to call from dispose().
   void clearData() {
+    isEdit = false;
     sectionId = null;
     subjectId = null;
     subjectController.clear();
@@ -227,14 +350,32 @@ class AssignmentProvider with ChangeNotifier {
     subjects = [];
     subjectResponse = SectionSubjectResponse();
     sectionResponse = TeacherSectionResponse();
+    fileName = null;
+    base64String = null;
+    selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // Do NOT notify — called from dispose(), widget tree may be locked.
+  }
+
+  void removeAttachment() {
+    fileName = null;
+    base64String = null;
+    notifyListeners();
+  }
+
+  void setAttachment(String name, String base64) {
+    fileName = name;
+    base64String = base64;
+    notifyListeners();
   }
 
   void setSectionId(int? id) {
+    if (sectionId == id) return;
     sectionId = id;
     notifyListeners();
   }
 
   void setSubjectId(int? id, String? name) {
+    if (subjectId == id && subjectController.text == (name ?? '')) return;
     subjectId = id;
     subjectController.text = name ?? '';
     notifyListeners();

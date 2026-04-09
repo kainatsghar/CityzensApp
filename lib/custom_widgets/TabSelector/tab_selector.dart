@@ -6,12 +6,14 @@ class TabSelector<T> extends StatefulWidget {
   final Function(T) getDisplayText;
   final Function(T item) onItemSelected;
   final String? initialItemName;
+  final bool isEnabled;
 
   const TabSelector({
     required this.items,
     required this.getDisplayText,
     required this.onItemSelected,
     this.initialItemName,
+    this.isEnabled = true,
     super.key,
   });
 
@@ -21,39 +23,52 @@ class TabSelector<T> extends StatefulWidget {
 
 class _TabSelectorState<T> extends State<TabSelector<T>>
     with TickerProviderStateMixin {
-  late int _selectedIndex;
   late Map<int, AnimationController> _scaleControllers;
 
   @override
   void initState() {
     super.initState();
-    // Auto-select first item or find by name if provided
-    _selectedIndex = 0;
     _scaleControllers = {};
+    _initControllers();
 
-    if (widget.items != null && widget.items!.isNotEmpty) {
-      // Initialize scale controllers for each item
+    // Auto-select first item in provider IF NO initial selection provided
+    if (widget.initialItemName == null || widget.initialItemName!.isEmpty) {
+      _triggerAutoSelection();
+    }
+  }
+
+  void _initControllers() {
+    if (widget.items != null) {
       for (int i = 0; i < widget.items!.length; i++) {
-        _scaleControllers[i] = AnimationController(
-          duration: const Duration(milliseconds: 150),
-          vsync: this,
+        _scaleControllers.putIfAbsent(
+          i,
+          () => AnimationController(
+            duration: const Duration(milliseconds: 150),
+            vsync: this,
+          ),
         );
       }
+    }
+  }
 
-      if (widget.initialItemName != null &&
-          widget.initialItemName!.isNotEmpty) {
-        _selectedIndex = widget.items!.indexWhere(
-          (item) => widget.getDisplayText(item) == widget.initialItemName,
-        );
-        if (_selectedIndex == -1) _selectedIndex = 0;
-      }
-      // Notify parent of initial selection
+  void _triggerAutoSelection() {
+    if (widget.items != null && widget.items!.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (widget.items != null && widget.items!.isNotEmpty && mounted) {
-          widget.onItemSelected(widget.items![_selectedIndex]);
+        if (mounted) {
+          widget.onItemSelected(widget.items![0]);
         }
       });
     }
+  }
+
+  @override
+  void didUpdateWidget(TabSelector<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.items != oldWidget.items) {
+      _initControllers();
+    }
+    // If no selection provided, auto-select first one again?
+    // No, only on first init usually.
   }
 
   @override
@@ -65,16 +80,9 @@ class _TabSelectorState<T> extends State<TabSelector<T>>
   }
 
   void _selectItem(int index) {
-    if (_selectedIndex != index &&
-        widget.items != null &&
-        index < widget.items!.length) {
-      // Animate scale for new selection
+    if (widget.items != null && index < widget.items!.length) {
       _scaleControllers[index]?.forward().then((_) {
         _scaleControllers[index]?.reverse();
-      });
-
-      setState(() {
-        _selectedIndex = index;
       });
       widget.onItemSelected(widget.items![index]);
     }
@@ -94,38 +102,57 @@ class _TabSelectorState<T> extends State<TabSelector<T>>
       );
     }
 
+    // Determine selection from initialItemName from parent
+    int selectedIndex = -1;
+    bool hasInitialName =
+        widget.initialItemName != null && widget.initialItemName!.isNotEmpty;
+
+    if (hasInitialName) {
+      selectedIndex = widget.items!.indexWhere(
+        (item) => widget.getDisplayText(item) == widget.initialItemName,
+      );
+    } else if (widget.items!.isNotEmpty) {
+      // No initial name provided, default to first item
+      selectedIndex = 0;
+    }
+
     return Wrap(
       runSpacing: 8,
       spacing: 8,
       alignment: WrapAlignment.start,
-
       children: List.generate(widget.items!.length, (index) {
         final item = widget.items![index];
         final displayText = widget.getDisplayText(item);
-        final isSelected = _selectedIndex == index;
+        final isSelected = selectedIndex == index;
 
         return ScaleTransition(
-          scale: Tween<double>(begin: 1.0, end: 1.08).animate(
+          scale: Tween<double>(begin: 1.0, end: widget.isEnabled ? 1.08 : 1.0)
+              .animate(
             CurvedAnimation(
-              parent: _scaleControllers[index]!,
+              parent:
+                  _scaleControllers[index] ??
+                  AnimationController(
+                    vsync: this,
+                    duration: const Duration(milliseconds: 150),
+                  ),
               curve: Curves.easeInOut,
             ),
           ),
           child: GestureDetector(
-            onTap: () => _selectItem(index),
+            onTap: widget.isEnabled ? () => _selectItem(index) : null,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
-              margin: EdgeInsets.only(
-                // left: index == 0 ? 0 : 8,
-                // right: index == widget.items!.length - 1 ? 0 : 0,
-              ),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.primaryColor : AppColors.white,
+                color: isSelected
+                    ? AppColors.primaryColor.withOpacity(widget.isEnabled ? 1.0 : 0.5)
+                    : AppColors.white,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: isSelected ? AppColors.primaryColor : AppColors.white,
+                  color: isSelected
+                      ? AppColors.primaryColor.withOpacity(widget.isEnabled ? 1.0 : 0.5)
+                      : Colors.grey.shade200,
                   width: isSelected ? 2.0 : 1.5,
                 ),
                 boxShadow: isSelected

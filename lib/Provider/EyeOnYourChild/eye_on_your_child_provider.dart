@@ -165,7 +165,7 @@ class EyeOnYourChildProvider with ChangeNotifier {
 
   void uploadAttachment() async {
     fileName1 = "";
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    FilePickerResult? result = await FilePicker.pickFiles(
       allowMultiple: true,
       type: FileType.image,
     );

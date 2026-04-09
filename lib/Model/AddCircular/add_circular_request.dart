@@ -1,3 +1,5 @@
+import 'package:tcs_app/utils/helper_function.dart';
+
 class AddCircularRequest {
   String? title;
   String? body;
@@ -8,6 +10,8 @@ class AddCircularRequest {
   String? filePath;
   String? fileName;
 
+  String? announcementDate;
+
   AddCircularRequest({
     this.title,
     this.body,
@@ -17,6 +21,7 @@ class AddCircularRequest {
     this.tokenId,
     this.filePath,
     this.fileName,
+    this.announcementDate,
   });
 
   AddCircularRequest.fromJson(Map<String, dynamic> json) {
@@ -28,6 +33,7 @@ class AddCircularRequest {
     tokenId = json['tokenId'];
     filePath = json['Base64String'];
     fileName = json['FileName'];
+    announcementDate = json['AnnouncementDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +46,7 @@ class AddCircularRequest {
     data['tokenId'] = tokenId;
     data['Base64String'] = filePath;
     data['FileName'] = fileName;
+    data['AnnouncementDate'] = HelperFunction.toSqlDate(announcementDate);
     return data;
   }
 }

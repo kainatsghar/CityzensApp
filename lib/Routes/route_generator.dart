@@ -60,6 +60,10 @@ import '../screens/Teacher/TeacherSectionScreen/teacher_section_screen.dart';
 import '../screens/Teacher/TeacherSurveyScreen/teacher_survey_screen.dart';
 import '../screens/Teacher/TeacherTimeTableScreen/teacher_timetable_screen.dart';
 import '../screens/Teacher/TeacherTimeTableSectionScreen/teacher_timetable_section_screen.dart';
+import '../screens/Teacher/TeacherCircularScreen/teacher_circular_screen.dart';
+import '../model/Diary/diary_response.dart';
+import '../model/Assignment/assignment_response.dart';
+import '../model/CircularAnnouncement/circular_announcement_response.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -129,7 +133,13 @@ class RouteGenerator {
       case AppNavRoutes.markUnidentifiedRoute:
         return routeScreen(child: const MarkUnidentifiedScreen());
       case AppNavRoutes.addDiaryRoute:
-        return routeScreen(child: const AddDiaryScreen());
+        return routeScreen(
+          child: AddDiaryScreen(
+            editRecord: settings.arguments is DiaryRecords
+                ? settings.arguments as DiaryRecords
+                : null,
+          ),
+        );
       case AppNavRoutes.teacherDiaryRoute:
         return routeScreen(child: const TeacherDiaryScreen());
       case AppNavRoutes.studentDiaryRoute:
@@ -155,7 +165,13 @@ class RouteGenerator {
       case AppNavRoutes.teacherAddClassResultRoute:
         return routeScreen(child: const TeacherAddClassResultScreen());
       case AppNavRoutes.addAssignmentRoute:
-        return routeScreen(child: const AddAssignmentScreen());
+        return routeScreen(
+          child: AddAssignmentScreen(
+            editRecord: settings.arguments is AssignmentRecords
+                ? settings.arguments as AssignmentRecords
+                : null,
+          ),
+        );
       case AppNavRoutes.teacherAssignmentRoute:
         return routeScreen(child: const TeacherAssignmentScreen());
       case AppNavRoutes.studentClassTestResultRoute:
@@ -183,7 +199,15 @@ class RouteGenerator {
       case AppNavRoutes.complaintQueryRoute:
         return routeScreen(child: const ComplaintQueryScreen());
       case AppNavRoutes.addCircularRoute:
-        return routeScreen(child: const AddCircularScreen());
+        return routeScreen(
+          child: AddCircularScreen(
+            editRecord: settings.arguments is CircularAnnouncementRecords
+                ? settings.arguments as CircularAnnouncementRecords
+                : null,
+          ),
+        );
+      case AppNavRoutes.teacherCircularRoute:
+        return routeScreen(child: const TeacherCircularScreen());
 
       default:
         return _errorRoute();
