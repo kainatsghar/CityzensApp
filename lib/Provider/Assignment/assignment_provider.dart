@@ -48,6 +48,7 @@ class AssignmentProvider with ChangeNotifier {
     selectedDate = DateFormat('yyyy-MM-dd').format(date);
     notifyListeners();
   }
+
   String? fileName;
   String? base64String;
 

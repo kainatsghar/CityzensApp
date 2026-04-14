@@ -108,8 +108,12 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
                       initialDate:
                           DateTime.tryParse(provider.selectedDate ?? '') ??
                           DateTime.now(),
-                      firstDate: DateTime(2020),
-                      lastDate: DateTime(2100),
+                      firstDate:
+                          DateTime.tryParse(provider.selectedDate ?? '') ??
+                          DateTime.now(),
+                      lastDate:
+                          DateTime.tryParse(provider.selectedDate ?? '') ??
+                          DateTime.now(),
                       builder: (context, child) {
                         return Theme(
                           data: Theme.of(context).copyWith(
