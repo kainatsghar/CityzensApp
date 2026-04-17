@@ -1,3 +1,5 @@
+// === UPDATED FILE: student_attendance_screen.dart ===
+// Updated: Premium AppBar styling with consistent design language
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +40,9 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Modern consistent AppBar
       appBar: const CustomAppBar(title: "ATTENDANCE"),
+      backgroundColor: Colors.grey.shade50,
       body: FutureBuilder(
         future: attendanceData,
         builder: (context, snapshot) {

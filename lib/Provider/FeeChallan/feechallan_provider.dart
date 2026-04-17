@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
@@ -13,8 +12,10 @@ class FeeChallanProvider with ChangeNotifier {
   TabController? controller;
   OutstandingChallanResponse? outstandingChallans;
   ChallanReceiptResponse? challanReceiptResponse;
-  bool _isNewPaymentFlowEnabled = true;
-  bool get isNewPaymentFlowEnabled => _isNewPaymentFlowEnabled;
+
+  // Loading state for unified data fetch
+  bool isLoading = true;
+  String? loadError;
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
     AppNavigation.currentContext!,
@@ -40,6 +41,26 @@ class FeeChallanProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Loads both Outstanding and Receipts data concurrently.
+  /// Called once on init and again on pull-to-refresh from any tab.
+  Future<void> loadAllData() async {
+    isLoading = true;
+    loadError = null;
+    notifyListeners();
+
+    try {
+      await Future.wait([
+        loadOutstandingRecords(),
+        loadReceiptRecords(),
+      ]);
+    } catch (e) {
+      loadError = e.toString();
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<OutstandingChallanResponse> loadOutstandingRecords() async {
     try {
       OutstandingChallanResponse response =
@@ -48,10 +69,7 @@ class FeeChallanProvider with ChangeNotifier {
             token: localDataProvider.userData!.tokenId ?? '',
             userName: localDataProvider.studentId,
           );
-      if (response.outstandingList != null &&
-          response.outstandingList!.isNotEmpty) {
-        fetchFeatureConfig();
-      }
+
       setOutstandingChallanData(response);
       return response;
     } catch (ex) {
@@ -70,21 +88,6 @@ class FeeChallanProvider with ChangeNotifier {
       return response;
     } catch (ex) {
       rethrow;
-    }
-  }
-
-  void fetchFeatureConfig() {
-    if (splashProvider.listOfFeatureConfig != null) {
-      try {
-        final newPaymentFlowFeature = splashProvider.listOfFeatureConfig!
-            .firstWhere((feature) => feature.id == 'newPaymentFlow');
-
-        _isNewPaymentFlowEnabled =
-            (kReleaseMode && newPaymentFlowFeature.isLive) ||
-            (kDebugMode && newPaymentFlowFeature.isTest);
-      } catch (e) {
-        _isNewPaymentFlowEnabled = true;
-      }
     }
   }
 }

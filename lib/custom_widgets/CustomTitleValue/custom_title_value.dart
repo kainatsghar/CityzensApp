@@ -22,82 +22,60 @@ class CustomTitleValue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
-                width: size.width / 2.5,
+              Expanded(
+                flex: 2,
                 child: Text(
-                  '$title: ',
-                  style: const TextStyle(
-                    color: AppColors.primaryTitleColor,
-                    fontWeight: FontWeight.bold,
+                  title,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    letterSpacing: 0.2,
                   ),
                 ),
               ),
+              const SizedBox(width: 12),
               Expanded(
+                flex: 3,
                 child: SelectableText(
                   value,
                   enableInteractiveSelection: isSelectionAllowed,
                   textAlign: TextAlign.right,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: AppColors.primaryDarkColor,
                     fontSize: 13,
-                    fontWeight: boldValue ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: boldValue ? FontWeight.w800 : FontWeight.w600,
+                    height: 1.3,
                   ),
                   contextMenuBuilder: (context, editableTextState) {
                     final List<ContextMenuButtonItem> buttonItems = [];
-                    if (!editableTextState
-                        .textEditingValue
-                        .selection
-                        .isCollapsed) {
+                    if (!editableTextState.textEditingValue.selection.isCollapsed) {
                       buttonItems.add(
                         ContextMenuButtonItem(
                           onPressed: () {
-                            editableTextState.copySelection(
-                              SelectionChangedCause.toolbar,
-                            );
-
+                            editableTextState.copySelection(SelectionChangedCause.toolbar);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Copied to clipboard'),
-                              ),
+                              const SnackBar(content: Text('Copied to clipboard')),
                             );
-
-                            final textEditingValue =
-                                editableTextState.textEditingValue;
-                            editableTextState.userUpdateTextEditingValue(
-                              textEditingValue.copyWith(
-                                selection: TextSelection.collapsed(
-                                  offset: textEditingValue.selection.end,
-                                ),
-                              ),
-                              SelectionChangedCause.toolbar,
-                            );
-
                             editableTextState.hideToolbar();
                           },
                           type: ContextMenuButtonType.copy,
                         ),
                       );
                     }
-
                     buttonItems.add(
                       ContextMenuButtonItem(
-                        onPressed: () {
-                          editableTextState.selectAll(
-                            SelectionChangedCause.toolbar,
-                          );
-                        },
+                        onPressed: () => editableTextState.selectAll(SelectionChangedCause.toolbar),
                         type: ContextMenuButtonType.selectAll,
                       ),
                     );
-
                     return AdaptiveTextSelectionToolbar.buttonItems(
                       anchors: editableTextState.contextMenuAnchors,
                       buttonItems: buttonItems,
@@ -105,29 +83,31 @@ class CustomTitleValue extends StatelessWidget {
                   },
                 ),
               ),
-              if (isCopyAllowed)
-                SizedBox(
-                  height: 16,
-                  child: InkWell(
-                    onTap: () {
-                      Clipboard.setData(ClipboardData(text: value));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Copied to clipboard')),
-                      );
-                    },
-                    child: const Icon(Icons.copy, size: 16),
+              if (isCopyAllowed) ...[
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: value));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Copied to clipboard')),
+                    );
+                  },
+                  child: Icon(
+                    Icons.copy_rounded, 
+                    size: 14, 
+                    color: AppColors.primaryColor.withOpacity(0.6)
                   ),
                 ),
+              ],
             ],
           ),
         ),
-        Visibility(
-          visible: showDivider,
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 2.0),
-            child: Divider(height: 0.0, color: Colors.black),
+        if (showDivider)
+          Divider(
+            height: 1,
+            thickness: 0.5,
+            color: Colors.grey.withOpacity(0.15),
           ),
-        ),
       ],
     );
   }

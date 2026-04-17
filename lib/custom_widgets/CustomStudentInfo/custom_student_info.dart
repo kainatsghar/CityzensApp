@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 
+/// A premium, modern redesign of the student information header.
+/// Matches the design language of the new About Us and Teacher Results pages.
 class CustomStudentInfo extends StatelessWidget {
   final dynamic info;
 
@@ -9,122 +12,225 @@ class CustomStudentInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    return Card(
-      color: AppColors.primaryLightBlue,
-      margin: const EdgeInsets.all(16.0),
-      elevation: 4,
+    if (info == null) return const SizedBox.shrink();
+
+    return FadeInDown(
+      duration: const Duration(milliseconds: 600),
       child: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 6.0),
-              child: Text(
-                info.name,
-                style: const TextStyle(
-                  color: AppColors.primaryTitleColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Container(
-              height: size.width * 0.25,
-              width: size.width * 0.25,
-              margin: const EdgeInsets.only(bottom: 8.0),
-              child: CustomUserImage(userId: '${info.rollNo}'),
-            ),
-            Column(
-              children: [
-                StudentInfoRowItems(
-                  firstTitle: 'BRANCH',
-                  firstValue: info.centerName.toString(),
-                  secondTitle: 'ROLL NUMBER',
-                  secondValue: info.rollNo.toString(),
-                ),
-                SizedBox(height: 8.0),
-                StudentInfoRowItems(
-                  firstTitle: 'REGION',
-                  firstValue: info.regionName.toString(),
-                  secondTitle: 'CLASS',
-                  secondValue: info.className.toString(),
-                ),
-              ],
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        decoration: BoxDecoration(
+          // Modern Gradient Background matching premium screens
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColors.primaryDarkColor,
+              AppColors.primaryColor.withOpacity(0.9),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryDarkColor.withOpacity(0.3),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
             ),
           ],
         ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: Stack(
+            children: [
+              // Subtle background pattern or accent
+              Positioned(
+                right: -30,
+                top: -30,
+                child: CircleAvatar(
+                  radius: 80,
+                  backgroundColor: Colors.white.withOpacity(0.05),
+                ),
+              ),
+
+              // Side Accent Bar (Consistent with Diary/Homework cards)
+              Positioned(
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: 6,
+                child: Container(color: AppColors.goldenYellow),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 24.0,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        // Enhanced Avatar Section with white ring
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white24,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: CustomUserImage(
+                            userId: '${info.rollNo}',
+                            imageSize: 75,
+                          ),
+                        ),
+                        const SizedBox(width: 18),
+
+                        // Main Name and ID Section
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                info.name?.toString().toUpperCase() ??
+                                    'NAME N/A',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 0.8,
+                                  fontFamily: 'Axiforma',
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 8),
+                              _buildGlassChip(
+                                icon: Icons.badge_outlined,
+                                label: 'ID: ${info.rollNo}',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Detail Grid for Class and Branch
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.white12),
+                      ),
+                      child: IntrinsicHeight(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: _DetailItem(
+                                title: 'CLASS',
+                                value: info.className.toString(),
+                                icon: Icons.school_rounded,
+                              ),
+                            ),
+                            VerticalDivider(
+                              color: Colors.white.withOpacity(0.2),
+                              thickness: 1,
+                              indent: 5,
+                              endIndent: 5,
+                            ),
+                            Expanded(
+                              child: _DetailItem(
+                                title: 'BRANCH',
+                                value: info.centerName.toString(),
+                                icon: Icons.location_on_rounded,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGlassChip({required IconData icon, required String label}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: Colors.white10,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white24),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: AppColors.goldenYellow),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class StudentInfoRowItems extends StatelessWidget {
-  const StudentInfoRowItems({
-    super.key,
-    required this.firstTitle,
-    required this.firstValue,
-    required this.secondTitle,
-    required this.secondValue,
-  });
+class _DetailItem extends StatelessWidget {
+  final String title;
+  final String value;
+  final IconData icon;
 
-  final String firstTitle;
-  final String firstValue;
-  final String secondTitle;
-  final String secondValue;
+  const _DetailItem({
+    required this.title,
+    required this.value,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    final titleTextStyle = TextStyle(
-      color: AppColors.primaryTitleColor,
-      fontWeight: FontWeight.bold,
-      fontSize: 12,
-    );
-    final valueTextStyle = const TextStyle(color: Colors.black54, fontSize: 12);
-    return IntrinsicHeight(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(
-            width: (size.width * 0.43) - 8,
-            child: Column(
-              children: [
-                Text(firstTitle, style: titleTextStyle),
-                const SizedBox(height: 2.0),
-                Text(
-                  firstValue,
-                  textAlign: TextAlign.center,
-                  style: valueTextStyle,
-                ),
-              ],
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 30,
-                child: VerticalDivider(
-                  width: 0,
-                  color: AppColors.blackColor,
-                  thickness: 1,
-                ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 12, color: AppColors.goldenYellow),
+            const SizedBox(width: 6),
+            Text(
+              title,
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.7),
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.0,
               ),
-            ],
-          ),
-          SizedBox(
-            width: (size.width * 0.43) - 8,
-            child: Column(
-              children: [
-                Text(secondTitle, style: titleTextStyle),
-                const SizedBox(height: 2.0),
-                Text(secondValue, style: valueTextStyle),
-              ],
             ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value.isNotEmpty == true ? value : 'N/A',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -3,34 +3,37 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomTabBar/custom_tab_bar.dart';
 import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
-import 'package:tcs_app/screens/Student/Feechallans/receipt_fee_screen.dart';
-
-import 'outstanding_fee_screen.dart';
+import 'package:tcs_app/components/FeeChallanComponents/outstanding_fee_component.dart';
+import 'package:tcs_app/components/FeeChallanComponents/receipt_fee_component.dart';
 
 class FeeChallanScreen extends StatefulWidget {
   const FeeChallanScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return FeeChallanScreenState();
-  }
+  State<StatefulWidget> createState() => _FeeChallanScreenState();
 }
 
-class FeeChallanScreenState extends State<FeeChallanScreen>
+class _FeeChallanScreenState extends State<FeeChallanScreen>
     with SingleTickerProviderStateMixin {
-  var provider = Provider.of<FeeChallanProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
+  late final FeeChallanProvider _provider;
 
   @override
   void initState() {
-    provider.initializeData(this);
     super.initState();
+    _provider = Provider.of<FeeChallanProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+    _provider.initializeData(this);
+    // Deferred to avoid notifyListeners() during build phase
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _provider.loadAllData();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    // AppBar is always visible — loading/error states are inside each tab
     return Scaffold(
       body: Consumer<FeeChallanProvider>(
         builder: (context, value, _) {
@@ -41,7 +44,10 @@ class FeeChallanScreenState extends State<FeeChallanScreen>
               Tab(child: Text('OUTSTANDING')),
               Tab(child: Text('RECEIPTS')),
             ],
-            widgets: const <Widget>[OutstandingFeeScreen(), ReceiptFeeScreen()],
+            widgets: <Widget>[
+              OutstandingFeeComponent(onRefresh: _provider.loadAllData),
+              ReceiptFeeComponent(onRefresh: _provider.loadAllData),
+            ],
             controller: value.controller,
           );
         },

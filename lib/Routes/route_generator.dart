@@ -21,7 +21,7 @@ import 'package:tcs_app/screens/Teacher/AddCircularScreen/add_circular_screen.da
 import 'package:tcs_app/screens/Teacher/AddDiaryScreen/add_diary_screen.dart';
 import 'package:tcs_app/screens/Teacher/MarkUnidentifiedScreen/mark_unidentified_screen.dart';
 import 'package:tcs_app/screens/Teacher/TeacherAssignmentScreen/teacher_assignment_screen.dart';
-import 'package:tcs_app/screens/Teacher/TeacherClassTestResultScreen/teacher_add_class_result_screen.dart';
+import 'package:tcs_app/screens/Teacher/TeacherClassTestResultScreen/teacher_class_result_modern_screen.dart';
 import 'package:tcs_app/screens/Teacher/TeacherClassTestResultScreen/teacher_class_test_result_screen.dart';
 import 'package:tcs_app/screens/Teacher/TeacherDiaryScreen/teacher_diary_screen.dart';
 import 'package:tcs_app/screens/Teacher/TeacherSchoolEventScreen/teacher_school_event_screen.dart';
@@ -163,7 +163,7 @@ class RouteGenerator {
       case AppNavRoutes.teacherClassTestResultRoute:
         return routeScreen(child: const TeacherClassTestResultScreen());
       case AppNavRoutes.teacherAddClassResultRoute:
-        return routeScreen(child: const TeacherAddClassResultScreen());
+        return routeScreen(child: const ClassTestResultsScreen());
       case AppNavRoutes.addAssignmentRoute:
         return routeScreen(
           child: AddAssignmentScreen(

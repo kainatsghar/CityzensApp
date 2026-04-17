@@ -1,3 +1,6 @@
+// === UPDATED FILE: student_list_component.dart ===
+// Modernized: Premium list layout with sticky bottom button,
+// consistent padding, and smooth transitions.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/MarkAttendanceComponents/attendance_graph_component.dart';
@@ -12,43 +15,48 @@ class StudentListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-        child: Consumer<MarkAttendanceProvider>(
-          builder: (context, value, _) {
-            var studentList = value.studentListResponse.studentList;
-            return studentList!.isEmpty
-                ? const ShowCustomMessage(message: AppConstants.noRecordFound)
-                : value.saveAttendanceResponse!.isSuccessful != null &&
-                      value.saveAttendanceResponse!.isSuccessful!
-                // : value.saveAttendanceResponse!.isSuccessful!
-                ? const AttendanceGraphComponent()
-                : ListView.builder(
-                    itemCount: studentList.length + 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index == studentList.length) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0,
-                            vertical: 16,
-                          ),
-                          child: CustomAppButton(
-                            buttonTitle: 'Save Attendance',
-                            onTap: () => value.saveAttendance(),
-                          ),
-                        );
-                      } else {
+    return Consumer<MarkAttendanceProvider>(
+      builder: (context, value, _) {
+        var studentList = value.studentListResponse.studentList;
+        return studentList!.isEmpty
+            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
+            : value.saveAttendanceResponse!.isSuccessful != null &&
+                  value.saveAttendanceResponse!.isSuccessful!
+            ? const AttendanceGraphComponent()
+            : Column(
+                children: [
+                  // ── Student List ──
+                  Expanded(
+                    child: ListView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                      itemCount: studentList.length,
+                      itemBuilder: (BuildContext context, int index) {
                         return AttendanceListItem(
                           index: index,
                           student: studentList[index],
                         );
-                      }
-                    },
-                  );
-          },
-        ),
-      ),
+                      },
+                    ),
+                  ),
+
+                  // ── Sticky Save Button ──
+                  SafeArea(
+                    top: false,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
+                      child: CustomAppButton(
+                        buttonTitle: 'Save Attendance',
+                        onTap: () => value.saveAttendance(),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+      },
     );
   }
 }

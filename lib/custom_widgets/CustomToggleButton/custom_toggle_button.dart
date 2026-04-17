@@ -1,3 +1,5 @@
+// === UPDATED FILE: custom_toggle_button.dart ===
+// Modernized: Animated scale feedback, refined border, premium feel
 import 'package:flutter/material.dart';
 import 'package:tcs_app/model/StudentAttendance/student_list_response.dart';
 
@@ -17,24 +19,40 @@ class CustomToggleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
+    final bool isSelected = student.day == title;
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
         decoration: BoxDecoration(
-          color: student.day == title
-              ? color.withValues(alpha: 0.5)
-              : Colors.transparent,
+          color: isSelected ? color.withValues(alpha: 0.15) : Colors.transparent,
           shape: BoxShape.circle,
-          border: Border.all(color: color, width: 2.0),
+          border: Border.all(
+            color: isSelected ? color : color.withValues(alpha: 0.35),
+            width: isSelected ? 2.5 : 1.5,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: color.withValues(alpha: 0.2),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ]
+              : [],
         ),
-        height: size.width / 12,
-        width: size.width / 12,
+        height: 36,
+        width: 36,
         child: Center(
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.w600),
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 200),
+            style: TextStyle(
+              fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+              fontSize: isSelected ? 14 : 13,
+              color: isSelected ? color : color.withValues(alpha: 0.5),
+            ),
+            child: Text(title, textAlign: TextAlign.center),
           ),
         ),
       ),

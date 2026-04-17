@@ -1,3 +1,5 @@
+// === UPDATED FILE: attendance_list_screen.dart ===
+// Modernized: Consistent background, premium AppBar
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/MarkAttendanceComponents/student_list_component.dart';
@@ -42,6 +44,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'MARK ATTENDANCE'),
+      backgroundColor: Colors.grey.shade50,
       body: FutureBuilder(
         future: _studentListService,
         builder: (context, snapshot) {

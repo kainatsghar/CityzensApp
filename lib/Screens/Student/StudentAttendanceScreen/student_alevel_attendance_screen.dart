@@ -1,7 +1,8 @@
+// === UPDATED FILE: student_alevel_attendance_screen.dart ===
+// Modernized: Consistent background with rest of app
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/StudentAttendanceComponents/student_alevel_attendance_component.dart';
-// import 'package:tcs_app/components/StudentAttendanceComponents/student_attendance_component.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
@@ -40,6 +41,7 @@ class _StudentAlevelAttendanceScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "ATTENDANCE"),
+      backgroundColor: Colors.grey.shade50,
       body: FutureBuilder(
         future: attendanceData,
         builder: (context, snapshot) {

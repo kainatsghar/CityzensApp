@@ -1,3 +1,5 @@
+// === UPDATED FILE: student_alevel_attendance_subject_screen.dart ===
+// Modernized: Consistent background
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/StudentAttendanceComponents/student_alevel_attendance_subject_component.dart';
@@ -5,7 +7,6 @@ import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/provider/StudentAttendance/student_alevel_attendance_provider.dart';
-// import 'package:tcs_app/provider/StudentAttendance/student_attendance_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 
 class StudentALevelAttendanceSubjectScreen extends StatefulWidget {
@@ -39,7 +40,8 @@ class _StudentALevelAttendanceSubjectScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Attendance Subject'),
+      appBar: const CustomAppBar(title: 'ATTENDANCE SUBJECT'),
+      backgroundColor: Colors.grey.shade50,
       body: RefreshIndicator(
         child: FutureBuilder(
           future: _attendanceSubjectsService,
