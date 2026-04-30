@@ -1,3 +1,6 @@
+// === UPDATED FILE: custom_timetable_form_field.dart ===
+// Modernized: Premium input styling with subtle fill, refined focus states,
+// and consistent border radius matching the new design system.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -66,43 +69,60 @@ class CustomTimeTableFormField extends StatelessWidget {
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       readOnly: readOnly,
       textAlign: TextAlign.center,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 12,
-        fontWeight: FontWeight.bold,
-        color: AppColors.secondaryColor,
+        fontWeight: FontWeight.w700,
+        color: isEnable
+            ? AppColors.primaryDarkColor
+            : AppColors.primaryDarkColor.withOpacity(0.65),
       ),
       decoration: InputDecoration(
-        fillColor: AppColors.whiteColor,
+        fillColor: isEnable
+            ? AppColors.primaryBlue.withOpacity(0.04)
+            : Colors.grey.shade50,
         filled: true,
-        focusColor: AppColors.whiteColor,
+        focusColor: AppColors.primaryLightBlue,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: AppColors.whiteColor),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: AppColors.primaryBlue.withOpacity(0.1),
+          ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: AppColors.whiteColor),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: AppColors.primaryBlue.withOpacity(0.1),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: AppColors.whiteColor),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: AppColors.primaryBlue,
+            width: 1.5,
+          ),
         ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: Colors.transparent),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.grey.withOpacity(0.1),
+          ),
         ),
         enabled: isEnable,
         isDense: true,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 2, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 4,
+          vertical: 10,
+        ),
+        counterText: '',
         errorMaxLines: 5,
         suffixIcon: suffixWidget == null
             ? null
             : Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(8.0),
-                    bottomRight: Radius.circular(8.0),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryBlue,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
                   ),
                 ),
                 child: suffixWidget,
@@ -110,11 +130,11 @@ class CustomTimeTableFormField extends StatelessWidget {
         prefixIcon: prefixIcon != null
             ? Container(
                 margin: const EdgeInsets.only(right: 3.0),
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
-                    bottomLeft: Radius.circular(8.0),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryBlue,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
                   ),
                 ),
                 child: Icon(prefixIcon, color: AppColors.whiteColor),
@@ -122,8 +142,10 @@ class CustomTimeTableFormField extends StatelessWidget {
             : null,
         hintText: hintText,
         labelStyle: const TextStyle(fontSize: 14.0),
-        hintStyle: const TextStyle(fontSize: 14.0) /*,
-            labelText: labelText*/,
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          color: Colors.grey.shade400,
+        ),
       ),
       enabled: isEnable,
       validator: validator,

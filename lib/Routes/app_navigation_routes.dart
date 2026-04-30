@@ -57,6 +57,7 @@ class AppNavRoutes {
   static const complaintQueryRoute = '/complaintQuery';
   static const addCircularRoute = '/addCircular';
   static const teacherCircularRoute = '/teacherCircular';
+  static const teacherAcademicHubRoute = '/teacherAcademicHub';
 
   /// Returns true if the given route name matches any of the defined routes
   static bool isRouteAvailable(String routeName) {
@@ -127,6 +128,7 @@ class AppNavRoutes {
       complaintQueryRoute,
       addCircularRoute,
       teacherCircularRoute,
+      teacherAcademicHubRoute,
     };
 
     return allRoutes.any((route) => route == normalizedRoute);

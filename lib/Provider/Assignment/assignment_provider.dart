@@ -125,12 +125,17 @@ class AssignmentProvider with ChangeNotifier {
 
   Future<void> setSelectedSection(String sectionName) async {
     AppNavigation.goBack();
-    sectionId = sections.singleWhere((e) => e.title == sectionName).value;
-    subjectController.clear();
-    sectionController.text = sectionName;
-    DialogBuilder.showLoadingIndicator();
-    await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
-    notifyListeners();
+    final newSectionId = sections.singleWhere((e) => e.title == sectionName).value;
+
+    // BUG FIX: Only reset subject and reload if section actually changed
+    if (sectionId != newSectionId) {
+      sectionId = newSectionId;
+      subjectController.clear();
+      sectionController.text = sectionName;
+      DialogBuilder.showLoadingIndicator();
+      await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
+      notifyListeners();
+    }
   }
 
   Future<void> submitAssignment() async {

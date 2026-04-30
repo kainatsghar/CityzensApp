@@ -116,34 +116,34 @@ class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
                 // ── Date Picker ──────────────────────────────────────────
                 GestureDetector(
                   onTap: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate:
-                          DateTime.tryParse(provider.selectedDate ?? '') ??
-                          DateTime.now(),
-                      firstDate:
-                          DateTime.tryParse(provider.selectedDate ?? '') ??
-                          DateTime.now(),
-                      lastDate:
-                          DateTime.tryParse(provider.selectedDate ?? '') ??
-                          DateTime.now(),
-                      builder: (context, child) {
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            colorScheme: const ColorScheme.light(
-                              primary: AppColors.secondaryColor,
-                              onPrimary: Colors.white,
-                              surface: Colors.white,
-                              onSurface: AppColors.primaryDarkColor,
-                            ),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (picked != null) {
-                      provider.setSelectedDate(picked);
-                    }
+                    // final picked = await showDatePicker(
+                    //   context: context,
+                    //   initialDate:
+                    //       DateTime.tryParse(provider.selectedDate ?? '') ??
+                    //       DateTime.now(),
+                    //   firstDate:
+                    //       DateTime.tryParse(provider.selectedDate ?? '') ??
+                    //       DateTime.now(),
+                    //   lastDate:
+                    //       DateTime.tryParse(provider.selectedDate ?? '') ??
+                    //       DateTime.now(),
+                    //   builder: (context, child) {
+                    //     return Theme(
+                    //       data: Theme.of(context).copyWith(
+                    //         colorScheme: const ColorScheme.light(
+                    //           primary: AppColors.goldenColors,
+                    //           onPrimary: Colors.white,
+                    //           surface: Colors.white,
+                    //           onSurface: AppColors.primaryDarkColor,
+                    //         ),
+                    //       ),
+                    //       child: child!,
+                    //     );
+                    //   },
+                    // );
+                    // if (picked != null) {
+                    //   provider.setSelectedDate(picked);
+                    // }
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -151,10 +151,10 @@ class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
                       vertical: 14,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.secondaryColor.withOpacity(0.04),
+                      color: AppColors.goldenColors.withOpacity(0.04),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: AppColors.secondaryColor.withOpacity(0.15),
+                        color: AppColors.goldenColors.withOpacity(0.15),
                         width: 1,
                       ),
                     ),
@@ -163,12 +163,12 @@ class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: AppColors.secondaryColor.withOpacity(0.12),
+                            color: AppColors.goldenColors.withOpacity(0.12),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
                             Icons.calendar_month_rounded,
-                            color: AppColors.secondaryColor,
+                            color: AppColors.goldenColors,
                             size: 20,
                           ),
                         ),
@@ -181,9 +181,7 @@ class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
                               style: TextStyle(
                                 fontSize: 10,
                                 letterSpacing: 0.5,
-                                color: AppColors.secondaryColor.withOpacity(
-                                  0.8,
-                                ),
+                                color: AppColors.goldenColors.withOpacity(0.8),
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -204,7 +202,7 @@ class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
                         const Icon(
                           Icons.edit_calendar_rounded,
                           size: 18,
-                          color: AppColors.secondaryColor,
+                          color: AppColors.goldenColors,
                         ),
                       ],
                     ),

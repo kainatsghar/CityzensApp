@@ -87,5 +87,7 @@
 		<string>https</string>
 		<string>mailto</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>

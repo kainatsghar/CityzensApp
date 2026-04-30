@@ -1,12 +1,11 @@
 import 'dart:io';
-
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 
 import '../../custom_widgets/CustomAppButton/custom_app_button.dart';
-import '../../custom_widgets/CustomCoverImage/custom_cover_image.dart';
-import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import '../../provider/EyeOnYourChild/eye_on_your_child_provider.dart';
 import '../../utils/app_constants.dart';
 
@@ -21,513 +20,399 @@ class EyeOnYourChildComponent extends StatefulWidget {
 class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Consumer<EyeOnYourChildProvider>(
       builder: (context, value, _) {
         var responseData = value.eyeOnChildResponse;
-        // var update = [
-        //   'Just took a nap!',
-        //   'Enjoyed lunch today!',
-        //   'Had a great play time!',
-        //   'Learnt something new!',
-        //   'Is feeling happy today!',
-        //   'Reached a milestone!',
-        //   'Is feeling sleepy now!',
-        //   'Is learning through play!',
-        //   'Made new friends today!',
-        //   'Enjoyed storytime!'
-        // ];
 
-        // var childs = ['Nafay Ali', 'Zainab Fahad', 'Aun Saif'];
+        if (responseData == null) {
+          return const ShowCustomMessage(message: AppConstants.noRecordFound);
+        }
 
-        return responseData == null
-            ? const ShowCustomMessage(message: AppConstants.noRecordFound)
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Form(
-                    key: value.formKey,
-                    child: Column(
-                      children: [
-                        const CustomCoverImage(
-                          title: 'EYE ON YOUR CHILD',
-                          imagePath: 'location.png',
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10.0,
-                            left: 10.0,
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(height: size.height * 0.02),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          const Text(
-                                            ' Select update to send',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: AppColors.blackColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(height: size.height * 0.01),
-                                          Container(
-                                            height:
-                                                2, // Set the height of the divider
-                                            width:
-                                                size.width *
-                                                0.4, // Set the width of the divider
-                                            color: AppColors.primaryColor,
-                                          ),
-                                          Transform.translate(
-                                            offset: const Offset(
-                                              0,
-                                              -12,
-                                            ), // Adjust this value as needed
-                                            child: const Icon(
-                                              Icons.arrow_drop_down_sharp,
-                                              size: 32,
-                                              color: AppColors
-                                                  .primaryColor, // Set the color of the arrow
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      const Text(
-                                        '       Select child             ',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: AppColors.blackColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(height: size.height * 0.01),
-                                      Container(
-                                        height:
-                                            2, // Set the height of the divider
-                                        width:
-                                            size.width *
-                                            0.4, // Set the width of the divider
-                                        color: AppColors.primaryColor,
-                                      ),
-                                      Transform.translate(
-                                        offset: const Offset(
-                                          0,
-                                          -12,
-                                        ), // Adjust this value as needed
-                                        child: const Icon(
-                                          Icons.arrow_drop_down_sharp,
-                                          size: 32,
-                                          color: AppColors
-                                              .primaryColor, // Set the color of the arrow
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+        final updates = responseData.studentUpdateDetails ?? [];
+        final students = responseData.studentDetails ?? [];
+
+        if (students.isEmpty) {
+          return const ShowCustomMessage(
+            message: 'No students found for this class.',
+          );
+        }
+
+        return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 16.0,
+            ),
+            child: Form(
+              key: value.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 1. Select Student
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 500),
+                    child: _buildSectionTitle(
+                      '1. Select Student',
+                      Icons.face_retouching_natural_rounded,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 100),
+                    child: SizedBox(
+                      height: 50,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: students.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 8),
+                        itemBuilder: (context, index) {
+                          final child = students[index];
+                          final isSelected =
+                              value.selectedChild == child.studentName;
+
+                          return GestureDetector(
+                            onTap: () {
+                              value.setSelectedChild(
+                                child.studentName ?? '',
+                                child.studentId ?? 0,
+                              );
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 0.0,
-                            right: 5.0,
-                            left: 5.0,
-                          ),
-                          child: SizedBox(
-                            height: size.height * 0.41,
-                            child: Column(
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? AppColors.primaryBlue
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? AppColors.primaryBlue
+                                      : Colors.grey.shade300,
+                                ),
+                                boxShadow: isSelected
+                                    ? [
+                                        BoxShadow(
+                                          color: AppColors.primaryBlue
+                                              .withOpacity(0.3),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ]
+                                    : null,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  child.studentName.toString().trim(),
+                                  style: TextStyle(
+                                    color: isSelected
+                                        ? Colors.white
+                                        : AppColors.primaryDarkColor,
+                                    fontWeight: isSelected
+                                        ? FontWeight.bold
+                                        : FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // 2. Select Update
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 200),
+                    child: _buildSectionTitle(
+                      '2. Select Update',
+                      Icons.message_rounded,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 300),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 10,
+                      children: updates.map((update) {
+                        final isSelected =
+                            value.selectedUpdate == update.updateName;
+                        return GestureDetector(
+                          onTap: () {
+                            value.setSelectedUpdate(
+                              update.updateName ?? '',
+                              update.id ?? 0,
+                            );
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColors.primaryDarkColor
+                                  : AppColors.primaryBlue.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: isSelected
+                                    ? AppColors.primaryDarkColor
+                                    : AppColors.primaryBlue.withOpacity(0.1),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width:
-                                            size.width *
-                                            0.45, // Set the width of the selection card
-                                        child: ListView.builder(
-                                          physics:
-                                              const ClampingScrollPhysics(),
-                                          padding: EdgeInsets.zero,
-                                          itemCount: responseData
-                                              .studentUpdateDetails
-                                              ?.length,
-                                          itemBuilder: (_, index) {
-                                            final updates = responseData
-                                                .studentUpdateDetails?[index];
-                                            return SizedBox(
-                                              height: size.height * 0.04,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  value.setSelectedUpdate(
-                                                    updates.updateName ?? '',
-                                                    updates.id ?? 0,
-                                                  );
-                                                },
-                                                child: Card(
-                                                  color:
-                                                      value.selectedUpdate ==
-                                                          updates!.updateName
-                                                              .toString()
-                                                      ? AppColors
-                                                            .primaryDarkColor
-                                                      : AppColors
-                                                            .primaryLightBlue,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          8,
-                                                        ),
-                                                  ),
-                                                  elevation: 2,
-                                                  child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      updates.updateName ?? '',
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        color:
-                                                            value.selectedUpdate ==
-                                                                updates
-                                                                    .updateName
-                                                                    .toString()
-                                                            ? AppColors
-                                                                  .whiteColor
-                                                            : AppColors
-                                                                  .blackColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: size.width * 0.47,
-                                        // height: size.height * 0.41,
-                                        child: ListView.builder(
-                                          physics:
-                                              const ClampingScrollPhysics(),
-                                          padding: EdgeInsets.zero,
-                                          // shrinkWrap: true,
-                                          itemCount: responseData
-                                              .studentDetails
-                                              ?.length,
-                                          itemBuilder: (_, index) {
-                                            final child = responseData
-                                                .studentDetails?[index];
-                                            return SizedBox(
-                                              height: size.height * 0.04,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  value.setSelectedChild(
-                                                    child.studentName ?? '',
-                                                    child.studentId ?? 0,
-                                                  );
-                                                },
-                                                child: Card(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          8,
-                                                        ),
-                                                  ),
-                                                  elevation: 0,
-                                                  // ignore: unrelated_type_equality_checks
-                                                  color:
-                                                      value.selectedChild ==
-                                                          child!.studentName
-                                                      ? AppColors
-                                                            .primaryDarkColor
-                                                      : const Color.fromARGB(
-                                                          255,
-                                                          212,
-                                                          210,
-                                                          210,
-                                                        ),
-                                                  child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: SingleChildScrollView(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets.symmetric(
-                                                              horizontal: 8.0,
-                                                            ),
-                                                        child: Text(
-                                                          child.studentName
-                                                              .toString()
-                                                              .trim(),
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                            // ignore: unrelated_type_equality_checks
-                                                            color:
-                                                                value.selectedChild ==
-                                                                    child
-                                                                        .studentName
-                                                                ? AppColors
-                                                                      .whiteColor
-                                                                : AppColors
-                                                                      .blackColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                if (isSelected) ...[
+                                  const Icon(
+                                    Icons.check_circle_rounded,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 6),
+                                ],
+                                Text(
+                                  update.updateName ?? '',
+                                  style: TextStyle(
+                                    color: isSelected
+                                        ? Colors.white
+                                        : AppColors.primaryDarkColor,
+                                    fontWeight: isSelected
+                                        ? FontWeight.bold
+                                        : FontWeight.w500,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(height: size.height * 0.02),
-                        //if(responseData.studentDetails!.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 1.0),
-                          child: responseData.studentDetails!.isNotEmpty
-                              ? const Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start, // Added
-                                  children: [
-                                    Text(
-                                      'Upload photos (for all) (maximum 3)',
-                                      style: TextStyle(fontSize: 16),
-                                      textAlign: TextAlign
-                                          .start, // Added textAlign property
-                                    ),
-                                  ],
-                                )
-                              : null,
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                        Stack(
-                          children: [
-                            Positioned(
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: value.files.isNotEmpty
-                                    ? Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: value.files.length,
-                                            itemBuilder: (context, index) {
-                                              // Check if the index is valid and if the file exists at that index
-                                              if (index < value.files.length) {
-                                                File? file = value
-                                                    .files[index]; // Get the file at the current index
-                                                if (file != null) {
-                                                  return SizedBox(
-                                                    width: size.width * 0.45,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                            left: 6,
-                                                          ),
-                                                      child: Card(
-                                                        elevation: 2,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets.all(
-                                                                8.0,
-                                                              ),
-                                                          child: Center(
-                                                            child: Text(
-                                                              file.path
-                                                                  .split('/')
-                                                                  .last,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                              }
-                                              // If the index is invalid or the file is null, return an empty SizedBox
-                                              return const SizedBox();
-                                            },
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 10,
-                                              top: 10,
-                                            ),
-                                            child:
-                                                responseData
-                                                    .studentDetails!
-                                                    .isNotEmpty
-                                                ? InkWell(
-                                                    onTap: () => value
-                                                        .uploadAttachment(),
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 40,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.grey,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              8,
-                                                            ),
-                                                        shape:
-                                                            BoxShape.rectangle,
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets.all(
-                                                              8.0,
-                                                            ),
-                                                        child: Image.asset(
-                                                          'assets/images/attachment.png',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : null,
-                                          ),
-                                          SizedBox(height: size.height * 0.01),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 10,
-                                            ),
-                                            child:
-                                                responseData
-                                                    .studentDetails!
-                                                    .isNotEmpty
-                                                ? const Text(
-                                                    'UPLOAD\nATTACHMENT',
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.grey,
-                                                      fontSize: 10,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  )
-                                                : null,
-                                          ),
-                                        ],
-                                      )
-                                    : Center(
-                                        child:
-                                            responseData
-                                                .studentDetails!
-                                                .isNotEmpty
-                                            ? Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                          right: 10,
-                                                        ),
-                                                    child: InkWell(
-                                                      onTap: () => value
-                                                          .uploadAttachment(),
-                                                      child: Container(
-                                                        height: 40,
-                                                        width: 40,
-                                                        decoration: BoxDecoration(
-                                                          border: Border.all(
-                                                            color: Colors.grey,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                8,
-                                                              ),
-                                                          shape: BoxShape
-                                                              .rectangle,
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets.all(
-                                                                8.0,
-                                                              ),
-                                                          child: Image.asset(
-                                                            'assets/images/attachment.png',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: size.height * 0.01,
-                                                  ),
-                                                  const Padding(
-                                                    padding: EdgeInsets.only(
-                                                      right: 10,
-                                                    ),
-                                                    child: Text(
-                                                      'UPLOAD\nATTACHMENT',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.grey,
-                                                        fontSize: 10,
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            : null,
-                                      ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: size.height * 0.01),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: responseData.studentDetails!.isNotEmpty
-                              ? CustomAppButton(
-                                  buttonTitle: 'SAVE',
-                                  onTap: () => {value.submitEyeOnChildRecord()},
-                                )
-                              : null,
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                      ],
+                        );
+                      }).toList(),
                     ),
                   ),
-                ),
-              );
+
+                  const SizedBox(height: 32),
+
+                  // 3. Attach Photos
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 400),
+                    child: _buildSectionTitle(
+                      '3. Attach Photos (Max 3)',
+                      Icons.camera_alt_rounded,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 500),
+                    child: _buildUploadSection(value),
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // Action Button
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 600),
+                    child: CustomAppButton(
+                      buttonTitle: 'SEND UPDATE',
+                      onTap: () {
+                        if (value.selectedChild != null &&
+                            value.selectedChild!.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please select a student'),
+                            ),
+                          );
+                          return;
+                        }
+                        if (value.selectedUpdate != null &&
+                            value.selectedUpdate!.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please select an update'),
+                            ),
+                          );
+                          return;
+                        }
+                        value.submitEyeOnChildRecord();
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ),
+          ),
+        );
       },
+    );
+  }
+
+  Widget _buildSectionTitle(String title, IconData icon) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: AppColors.primaryBlue.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, color: AppColors.primaryBlue, size: 16),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: const TextStyle(
+            color: AppColors.primaryDarkColor,
+            fontWeight: FontWeight.w800,
+            fontSize: 15,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUploadSection(EyeOnYourChildProvider value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Upload Button Zone
+        GestureDetector(
+          onTap: value.files.length < 3 ? () => value.uploadAttachment() : null,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            decoration: BoxDecoration(
+              color: value.files.length < 3
+                  ? AppColors.primaryBlue.withOpacity(0.04)
+                  : Colors.grey.shade100,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: value.files.length < 3
+                    ? AppColors.primaryBlue.withOpacity(0.3)
+                    : Colors.grey.shade300,
+                width: 1.5,
+              ), // Note: Cannot easily do dashed border without external package, solid is fine and modern.
+            ),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.cloud_upload_outlined,
+                  size: 32,
+                  color: value.files.length < 3
+                      ? AppColors.primaryBlue
+                      : Colors.grey,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  value.files.length < 3
+                      ? 'Tap to upload photos'
+                      : 'Maximum photos reached',
+                  style: TextStyle(
+                    color: value.files.length < 3
+                        ? AppColors.primaryDarkColor
+                        : Colors.grey,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${value.files.length}/3 photos selected',
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 11),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // Display Selected Files
+        if (value.files.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 60,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: value.files.length,
+              separatorBuilder: (context, index) => const SizedBox(width: 10),
+              itemBuilder: (context, index) {
+                final File? file = value.files[index];
+                if (file == null) return const SizedBox.shrink();
+
+                return Container(
+                  width: 160,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey.shade200),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.03),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryLightBlue.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(
+                          Icons.image_outlined,
+                          size: 16,
+                          color: AppColors.primaryBlue,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          file.path.split('/').last,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primaryDarkColor,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      // Ideally there should be a remove button, but provider doesn't have a removeAttachment method
+                      // If it did: GestureDetector(onTap: () => value.removeFile(index), child: Icon(Icons.close, size: 16))
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

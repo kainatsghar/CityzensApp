@@ -27,6 +27,54 @@ class MarkAttendanceProvider with ChangeNotifier {
   final subjectController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  DateTime selectedDate = DateTime.now();
+  bool isDirty = false;
+  bool isUpdateMode = false;
+
+  bool get isViewOnly => !isToday(selectedDate);
+  bool get isWeekend =>
+      selectedDate.weekday == DateTime.saturday ||
+      selectedDate.weekday == DateTime.sunday;
+
+  bool get isTimeLocked {
+    if (AppConstants.baseUrl == AppConstants.apiTestBaseURL) return false;
+    if (classId == 19 || classId == 20) return false;
+    return DateTime.now().hour >= 10;
+  }
+
+  bool isToday(DateTime date) {
+    final now = DateTime.now();
+    return date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day;
+  }
+
+  void setSelectedDate(DateTime date) {
+    selectedDate = date;
+    notifyListeners();
+  }
+
+  void setDirty(bool value) {
+    if (isDirty != value) {
+      isDirty = value;
+      notifyListeners();
+    }
+  }
+
+  Map<String, int> getLiveStatistics() {
+    int present = 0, absent = 0, leave = 0;
+    for (var student in students) {
+      if (student.attnTypeId == 1) {
+        present++;
+      } else if (student.attnTypeId == 2) {
+        absent++;
+      } else if (student.attnTypeId == 3) {
+        leave++;
+      }
+    }
+    return {'Present': present, 'Absent': absent, 'Leave': leave};
+  }
+
   List<AttendanceGraph> pieData = [];
   List<Options> sections = [];
   List<Options> subjects = [];
@@ -68,18 +116,22 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   /// Set section ID and class ID from section object
   void setSectionId(int? id) {
+    if (sectionId == id) return;
     sectionId = id;
     notifyListeners();
   }
 
   /// Set class ID from section object
   void setClassId(int? id) {
+    if (classId == id) return;
     classId = id;
     notifyListeners();
   }
 
   /// Set subject ID and name from subject object
   void setSubjectId(int? id, String? name) {
+    if (subjectId == (id ?? 0) && subjectController.text == (name ?? ''))
+      return;
     subjectId = id ?? 0;
     subjectController.text = name ?? '';
     notifyListeners();
@@ -104,7 +156,7 @@ class MarkAttendanceProvider with ChangeNotifier {
         classSectionId: '$sectionId',
         subjectId: subjectId,
         tokenId: localDataProvider.userData!.tokenId!,
-        attendanceDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        attendanceDate: DateFormat('yyyy-MM-dd').format(selectedDate),
       );
       setStudentList(response);
       return response;
@@ -124,20 +176,39 @@ class MarkAttendanceProvider with ChangeNotifier {
   }
 
   void changeStatus(String status, int index) {
+    if (isViewOnly) return;
     studentListResponse.studentList![index].day = status;
     studentListResponse.studentList![index].attnTypeId = attendanceOptions
         .singleWhere((e) => e.title!.characters.first == status)
         .value;
+    setDirty(true);
     notifyListeners();
   }
 
   void setStudentList(StudentListResponse listResponse) {
     studentListResponse = listResponse;
     saveAttendanceResponse = ResponseMessage();
-    for (int i = 0; i < studentListResponse.studentList!.length; i++) {
-      if (studentListResponse.studentList![i].attnTypeId == 0) {
-        studentListResponse.studentList![i].day = 'P';
-        studentListResponse.studentList![i].attnTypeId = 1;
+    isUpdateMode = false;
+    isDirty = false;
+
+    // Check if any student already has attendance marked from API
+    bool anyMarked = false;
+    if (studentListResponse.studentList != null) {
+      for (int i = 0; i < studentListResponse.studentList!.length; i++) {
+        if (studentListResponse.studentList![i].attnTypeId != 0) {
+          anyMarked = true;
+          break;
+        }
+      }
+    }
+    isUpdateMode = anyMarked;
+
+    if (isToday(selectedDate) && studentListResponse.studentList != null) {
+      for (int i = 0; i < studentListResponse.studentList!.length; i++) {
+        if (studentListResponse.studentList![i].attnTypeId == 0) {
+          studentListResponse.studentList![i].day = 'P';
+          studentListResponse.studentList![i].attnTypeId = 1;
+        }
       }
     }
     notifyListeners();
@@ -145,18 +216,25 @@ class MarkAttendanceProvider with ChangeNotifier {
 
   Future<void> setSelectedSection(String sectionName) async {
     AppNavigation.goBack();
-    sectionId = sections.firstWhere((e) => e.title == sectionName).value;
-    classId = sectionResponse.section!
-        .firstWhere((e) => e.name == sectionName)
-        .classId;
-    subjectController.clear();
-    subjectId = 0;
-    sectionController.text = sectionName;
-    if (classId == 19 || classId == 20) {
-      DialogBuilder.showLoadingIndicator();
-      await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
+    final newSectionId = sections
+        .firstWhere((e) => e.title == sectionName)
+        .value;
+
+    // BUG FIX: Only reset subject and reload if section actually changed
+    if (sectionId != newSectionId) {
+      sectionId = newSectionId;
+      classId = sectionResponse.section!
+          .firstWhere((e) => e.name == sectionName)
+          .classId;
+      subjectController.clear();
+      subjectId = 0;
+      sectionController.text = sectionName;
+      if (classId == 19 || classId == 20) {
+        DialogBuilder.showLoadingIndicator();
+        await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void setSelectedSubject(String subjectName) {
@@ -227,12 +305,14 @@ class MarkAttendanceProvider with ChangeNotifier {
               SaveAttendanceRequest(
                 classSectionId: '$sectionId',
                 tokenId: localDataProvider.userData!.tokenId,
-                attendanceDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                attendanceDate: DateFormat('yyyy-MM-dd').format(selectedDate),
                 subjectId: subjectId,
                 dailyAttendance: attendanceList,
               ),
             );
         if (responseMessage.isSuccessful ?? false) {
+          isUpdateMode = true; // After successful save, it becomes update mode
+          isDirty = false;
           setSaveAttendanceResponse(responseMessage);
           showSnackBar(
             responseMessage.message,

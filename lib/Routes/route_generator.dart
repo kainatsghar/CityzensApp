@@ -61,6 +61,7 @@ import '../screens/Teacher/TeacherSurveyScreen/teacher_survey_screen.dart';
 import '../screens/Teacher/TeacherTimeTableScreen/teacher_timetable_screen.dart';
 import '../screens/Teacher/TeacherTimeTableSectionScreen/teacher_timetable_section_screen.dart';
 import '../screens/Teacher/TeacherCircularScreen/teacher_circular_screen.dart';
+import '../screens/Teacher/TeacherAcademicHubScreen/teacher_academic_hub_screen.dart';
 import '../model/Diary/diary_response.dart';
 import '../model/Assignment/assignment_response.dart';
 import '../model/CircularAnnouncement/circular_announcement_response.dart';
@@ -208,6 +209,14 @@ class RouteGenerator {
         );
       case AppNavRoutes.teacherCircularRoute:
         return routeScreen(child: const TeacherCircularScreen());
+      case AppNavRoutes.teacherAcademicHubRoute:
+        return routeScreen(
+          child: TeacherAcademicHubScreen(
+            initialTabIndex: settings.arguments is int
+                ? settings.arguments as int
+                : 0,
+          ),
+        );
 
       default:
         return _errorRoute();

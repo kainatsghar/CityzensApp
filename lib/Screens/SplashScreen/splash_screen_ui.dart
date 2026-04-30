@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/LogoWidget/logo_widget.dart';
 import 'package:tcs_app/custom_widgets/ParticleBackground/particle_background.dart';
@@ -8,7 +9,7 @@ import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/app_constants.dart';
 
 /// A performance-optimized production Splash Screen.
-/// 
+///
 /// Performance Highlights:
 /// - [RepaintBoundary] around the animated center to isolate branding animations.
 /// - [const] constructors used for all static UI elements.
@@ -77,12 +78,13 @@ class SplashScreenUIState extends State<SplashScreenUI>
       curve: const Interval(0.8, 1.0, curve: Curves.easeIn),
     );
 
-    _bgGradientColor = ColorTween(
-      begin: AppColors.primaryDarkBlue,
-      end: const Color(0xFF1A237E),
-    ).animate(
-      CurvedAnimation(parent: _ambientController, curve: Curves.easeInOut),
-    );
+    _bgGradientColor =
+        ColorTween(
+          begin: AppColors.primaryDarkBlue,
+          end: const Color(0xFF1A237E),
+        ).animate(
+          CurvedAnimation(parent: _ambientController, curve: Curves.easeInOut),
+        );
 
     _entryController.forward();
   }
@@ -96,88 +98,93 @@ class SplashScreenUIState extends State<SplashScreenUI>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnimatedBuilder(
-        animation: Listenable.merge([_bgGradientColor, _ambientController]),
-        builder: (context, child) {
-          return DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                center: const Alignment(0, -0.2),
-                radius: 1.8,
-                colors: [
-                  _bgGradientColor.value!.withOpacity(0.9),
-                  AppColors.primaryDarkBlue,
-                ],
-              ),
-            ),
-            child: child,
-          );
-        },
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            // Optimized modular particles
-            ParticleBackground(
-              animation: _ambientController,
-              particleColor: AppColors.goldenYellow,
-            ),
-
-            // Isolated foreground content
-            Center(
-              child: RepaintBoundary(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FadeTransition(
-                      opacity: _logoFade,
-                      child: ScaleTransition(
-                        scale: _logoScale,
-                        child: LogoWidget(
-                          size: MediaQuery.sizeOf(context).height * 0.28,
-                          glowColor: AppColors.goldenYellow,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 48),
-                    FadeTransition(
-                      opacity: _textFade,
-                      child: const Text(
-                        'W E L C O M E',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w300,
-                          letterSpacing: 8.0,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        body: AnimatedBuilder(
+          animation: Listenable.merge([_bgGradientColor, _ambientController]),
+          builder: (context, child) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: const Alignment(0, -0.2),
+                  radius: 1.8,
+                  colors: [
+                    _bgGradientColor.value!.withOpacity(0.9),
+                    AppColors.primaryDarkBlue,
                   ],
                 ),
               ),
-            ),
+              child: child,
+            );
+          },
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              // Optimized modular particles
+              ParticleBackground(
+                animation: _ambientController,
+                particleColor: AppColors.goldenYellow,
+              ),
 
-            // Static Footer (Optimized with const)
-            Positioned(
-              bottom: 40,
-              left: 0,
-              right: 0,
-              child: FadeTransition(
-                opacity: _versionFade,
-                child: Text(
-                  "v${AppConstants.appVersion}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.4),
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 1.5,
+              // Isolated foreground content
+              Center(
+                child: RepaintBoundary(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FadeTransition(
+                        opacity: _logoFade,
+                        child: ScaleTransition(
+                          scale: _logoScale,
+                          child: LogoWidget(
+                            size: MediaQuery.sizeOf(context).height * 0.28,
+                            glowColor: AppColors.goldenYellow,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 48),
+                      FadeTransition(
+                        opacity: _textFade,
+                        child: const Text(
+                          'W E L C O M E',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 8.0,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+
+              // Static Footer (Optimized with const)
+              Positioned(
+                bottom: 40,
+                left: 0,
+                right: 0,
+                child: FadeTransition(
+                  opacity: _versionFade,
+                  child: Text(
+                    "v${AppConstants.appVersion}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.4),
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

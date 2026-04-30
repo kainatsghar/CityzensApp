@@ -10,6 +10,7 @@ import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/StudentAttendance/student_list_response.dart';
+import 'package:flutter/services.dart';
 
 class AttendanceListItem extends StatelessWidget {
   final Student student;
@@ -24,27 +25,39 @@ class AttendanceListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Options> attendanceOptions = HelperFunction.attendanceOptions();
-    return Consumer<MarkAttendanceProvider>(
-      builder: (context, value, _) {
+
+    // Only rebuild this specific row when this specific student's attendance changes
+    return Selector<MarkAttendanceProvider, String>(
+      selector: (context, provider) =>
+          provider.studentListResponse.studentList![index].day ?? '',
+      builder: (context, day, _) {
+        final value = context.read<MarkAttendanceProvider>();
+        final isViewOnly = value.isViewOnly;
+        final isUnmarkedPast = isViewOnly && student.attnTypeId == 0;
+
         return FadeInUp(
-          delay: Duration(milliseconds: 20 * index),
+          delay: Duration(milliseconds: 100),
           duration: const Duration(milliseconds: 350),
           child: Container(
             margin: const EdgeInsets.only(bottom: 10),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: isUnmarkedPast ? Colors.grey.shade50 : Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.primaryBlue.withOpacity(0.06),
+                color: isUnmarkedPast
+                    ? Colors.grey.shade300
+                    : AppColors.primaryBlue.withOpacity(0.06),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.025),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+              boxShadow: isUnmarkedPast
+                  ? []
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.025),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
             ),
             child: Row(
               children: [
@@ -82,8 +95,6 @@ class AttendanceListItem extends StatelessWidget {
                           color: AppColors.primaryDarkColor,
                           letterSpacing: 0.2,
                         ),
-                        // maxLines: 1,
-                        // overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 2),
                       Card.filled(
@@ -120,11 +131,18 @@ class AttendanceListItem extends StatelessWidget {
                       child: CustomToggleButton(
                         student: student,
                         title: attendanceOptions[i].title!.characters.first,
-                        color: attendanceOptions[i].color!,
-                        onTap: () => value.changeStatus(
-                          attendanceOptions[i].title!.characters.first,
-                          index,
-                        ),
+                        color: isUnmarkedPast
+                            ? Colors.grey
+                            : attendanceOptions[i].color!,
+                        onTap: () {
+                          if (!isViewOnly) {
+                            HapticFeedback.lightImpact();
+                            value.changeStatus(
+                              attendanceOptions[i].title!.characters.first,
+                              index,
+                            );
+                          }
+                        },
                       ),
                     ),
                   ),

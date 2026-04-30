@@ -197,12 +197,23 @@ Teachers have full control over academic content creation and student management
   - **Purpose**: Enhance parent engagement in early childhood education
   - Photos and notes visible to parents in real-time
 
-#### 10. **Teacher Dashboard**
+#### 10. **Teacher Dashboard & Unified Academic Hub**
 - **File**: [teacher_dashboard_screen.dart](lib/Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart)
-- Quick access to all teaching features via dashboard buttons
-- Display: Name, Campus, Current Date
-- Navigation to Profile, Timetable, Attendance, Diary, Assignments, etc.
-- Real-time sync with ERP data
+- Quick access to all teaching features via a premium, responsive dashboard interface.
+- Display: Compact teacher profile strip.
+- **Smart Class & Section Card**:
+  - Unified selection interface for both ClassTeacher (Attendance, Timetable) and SubjectTeacher (Academics, Results) roles.
+  - Auto-selects first available section and subject.
+  - State is shared globally across the app without needing intermediate selection screens.
+- **Unified Academic Hub**:
+  - Replaces individual list screens with a single `TeacherAcademicHubScreen`.
+  - Tabbed interface to switch seamlessly between Homework, Classwork, and Circulars.
+  - Floating action button dynamically changes context based on active tab.
+- **Smart Navigation Guards**:
+  - Validates section selection before navigating to section-dependent screens
+  - Validates subject selection for A-Level classes before attendance/timetable
+  - Clear user feedback via snackbar when prerequisites are missing
+- **Pull-to-Refresh**: Refresh all dashboard data with a single gesture
 
 ---
 

@@ -103,34 +103,34 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
                 // ── Date Picker ──────────────────────────────────────────
                 GestureDetector(
                   onTap: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate:
-                          DateTime.tryParse(provider.selectedDate ?? '') ??
-                          DateTime.now(),
-                      firstDate:
-                          DateTime.tryParse(provider.selectedDate ?? '') ??
-                          DateTime.now(),
-                      lastDate:
-                          DateTime.tryParse(provider.selectedDate ?? '') ??
-                          DateTime.now(),
-                      builder: (context, child) {
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            colorScheme: const ColorScheme.light(
-                              primary: AppColors.lightRedColor,
-                              onPrimary: Colors.white,
-                              surface: Colors.white,
-                              onSurface: AppColors.primaryDarkColor,
-                            ),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (picked != null) {
-                      provider.setSelectedDate(picked);
-                    }
+                    // final picked = await showDatePicker(
+                    //   context: context,
+                    //   initialDate:
+                    //       DateTime.tryParse(provider.selectedDate ?? '') ??
+                    //       DateTime.now(),
+                    //   firstDate:
+                    //       DateTime.tryParse(provider.selectedDate ?? '') ??
+                    //       DateTime.now(),
+                    //   lastDate:
+                    //       DateTime.tryParse(provider.selectedDate ?? '') ??
+                    //       DateTime.now(),
+                    //   builder: (context, child) {
+                    //     return Theme(
+                    //       data: Theme.of(context).copyWith(
+                    //         colorScheme: const ColorScheme.light(
+                    //           primary: AppColors.lightRedColor,
+                    //           onPrimary: Colors.white,
+                    //           surface: Colors.white,
+                    //           onSurface: AppColors.primaryDarkColor,
+                    //         ),
+                    //       ),
+                    //       child: child!,
+                    //     );
+                    //   },
+                    // );
+                    // if (picked != null) {
+                    //   provider.setSelectedDate(picked);
+                    // }
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

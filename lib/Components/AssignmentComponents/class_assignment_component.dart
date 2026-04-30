@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/model/Assignment/assignment_response.dart';
 import 'package:tcs_app/provider/Assignment/assignment_provider.dart';
+import '../../custom_widgets/CustomDialogBoxes/delete_confirm_dialog.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/app_constants.dart';
@@ -44,31 +45,11 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
     showDialog(
       context: context,
       builder: (BuildContext ctx) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          title: const Text(
-            'Delete Classwork',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          content: const Text(
-            'Are you sure you want to delete this classwork entry? This action cannot be undone.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Cancel'),
-            ),
-            FilledButton(
-              style: FilledButton.styleFrom(backgroundColor: Colors.redAccent),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-                provider.deleteAssignment(id);
-              },
-              child: const Text('Delete'),
-            ),
-          ],
+        return DeleteConfirmDialog(
+          title: 'Delete Classwork',
+          description:
+              'Are you sure you want to delete this classwork entry? This action cannot be undone.',
+          onDelete: () => provider.deleteAssignment(id),
         );
       },
     );
@@ -139,10 +120,10 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
               margin: const EdgeInsets.only(top: 24, bottom: 12),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: AppColors.secondaryColor.withOpacity(0.12),
+                color: AppColors.goldenColors.withOpacity(0.12),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: AppColors.secondaryColor.withOpacity(0.2),
+                  color: AppColors.goldenColors.withOpacity(0.2),
                 ),
               ),
               child: Row(
@@ -151,7 +132,7 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
                   const Icon(
                     Icons.calendar_today_rounded,
                     size: 16,
-                    color: AppColors.secondaryColor,
+                    color: AppColors.goldenColors,
                   ),
                   const SizedBox(width: 10),
                   Text(
@@ -200,15 +181,15 @@ class _AssignmentCard extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
           decoration: BoxDecoration(
-            color: AppColors.secondaryColor.withOpacity(0.04),
+            color: AppColors.goldenColors.withOpacity(0.04),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: AppColors.secondaryColor.withOpacity(0.2),
+              color: AppColors.goldenColors.withOpacity(0.2),
               width: 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.secondaryColor.withOpacity(0.1),
+                color: AppColors.goldenColors.withOpacity(0.1),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
               ),
@@ -229,7 +210,7 @@ class _AssignmentCard extends StatelessWidget {
                   Container(
                     width: 6,
                     decoration: const BoxDecoration(
-                      color: AppColors.secondaryColor,
+                      color: AppColors.goldenColors,
                     ),
                   ),
                   Expanded(
@@ -262,13 +243,14 @@ class _AssignmentCard extends StatelessWidget {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: AppColors.secondaryColor.withOpacity(
+                                    color: AppColors.goldenColors.withOpacity(
                                       0.15,
                                     ),
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
-                                      color: AppColors.secondaryColor
-                                          .withOpacity(0.3),
+                                      color: AppColors.goldenColors.withOpacity(
+                                        0.3,
+                                      ),
                                     ),
                                   ),
                                   child: Text(

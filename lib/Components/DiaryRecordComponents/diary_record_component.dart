@@ -7,6 +7,7 @@ import 'package:tcs_app/utils/app_constants.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../custom_widgets/CustomDialogBoxes/delete_confirm_dialog.dart';
 import '../../model/Diary/diary_response.dart';
 import '../../provider/Diary/diary_provider.dart';
 import '../../provider/LocalData/local_data_provider.dart';
@@ -43,31 +44,11 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
     showDialog(
       context: context,
       builder: (BuildContext ctx) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          title: const Text(
-            'Delete Homework',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          content: const Text(
-            'Are you sure you want to delete this homework diary entry? This action cannot be undone.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Cancel'),
-            ),
-            FilledButton(
-              style: FilledButton.styleFrom(backgroundColor: Colors.redAccent),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-                provider.deleteDiary(id);
-              },
-              child: const Text('Delete'),
-            ),
-          ],
+        return DeleteConfirmDialog(
+          title: 'Delete Homework',
+          description:
+              'Are you sure you want to delete this homework diary entry? This action cannot be undone.',
+          onDelete: () => provider.deleteDiary(id),
         );
       },
     );

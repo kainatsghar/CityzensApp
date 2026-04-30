@@ -113,12 +113,19 @@ class ClassTestResultProvider with ChangeNotifier {
 
   Future<void> setSelectedSection(String sectionName) async {
     AppNavigation.goBack();
-    sectionId = sections.singleWhere((e) => e.title == sectionName).value;
-    subjectController.clear();
-    sectionController.text = sectionName;
-    DialogBuilder.showLoadingIndicator();
-    await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
-    notifyListeners();
+    final newSectionId = sections
+        .singleWhere((e) => e.title == sectionName)
+        .value;
+
+    // BUG FIX: Only reset subject and reload if section actually changed
+    if (sectionId != newSectionId) {
+      sectionId = newSectionId;
+      subjectController.clear();
+      sectionController.text = sectionName;
+      DialogBuilder.showLoadingIndicator();
+      await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
+      notifyListeners();
+    }
   }
 
   Future<TeacherSectionResponse> loadSections() async {
@@ -351,11 +358,14 @@ class ClassTestResultProvider with ChangeNotifier {
   }
 
   void setSectionId(int? id) {
+    if (sectionId == id) return;
     sectionId = id;
     notifyListeners();
   }
 
   void setSubjectId(int? id, String? name) {
+    if (subjectId == (id ?? 0) && subjectController.text == (name ?? ''))
+      return;
     subjectId = id ?? 0;
     subjectController.text = name ?? '';
     notifyListeners();

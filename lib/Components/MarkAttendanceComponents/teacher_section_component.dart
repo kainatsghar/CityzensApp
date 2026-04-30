@@ -37,13 +37,70 @@ class TeacherSectionComponent extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomTextFormField(
-                          hintText: HelperFunction.dateFormatter(
-                            '${DateTime.now()}',
-                          ),
-                          isEnable: false,
-                          readOnly: true,
-                          prefixIcon: Icons.date_range,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextFormField(
+                                hintText: HelperFunction.dateFormatter(
+                                  '${attendanceValue.selectedDate}',
+                                ),
+                                isEnable: true,
+                                readOnly: true,
+                                prefixIcon: Icons.date_range,
+                                onTap: () async {
+                                  DateTime now = DateTime.now();
+                                  DateTime firstDayOfPreviousMonth = DateTime(
+                                    now.year,
+                                    now.month - 1,
+                                    1,
+                                  );
+                                  final DateTime? picked = await showDatePicker(
+                                    context: context,
+                                    initialDate: attendanceValue.selectedDate,
+                                    firstDate: firstDayOfPreviousMonth,
+                                    lastDate: now,
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: const ColorScheme.light(
+                                            primary: AppColors.primaryBlue,
+                                            onPrimary: Colors.white,
+                                            onSurface: AppColors.primaryDarkColor,
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                  );
+                                  if (picked != null) {
+                                    attendanceValue.setSelectedDate(picked);
+                                  }
+                                },
+                              ),
+                            ),
+                            if (!attendanceValue.isToday(attendanceValue.selectedDate)) ...[
+                              const SizedBox(width: 12),
+                              GestureDetector(
+                                onTap: () => attendanceValue.setSelectedDate(DateTime.now()),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primaryBlue.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: AppColors.primaryBlue.withOpacity(0.3)),
+                                  ),
+                                  child: const Text(
+                                    "Today",
+                                    style: TextStyle(
+                                      color: AppColors.primaryBlue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ]
+                          ],
                         ),
                         SizedBox(height: size.height * 0.02),
                         const Text(
@@ -58,15 +115,18 @@ class TeacherSectionComponent extends StatelessWidget {
                           items: dashboardValue.getSectionsWithDiary(false),
                           getDisplayText: (section) => section.name ?? 'N/A',
                           onItemSelected: (section) {
-                            attendanceValue.sectionController.text =
-                                section.name ?? '';
-                            attendanceValue.setClassId(section.classId ?? 0);
-                            attendanceValue.setSectionId(
-                              section.classSectionId ?? 0,
-                            );
-                            // Reset subject selection when section changes
-                            attendanceValue.subjectController.clear();
-                            attendanceValue.setSubjectId(null, null);
+                            // BUG FIX: Only reset subject and update if section actually changed
+                            if (attendanceValue.sectionId != section.classSectionId) {
+                              attendanceValue.sectionController.text =
+                                  section.name ?? '';
+                              attendanceValue.setClassId(section.classId ?? 0);
+                              attendanceValue.setSectionId(
+                                section.classSectionId ?? 0,
+                              );
+                              // Reset subject selection when section changes
+                              attendanceValue.subjectController.clear();
+                              attendanceValue.setSubjectId(null, null);
+                            }
                           },
                           initialItemName:
                               attendanceValue.sectionController.text,

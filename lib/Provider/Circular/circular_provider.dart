@@ -121,12 +121,19 @@ class CircularProvider with ChangeNotifier {
 
   Future<void> setSelectedSection(String sectionName) async {
     AppNavigation.goBack();
-    sectionId = sections.singleWhere((e) => e.title == sectionName).value;
-    subjectController.clear();
-    sectionController.text = sectionName;
-    DialogBuilder.showLoadingIndicator();
-    await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
-    notifyListeners();
+    final newSectionId = sections
+        .singleWhere((e) => e.title == sectionName)
+        .value;
+
+    // BUG FIX: Only reset subject and reload if section actually changed
+    if (sectionId != newSectionId) {
+      sectionId = newSectionId;
+      subjectController.clear();
+      sectionController.text = sectionName;
+      DialogBuilder.showLoadingIndicator();
+      await loadSubjects().whenComplete(() => DialogBuilder.hideOpenDialog());
+      notifyListeners();
+    }
   }
 
   Future<void> submitCircular() async {
@@ -148,6 +155,7 @@ class CircularProvider with ChangeNotifier {
           ),
         );
         if (response.isSuccess!) {
+          await loadTeacherCircular();
           Future.delayed(
             const Duration(seconds: 1),
             () => AppNavigation.goBack(),
@@ -183,7 +191,7 @@ class CircularProvider with ChangeNotifier {
                     titleController.text, // "Subject" field for Announcement
                 description: descriptionController.text,
                 announcementDate: selectedDate,
-                classTeacherId: existingRecord.classTeacherId.toString(),
+                classTeacherId: localDataProvider.userData!.userName,
                 sectionId: existingRecord.sectionId,
                 fileName: fileName ?? '',
                 base64String: base64String,

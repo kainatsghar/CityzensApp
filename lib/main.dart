@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tcs_app/utils/media_query_util.dart';
@@ -38,17 +39,22 @@ class TCSApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryUtil.init(context);
-    return MultiProvider(
-      providers: appProviders,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Cityzens',
-        theme: AppThemes.lightTheme,
-        home: const SplashScreenUI(),
-        initialRoute: AppNavRoutes.initialRoute,
-        navigatorKey: AppNavigation.navigatorKey,
-        onGenerateRoute: RouteGenerator.generateRoute,
-        navigatorObservers: !kIsWeb ? [AppInitializer.analyticsObserver] : [],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent,
+      ),
+      child: MultiProvider(
+        providers: appProviders,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Cityzens',
+          theme: AppThemes.lightTheme,
+          home: const SplashScreenUI(),
+          initialRoute: AppNavRoutes.initialRoute,
+          navigatorKey: AppNavigation.navigatorKey,
+          onGenerateRoute: RouteGenerator.generateRoute,
+          navigatorObservers: !kIsWeb ? [AppInitializer.analyticsObserver] : [],
+        ),
       ),
     );
   }

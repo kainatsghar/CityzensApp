@@ -52,4 +52,7 @@ class AppColors {
   static const Color purple = Color(0xFF4F5FEB); // purpleColor
   static const Color primary = Color(0xFF617FFF); // primaryColor
   static const Color grey = Color(0xFFEBEAEA); // greyColor
+  static const Color blueGrey = Color(0xFF607D8B);
+  static const Color blueGreyLight = Color(0xFFECEFF1); // shade 50
+  static const Color blueGreyDark = Color(0xFF455A64); // shade 700
 }

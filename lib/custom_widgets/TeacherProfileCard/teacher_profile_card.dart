@@ -41,24 +41,18 @@ class TeacherProfileCard extends StatelessWidget {
               opacity: 0.1,
               alignment: Alignment.centerRight,
             ),
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppColors.primaryLightBlue,
-                AppColors.primaryColor,
-                AppColors.primaryColor,
-
-                // Color(0xFF6BA3D4),
+                AppColors.primaryBlue.withOpacity(0.05),
+                AppColors.primaryBlue.withOpacity(0.15),
               ],
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(75),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            border: Border.all(
+              color: AppColors.primaryBlue.withOpacity(0.1),
+              width: 1,
+            ),
           ),
           child: InkWell(
             onTap: onTap,
@@ -104,7 +98,7 @@ class TeacherProfileCard extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: AppColors.primaryDarkColor,
                               height: 1.3,
                             ),
                             maxLines: 2,
@@ -124,9 +118,7 @@ class TeacherProfileCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white.withAlpha(
-                                230,
-                              ), // 0.9 * 255 = 230
+                              color: Colors.grey.shade600,
                               letterSpacing: 0.5,
                             ),
                             maxLines: 2,
@@ -146,14 +138,10 @@ class TeacherProfileCard extends StatelessWidget {
                                 vertical: 6.0,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white.withAlpha(
-                                  51,
-                                ), // 0.2 * 255 = 51
-                                borderRadius: BorderRadius.circular(8.0),
+                                color: AppColors.primaryBlue.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(12.0),
                                 border: Border.all(
-                                  color: Colors.white.withAlpha(
-                                    77,
-                                  ), // 0.3 * 255 = 77
+                                  color: AppColors.primaryBlue.withOpacity(0.2),
                                   width: 1,
                                 ),
                               ),
@@ -167,7 +155,7 @@ class TeacherProfileCard extends StatelessWidget {
                                   style: const TextStyle(
                                     fontSize: 13.0,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.white,
+                                    color: AppColors.primaryBlue,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,

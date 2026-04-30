@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/MarkAttendanceComponents/student_list_component.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/provider/MarkAttendance/mark_attendance_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
@@ -50,7 +49,69 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return const CustomLoader();
+              return ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 42,
+                          height: 42,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 12,
+                                width: 120,
+                                color: Colors.grey.withOpacity(0.2),
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                height: 10,
+                                width: 80,
+                                color: Colors.grey.withOpacity(0.2),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: List.generate(
+                            3,
+                            (i) => Container(
+                              margin: const EdgeInsets.only(left: 5),
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey.withOpacity(0.2),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
             default:
               if (snapshot.hasData) {
                 return const StudentListComponent();

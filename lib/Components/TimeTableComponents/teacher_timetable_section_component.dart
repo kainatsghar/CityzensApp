@@ -1,3 +1,7 @@
+// === UPDATED FILE: teacher_timetable_section_component.dart ===
+// Modernized: Premium selection card, improved spacing, consistent typography,
+// and smooth layout using the latest design system components.
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
@@ -17,70 +21,91 @@ class TeacherTimeTableSectionComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Consumer2<TimeTableProvider, DashboardProvider>(
         builder: (context, value, dashboardValue, _) {
           return Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 8.0,
+              horizontal: 20.0,
+              vertical: 16.0,
             ),
             child: Column(
               children: <Widget>[
-                const CustomLogoCover(),
-                SizedBox(height: size.height * 0.03),
-                CustomCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Select Section',
-                        style: TextStyle(
-                          color: AppColors.primaryDarkColor,
-                          fontWeight: FontWeight.w500,
+                // ── Animated Header ──
+                FadeInDown(
+                  duration: const Duration(milliseconds: 400),
+                  child: const CustomLogoCover(),
+                ),
+                SizedBox(height: size.height * 0.04),
+
+                // ── Section Selection Card ──
+                FadeInUp(
+                  delay: const Duration(milliseconds: 100),
+                  duration: const Duration(milliseconds: 400),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.04),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: CustomCard(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.layers_outlined,
+                                  size: 18,
+                                  color: AppColors.primaryBlue.withOpacity(0.7),
+                                ),
+                                const SizedBox(width: 10),
+                                const Text(
+                                  'Select Your Class & Section',
+                                  style: TextStyle(
+                                    color: AppColors.primaryDarkColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            TabSelector<Section>(
+                              items: dashboardValue.getSectionsWithDiary(false),
+                              getDisplayText: (section) =>
+                                  section.name ?? 'N/A',
+                              onItemSelected: (section) {
+                                value.sectionController.text =
+                                    section.name ?? '';
+                                value.setClassId(section.classId ?? 0);
+                                value.setSectionId(section.classSectionId ?? 0);
+                              },
+                              initialItemName: value.sectionController.text,
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        height: size.height * 0.01,
-                        width: double.maxFinite,
-                      ),
-                      TabSelector<Section>(
-                        items: dashboardValue.getSectionsWithDiary(false),
-                        getDisplayText: (section) => section.name ?? 'N/A',
-                        onItemSelected: (section) {
-                          value.sectionController.text = section.name ?? '';
-                          value.setClassId(section.classId ?? 0);
-                          value.setSectionId(section.classSectionId ?? 0);
-                        },
-                        initialItemName: value.sectionController.text,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-                // CustomCard(
-                //   child: Form(
-                //     key: value.formKey,
-                //     child: Column(
-                //       children: [
-                //         CustomTextFormField(
-                //           hintText: 'Select Section',
-                //           controller: value.sectionController,
-                //           onTap: () => value.sectionBottomSheet(),
-                //           readOnly: true,
-                //           validator: HelperFunction.validator,
-                //           suffixWidget: const ImageIcon(
-                //             AssetImage('assets/images/dropdown_icon.png'),
-                //             color: AppColors.whiteColor,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                SizedBox(height: size.height * 0.03),
-                CustomAppButton(
-                  buttonTitle: 'Next',
-                  onTap: () => value.navigateToMarkTimeTable(),
+                SizedBox(height: size.height * 0.04),
+
+                // ── Navigation Action ──
+                FadeInUp(
+                  delay: const Duration(milliseconds: 200),
+                  child: CustomAppButton(
+                    buttonTitle: 'Continue to Timetable',
+                    onTap: () => value.navigateToMarkTimeTable(),
+                  ),
                 ),
+                SizedBox(height: size.height * 0.04),
               ],
             ),
           );
