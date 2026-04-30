@@ -729,18 +729,6 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header description
-          Text(
-            'Manage and track student performance with ease.',
-            style: TextStyle(
-              color: AppColors.softGreyText.withValues(alpha: 0.8),
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Active Selection Banner (High Fidelity)
           FadeInRight(
             duration: const Duration(milliseconds: 500),
             child: Container(
@@ -1073,13 +1061,17 @@ Widget _buildWrapChips<T>({
                 const Icon(Icons.book_rounded, size: 14, color: Colors.white),
                 const SizedBox(width: 8),
               ],
-              Text(
-                text,
-                style: TextStyle(
-                  color: isSelected ? Colors.white : AppColors.primaryDarkBlue,
-                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w700,
-                  fontSize: 13,
-                  letterSpacing: 0.3,
+              Flexible(
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: isSelected
+                        ? Colors.white
+                        : AppColors.primaryDarkBlue,
+                    fontWeight: isSelected ? FontWeight.w800 : FontWeight.w700,
+                    fontSize: 13,
+                    letterSpacing: 0.3,
+                  ),
                 ),
               ),
             ],

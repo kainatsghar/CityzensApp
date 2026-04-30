@@ -64,6 +64,19 @@ class EyeOnYourChildProvider with ChangeNotifier {
 
   void setEyeOnYourChildRecords(EyeOnYourChildResponse response) {
     eyeOnChildResponse = response;
+    
+    // Auto-select first student if available and none selected
+    if (selectedChild == null && response.studentDetails != null && response.studentDetails!.isNotEmpty) {
+      selectedChild = response.studentDetails!.first.studentName;
+      selectedChildId = response.studentDetails!.first.studentId;
+    }
+    
+    // Auto-select first update if available and none selected
+    if (selectedUpdate == null && response.studentUpdateDetails != null && response.studentUpdateDetails!.isNotEmpty) {
+      selectedUpdate = response.studentUpdateDetails!.first.updateName;
+      selectedUpdateId = response.studentUpdateDetails!.first.id;
+    }
+    
     notifyListeners();
   }
 
@@ -231,6 +244,33 @@ class EyeOnYourChildProvider with ChangeNotifier {
       // }
     }
     notifyListeners();
+  }
+
+  void removeAttachment(int index) {
+    if (index >= 0 && index < files.length) {
+      files.removeAt(index);
+      _reassignFileStrings();
+      notifyListeners();
+    }
+  }
+
+  void _reassignFileStrings() {
+    fileName1 = files.isNotEmpty ? files[0]!.path.split('/').last : null;
+    fileName2 = files.length > 1 ? files[1]!.path.split('/').last : null;
+    fileName3 = files.length > 2 ? files[2]!.path.split('/').last : null;
+
+    if (files.length < 3) {
+      fileName3 = null;
+      base64String3 = null;
+    }
+    if (files.length < 2) {
+      fileName2 = null;
+      base64String2 = null;
+    }
+    if (files.isEmpty) {
+      fileName1 = null;
+      base64String1 = null;
+    }
   }
 
   Future<String> fileToBase64(File file) async {
