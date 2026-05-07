@@ -25,12 +25,12 @@ import 'Dashboard/dashboard_provider.dart';
 import 'Diary/diary_provider.dart';
 import 'EyeOnYourChild/eye_on_your_child_provider.dart';
 import 'MarkUnverified/mark_unverified_provider.dart';
-import 'ParentDashboard/parent_dashboard_provider.dart';
 import 'StudentAttendance/student_alevel_attendance_provider.dart';
 import 'StudentAttendance/student_attendance_provider.dart';
 import 'Survey/survey_provider.dart';
 import 'TimeTable/timetable_provider.dart';
 import 'WithdrawalRequest/withdrawal_request_provider.dart';
+import 'StudentDashboard/student_dashboard_provider.dart';
 
 List<SingleChildWidget> appProviders = [
   ChangeNotifierProvider(create: (_) => LoginProvider()),
@@ -41,7 +41,6 @@ List<SingleChildWidget> appProviders = [
   ChangeNotifierProvider(create: (_) => DashboardProvider()),
   ChangeNotifierProvider(create: (_) => LibraryProvider()),
   ChangeNotifierProvider(create: (_) => FeeChallanProvider()),
-  ChangeNotifierProvider(create: (_) => ParentDashboardProvider()),
   ChangeNotifierProvider(create: (_) => NotificationProvider()),
   ChangeNotifierProvider(create: (_) => TeacherProfileProvider()),
   ChangeNotifierProvider(create: (_) => MarkAttendanceProvider()),
@@ -63,4 +62,5 @@ List<SingleChildWidget> appProviders = [
   ChangeNotifierProvider(create: (_) => CircularProvider()),
   ChangeNotifierProvider(create: (_) => SupportFormProvider()),
   ChangeNotifierProvider(create: (_) => SplashProvider()),
+  ChangeNotifierProvider(create: (_) => StudentDashboardProvider()),
 ];

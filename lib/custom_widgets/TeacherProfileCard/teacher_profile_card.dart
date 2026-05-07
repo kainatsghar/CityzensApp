@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
-import 'package:tcs_app/gen/assets.gen.dart';
 import 'package:tcs_app/provider/TeacherProfile/teacher_profile_provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/helper_function.dart';
-import 'package:tcs_app/utils/media_query_util.dart';
 
 class TeacherProfileCard extends StatelessWidget {
   final double? borderRadius;
@@ -31,148 +29,170 @@ class TeacherProfileCard extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return Container(
-          margin: padding ?? const EdgeInsets.symmetric(horizontal: 16.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
-            image: DecorationImage(
-              image: AssetImage(Assets.images.tcsLogoWhite.path),
-              fit: BoxFit.fitHeight,
-              opacity: 0.1,
-              alignment: Alignment.centerRight,
-            ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppColors.primaryBlue.withOpacity(0.05),
-                AppColors.primaryBlue.withOpacity(0.15),
+        return RepaintBoundary(
+          child: Container(
+            margin: padding ?? const EdgeInsets.symmetric(horizontal: 16.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius ?? 24.0),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [AppColors.primaryBlue, AppColors.primaryDarkBlue],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primaryBlue.withValues(alpha: 0.3),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
               ],
             ),
-            border: Border.all(
-              color: AppColors.primaryBlue.withOpacity(0.1),
-              width: 1,
-            ),
-          ),
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // Avatar with gender-based image
-                    Container(
-                      width: MediaQueryUtil.getResponsivePercentageSize(8),
-                      height: MediaQueryUtil.getResponsivePercentageSize(8),
-                      decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: ClipOval(
-                        child: Hero(
-                          tag: 'teacher_profile_image',
-                          child: CustomUserImage(
-                            userId: profile.employeeCode ?? '',
-                            disableUploadImage: true,
-                            isMale: isMale,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-
-                    // Teacher Name
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQueryUtil.getWidthPercentage(62),
-                          child: Text(
-                            HelperFunction.noNullStringText(
-                              profile.teacherName ?? '',
-                            ).toUpperCase(),
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryDarkColor,
-                              height: 1.3,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-
-                        // Designation
-                        SizedBox(
-                          width: MediaQueryUtil.getWidthPercentage(62),
-                          child: Text(
-                            HelperFunction.noNullStringText(
-                              profile.designation ?? '',
-                            ).toUpperCase(),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey.shade600,
-                              letterSpacing: 0.5,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-
-                        const SizedBox(height: 8),
-
-                        // Branch Name
-                        Row(
+              borderRadius: BorderRadius.circular(borderRadius ?? 24.0),
+              child: Stack(
+                children: [
+                  // Interactive Content
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: onTap,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
-                              width: MediaQueryUtil.getWidthPercentage(62),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0,
-                                vertical: 6.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryBlue.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(12.0),
-                                border: Border.all(
-                                  color: AppColors.primaryBlue.withOpacity(0.2),
-                                  width: 1,
-                                ),
-                              ),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  HelperFunction.noNullStringText(
-                                    profile.branch ?? '',
-                                  ).toUpperCase(),
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontSize: 13.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.primaryBlue,
+                            // Avatar Section
+                            _buildAvatar(
+                              profile.employeeCode ?? '',
+                              AppColors.whiteColor.withValues(alpha: 0.8),
+                            ),
+                            const SizedBox(width: 20),
+
+                            // Info Section
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    HelperFunction.noNullStringText(
+                                      profile.teacherName ?? '',
+                                    ).toUpperCase(),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w900,
+                                      color: AppColors.whiteColor,
+                                      letterSpacing: 0.5,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                  const SizedBox(height: 6),
+                                  _buildBadge(
+                                    profile.designation ?? '',
+                                    AppColors.whiteColor.withValues(
+                                      alpha: 0.15,
+                                    ),
+                                    AppColors.whiteColor.withValues(alpha: 0.2),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  _buildBranchInfo(
+                                    profile.branch ?? '',
+                                    AppColors.whiteColor.withValues(alpha: 0.9),
+                                  ),
+                                ],
                               ),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: AppColors.whiteColor,
+                              size: 16,
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildAvatar(String employeeCode, Color borderColor) {
+    return Container(
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: borderColor, width: 2),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x33000000),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ClipOval(
+        child: Hero(
+          tag: 'teacher_profile_image',
+          child: CustomUserImage(
+            userId: employeeCode,
+            disableUploadImage: true,
+            isMale: isMale,
+            imageSize: 75,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBadge(String text, Color bg, Color border) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: border),
+      ),
+      child: Text(
+        text.toUpperCase(),
+        style: const TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w900,
+          color: AppColors.goldenYellow,
+          letterSpacing: 0.5,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBranchInfo(String branch, Color color) {
+    return Row(
+      children: [
+        const Icon(
+          Icons.location_on_rounded,
+          size: 12,
+          color: AppColors.goldenYellow,
+        ),
+        const SizedBox(width: 4),
+        Expanded(
+          child: Text(
+            branch.toUpperCase(),
+            style: TextStyle(
+              fontSize: 11,
+              color: color,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.2,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }

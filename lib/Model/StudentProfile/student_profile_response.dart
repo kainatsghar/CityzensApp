@@ -21,6 +21,15 @@ class StudentProfileResponse {
       profile: profileList,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'IsSuccessful': isSuccessful,
+      'Message': message,
+      'IsServerException': isException,
+      'profile': profile?.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
 class Profile {
@@ -61,5 +70,20 @@ class Profile {
       region: json['Region_Name'],
       fatherEmail: json['FatherEmail'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'Student_Id': studentId,
+      'fullname': name,
+      'Date_Of_Birth': dateOfBirth,
+      'Address': address,
+      'PrimaryContactNo': contactNo,
+      'City': city,
+      'Class_Name': className,
+      'Center_Name': center,
+      'Region_Name': region,
+      'FatherEmail': fatherEmail,
+    };
   }
 }

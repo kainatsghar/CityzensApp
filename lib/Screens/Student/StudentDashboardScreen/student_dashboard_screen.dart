@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
 import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart';
-import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/custom_widgets/CustomDashboardButton/custom_dashboard_button.dart';
+import 'package:tcs_app/custom_widgets/ShimmerEffect/dashboard_shimmer.dart';
+import 'package:tcs_app/screens/Student/StudentDashboardScreen/components/student_profile_card.dart';
+import 'package:tcs_app/gen/assets.gen.dart';
+import 'package:tcs_app/model/MultiChild/multi_child_response.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/provider/StudentAttendance/student_attendance_provider.dart';
+import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/routes/app_navigation_routes.dart';
 import 'package:tcs_app/routes/screen_arguments.dart';
-import 'package:tcs_app/screens/Student/StudentDashboardScreen/update_dashboard_card.dart';
-import 'package:tcs_app/services/FCMTokenRefresh/fcm_token_refresh_service.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:tcs_app/utils/media_query_util.dart';
 
-import '../../../custom_widgets/CustomLoader/custom_loader.dart';
-import '../../../utils/app_colors.dart';
-import '../../../utils/helper_function.dart';
+import 'package:tcs_app/services/FCMTokenRefresh/fcm_token_refresh_service.dart';
+import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   final ScreenArguments? args;
@@ -31,722 +30,815 @@ class StudentDashboardScreen extends StatefulWidget {
 
 class StudentDashboardScreenState extends State<StudentDashboardScreen>
     with WidgetsBindingObserver {
-  var localData = Provider.of<LocalDataProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
-  var attendance = Provider.of<StudentAttendanceProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
-  // var dashboardProvider = Provider.of<DashboardProvider>(
-  //   AppNavigation.currentContext!,
-  //   listen: false,
-  // );
+  final ValueNotifier<double> _appBarOpacityNotifier = ValueNotifier(0.0);
+  late final ScrollController _scrollController;
 
-  // final splashProvider = Provider.of<SplashProvider>(
-  //   AppNavigation.currentContext!,
-  //   listen: false,
-  // );
-  // bool isDashboardResultCardViewFeatureEnabled = false;
-  // bool isAcademicResultPublishedFeatureEnable = false;
+  bool get _isParent {
+    final localData = Provider.of<LocalDataProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+    return localData.userData?.userType == 'Parent';
+  }
 
-  Future? attendanceService;
-  // Future? resultService;
-  // bool isURLOpening = false;
-  // FeatureConfigModel? academicResultPublishedFeature;
+  String get _selectedChildName {
+    final localData = Provider.of<LocalDataProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+    if (!_isParent) {
+      return HelperFunction.noNullStringText(
+        '${localData.userData?.info?.name}',
+      );
+    }
+    final provider = Provider.of<StudentDashboardProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+    final children = provider.multiChildResponse?.children;
+    if (children == null || children.isEmpty) {
+      return widget.args?.userName ?? 'CITYZENS';
+    }
+    final currentId = localData.studentId;
+    final match = children.cast<ChildInfo?>().firstWhere(
+      (c) => '${c!.studentId}' == currentId,
+      orElse: () => null,
+    );
+    return match?.studentName?.toUpperCase() ??
+        children.first.studentName?.toUpperCase() ??
+        'CITYZENS';
+  }
 
   @override
   void initState() {
-    if (localData.userData!.userType != 'Parent') {
-      FcmTokenRefreshService.refreshToken();
-    }
-    attendanceService = attendance.getAttendancePercentage();
-
-    // if (splashProvider.listOfFeatureConfig != null) {
-    //   try {
-    //     academicResultPublishedFeature = splashProvider.listOfFeatureConfig!
-    //         .firstWhere((feature) => feature.id == 'academicResultPublished');
-
-    //     if (academicResultPublishedFeature == null) {
-    //       isAcademicResultPublishedFeatureEnable = false;
-    //     } else {
-    //       isAcademicResultPublishedFeatureEnable =
-    //           academicResultPublishedFeature!.isActive;
-    //     }
-    //   } catch (e) {
-    //     isAcademicResultPublishedFeatureEnable = false;
-    //   }
-    //   try {
-    //     final dashboardResultCardViewFeature = splashProvider
-    //         .listOfFeatureConfig!
-    //         .firstWhere((feature) => feature.id == 'dashboardResultCardView');
-
-    //     isDashboardResultCardViewFeatureEnabled =
-    //         dashboardResultCardViewFeature.isActive;
-    //   } catch (e) {
-    //     isDashboardResultCardViewFeatureEnabled = false;
-    //   }
-    // }
-
-    // if (isDashboardResultCardViewFeatureEnabled) {
-    //   resultService = dashboardProvider.loadResults(
-    //     academicYearId: 17,
-    //     termId: 1,
-    //   );
-    // }
-
     super.initState();
+
+    FcmTokenRefreshService.refreshToken();
+
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      double offset = _scrollController.offset;
+      double newOpacity = (offset / 100).clamp(0.0, 1.0);
+      if (newOpacity != _appBarOpacityNotifier.value) {
+        _appBarOpacityNotifier.value = newOpacity;
+      }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final provider = Provider.of<StudentDashboardProvider>(
+        context,
+        listen: false,
+      );
+      if (_isParent) {
+        if (provider.multiChildResponse == null) {
+          provider.fetchMultiChildData();
+        } else {
+          provider.initializeForParent(provider.multiChildResponse!.children!);
+        }
+      } else {
+        provider.initializeForStudent();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _appBarOpacityNotifier.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final double itemHeight =
-        ((MediaQueryUtil.isLandscape() ? size.width : size.height) -
-            kToolbarHeight -
-            24) /
-        6;
-    final double itemWidth =
-        (MediaQueryUtil.isLandscape() ? size.height : size.width) / 2;
+    String getUserName(
+      LocalDataProvider localData,
+      StudentDashboardProvider provider,
+    ) {
+      if (_isParent) {
+        return _selectedChildName;
+      } else {
+        final profile =
+            provider.activeChildData?.profile?.profile?.isNotEmpty == true
+            ? provider.activeChildData!.profile!.profile!.first
+            : null;
+        return profile?.name ?? localData.userData?.info?.name ?? 'Student';
+      }
+    }
 
-    return Consumer<LocalDataProvider>(
-      builder: (context, value, _) {
-        final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
-        final localGradeId = value.gradeId?.toString() ?? '';
-        // print('GRADE ID DASHBOARD: $gradeId');
-        // print('LOCAL GRADE ID DASHBOARD: $localGradeId');
+    return Consumer2<LocalDataProvider, StudentDashboardProvider>(
+      builder: (context, localData, provider, _) {
+        final gradeId = localData.userData?.info?.gradeId?.toString() ?? '';
+        final localGradeId = localData.gradeId?.toString() ?? '';
+        final userName = getUserName(localData, provider);
+
         return Scaffold(
-          appBar: CustomAppBar(
-            title: localData.userData!.userType == 'Parent'
-                ? '${widget.args!.userName}'
-                // ? '${widget.args.userName}'
-                : HelperFunction.noNullStringText(
-                    '${localData.userData!.info!.name}',
-                  ),
-          ),
-          drawer: value.userData!.userType == 'Parent'
-              ? null
-              : const NavigationalDrawer(),
-          body: RefreshIndicator(
-            onRefresh: () {
-              return attendanceService = attendance.getAttendancePercentage();
-            },
-            child: SafeArea(
-              top: false,
-              child: CustomScrollView(
-                slivers: [
-                  // SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  //     child: AttendanceDashboardCard(
-                  //       attendanceService: attendanceService,
-                  //       size: size,
-                  //     ),
-                  //   ),
-                  // ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: DashboardTopSection(
-                        showResult: false,
-                        // (gradeId != '2' &&
-                        // gradeId != '3' &&
-                        // gradeId != '4' &&
-                        // localGradeId != '2' &&
-                        // localGradeId != '3' &&
-                        // localGradeId != '4' &&
-                        // isDashboardResultCardViewFeatureEnabled),
-                        resultReleaseTime:
-                            // academicResultPublishedFeature?.startDate ??
-                            DateTime(2025, 12, 22, 17, 12, 0),
-                        onViewResult: null,
-                        //  !isAcademicResultPublishedFeatureEnable
-                        //     ? null
-                        //     : () async {
-                        //         final url =
-                        //             dashboardProvider
-                        //                         .resultsResponse
-                        //                         .pdfResultslist !=
-                        //                     null &&
-                        //                 dashboardProvider
-                        //                     .resultsResponse
-                        //                     .pdfResultslist!
-                        //                     .isNotEmpty
-                        //             ? dashboardProvider
-                        //                   .resultsResponse
-                        //                   .pdfResultslist![0]
-                        //                   .url!
-                        //             : '';
-                        //         if (url.isNotEmpty) {
-                        //           if (!isURLOpening) {
-                        //             isURLOpening = true;
-                        //             await HelperFunction.launchURL(url);
-                        //             FirebaseAnalytics.instance.logEvent(
-                        //               name: 'view_result_from_dashboard',
-                        //               parameters: {
-                        //                 'student_id': localData.studentId,
-                        //                 'grade_id': localData.gradeId
-                        //                     .toString(),
-                        //               },
-                        //             );
-                        //             isURLOpening = false;
-                        //           }
-                        //         }
-                        //       },
-                        attendanceService: attendanceService!,
-                        resultService: null,
-                        // resultService,
-                        size: size,
-                      ),
-                    ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-                    sliver: SliverGrid.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: itemWidth / itemHeight,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      children: [
-                        CustomDashboardButton(
-                          title: 'PROFILE',
-                          bottomAlign: -20,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.studentProfileRoute,
-                          ),
-                          imageName: 'profile_icon.png',
-                        ),
-                        CustomDashboardButton(
-                          title: 'ATTENDANCE',
-                          bottomAlign: -25,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(13),
-                          onTap: () {
-                            if (gradeId == '19' ||
-                                gradeId == '20' ||
-                                localGradeId == '19' ||
-                                localGradeId == '20') {
-                              AppNavigation.navigateTo(
-                                AppNavRoutes.attendanceSubjectRoute,
-                              );
-                            } else {
-                              AppNavigation.navigateTo(
-                                AppNavRoutes.attendanceRoute,
-                              );
-                            }
-                          },
-                          imageName: 'attendance_icon.png',
-                        ),
-
-                        CustomDashboardButton(
-                          title: 'HOMEWORK\nDIARY',
-                          bottomAlign: -20,
-                          leftAlign: -10,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.studentDiaryRoute,
-                          ),
-                          imageName: 'diary_icon.png',
-                        ),
-                        CustomDashboardButton(
-                          title: 'CLASSWORK\nASSIGNMENTS',
-                          bottomAlign: -65,
-                          leftAlign: -50,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(20),
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.studentAssignmentRoute,
-                          ),
-                          imageName: 'assignment_icon_h.png',
-                        ),
-                        if (gradeId != '2' &&
-                            gradeId != '3' &&
-                            gradeId != '4' &&
-                            // gradeId != '5' &&
-                            // gradeId != '6' &&
-                            localGradeId != '2' &&
-                            localGradeId != '3' &&
-                            localGradeId != '4'
-                        // &&
-                        // localGradeId != '5' &&
-                        // localGradeId != '6'
-                        )
-                          CustomDashboardButton(
-                            title: 'TERM RESULT',
-                            leftAlign: 5.0,
-                            onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.academicTermRoute,
-                            ),
-                            imageName: 'result_icon.png',
-                          ),
-                        if (gradeId != '2' &&
-                            gradeId != '3' &&
-                            gradeId != '4' &&
-                            gradeId != '5' &&
-                            gradeId != '6' &&
-                            localGradeId != '2' &&
-                            localGradeId != '3' &&
-                            localGradeId != '4' &&
-                            localGradeId != '5' &&
-                            localGradeId != '6')
-                          CustomDashboardButton(
-                            title: 'CLASS TEST\nRESULTS',
-                            bottomAlign: -65,
-                            leftAlign: -65,
-                            imageHeight:
-                                MediaQueryUtil.getResponsivePercentageSize(24),
-                            onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.studentClassTestResultRoute,
-                            ),
-                            imageName: 'class_result.png',
-                          ),
-                        CustomDashboardButton(
-                          title: 'FEE BILL &\n PAYMENT',
-                          bottomAlign: -25,
-                          leftAlign: -12,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.feeChallansRoute,
-                          ),
-                          imageName: 'fee_challan_icon.png',
-                        ),
-                        CustomDashboardButton(
-                          title: 'CIRCULARS',
-                          leftAlign: 3.0,
-                          bottomAlign: -3,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(10),
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.notificationsRoute,
-                          ),
-                          imageName: 'notification_icon.png',
-                        ),
-                        CustomDashboardButton(
-                          title: 'LIBRARY',
-                          bottomAlign: -45,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(14),
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.libraryRoute,
-                          ),
-                          imageName: 'library_icon.png',
-                        ),
-
-                        CustomDashboardButton(
-                          title: 'TIMETABLE',
-                          bottomAlign: -22,
-                          leftAlign: -10,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(13),
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.teacherTimeTableRoute,
-                          ),
-                          imageName: 'calendar.png',
-                        ),
-                        // CustomDashboardButton(
-                        //     title: 'EVENT\nCALENDAR',
-                        //     bottomAlign: -22,
-                        //     leftAlign: -10,
-                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(13),
-                        //     onTap: () => AppNavigation.navigateTo(
-                        //         AppNavRoutes.studentSchoolEventsRoute),
-                        //     imageName: 'calendar.png'),
-
-                        // CustomDashboardButton(
-                        //     title: 'SURVEY',
-                        //     bottomAlign: -14,
-                        //     leftAlign: -10,
-                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(11),
-                        //     onTap: () => AppNavigation.navigateTo(
-                        //         AppNavRoutes.studentSurveyRoute),
-                        //     imageName: 'survey.png'),
-                        // CustomDashboardButton(
-                        //     title: 'INDIVIDUAL\nEDUCATION PLAN',
-                        //     bottomAlign: -65,
-                        //     leftAlign: -65,
-                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(24),
-                        //     onTap: () => AppNavigation.navigateTo(
-                        //         AppNavRoutes.individualEducationPlanRoute),
-                        //     imageName: 'class_result.png'),
-                        // if (value.userData!.userType == 'Parent')
-                        //   CustomDashboardButton(
-                        //     title: 'BILL\nPAYMENT',
-                        //     bottomAlign: -25,
-                        //     leftAlign: -10,
-                        //     onTap: () => AppNavigation.navigateTo(
-                        //       AppNavRoutes.challanPaymentRoute,
-                        //     ),
-                        //     imageName: 'challan_payment_icon.png',
-                        //   ),
-                        // if (value.userData!.userType == 'Parent')
-                        //   CustomDashboardButton(
-                        //       title: 'BOOK AN\nAPPOINTMENT',
-                        //       bottomAlign: -24,
-                        //       leftAlign: 0,
-                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(10),
-                        //       onTap: () => AppNavigation.navigateTo(
-                        //           AppNavRoutes.bookanAppointmentRoute),
-                        //       imageName: 'calendar_appoointment.png'),
-                        if ((gradeId == '2' ||
-                                gradeId == '3' ||
-                                gradeId == '4' ||
-                                localGradeId == '2' ||
-                                localGradeId == '3' ||
-                                localGradeId == '4') &&
-                            value.userData!.userType == 'Parent')
-                          CustomDashboardButton(
-                            title: 'EYE ON\nYOUR CHILD',
-                            bottomAlign: -22,
-                            leftAlign: 0,
-                            imageHeight:
-                                MediaQueryUtil.getResponsivePercentageSize(10),
-                            onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.parentEyeOnYourChildRoute,
-                            ),
-                            imageName: 'shield.png',
-                          ),
-                        // if (value.userData!.userType == 'Parent')
-                        //   CustomDashboardButton(
-                        //       title: 'WITHDRAWAL\nREQUEST',
-                        //       bottomAlign: -22,
-                        //       leftAlign: -15, //0,
-                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(8),
-                        //       onTap: () => AppNavigation.navigateTo(
-                        //           AppNavRoutes.withdrawalRequestRoute),
-                        //       imageName: 'withdrawal.png'),
-                        // if (value.userData!.userType == 'Parent')
-                        //   CustomDashboardButton(
-                        //     title: 'COMPLAINT\nQUERY',
-                        //     bottomAlign: -20,
-                        //     leftAlign: -15, //0,
-                        //     imageHeight:
-                        //         MediaQueryUtil.getResponsivePercentageSize(10),
-                        //     onTap:
-                        //         //  null,
-                        //         () => AppNavigation.navigateTo(
-                        //           AppNavRoutes.complaintQueryRoute,
-                        //         ),
-                        //     imageName: 'lightbulb.png',
-                        //   ),
-                      ],
-                    ),
-                  ),
+          drawer: const NavigationalDrawer(),
+          body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, 0.4, 1.0],
+                colors: [
+                  AppColors.whiteColor,
+                  Color(0xFFF8FAFC),
+                  Color(0xFFF1F5F9),
                 ],
               ),
+            ),
+            child: Stack(
+              children: [
+                if (provider.isLoading && !provider.isFirstChildReady)
+                  _buildLoadingState(userName)
+                else if (provider.loadError != null &&
+                    !provider.isFirstChildReady)
+                  _buildErrorState(provider.loadError!)
+                else
+                  _buildDashboardContent(
+                    localData,
+                    provider,
+                    userName,
+                    gradeId,
+                    localGradeId,
+                  ),
+              ],
             ),
           ),
         );
       },
     );
   }
-}
 
-class AttendanceDashboardCard extends StatelessWidget {
-  const AttendanceDashboardCard({
-    super.key,
-    required this.size,
-    this.attendanceService,
-  });
-
-  final Size size;
-  final Future? attendanceService;
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 8,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-      child: Container(
-        // height: MediaQueryUtil.getResponsivePercentageSize(18),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      DateFormat.MMMM().format(DateTime.now()).toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        color: AppColors.secondaryColor,
-                      ),
-                    ),
-                    Text(
-                      '${DateTime.now().year}',
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        color: AppColors.whiteColor,
-                        fontWeight: FontWeight.w600,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                const Text(
-                  'MY\nATTENDANCE',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: AppColors.whiteColor,
-                    fontWeight: FontWeight.w600,
-                    height: 1.12,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: MediaQueryUtil.getResponsivePercentageSize(18) - 32,
-              child: FutureBuilder(
-                future: attendanceService,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: CustomLoader(color: AppColors.whiteColor),
-                      );
-                    default:
-                      if (snapshot.hasData) {
-                        return Consumer<StudentAttendanceProvider>(
-                          builder: (context, value, _) {
-                            num data =
-                                value
-                                    .attendancePercentage!
-                                    .data!
-                                    .attendancePercentage ??
-                                0;
-                            data = data.clamp(0, 100);
-                            return Card(
-                              elevation: 4,
-                              borderOnForeground: false,
-                              color: Colors.transparent,
-                              shadowColor: AppColors.blackColor.withValues(
-                                alpha: 0.9,
-                              ),
-                              margin: EdgeInsets.zero,
-                              shape: const CircleBorder(),
-                              child: LayoutBuilder(
-                                builder: (context, constraints) {
-                                  // compute radius based on available height/width
-                                  final double maxDiameter =
-                                      constraints.biggest.shortestSide;
-                                  final double radius = (maxDiameter * 0.8) / 2;
-                                  final double lineWidth = (maxDiameter / 20)
-                                      .clamp(3.0, 12.0);
-                                  final double fontSize = (radius * 0.45).clamp(
-                                    12.0,
-                                    24.0,
-                                  );
-
-                                  return SizedBox(
-                                    width: maxDiameter,
-                                    height: maxDiameter,
-                                    child: CircularPercentIndicator(
-                                      radius: radius,
-                                      lineWidth: lineWidth,
-                                      percent: data / 100,
-                                      progressColor:
-                                          AppColors.successGreenColor,
-                                      backgroundColor: AppColors.whiteColor,
-                                      center: Text(
-                                        "${data == 100 ? "100" : data}%",
-                                        style: TextStyle(
-                                          color: AppColors.whiteColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: fontSize,
-                                        ),
-                                      ),
-                                      rotateLinearGradient: true,
-                                      circularStrokeCap:
-                                          CircularStrokeCap.round,
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Icon(
-                            Icons.error_outline,
-                            color: AppColors.lightRedColor,
-                            size: 50,
-                          ),
-                        );
-                      }
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DashboardTopSection extends StatefulWidget {
-  final bool showResult;
-  final DateTime resultReleaseTime;
-  final void Function()? onViewResult;
-  final Future<dynamic>? resultService;
-  final Future? attendanceService;
-  final Size size;
-
-  const DashboardTopSection({
-    super.key,
-    required this.showResult,
-    required this.resultReleaseTime,
-    required this.onViewResult,
-    this.resultService,
-    this.attendanceService,
-    required this.size,
-  });
-
-  @override
-  State<DashboardTopSection> createState() => _DashboardTopSectionState();
-}
-
-class _DashboardTopSectionState extends State<DashboardTopSection> {
-  int _activeIndex = 0;
-  late final PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: 0);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final double cardHeight = MediaQueryUtil.getResponsivePercentageSize(
-      20,
-    ).clamp(150.0, 175.0);
-
-    if (!widget.showResult) {
-      return SizedBox(
-        height: cardHeight,
-        child: DashboardCardWrapper(
-          child: AttendanceDashboardCard(
-            attendanceService: widget.attendanceService,
-            size: widget.size,
+  Widget _buildLoadingState(String userName) {
+    return CustomScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      slivers: [
+        const SliverToBoxAdapter(child: SizedBox(height: 60)), // Top spacing
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: const DashboardShimmer(itemCount: 4),
           ),
-        ),
-      );
-    }
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: cardHeight,
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (index) => setState(() => _activeIndex = index),
-            children: [
-              // Result card
-              DashboardCardWrapper(
-                child: ResultDashboardCard(
-                  resultReleaseTime: widget.resultReleaseTime,
-                  onViewResult: widget.onViewResult,
-                  loadResultsFuture: widget.resultService,
-                ),
-              ),
-
-              // Attendance card
-              DashboardCardWrapper(
-                child: AttendanceDashboardCard(
-                  attendanceService: widget.attendanceService,
-                  size: widget.size,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        const SizedBox(height: 8),
-
-        CarouselDots(
-          count: 2,
-          activeIndex: _activeIndex,
-          onDotTapped: (index) {
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            );
-          },
         ),
       ],
     );
   }
-}
 
-class CarouselDots extends StatelessWidget {
-  final int count;
-  final int activeIndex;
-  final void Function(int)? onDotTapped;
-
-  const CarouselDots({
-    super.key,
-    required this.count,
-    required this.activeIndex,
-    this.onDotTapped,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(count, (index) {
-        final isActive = activeIndex == index;
-        final dot = AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          width: isActive ? 10 : 6,
-          height: 6,
-          decoration: BoxDecoration(
-            color: isActive ? AppColors.primaryColor : Colors.grey.shade400,
-            borderRadius: BorderRadius.circular(60),
+  Widget _buildErrorState(String error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.error_outline,
+            color: AppColors.lightRedColor,
+            size: 48,
           ),
-        );
-
-        if (onDotTapped != null) {
-          return GestureDetector(onTap: () => onDotTapped!(index), child: dot);
-        }
-        return dot;
-      }),
+          const SizedBox(height: 16),
+          Text(
+            error,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () {
+              final provider = Provider.of<StudentDashboardProvider>(
+                context,
+                listen: false,
+              );
+              if (_isParent) {
+                provider.fetchMultiChildData();
+              } else {
+                provider.initializeForStudent();
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryBlue,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: const Text('Retry Connection'),
+          ),
+        ],
+      ),
     );
   }
-}
 
-class DashboardCardWrapper extends StatelessWidget {
-  final Widget child;
+  Widget _buildDashboardContent(
+    LocalDataProvider localData,
+    StudentDashboardProvider provider,
+    String userName,
+    String gradeId,
+    String localGradeId,
+  ) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        if (_isParent) {
+          await provider.refreshAllChildren();
+          if (!mounted) return;
+          await provider.fetchMultiChildData();
+        } else {
+          await provider.refreshActiveChild();
+        }
+      },
+      child: CustomScrollView(
+        controller: _scrollController,
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
+        slivers: [
+          ValueListenableBuilder<double>(
+            valueListenable: _appBarOpacityNotifier,
+            builder: (context, opacity, _) {
+              return _buildAppBar(
+                userName,
+                isDynamic: true,
+                currentOpacity: opacity,
+              );
+            },
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 8)),
+          SliverToBoxAdapter(child: const StudentProfileCard()),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
-  const DashboardCardWrapper({super.key, required this.child});
+          // Primary Data Hubs
+          _buildAnimatedSliver(
+            _buildAcademicUpdatesHub(provider.activeChildData),
+            delay: 100,
+          ),
+          _buildAnimatedSliver(
+            _buildFinancialHub(provider.activeChildData),
+            delay: 200,
+          ),
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
+          // Navigation Hubs
+          _buildAnimatedSliver(
+            _buildAcademicsNavHub(gradeId, localGradeId),
+            delay: 300,
+          ),
+          _buildAnimatedSliver(_buildCampusNavHub(), delay: 400),
+          if (_isParent)
+            _buildAnimatedSliver(
+              _buildParentServicesNavHub(gradeId, localGradeId),
+              delay: 500,
+            ),
 
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      clipBehavior: Clip.antiAlias,
-      child: child,
+          const SliverToBoxAdapter(child: SizedBox(height: 40)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAnimatedSliver(Widget child, {required int delay}) {
+    return SliverToBoxAdapter(child: child);
+  }
+
+  Widget _buildAppBar(
+    String userName, {
+    bool isDynamic = false,
+    double currentOpacity = 1.0,
+  }) {
+    final double effectiveOpacity = isDynamic ? currentOpacity : 1.0;
+
+    return SliverAppBar(
+      expandedHeight: 75,
+      pinned: true,
+      centerTitle: false,
+      elevation: 0,
+      backgroundColor: AppColors.whiteColor.withValues(alpha: effectiveOpacity),
+      surfaceTintColor: Colors.transparent,
+      leading: Builder(
+        builder: (ctx) => IconButton(
+          icon: const Icon(
+            Icons.menu_rounded,
+            color: AppColors.primaryDarkBlue,
+            size: 28,
+          ),
+          onPressed: () => Scaffold.of(ctx).openDrawer(),
+        ),
+      ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            HelperFunction.getGreeting(),
+            style: TextStyle(
+              fontSize: 11,
+              color: AppColors.softGreyText.withValues(
+                alpha: effectiveOpacity > 0.5 ? 1.0 : 0.8,
+              ),
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
+            ),
+          ),
+          Text(
+            userName,
+            style: TextStyle(
+              fontSize: 17,
+              color: AppColors.primaryDarkBlue.withValues(
+                alpha: effectiveOpacity > 0.5 ? 1.0 : 0.9,
+              ),
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: Image.asset(Assets.images.appLogo.path, height: 35, width: 35),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAcademicUpdatesHub(ChildDashboardData? data) {
+    if (data == null) return const SizedBox.shrink();
+
+    final hw = data.latestHomework?.diaryRecords?.firstOrNull;
+    final assignment = data.latestAssignments?.assignmentRecords?.firstOrNull;
+    final circular = data.latestCirculars?.notifications?.firstOrNull;
+
+    return _buildDashboardCard(
+      title: 'Academic Updates',
+      accentColor: AppColors.primaryBlue,
+      icon: Icons.auto_stories_rounded,
+      child: Column(
+        children: [
+          _buildUpdateItem(
+            icon: Icons.menu_book_rounded,
+            title: hw?.subject ?? 'Homework',
+            subtitle: hw?.description ?? 'No recent homework',
+            date: hw?.diaryDate ?? '',
+            color: AppColors.primaryBlue,
+            onTap: () =>
+                AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute),
+          ),
+          const Divider(height: 24),
+          _buildUpdateItem(
+            icon: Icons.assignment_rounded,
+            title: assignment?.subject ?? 'Classwork',
+            subtitle: assignment?.description ?? 'No recent assignments',
+            date: assignment?.classWorkDate ?? '',
+            color: AppColors.goldenColors,
+            onTap: () =>
+                AppNavigation.navigateTo(AppNavRoutes.studentAssignmentRoute),
+          ),
+          const Divider(height: 24),
+          _buildUpdateItem(
+            icon: Icons.campaign_rounded,
+            title: 'Circular',
+            subtitle: circular?.notifySubject ?? 'No new circulars',
+            date: circular?.generatedOn ?? '',
+            color: AppColors.successGreen,
+            onTap: () =>
+                AppNavigation.navigateTo(AppNavRoutes.notificationsRoute),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUpdateItem({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required String date,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w900,
+                        color: color,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    Text(
+                      date,
+                      style: const TextStyle(
+                        fontSize: 9,
+                        color: AppColors.softGreyText,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Icon(Icons.chevron_right_rounded, size: 18, color: color),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFinancialHub(ChildDashboardData? data) {
+    if (data == null) return const SizedBox.shrink();
+    final fees = data.outstandingChallans?.outstandingList ?? [];
+    double total = fees.fold(
+      0.0,
+      (sum, item) => sum + (item.outstandingFee ?? 0),
+    );
+    bool hasFees = total > 0;
+
+    return _buildDashboardCard(
+      title: 'Financial Status',
+      accentColor: AppColors.valuesRedColors,
+      icon: Icons.account_balance_wallet_rounded,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color:
+                      (hasFees
+                              ? AppColors.valuesRedColors
+                              : AppColors.successGreen)
+                          .withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  hasFees
+                      ? Icons.pending_actions_rounded
+                      : Icons.check_circle_rounded,
+                  color: hasFees
+                      ? AppColors.valuesRedColors
+                      : AppColors.successGreen,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      hasFees ? 'OUTSTANDING DUES' : 'ALL CLEAR',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w900,
+                        color: hasFees
+                            ? AppColors.valuesRedColors
+                            : AppColors.successGreen,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      hasFees
+                          ? 'Rs. ${total.toStringAsFixed(0)}'
+                          : 'No pending payments',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: AppColors.primaryDarkBlue,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: _buildHubActionCard(
+                  title: 'Fee Bill & Payment',
+                  icon: Icons.receipt_long_rounded,
+                  color: AppColors.valuesRedColors,
+                  onTap: () =>
+                      AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
+                  isPrimary: true,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAcademicsNavHub(String gradeId, String localGradeId) {
+    return _buildDashboardCard(
+      title: 'Academics',
+      accentColor: AppColors.primaryBlue,
+      icon: Icons.school_rounded,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            childAspectRatio: 1.4,
+            children: [
+              _buildHubActionCard(
+                title: 'Diary',
+                icon: Icons.menu_book_rounded,
+                color: AppColors.primaryBlue,
+                onTap: () =>
+                    AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute),
+              ),
+              _buildHubActionCard(
+                title: 'Assignment',
+                icon: Icons.assignment_rounded,
+                color: AppColors.primaryBlue,
+                onTap: () => AppNavigation.navigateTo(
+                  AppNavRoutes.studentAssignmentRoute,
+                ),
+              ),
+              if (gradeId != '1' && localGradeId != '1')
+                _buildHubActionCard(
+                  title: 'Term Result',
+                  icon: Icons.grade_rounded,
+                  color: AppColors.primaryBlue,
+                  onTap: () =>
+                      AppNavigation.navigateTo(AppNavRoutes.academicTermRoute),
+                ),
+              if (gradeId != '1' && localGradeId != '1')
+                _buildHubActionCard(
+                  title: 'Class Test',
+                  icon: Icons.quiz_rounded,
+                  color: AppColors.primaryBlue,
+                  onTap: () => AppNavigation.navigateTo(
+                    AppNavRoutes.studentClassTestResultRoute,
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildCampusNavHub() {
+    return _buildDashboardCard(
+      title: 'Campus & Services',
+      accentColor: AppColors.successGreen,
+      icon: Icons.business_rounded,
+      child: GridView.count(
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
+        childAspectRatio: 1.4,
+        children: [
+          _buildHubActionCard(
+            title: 'Library',
+            icon: Icons.local_library_rounded,
+            color: AppColors.successGreen,
+            onTap: () => AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
+          ),
+          _buildHubActionCard(
+            title: 'Timetable',
+            icon: Icons.calendar_today_rounded,
+            color: AppColors.successGreen,
+            onTap: () =>
+                AppNavigation.navigateTo(AppNavRoutes.teacherTimeTableRoute),
+          ),
+          _buildHubActionCard(
+            title: 'Events',
+            icon: Icons.event_note_rounded,
+            color: AppColors.successGreen,
+            onTap: null,
+          ),
+          _buildHubActionCard(
+            title: 'Survey',
+            icon: Icons.poll_rounded,
+            color: AppColors.successGreen,
+            onTap: null,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildParentServicesNavHub(String gradeId, String localGradeId) {
+    bool showEYOC =
+        ['2', '3', '4'].contains(gradeId) ||
+        ['2', '3', '4'].contains(localGradeId);
+
+    return _buildDashboardCard(
+      title: 'Parent Services',
+      accentColor: AppColors.purpleColor,
+      icon: Icons.family_restroom_rounded,
+      child: GridView.count(
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
+        childAspectRatio: 1.4,
+        children: [
+          if (showEYOC)
+            _buildHubActionCard(
+              title: 'Eye On Child',
+              icon: Icons.visibility_rounded,
+              color: AppColors.purpleColor,
+              onTap: () => AppNavigation.navigateTo(
+                AppNavRoutes.parentEyeOnYourChildRoute,
+              ),
+            ),
+          _buildHubActionCard(
+            title: 'Appointment',
+            icon: Icons.edit_calendar_rounded,
+            color: AppColors.purpleColor,
+            onTap: null,
+          ),
+          _buildHubActionCard(
+            title: 'Withdrawal',
+            icon: Icons.outbox_rounded,
+            color: AppColors.purpleColor,
+            onTap: null,
+          ),
+          _buildHubActionCard(
+            title: 'Complaints',
+            icon: Icons.support_agent_rounded,
+            color: AppColors.purpleColor,
+            onTap: null,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDashboardCard({
+    required String title,
+    required Color accentColor,
+    required Widget child,
+    IconData? icon,
+  }) {
+    return RepaintBoundary(
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: accentColor.withValues(alpha: 0.08),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
+            ),
+          ],
+          border: Border.all(
+            color: AppColors.borderGrey.withValues(alpha: 0.5),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  if (icon != null) ...[
+                    Icon(icon, color: accentColor, size: 18),
+                    const SizedBox(width: 10),
+                  ],
+                  Text(
+                    title.toUpperCase(),
+                    style: TextStyle(
+                      color: AppColors.primaryDarkBlue,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: 30,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: accentColor.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              child,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHubActionCard({
+    required String title,
+    required IconData icon,
+    required Color color,
+    required void Function()? onTap,
+    bool isPrimary = false,
+  }) {
+    bool isDormant = onTap == null;
+
+    return InkWell(
+      onTap: () {
+        if (!isDormant) {
+          HapticFeedback.lightImpact();
+          onTap();
+        }
+      },
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: isDormant
+              ? Colors.grey.shade50
+              : (isPrimary ? color.withValues(alpha: 0.1) : Colors.white),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isDormant
+                ? Colors.grey.shade200
+                : (isPrimary
+                      ? color.withValues(alpha: 0.2)
+                      : AppColors.borderGrey.withValues(alpha: 0.5)),
+            width: 1,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: isDormant ? Colors.grey.shade300 : color,
+              size: 24,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: isDormant
+                    ? Colors.grey.shade400
+                    : AppColors.primaryDarkBlue,
+                fontWeight: FontWeight.w700,
+                fontSize: 11,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            if (isDormant)
+              Text(
+                'SOON',
+                style: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 7,
+                  letterSpacing: 1,
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

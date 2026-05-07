@@ -8,7 +8,7 @@ class AppNavRoutes {
   static const registrationPinCodeRoute = '/registrationPinCode';
   static const createPasswordRoute = '/createPassword';
   static const studentDashboardRoute = '/studentDashboard';
-  static const parentDashboardRoute = '/parentDashboard';
+  static const parentDashboardRoute = '/studentDashboard';
   static const studentProfileRoute = '/studentProfile';
   static const resultsRoute = '/results';
   static const academicTermRoute = '/academicTerm';

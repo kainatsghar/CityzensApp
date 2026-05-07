@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
@@ -14,6 +15,16 @@ class StudentProfileProvider with ChangeNotifier {
   );
 
   void setStdProfileData(StudentProfileResponse response) {
+    // Only notify if data has actually changed to prevent unnecessary UI jitters
+    if (profileResponse != null) {
+      String oldData = jsonEncode(profileResponse!.toJson());
+      String newData = jsonEncode(response.toJson());
+      if (oldData == newData) {
+        debugPrint('Student Profile data unchanged, skipping notifyListeners');
+        return;
+      }
+    }
+    
     profileResponse = response;
     notifyListeners();
   }

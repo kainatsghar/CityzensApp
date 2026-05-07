@@ -72,56 +72,45 @@ class TeacherProfileScreenState extends State<TeacherProfileScreen>
       ),
       child: Scaffold(
         backgroundColor: AppColors.ultraLightGrey,
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppColors.primaryLightBlue, AppColors.ultraLightGrey],
+        body: Stack(
+          children: [
+            // 1. Dynamic Particle Layer (Very subtle for light theme)
+            ParticleBackground(
+              animation: _particleController,
+              particleColor: AppColors.primaryBlue.withValues(alpha: 0.15),
             ),
-          ),
-          child: Stack(
-            children: [
-              // 1. Dynamic Particle Layer (Very subtle for light theme)
-              ParticleBackground(
-                animation: _particleController,
-                particleColor: AppColors.primaryBlue.withValues(alpha: 0.15),
-              ),
 
-              // 2. Main Content
-              RefreshIndicator(
-                displacement: 80,
-                color: AppColors.primaryBlue,
-                onRefresh: () => provider.loadTeacherProfile(),
-                child: provider.profileResponse != null
-                    ? TeacherProfileComponent(
-                        scrollController: _scrollController,
-                      )
-                    : FutureBuilder(
-                        future: _teacherProfile,
-                        builder: (context, snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return const Center(child: CustomLoader());
-                            default:
-                              if (snapshot.hasData ||
-                                  provider.profileResponse != null) {
-                                return TeacherProfileComponent(
-                                  scrollController: _scrollController,
-                                );
-                              } else {
-                                return Center(
-                                  child: ShowError(
-                                    errorText: '${snapshot.error}',
-                                  ),
-                                );
-                              }
-                          }
-                        },
-                      ),
-              ),
-            ],
-          ),
+            // 2. Main Content
+            RefreshIndicator(
+              displacement: 80,
+              color: AppColors.primaryBlue,
+              onRefresh: () => provider.loadTeacherProfile(),
+              child: provider.profileResponse != null
+                  ? TeacherProfileComponent(scrollController: _scrollController)
+                  : FutureBuilder(
+                      future: _teacherProfile,
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return const Center(child: CustomLoader());
+                          default:
+                            if (snapshot.hasData ||
+                                provider.profileResponse != null) {
+                              return TeacherProfileComponent(
+                                scrollController: _scrollController,
+                              );
+                            } else {
+                              return Center(
+                                child: ShowError(
+                                  errorText: '${snapshot.error}',
+                                ),
+                              );
+                            }
+                        }
+                      },
+                    ),
+            ),
+          ],
         ),
       ),
     );

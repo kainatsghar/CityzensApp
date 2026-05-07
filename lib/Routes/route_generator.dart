@@ -34,7 +34,6 @@ import '../screens/NavigationalDrawer/AppFeedbackScreen/app_feedback_screen.dart
 import '../screens/NavigationalDrawer/ChangePasswordScreen/change_password_screen.dart';
 import '../screens/Parent/AppointmentScreen/book_an_appointment_screen.dart';
 import '../screens/Parent/ComplaintQueryScreen/complaint_query_screen.dart';
-import '../screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
 import '../screens/Parent/ParentEyeOnYourChildScreen/parent_eye_on_your_child_screen.dart';
 import '../screens/Registration/CreatePasswordScreen/create_password_screen.dart';
 import '../screens/Registration/RegPinCodeScreen/reg_pincode_screen.dart';
@@ -88,11 +87,11 @@ class RouteGenerator {
       case AppNavRoutes.studentDashboardRoute:
         return routeScreen(
           child: StudentDashboardScreen(
-            args: settings.arguments as ScreenArguments,
+            args: settings.arguments is ScreenArguments
+                ? settings.arguments as ScreenArguments
+                : null,
           ),
         );
-      case AppNavRoutes.parentDashboardRoute:
-        return routeScreen(child: const ParentDashboardScreen());
       case AppNavRoutes.studentProfileRoute:
         return routeScreen(child: const StudentProfileScreen());
       case AppNavRoutes.academicTermRoute:

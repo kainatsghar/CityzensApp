@@ -10,7 +10,7 @@ import '../../services/WithdrawalRequest/withdrawal_request_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 import '../LocalData/local_data_provider.dart';
-import '../ParentDashboard/parent_dashboard_provider.dart';
+import '../StudentDashboard/student_dashboard_provider.dart';
 
 class ComplaintQueryProvider with ChangeNotifier {
   WithdrawalResponse? withdrawalResponse;
@@ -88,11 +88,11 @@ class ComplaintQueryProvider with ChangeNotifier {
           localDataProvider.userData?.info?.fatherEmail ?? "";
       mobileController.text = "";
 
-      final parentProvider = Provider.of<ParentDashboardProvider>(
+      final studentDashboardProvider = Provider.of<StudentDashboardProvider>(
         AppNavigation.currentContext!,
         listen: false,
       );
-      multiChildResponse = parentProvider.multiChildResponse;
+      multiChildResponse = studentDashboardProvider.multiChildResponse;
       descriptionController.text = _buildChildrenInfo();
     }
 

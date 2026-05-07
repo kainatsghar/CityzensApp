@@ -6,7 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
-import 'package:tcs_app/provider/ParentDashboard/parent_dashboard_provider.dart';
+import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/utils/app_constants.dart';
 import 'package:tcs_app/model/MultiChild/multi_child_response.dart';
@@ -59,7 +59,7 @@ class SupportFormProvider with ChangeNotifier {
 
   /// Load user data from LocalDataProvider
   void initializeUserData() {
-    var parentProvider = Provider.of<ParentDashboardProvider>(
+    var studentDashboardProvider = Provider.of<StudentDashboardProvider>(
       AppNavigation.currentContext!,
       listen: false,
     );
@@ -89,7 +89,7 @@ class SupportFormProvider with ChangeNotifier {
       regionController.text = localProvider.userData!.info!.regionName ?? "";
       mobileContactController.text =
           localProvider.userData!.info!.fatherEmail ?? "";
-      multiChildResponse = parentProvider.multiChildResponse;
+      multiChildResponse = studentDashboardProvider.multiChildResponse;
       emailController.text =
           multiChildResponse?.children != null &&
               multiChildResponse!.children!.isNotEmpty

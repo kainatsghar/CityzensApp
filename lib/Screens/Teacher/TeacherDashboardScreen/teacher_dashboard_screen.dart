@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart';
-import 'package:tcs_app/custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/custom_widgets/ShimmerEffect/dashboard_shimmer.dart';
 import 'package:tcs_app/custom_widgets/TeacherProfileCard/teacher_profile_card.dart';
@@ -21,8 +20,6 @@ import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/utils/media_query_util.dart';
 
-import 'package:tcs_app/custom_widgets/ParticleBackground/particle_background.dart';
-
 class TeacherDashboardScreen extends StatefulWidget {
   const TeacherDashboardScreen({super.key});
 
@@ -35,16 +32,21 @@ class TeacherDashboardScreen extends StatefulWidget {
 class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
     with TickerProviderStateMixin {
   DashboardProvider? dashboardProvider;
-  late final AnimationController _particleController;
+  final ValueNotifier<double> _appBarOpacityNotifier = ValueNotifier(0.0);
+  late final ScrollController _scrollController;
 
   @override
   void initState() {
     FcmTokenRefreshService.refreshToken();
 
-    _particleController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 35),
-    )..repeat();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      double offset = _scrollController.offset;
+      double newOpacity = (offset / 100).clamp(0.0, 1.0);
+      if (newOpacity != _appBarOpacityNotifier.value) {
+        _appBarOpacityNotifier.value = newOpacity;
+      }
+    });
 
     // Initialize dashboard data after build phase completes
     Future.microtask(() => _initializeDashboardData());
@@ -54,7 +56,8 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
 
   @override
   void dispose() {
-    _particleController.dispose();
+    _scrollController.dispose();
+    _appBarOpacityNotifier.dispose();
     super.dispose();
   }
 
@@ -76,17 +79,6 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
     } catch (ex) {
       // Error is handled in the provider, just log it here if needed
       debugPrint('Dashboard initialization error: $ex');
-    }
-  }
-
-  String _getGreeting() {
-    final hour = DateTime.now().hour;
-    if (hour < 12) {
-      return 'GOOD MORNING';
-    } else if (hour < 17) {
-      return 'GOOD AFTERNOON';
-    } else {
-      return 'GOOD EVENING';
     }
   }
 
@@ -130,12 +122,6 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
               ),
               child: Stack(
                 children: [
-                  ParticleBackground(
-                    animation: _particleController,
-                    particleColor: AppColors.primaryBlue.withValues(
-                      alpha: 0.12,
-                    ),
-                  ),
                   Consumer3<
                     DashboardProvider,
                     MarkAttendanceProvider,
@@ -151,31 +137,16 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                         ) {
                           // Show shimmer while loading
                           if (dashboardValue.isDashboardDataLoading) {
-                            return CustomScrollView(
+                            return const CustomScrollView(
+                              physics: NeverScrollableScrollPhysics(),
                               slivers: [
-                                SliverToBoxAdapter(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 16.0,
-                                      right: 16.0,
-                                      top: 32,
-                                    ),
-                                    child: const CustomLogoCover(),
-                                  ),
-                                ),
+                                SliverToBoxAdapter(child: SizedBox(height: 60)),
                                 SliverPadding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    16.0,
-                                    16.0,
-                                    16.0,
-                                    32,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0,
                                   ),
                                   sliver: SliverToBoxAdapter(
-                                    child: DashboardShimmer(
-                                      itemWidth: itemWidth,
-                                      itemHeight: itemHeight,
-                                      itemCount: 6,
-                                    ),
+                                    child: DashboardShimmer(itemCount: 6),
                                   ),
                                 ),
                               ],
@@ -207,87 +178,96 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                             color: AppColors.primaryBlue,
                             displacement: 60,
                             child: CustomScrollView(
+                              controller: _scrollController,
                               physics: const AlwaysScrollableScrollPhysics(
                                 parent: BouncingScrollPhysics(),
                               ),
                               slivers: [
                                 // Premium Sliver App Bar
-                                SliverAppBar(
-                                  expandedHeight: 75,
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  pinned: true,
-                                  centerTitle: false,
-                                  systemOverlayStyle: SystemUiOverlayStyle.dark
-                                      .copyWith(
-                                        statusBarColor: Colors.transparent,
+                                ValueListenableBuilder<double>(
+                                  valueListenable: _appBarOpacityNotifier,
+                                  builder: (context, opacity, _) {
+                                    return SliverAppBar(
+                                      expandedHeight: 75,
+                                      backgroundColor: AppColors.whiteColor
+                                          .withValues(
+                                            alpha: opacity.clamp(0.0, 0.95),
+                                          ),
+                                      surfaceTintColor: Colors.transparent,
+                                      elevation: 0,
+                                      pinned: true,
+                                      centerTitle: false,
+                                      systemOverlayStyle: SystemUiOverlayStyle
+                                          .dark
+                                          .copyWith(
+                                            statusBarColor: Colors.transparent,
+                                          ),
+                                      leading: Builder(
+                                        builder: (BuildContext context) {
+                                          return IconButton(
+                                            icon: const Icon(
+                                              Icons.menu_rounded,
+                                              color: AppColors.primaryDarkBlue,
+                                            ),
+                                            onPressed: () => Scaffold.of(
+                                              context,
+                                            ).openDrawer(),
+                                            tooltip: MaterialLocalizations.of(
+                                              context,
+                                            ).openAppDrawerTooltip,
+                                          );
+                                        },
                                       ),
-                                  leading: Builder(
-                                    builder: (BuildContext context) {
-                                      return IconButton(
-                                        icon: const Icon(
-                                          Icons.menu_rounded,
-                                          color: AppColors.primaryDarkBlue,
-                                        ),
-                                        onPressed: () =>
-                                            Scaffold.of(context).openDrawer(),
-                                        tooltip: MaterialLocalizations.of(
-                                          context,
-                                        ).openAppDrawerTooltip,
-                                      );
-                                    },
-                                  ),
-                                  title: LayoutBuilder(
-                                    builder: (context, constraints) {
-                                      return FadeIn(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              _getGreeting(),
-                                              style: const TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                      title: LayoutBuilder(
+                                        builder: (context, constraints) {
+                                          return FadeIn(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  HelperFunction.getGreeting(),
+                                                  style: const TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  teacherName,
+                                                  style: const TextStyle(
+                                                    color: AppColors
+                                                        .primaryDarkBlue,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: -0.5,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              teacherName,
-                                              style: const TextStyle(
-                                                color:
-                                                    AppColors.primaryDarkBlue,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: -0.5,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
                                 ),
 
                                 // Teacher Profile Card
                                 SliverToBoxAdapter(
-                                  child: FadeInDown(
-                                    duration: const Duration(milliseconds: 500),
-                                    child: TeacherProfileCard(
-                                      isMale:
-                                          dashboardValue
-                                                  .teacherProfileProvider
-                                                  .profileResponse !=
-                                              null &&
-                                          dashboardValue
-                                              .teacherProfileProvider
-                                              .profileResponse!
-                                              .isMale,
-                                      onTap: () => AppNavigation.navigateTo(
-                                        AppNavRoutes.teacherProfileRoute,
-                                      ),
+                                  child: TeacherProfileCard(
+                                    isMale:
+                                        dashboardValue
+                                                .teacherProfileProvider
+                                                .profileResponse !=
+                                            null &&
+                                        dashboardValue
+                                            .teacherProfileProvider
+                                            .profileResponse!
+                                            .isMale,
+                                    onTap: () => AppNavigation.navigateTo(
+                                      AppNavRoutes.teacherProfileRoute,
                                     ),
                                   ),
                                 ),
@@ -295,42 +275,24 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                                 // Class Teacher Hub
                                 if (hasClassSections)
                                   SliverToBoxAdapter(
-                                    child: FadeInUp(
-                                      duration: const Duration(
-                                        milliseconds: 500,
-                                      ),
-                                      delay: const Duration(milliseconds: 100),
-                                      child: _buildClassTeacherHub(
-                                        dashboardValue,
-                                        attendanceValue,
-                                      ),
+                                    child: _buildClassTeacherHub(
+                                      dashboardValue,
+                                      attendanceValue,
                                     ),
                                   ),
 
                                 // Academic Content Hub (HW/CW/Circulars)
                                 if (hasSubjectSections)
                                   SliverToBoxAdapter(
-                                    child: FadeInUp(
-                                      duration: const Duration(
-                                        milliseconds: 500,
-                                      ),
-                                      delay: const Duration(milliseconds: 150),
-                                      child: _buildAcademicContentHub(),
-                                    ),
+                                    child: _buildAcademicContentHub(),
                                   ),
 
                                 // Subject Teacher Hub (Results)
                                 if (hasSubjectSections)
                                   SliverToBoxAdapter(
-                                    child: FadeInUp(
-                                      duration: const Duration(
-                                        milliseconds: 500,
-                                      ),
-                                      delay: const Duration(milliseconds: 200),
-                                      child: _buildSubjectTeacherHub(
-                                        dashboardValue,
-                                        classTestValue,
-                                      ),
+                                    child: _buildSubjectTeacherHub(
+                                      dashboardValue,
+                                      classTestValue,
                                     ),
                                   ),
 
@@ -1144,55 +1106,60 @@ Widget _buildDashboardCard({
   required Widget child,
   IconData? icon,
 }) {
-  return Container(
-    width: double.infinity,
-    margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-    decoration: BoxDecoration(
-      color: AppColors.primaryLightBlue.withValues(alpha: 0.8),
-      borderRadius: BorderRadius.circular(24),
-      border: Border.all(color: accentColor.withValues(alpha: 0.2), width: 1.5),
-      boxShadow: [
-        BoxShadow(
-          color: accentColor.withValues(alpha: 0.08),
-          blurRadius: 20,
-          offset: const Offset(0, 10),
+  return RepaintBoundary(
+    child: Container(
+      width: double.infinity,
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      decoration: BoxDecoration(
+        color: AppColors.primaryLightBlue.withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: accentColor.withValues(alpha: 0.2),
+          width: 1.5,
         ),
-      ],
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 4,
-                height: 18,
-                decoration: BoxDecoration(
-                  color: accentColor,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
-              const SizedBox(width: 12),
-              if (icon != null) ...[
-                Icon(icon, color: accentColor, size: 20),
-                const SizedBox(width: 8),
-              ],
-              Text(
-                title.toUpperCase(),
-                style: TextStyle(
-                  color: AppColors.primaryDarkBlue.withValues(alpha: 0.8),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ],
+        boxShadow: [
+          BoxShadow(
+            color: accentColor.withValues(alpha: 0.08),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
           ),
-          const SizedBox(height: 16),
-          child,
         ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    color: accentColor,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                if (icon != null) ...[
+                  Icon(icon, color: accentColor, size: 20),
+                  const SizedBox(width: 8),
+                ],
+                Text(
+                  title.toUpperCase(),
+                  style: TextStyle(
+                    color: AppColors.primaryDarkBlue.withValues(alpha: 0.8),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            child,
+          ],
+        ),
       ),
     ),
   );
