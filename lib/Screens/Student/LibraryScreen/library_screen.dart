@@ -8,6 +8,7 @@ import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart
 import 'package:tcs_app/components/NotificationComponents/notification_component.dart';
 import 'package:tcs_app/components/LibraryComponents/single_library_item.dart';
 import 'package:tcs_app/provider/Library/library_provider.dart';
+import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 
 class LibraryScreen extends StatefulWidget {
@@ -70,8 +71,8 @@ class _LibraryRecordsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LibraryProvider>(
-      builder: (context, value, _) {
+    return Consumer2<LibraryProvider, StudentDashboardProvider>(
+      builder: (context, value, dashboardProvider, _) {
         // Loading state
         if (value.isLoading && value.libraryResponse == null) {
           return const CustomLoader();
@@ -96,7 +97,22 @@ class _LibraryRecordsTab extends StatelessWidget {
             itemCount: records.length + 1,
             itemBuilder: (context, index) {
               if (index == 0) {
-                return CustomStudentInfo(info: value.libraryResponse!.info);
+                // FALLBACK LOGIC: Use StudentDashboardProvider data if Library info is null
+                final apiInfo = value.libraryResponse!.info;
+                final profile = dashboardProvider
+                    .activeChildData?.profile?.profile?.firstOrNull;
+
+                if (apiInfo?.className == null && profile != null) {
+                  final fallbackInfo = {
+                    'rollNo': profile.studentId,
+                    'name': profile.name,
+                    'className': profile.className,
+                    'centerName': profile.center,
+                  };
+                  return CustomStudentInfo(info: _LibraryInfoWrapper(fallbackInfo));
+                }
+
+                return CustomStudentInfo(info: apiInfo);
               }
 
               final recordIndex = index - 1;
@@ -133,4 +149,14 @@ class _NotificationsTab extends StatelessWidget {
       ),
     );
   }
+}
+
+class _LibraryInfoWrapper {
+  final Map<String, dynamic> _data;
+  _LibraryInfoWrapper(this._data);
+
+  get rollNo => _data['rollNo'];
+  get name => _data['name'];
+  get className => _data['className'];
+  get centerName => _data['centerName'];
 }

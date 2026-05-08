@@ -1,15 +1,18 @@
+import 'dart:ui';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
-import 'package:tcs_app/custom_widgets/CustomLogoCover/custom_logo_cover.dart';
+import 'package:tcs_app/custom_widgets/CustomStudentInfo/custom_student_info.dart';
 import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
+import 'package:tcs_app/custom_widgets/ParticleBackground/particle_background.dart';
 import 'package:tcs_app/provider/SupportForm/support_form_provider.dart';
+import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/utils/app_colors.dart';
-import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/utils/input_formatters.dart';
 import 'package:tcs_app/utils/validators.dart';
 
@@ -17,302 +20,563 @@ class AppFeedbackScreen extends StatefulWidget {
   const AppFeedbackScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => AppFeedbackScreenState();
+  State<AppFeedbackScreen> createState() => AppFeedbackScreenState();
 }
 
-class AppFeedbackScreenState extends State<AppFeedbackScreen> {
-  var provider = Provider.of<SupportFormProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
+class AppFeedbackScreenState extends State<AppFeedbackScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _particleController;
+  late SupportFormProvider _provider;
 
   @override
   void initState() {
-    provider.initializeData();
-    if (provider.userType.isNotEmpty) {
-      provider.clearData();
-      provider.initializeUserData();
-    }
-    provider.loadDeviceInfo();
     super.initState();
+    _particleController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    )..repeat();
+
+    _provider = Provider.of<SupportFormProvider>(
+      AppNavigation.currentContext!,
+      listen: false,
+    );
+    _provider.initializeData();
+    if (_provider.userType.isNotEmpty) {
+      _provider.clearData();
+      _provider.initializeUserData();
+    }
+    _provider.loadDeviceInfo();
   }
 
   @override
   void dispose() {
-    provider.clearData();
+    _particleController.dispose();
+    _provider.clearData();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-
     return Scaffold(
       appBar: const CustomAppBar(title: 'APP FEEDBACK'),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(
-            left: 16.0,
-            right: 16.0,
-            top: 8.0,
-            bottom: 16.0,
+      body: Stack(
+        children: [
+          ParticleBackground(
+            animation: _particleController,
+            particleColor: AppColors.primaryBlue.withValues(alpha: 0.15),
           ),
-          child: Column(
-            children: <Widget>[
-              const CustomLogoCover(),
-              SizedBox(height: size.height * 0.03),
-
-              CustomCard(
-                child: Form(
-                  key: provider.formKey,
-                  child: Column(
-                    children: <Widget>[
-                      // User Name
-                      CustomTextFormField(
-                        controller: provider.nameController,
-                        prefixIcon: Icons.person,
-                        hintText: "User Name",
-                        validator: (val) => Validators.validator(val),
-                      ),
-                      SizedBox(height: size.height * 0.02),
-
-                      // User Type (read-only)
-                      if (provider.userType.isNotEmpty) ...[
-                        CustomTextFormField(
-                          hintText: provider.userType,
-                          prefixIcon: Icons.account_circle,
-                          isEnable: false,
-                        ),
-                        SizedBox(height: size.height * 0.02),
-                      ],
-
-                      // ID
-                      CustomTextFormField(
-                        controller: provider.idController,
-                        prefixIcon: Icons.badge,
-                        hintText: "Roll No / ERP / CNIC",
-                        validator: (val) => Validators.validator(val),
-                      ),
-                      SizedBox(height: size.height * 0.02),
-
-                      // Class (Students only)
-                      if (provider.userType ==
-                          HelperFunction.userType(AppUserType.student)) ...[
-                        Column(
-                          children: [
-                            CustomTextFormField(
-                              controller: provider.classController,
-
-                              prefixIcon: Icons.school,
-                              hintText: "Class",
-                            ),
-                            SizedBox(height: size.height * 0.02),
-                          ],
-                        ),
-                      ],
-
-                      if (provider.userType !=
-                          HelperFunction.userType(AppUserType.parent)) ...[
-                        // Campus
-                        CustomTextFormField(
-                          controller: provider.campusController,
-
-                          prefixIcon: Icons.business,
-                          hintText: "Campus",
-                        ),
-                        SizedBox(height: size.height * 0.02),
-                      ],
-
-                      if (provider.userType !=
-                          HelperFunction.userType(AppUserType.parent)) ...[
-                        // Region
-                        CustomTextFormField(
-                          controller: provider.regionController,
-
-                          prefixIcon: Icons.location_city,
-                          hintText: "Region",
-                        ),
-                        SizedBox(height: size.height * 0.02),
-                      ],
-
-                      // Contact Email
-                      CustomTextFormField(
-                        controller: provider.emailController,
-                        inputType: TextInputType.emailAddress,
-                        prefixIcon: Icons.email,
-                        hintText: "Contact Email",
-                        validator: Validators.validatorForEmail,
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                      // Contact No
-                      CustomTextFormField(
-                        controller: provider.mobileContactController,
-                        inputType: TextInputType.phone,
-                        hintText: 'Mobile Number(03XX-XXXXXXX)',
-                        prefixIcon: Icons.phone_iphone,
-                        inputFormatter: InputFormatters.mobileNumberFormatter(),
-                        validator: Validators.validatorForMobileNo,
-                      ),
-                      SizedBox(height: size.height * 0.02),
-
-                      // Feedback Type Dropdown
-                      DropdownButtonFormField<String>(
-                        // padding: EdgeInsets.zero,
-                        initialValue: provider.selectedFeedbackType,
-                        borderRadius: BorderRadius.circular(8.0),
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                        ),
-                        decoration: InputDecoration(
-                          prefixIcon: Container(
-                            margin: const EdgeInsets.only(right: 3.0),
-                            decoration: const BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(8.0),
-                                bottomLeft: Radius.circular(8.0),
-                              ),
-                            ),
-                            child: Icon(
-                              Icons.feedback,
-                              color: AppColors.whiteColor,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        items: provider.feedbackTypes
-                            .map(
-                              (type) => DropdownMenuItem(
-                                value: type,
-                                child: Text(type),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (value) {
-                          if (value != null) {
-                            provider.updateFeedbackType(value);
+          SafeArea(
+            child: Consumer<SupportFormProvider>(
+              builder: (context, provider, _) {
+                return CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    // Header Section
+                    SliverToBoxAdapter(
+                      child: Consumer<LocalDataProvider>(
+                        builder: (context, localData, _) {
+                          if (localData.userData?.userType == 'Parent') {
+                            return _buildParentHeader(localData);
                           }
+                          return _buildReusableHeader();
                         },
                       ),
-                      SizedBox(height: size.height * 0.02),
+                    ),
 
-                      // Title
-                      CustomTextFormField(
-                        controller: provider.titleController,
-                        hintText: "Title",
-                        prefixIcon: Icons.title,
-                        inputAction: TextInputAction.next,
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Title is required';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: size.height * 0.02),
-
-                      // Details
-                      CustomTextFormField(
-                        controller: provider.detailsController,
-                        hintText: "Details",
-                        // prefixIcon: Icons.description,
-                        maxLines: 4,
-                        inputType: TextInputType.multiline,
-                        inputAction: TextInputAction.newline,
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Details are required';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: size.height * 0.02),
-
-                      // Children Info (for Parents only)
-                      if (provider.userType == "Parent" &&
-                          provider.multiChildResponse != null)
-                        Column(
-                          children: provider.multiChildResponse!.children!
-                              .map(
-                                (c) => Card(
-                                  color: AppColors.whiteColor.withValues(
+                    // Form Section
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      sliver: SliverToBoxAdapter(
+                        child: FadeInUp(
+                          duration: const Duration(milliseconds: 600),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(24),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                padding: const EdgeInsets.all(24),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryLightBlue.withValues(
                                     alpha: 0.8,
                                   ),
-                                  child: ListTile(
-                                    leading: CustomUserImage(
-                                      imageSize: size.width * 0.15,
-                                      userId: '${c.studentId}',
-                                    ),
-                                    title: Text(
-                                      "${c.studentName} (${c.studentId}) - ${c.className} (${c.centerName}, ${c.regionName})",
-                                      style: const TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 14,
-                                      ),
+                                  borderRadius: BorderRadius.circular(24),
+                                  border: Border.all(
+                                    color: AppColors.primaryBlue.withValues(
+                                      alpha: 0.2,
                                     ),
                                   ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(
+                                        alpha: 0.05,
+                                      ),
+                                      blurRadius: 20,
+                                      offset: const Offset(0, 10),
+                                    ),
+                                  ],
                                 ),
-                              )
-                              .toList(),
+                                child: Form(
+                                  key: provider.formKey,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _buildSectionTitle('SENDER INFORMATION'),
+                                      const SizedBox(height: 16),
+                                      CustomTextFormField(
+                                        controller: provider.nameController,
+                                        prefixIcon:
+                                            Icons.person_outline_rounded,
+                                        hintText: "Full Name",
+                                        validator: (val) =>
+                                            Validators.validator(val),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: CustomTextFormField(
+                                              controller: provider.idController,
+                                              prefixIcon: Icons.badge_outlined,
+                                              hintText: "ID / CNIC",
+                                              validator: (val) =>
+                                                  Validators.validator(val),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: CustomTextFormField(
+                                              hintText: provider.userType,
+                                              prefixIcon:
+                                                  Icons.account_circle_outlined,
+                                              isEnable: false,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 16),
+                                      CustomTextFormField(
+                                        controller: provider.emailController,
+                                        inputType: TextInputType.emailAddress,
+                                        prefixIcon:
+                                            Icons.alternate_email_rounded,
+                                        hintText: "Contact Email",
+                                        validator: Validators.validatorForEmail,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      CustomTextFormField(
+                                        controller:
+                                            provider.mobileContactController,
+                                        inputType: TextInputType.phone,
+                                        hintText: 'Mobile (03XX-XXXXXXX)',
+                                        prefixIcon: Icons.phone_android_rounded,
+                                        inputFormatter:
+                                            InputFormatters.mobileNumberFormatter(),
+                                        validator:
+                                            Validators.validatorForMobileNo,
+                                      ),
+                                      const SizedBox(height: 24),
+                                      const Divider(
+                                        height: 32,
+                                        thickness: 0.5,
+                                        color: AppColors.primaryTitleColor,
+                                      ),
+                                      _buildSectionTitle('FEEDBACK DETAILS'),
+                                      const SizedBox(height: 16),
+                                      _buildFeedbackTypeDropdown(provider),
+                                      const SizedBox(height: 16),
+                                      CustomTextFormField(
+                                        controller: provider.titleController,
+                                        hintText: "Subject / Title",
+                                        prefixIcon: Icons.title_rounded,
+                                        inputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().isEmpty) {
+                                            return 'Title is required';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: 16),
+                                      CustomTextFormField(
+                                        controller: provider.detailsController,
+                                        hintText: "Tell us more...",
+                                        maxLines: 5,
+                                        inputType: TextInputType.multiline,
+                                        inputAction: TextInputAction.newline,
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().isEmpty) {
+                                            return 'Details are required';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      if (provider.userType == "Parent" &&
+                                          provider.multiChildResponse !=
+                                              null) ...[
+                                        const SizedBox(height: 24),
+                                        _buildSectionTitle('LINKED CHILDREN'),
+                                        const SizedBox(height: 12),
+                                        ...provider
+                                            .multiChildResponse!
+                                            .children!
+                                            .map((c) => _buildChildTile(c)),
+                                      ],
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                    ],
-                  ),
-                ),
-              ),
+                      ),
+                    ),
 
-              SizedBox(height: size.height * 0.02),
-              SizedBox(
-                width: size.width,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Note:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                    // Notes Section
+                    SliverToBoxAdapter(
+                      child: FadeInUp(
+                        delay: const Duration(milliseconds: 200),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryBlue.withValues(
+                                alpha: 0.05,
+                              ),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: AppColors.primaryBlue.withValues(
+                                  alpha: 0.1,
+                                ),
+                              ),
+                            ),
+                            child: const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.info_outline_rounded,
+                                      size: 16,
+                                      color: AppColors.primaryBlue,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Quick Notes',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w900,
+                                        color: AppColors.primaryBlue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 12),
+                                _NoteItem(
+                                  text:
+                                      'You can attach screenshots in the generated email.',
+                                ),
+                                _NoteItem(
+                                  text:
+                                      'Ensure contact details are valid for our response.',
+                                ),
+                                _NoteItem(
+                                  text:
+                                      'Your feedback is strictly confidential.',
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                      Text(
-                        '\u2023 Please attach screenshots or documents if necessary in the email that will be generated.',
-                        style: TextStyle(height: 1.5),
-                      ),
-                      Text(
-                        "\u2023 Please provide valid contact details so that we can get back to you.",
-                        style: TextStyle(height: 1.5),
-                      ),
-                      Text(
-                        '\u2023 Your feedback is important to us and will be kept confidential.',
-                        style: TextStyle(height: 1.5),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
 
-              SizedBox(height: size.height * 0.02),
-
-              // Submit button
-              CustomAppButton(
-                buttonTitle: 'Generate Email',
-                onTap: () => provider.sendSupportEmail(),
-              ),
-            ],
+                    // Action Button
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 0, 24, 40),
+                        child: FadeInUp(
+                          delay: const Duration(milliseconds: 400),
+                          child: CustomAppButton(
+                            buttonTitle: 'GENERATE EMAIL',
+                            onTap: () => provider.sendSupportEmail(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.w900,
+        color: AppColors.primaryBlue,
+        letterSpacing: 1.5,
+      ),
+    );
+  }
+
+  Widget _buildFeedbackTypeDropdown(SupportFormProvider provider) {
+    return Container(
+      height: 50,
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.95),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Prefix Icon (Exact match to CustomTextFormField style)
+          Container(
+            width: 46,
+            decoration: const BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0),
+              ),
+            ),
+            child: const Icon(
+              Icons.feedback_rounded,
+              color: Colors.white,
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 12),
+          // Dropdown Content
+          Expanded(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: provider.selectedFeedbackType,
+                isExpanded: true,
+                dropdownColor: Colors.white,
+                icon: const Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.primaryColor,
+                    size: 20,
+                  ),
+                ),
+                borderRadius: BorderRadius.circular(12),
+                style: const TextStyle(
+                  color: AppColors.primaryDarkBlue,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Roboto', // Ensuring consistent font
+                ),
+                items: provider.feedbackTypes
+                    .map(
+                      (type) =>
+                          DropdownMenuItem(value: type, child: Text(type)),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    provider.updateFeedbackType(value);
+                  }
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildChildTile(dynamic c) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.1)),
+      ),
+      child: Row(
+        children: [
+          CustomUserImage(imageSize: 45, userId: '${c.studentId}'),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  c.studentName ?? '',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 13,
+                    color: AppColors.primaryDarkBlue,
+                  ),
+                ),
+                Text(
+                  "${c.className} | ID: ${c.studentId}",
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: AppColors.softGreyText.withValues(alpha: 0.8),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildParentHeader(LocalDataProvider localData) {
+    return FadeInDown(
+      duration: const Duration(milliseconds: 600),
+      child: Container(
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.primaryDarkBlue, Color(0xED002D62)],
+          ),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryBlue.withValues(alpha: 0.3),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.rate_review_rounded,
+                color: AppColors.goldenYellow,
+                size: 32,
+              ),
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'SHARE FEEDBACK',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.goldenYellow,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    localData.userData?.name?.toUpperCase() ?? 'PARENT',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+
+  Widget _buildReusableHeader() {
+    return Consumer2<StudentDashboardProvider, LocalDataProvider>(
+      builder: (context, dashboardProvider, localData, _) {
+        final profile =
+            dashboardProvider.activeChildData?.profile?.profile?.firstOrNull;
+
+        if (profile == null) {
+          return CustomStudentInfo(info: localData.userData?.info);
+        }
+
+        final infoWrapper = {
+          'rollNo': profile.studentId,
+          'name': profile.name,
+          'className': profile.className,
+          'centerName': profile.center,
+        };
+
+        return CustomStudentInfo(info: _InfoWrapper(infoWrapper));
+      },
+    );
+  }
+}
+
+class _NoteItem extends StatelessWidget {
+  final String text;
+  const _NoteItem({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '\u2022',
+            style: TextStyle(
+              color: AppColors.primaryBlue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 12,
+                color: AppColors.primaryDarkBlue.withValues(alpha: 0.8),
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoWrapper {
+  final Map<String, dynamic> _data;
+  _InfoWrapper(this._data);
+
+  String? get rollNo => _data['rollNo'];
+  String? get name => _data['name'];
+  String? get className => _data['className'];
+  String? get centerName => _data['centerName'];
 }

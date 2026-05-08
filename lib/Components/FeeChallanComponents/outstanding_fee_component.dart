@@ -7,6 +7,7 @@ import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
+import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/routes/app_navigation_routes.dart';
 import 'package:tcs_app/routes/challan_args.dart';
@@ -20,8 +21,8 @@ class OutstandingFeeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FeeChallanProvider>(
-      builder: (context, value, _) {
+    return Consumer2<FeeChallanProvider, StudentDashboardProvider>(
+      builder: (context, value, dashboardProvider, _) {
         // Loading state
         if (value.isLoading && value.outstandingChallans == null) {
           return const CustomLoader();
@@ -61,8 +62,25 @@ class OutstandingFeeComponent extends StatelessWidget {
                     children: [
                       // ── Student info header ──
                       if (value.outstandingChallans!.info != null)
-                        CustomStudentInfo(
-                          info: value.outstandingChallans!.info,
+                        Builder(
+                          builder: (context) {
+                            final apiInfo = value.outstandingChallans!.info;
+                            final profile = dashboardProvider
+                                .activeChildData?.profile?.profile?.firstOrNull;
+
+                            if (apiInfo?.className == null && profile != null) {
+                              final fallbackInfo = {
+                                'rollNo': profile.studentId,
+                                'name': profile.name,
+                                'className': profile.className,
+                                'centerName': profile.center,
+                              };
+                              return CustomStudentInfo(
+                                info: _FeeInfoWrapper(fallbackInfo),
+                              );
+                            }
+                            return CustomStudentInfo(info: apiInfo);
+                          },
                         ),
 
                       // ── Challan card & surcharge note ──
@@ -149,4 +167,14 @@ class OutstandingFeeComponent extends StatelessWidget {
       ),
     );
   }
+}
+
+class _FeeInfoWrapper {
+  final Map<String, dynamic> _data;
+  _FeeInfoWrapper(this._data);
+
+  get rollNo => _data['rollNo'];
+  get name => _data['name'];
+  get className => _data['className'];
+  get centerName => _data['centerName'];
 }

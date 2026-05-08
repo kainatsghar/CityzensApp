@@ -6,6 +6,7 @@ import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
+import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 import 'package:tcs_app/utils/app_constants.dart';
 
 class ReceiptFeeComponent extends StatelessWidget {
@@ -15,8 +16,8 @@ class ReceiptFeeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FeeChallanProvider>(
-      builder: (context, value, _) {
+    return Consumer2<FeeChallanProvider, StudentDashboardProvider>(
+      builder: (context, value, dashboardProvider, _) {
         // Loading state
         if (value.isLoading && value.challanReceiptResponse == null) {
           return const CustomLoader();
@@ -43,11 +44,25 @@ class ReceiptFeeComponent extends StatelessWidget {
             itemCount: responseData.length + 1,
             itemBuilder: (context, index) {
               if (index == 0) {
-                return value.challanReceiptResponse!.info == null
+                final apiInfo = value.challanReceiptResponse!.info;
+                final profile = dashboardProvider
+                    .activeChildData?.profile?.profile?.firstOrNull;
+
+                if (apiInfo?.className == null && profile != null) {
+                  final fallbackInfo = {
+                    'rollNo': profile.studentId,
+                    'name': profile.name,
+                    'className': profile.className,
+                    'centerName': profile.center,
+                  };
+                  return CustomStudentInfo(
+                    info: _ReceiptInfoWrapper(fallbackInfo),
+                  );
+                }
+
+                return apiInfo == null
                     ? const SizedBox.shrink()
-                    : CustomStudentInfo(
-                        info: value.challanReceiptResponse!.info,
-                      );
+                    : CustomStudentInfo(info: apiInfo);
               }
 
               final recordIndex = index - 1;
@@ -64,4 +79,14 @@ class ReceiptFeeComponent extends StatelessWidget {
       },
     );
   }
+}
+
+class _ReceiptInfoWrapper {
+  final Map<String, dynamic> _data;
+  _ReceiptInfoWrapper(this._data);
+
+  get rollNo => _data['rollNo'];
+  get name => _data['name'];
+  get className => _data['className'];
+  get centerName => _data['centerName'];
 }

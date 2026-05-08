@@ -19,7 +19,6 @@ class StudentProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     const white10 = Color(0x1AFFFFFF);
     const white15 = Color(0x26FFFFFF);
-    const white40 = Color(0x66FFFFFF);
     const white80 = Color(0xCCFFFFFF);
     const whiteE6 = Color(0xE6FFFFFF);
 

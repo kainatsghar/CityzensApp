@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart';
@@ -280,12 +281,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             _buildAcademicsNavHub(gradeId, localGradeId),
             delay: 300,
           ),
-          _buildAnimatedSliver(_buildCampusNavHub(), delay: 400),
-          if (_isParent)
-            _buildAnimatedSliver(
-              _buildParentServicesNavHub(gradeId, localGradeId),
-              delay: 500,
-            ),
+          _buildAnimatedSliver(
+            _buildStudentHub(gradeId, localGradeId),
+            delay: 400,
+          ),
 
           const SliverToBoxAdapter(child: SizedBox(height: 40)),
         ],
@@ -484,78 +483,101 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
 
     return _buildDashboardCard(
       title: 'Financial Status',
-      accentColor: AppColors.valuesRedColors,
+      accentColor: hasFees ? AppColors.valuesRedColors : AppColors.successGreen,
       icon: Icons.account_balance_wallet_rounded,
       child: Column(
         children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color:
-                      (hasFees
-                              ? AppColors.valuesRedColors
-                              : AppColors.successGreen)
-                          .withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  hasFees
-                      ? Icons.pending_actions_rounded
-                      : Icons.check_circle_rounded,
-                  color: hasFees
-                      ? AppColors.valuesRedColors
-                      : AppColors.successGreen,
-                  size: 28,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      hasFees ? 'OUTSTANDING DUES' : 'ALL CLEAR',
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w900,
-                        color: hasFees
-                            ? AppColors.valuesRedColors
-                            : AppColors.successGreen,
-                        letterSpacing: 1.0,
-                      ),
+          InkWell(
+            onTap: () {
+              HapticFeedback.selectionClick();
+              AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute);
+            },
+            borderRadius: BorderRadius.circular(16),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color:
+                          (hasFees
+                                  ? AppColors.valuesRedColors
+                                  : AppColors.successGreen)
+                              .withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              (hasFees
+                                      ? AppColors.valuesRedColors
+                                      : AppColors.successGreen)
+                                  .withValues(alpha: 0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 2),
-                    Text(
+                    child: Icon(
                       hasFees
-                          ? 'Rs. ${total.toStringAsFixed(0)}'
-                          : 'No pending payments',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                        color: AppColors.primaryDarkBlue,
-                      ),
+                          ? Icons.pending_actions_rounded
+                          : Icons.check_circle_rounded,
+                      color: hasFees
+                          ? AppColors.valuesRedColors
+                          : AppColors.successGreen,
+                      size: 32,
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          hasFees ? 'OUTSTANDING DUES' : 'FINANCIAL STATUS',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w900,
+                            color: hasFees
+                                ? AppColors.valuesRedColors
+                                : AppColors.successGreen,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          hasFees
+                              ? NumberFormat.currency(
+                                  symbol: 'Rs. ',
+                                  decimalDigits: 0,
+                                ).format(total)
+                              : 'All Dues Cleared',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.primaryDarkBlue,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.softGreyText.withValues(alpha: 0.5),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: _buildHubActionCard(
-                  title: 'Fee Bill & Payment',
-                  icon: Icons.receipt_long_rounded,
-                  color: AppColors.valuesRedColors,
-                  onTap: () =>
-                      AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
-                  isPrimary: true,
-                ),
-              ),
-            ],
+          const SizedBox(height: 24),
+          _buildHubActionCard(
+            title: 'View Fee Bill & Payment History',
+            icon: Icons.receipt_long_rounded,
+            color: hasFees ? AppColors.valuesRedColors : AppColors.primaryBlue,
+            onTap: () =>
+                AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
+            isPrimary: true,
           ),
         ],
       ),
@@ -563,146 +585,147 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   }
 
   Widget _buildAcademicsNavHub(String gradeId, String localGradeId) {
+    // Check if any academic items are active
+    final bool isNotGradeOne = gradeId != '1' && localGradeId != '1';
+    if (!isNotGradeOne) return const SizedBox.shrink();
+
     return _buildDashboardCard(
-      title: 'Academics',
+      title: 'Academic Results',
       accentColor: AppColors.primaryBlue,
-      icon: Icons.school_rounded,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 1.4,
+      icon: Icons.workspace_premium_rounded,
+      child: Column(
+        children: [
+          Row(
             children: [
-              _buildHubActionCard(
-                title: 'Diary',
-                icon: Icons.menu_book_rounded,
-                color: AppColors.primaryBlue,
-                onTap: () =>
-                    AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute),
-              ),
-              _buildHubActionCard(
-                title: 'Assignment',
-                icon: Icons.assignment_rounded,
-                color: AppColors.primaryBlue,
-                onTap: () => AppNavigation.navigateTo(
-                  AppNavRoutes.studentAssignmentRoute,
-                ),
-              ),
-              if (gradeId != '1' && localGradeId != '1')
-                _buildHubActionCard(
-                  title: 'Term Result',
-                  icon: Icons.grade_rounded,
+              Expanded(
+                child: _buildHubActionCard(
+                  title: 'Term Results',
+                  icon: Icons.emoji_events_rounded,
                   color: AppColors.primaryBlue,
                   onTap: () =>
                       AppNavigation.navigateTo(AppNavRoutes.academicTermRoute),
                 ),
-              if (gradeId != '1' && localGradeId != '1')
-                _buildHubActionCard(
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildHubActionCard(
                   title: 'Class Test',
-                  icon: Icons.quiz_rounded,
+                  icon: Icons.assessment,
                   color: AppColors.primaryBlue,
                   onTap: () => AppNavigation.navigateTo(
                     AppNavRoutes.studentClassTestResultRoute,
                   ),
                 ),
+              ),
             ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildCampusNavHub() {
-    return _buildDashboardCard(
-      title: 'Campus & Services',
-      accentColor: AppColors.successGreen,
-      icon: Icons.business_rounded,
-      child: GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        childAspectRatio: 1.4,
-        children: [
-          _buildHubActionCard(
-            title: 'Library',
-            icon: Icons.local_library_rounded,
-            color: AppColors.successGreen,
-            onTap: () => AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
-          ),
-          _buildHubActionCard(
-            title: 'Timetable',
-            icon: Icons.calendar_today_rounded,
-            color: AppColors.successGreen,
-            onTap: () =>
-                AppNavigation.navigateTo(AppNavRoutes.teacherTimeTableRoute),
-          ),
-          _buildHubActionCard(
-            title: 'Events',
-            icon: Icons.event_note_rounded,
-            color: AppColors.successGreen,
-            onTap: null,
-          ),
-          _buildHubActionCard(
-            title: 'Survey',
-            icon: Icons.poll_rounded,
-            color: AppColors.successGreen,
-            onTap: null,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildParentServicesNavHub(String gradeId, String localGradeId) {
+  Widget _buildStudentHub(String gradeId, String localGradeId) {
     bool showEYOC =
         ['2', '3', '4'].contains(gradeId) ||
         ['2', '3', '4'].contains(localGradeId);
 
     return _buildDashboardCard(
-      title: 'Parent Services',
-      accentColor: AppColors.purpleColor,
-      icon: Icons.family_restroom_rounded,
-      child: GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        childAspectRatio: 1.4,
+      title: 'Student Hub',
+      accentColor: AppColors.primaryBlue,
+      icon: Icons.grid_view_rounded,
+      child: Column(
         children: [
-          if (showEYOC)
-            _buildHubActionCard(
-              title: 'Eye On Child',
-              icon: Icons.visibility_rounded,
-              color: AppColors.purpleColor,
-              onTap: () => AppNavigation.navigateTo(
-                AppNavRoutes.parentEyeOnYourChildRoute,
+          InkWell(
+            onTap: () {
+              HapticFeedback.selectionClick();
+              AppNavigation.navigateTo(AppNavRoutes.teacherTimeTableRoute);
+            },
+            borderRadius: BorderRadius.circular(16),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryBlue.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.calendar_today_rounded,
+                      color: AppColors.primaryBlue,
+                      size: 26,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'WEEKLY SCHEDULE',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.primaryBlue,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          'View Timetable',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.primaryDarkBlue,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.softGreyText.withValues(alpha: 0.5),
+                  ),
+                ],
               ),
             ),
-          _buildHubActionCard(
-            title: 'Appointment',
-            icon: Icons.edit_calendar_rounded,
-            color: AppColors.purpleColor,
-            onTap: null,
           ),
-          _buildHubActionCard(
-            title: 'Withdrawal',
-            icon: Icons.outbox_rounded,
-            color: AppColors.purpleColor,
-            onTap: null,
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: _buildHubActionCard(
+                  title: 'Library',
+                  icon: Icons.local_library_rounded,
+                  color: AppColors.primaryBlue,
+                  onTap: () =>
+                      AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
+                ),
+              ),
+              if (showEYOC) ...[
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildHubActionCard(
+                    title: 'Eye On Child',
+                    icon: Icons.visibility_rounded,
+                    color: AppColors.purpleColor,
+                    onTap: () => AppNavigation.navigateTo(
+                      AppNavRoutes.parentEyeOnYourChildRoute,
+                    ),
+                  ),
+                ),
+              ],
+            ],
           ),
-          _buildHubActionCard(
-            title: 'Complaints',
-            icon: Icons.support_agent_rounded,
-            color: AppColors.purpleColor,
-            onTap: null,
-          ),
+          // Hidden inactive features preserved in code
+          /*
+          _buildHubActionCard(title: 'Events', icon: Icons.event_note_rounded, color: AppColors.primaryBlue, onTap: null),
+          _buildHubActionCard(title: 'Survey', icon: Icons.poll_rounded, color: AppColors.primaryBlue, onTap: null),
+          _buildHubActionCard(title: 'Appointment', icon: Icons.edit_calendar_rounded, color: AppColors.primaryBlue, onTap: null),
+          _buildHubActionCard(title: 'Withdrawal', icon: Icons.outbox_rounded, color: AppColors.primaryBlue, onTap: null),
+          _buildHubActionCard(title: 'Complaints', icon: Icons.support_agent_rounded, color: AppColors.primaryBlue, onTap: null),
+          */
         ],
       ),
     );
@@ -790,52 +813,64 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         decoration: BoxDecoration(
           color: isDormant
               ? Colors.grey.shade50
-              : (isPrimary ? color.withValues(alpha: 0.1) : Colors.white),
+              : (isPrimary ? AppColors.primaryDarkBlue : Colors.white),
           borderRadius: BorderRadius.circular(16),
+          gradient: isPrimary && !isDormant
+              ? const LinearGradient(
+                  colors: [AppColors.primaryBlue, AppColors.primaryDarkBlue],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+          boxShadow: isPrimary && !isDormant
+              ? [
+                  BoxShadow(
+                    color: AppColors.primaryDarkBlue.withValues(alpha: 0.3),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ]
+              : null,
           border: Border.all(
             color: isDormant
                 ? Colors.grey.shade200
                 : (isPrimary
-                      ? color.withValues(alpha: 0.2)
+                      ? Colors.transparent
                       : AppColors.borderGrey.withValues(alpha: 0.5)),
             width: 1,
           ),
         ),
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
-              color: isDormant ? Colors.grey.shade300 : color,
-              size: 24,
+              color: isDormant
+                  ? Colors.grey.shade300
+                  : (isPrimary ? Colors.white : color),
+              size: 20,
             ),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: isDormant
-                    ? Colors.grey.shade400
-                    : AppColors.primaryDarkBlue,
-                fontWeight: FontWeight.w700,
-                fontSize: 11,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            if (isDormant)
-              Text(
-                'SOON',
+            const SizedBox(width: 10),
+            Flexible(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.grey.shade400,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 7,
-                  letterSpacing: 1,
+                  color: isDormant
+                      ? Colors.grey.shade400
+                      : (isPrimary ? Colors.white : AppColors.primaryDarkBlue),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 13,
+                  letterSpacing: 0.2,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
+            ),
           ],
         ),
       ),

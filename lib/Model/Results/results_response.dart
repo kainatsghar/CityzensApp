@@ -6,13 +6,14 @@ class ResultsResponse {
   List<Detail>? listDetail;
   List<PDFResults>? pdfResultslist;
 
-  ResultsResponse(
-      {this.isSuccessful,
-      this.message,
-      this.isException,
-      this.info,
-      this.listDetail,
-      this.pdfResultslist});
+  ResultsResponse({
+    this.isSuccessful,
+    this.message,
+    this.isException,
+    this.info,
+    this.listDetail,
+    this.pdfResultslist,
+  });
 
   factory ResultsResponse.fromJson(Map json) {
     // Ensure "Results" and "PDFResults" are not null and have correct type
@@ -20,8 +21,9 @@ class ResultsResponse {
     List<Detail> detailList = list.map((i) => Detail.fromJson(i)).toList();
 
     var listpdf = json['PDFResults'] as List? ?? [];
-    List<PDFResults> listpdfresult =
-        listpdf.map((i) => PDFResults.fromJson(i)).toList();
+    List<PDFResults> listpdfresult = listpdf
+        .map((i) => PDFResults.fromJson(i))
+        .toList();
 
     return ResultsResponse(
       isSuccessful: json['IsSuccessful'] ?? false,
@@ -52,42 +54,44 @@ class StudentInfo {
   double? average;
   int? gradeId;
 
-  StudentInfo(
-      {this.gradeId,
-      this.name,
-      this.rollNo,
-      this.className,
-      this.centerName,
-      this.regionName,
-      this.term,
-      this.sessionId,
-      this.section,
-      this.promotedTo,
-      this.teacherComment,
-      this.overallGrade,
-      this.average,
-      this.highestPercentage,
-      this.lowestPercentage,
-      this.overallPercentage});
+  StudentInfo({
+    this.gradeId,
+    this.name,
+    this.rollNo,
+    this.className,
+    this.centerName,
+    this.regionName,
+    this.term,
+    this.sessionId,
+    this.section,
+    this.promotedTo,
+    this.teacherComment,
+    this.overallGrade,
+    this.average,
+    this.highestPercentage,
+    this.lowestPercentage,
+    this.overallPercentage,
+  });
 
   factory StudentInfo.fromJson(Map json) {
     return StudentInfo(
-        gradeId: json['Grade_Id'],
-        name: json['StudentName'],
-        rollNo: json['Student_Id'],
-        className: json['Class_Name'],
-        centerName: json['Center_Name'],
-        regionName: json['Region_Name'],
-        term: json['Term'],
-        sessionId: json['Session_Id'],
-        section: json['Section_Name'],
-        promotedTo: json['PromotedToClass'],
-        teacherComment: json['ClassTeacher_Comments'],
-        overallGrade: json['Overall_G'],
-        average: json['Class_Average'],
-        highestPercentage: json['Class_Heighest'],
-        lowestPercentage: json['ClassMinimum'],
-        overallPercentage: json['Overall_P']);
+      gradeId: json['Grade_Id'],
+      name: json['StudentName'],
+      rollNo: json['Student_Id'],
+      className: json['Class_Name'],
+      centerName: json['Center_Name'],
+      regionName: json['Region_Name'],
+      term: json['Term'],
+      sessionId: json['Session_Id'],
+      section: json['Section_Name'],
+      promotedTo: json['PromotedToClass'],
+      teacherComment: json['ClassTeacher_Comments'],
+      overallGrade: json['Overall_G'],
+      average: json['Class_Average'],
+      highestPercentage: json['Class_Heighest'],
+      lowestPercentage: json['ClassMinimum'],
+      overallPercentage: json['Overall_P'],
+    );
   }
 }
 
@@ -99,22 +103,24 @@ class Detail {
   String? midYear;
   double? marks;
 
-  Detail(
-      {this.subject,
-      this.grade,
-      this.theoryExam,
-      this.courseWork,
-      this.midYear,
-      this.marks});
+  Detail({
+    this.subject,
+    this.grade,
+    this.theoryExam,
+    this.courseWork,
+    this.midYear,
+    this.marks,
+  });
 
   factory Detail.fromJson(Map json) {
     return Detail(
-        subject: json['Subject_Name'] as String,
-        grade: json['Grade'] as String,
-        theoryExam: json['Theory_Exam'] as String,
-        midYear: json['Mid_Year'] as String,
-        courseWork: json['Course_Work'] as double,
-        marks: json['Marks'] as double);
+      subject: json['Subject_Name'] as String,
+      grade: json['Grade'] as String,
+      theoryExam: json['Theory_Exam'] as String,
+      midYear: json['Mid_Year'] as String,
+      courseWork: json['Course_Work'] as double,
+      marks: json['Marks'] as double,
+    );
   }
 }
 
@@ -135,15 +141,16 @@ class SubjectDetails {
   int? key3;
   int? key4;
 
-  SubjectDetails(
-      {this.classTeacherComments,
-      this.description,
-      this.subjectName,
-      this.kLO,
-      this.key1,
-      this.key2,
-      this.key3,
-      this.key4});
+  SubjectDetails({
+    this.classTeacherComments,
+    this.description,
+    this.subjectName,
+    this.kLO,
+    this.key1,
+    this.key2,
+    this.key3,
+    this.key4,
+  });
 
   SubjectDetails.fromJson(Map<String, dynamic> json) {
     classTeacherComments = json['ClassTeacherComments'];
@@ -178,13 +185,14 @@ class PDFResults {
   int? termGroupId;
   String? url;
 
-  PDFResults(
-      {this.studentId,
-      this.classId,
-      this.sessionId,
-      this.sectionId,
-      this.termGroupId,
-      this.url});
+  PDFResults({
+    this.studentId,
+    this.classId,
+    this.sessionId,
+    this.sectionId,
+    this.termGroupId,
+    this.url,
+  });
 
   factory PDFResults.fromJson(Map<String, dynamic> json) {
     return PDFResults(

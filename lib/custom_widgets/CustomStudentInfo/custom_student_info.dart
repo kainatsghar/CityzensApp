@@ -131,12 +131,12 @@ class CustomStudentInfo extends StatelessWidget {
                             Expanded(
                               child: _DetailItem(
                                 title: 'CLASS',
-                                value: info.className.toString(),
+                                value: info.className?.toString() ?? 'N/A',
                                 icon: Icons.school_rounded,
                               ),
                             ),
                             VerticalDivider(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha: 0.2),
                               thickness: 1,
                               indent: 5,
                               endIndent: 5,
@@ -144,7 +144,7 @@ class CustomStudentInfo extends StatelessWidget {
                             Expanded(
                               child: _DetailItem(
                                 title: 'BRANCH',
-                                value: info.centerName.toString(),
+                                value: info.centerName?.toString() ?? 'N/A',
                                 icon: Icons.location_on_rounded,
                               ),
                             ),
@@ -191,7 +191,7 @@ class CustomStudentInfo extends StatelessWidget {
 
 class _DetailItem extends StatelessWidget {
   final String title;
-  final String value;
+  final String? value;
   final IconData icon;
 
   const _DetailItem({
@@ -202,6 +202,10 @@ class _DetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final displayValue = (value == null || value == 'null' || value!.isEmpty)
+        ? 'N/A'
+        : value!;
+
     return Column(
       children: [
         Row(
@@ -212,7 +216,7 @@ class _DetailItem extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withValues(alpha: 0.7),
                 fontSize: 10,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.0,
@@ -222,7 +226,7 @@ class _DetailItem extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          value.isNotEmpty == true ? value : 'N/A',
+          displayValue,
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
