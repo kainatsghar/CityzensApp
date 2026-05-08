@@ -25,7 +25,7 @@ class ParticleBackground extends StatefulWidget {
 
 class _ParticleBackgroundState extends State<ParticleBackground> {
   // Pre-generated particle configs — created once, never reallocated
-  static const int _particleCount = 25;
+  static const int _particleCount = 50;
   late final List<_ParticleConfig> _particles;
 
   @override

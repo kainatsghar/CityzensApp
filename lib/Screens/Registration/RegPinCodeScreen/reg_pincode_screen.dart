@@ -8,6 +8,7 @@ import 'package:tcs_app/provider/Registration/registration_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/utils/validators.dart';
 
+import 'package:tcs_app/custom_widgets/CustomNoteCard/custom_note_card.dart';
 import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 
 class RegPinCodeScreen extends StatefulWidget {
@@ -76,24 +77,10 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
                   onTap: () => value.verifyPinCode(),
                 ),
                 SizedBox(height: size.height * 0.02),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Note:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '\u2022 TCS app will send you a message containing a PIN code you will use to verify your number.',
-                      style: TextStyle(height: 1.5),
-                    ),
-                    Text(
-                      '\u2022 Verification message might not reach you if promotional message are blocked from your service provider.',
-                      style: TextStyle(height: 1.5),
-                    ),
+                const CustomNoteCard(
+                  notes: [
+                    'TCS app will send you a message containing a PIN code you will use to verify your number.',
+                    'Verification message might not reach you if promotional message are blocked from your service provider.',
                   ],
                 ),
               ],

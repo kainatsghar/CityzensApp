@@ -8,9 +8,11 @@ import 'package:tcs_app/custom_widgets/UserTypeTabSelector/user_type_tab_selecto
 import 'package:tcs_app/provider/Registration/registration_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/routes/app_navigation_routes.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/input_formatters.dart';
 import 'package:tcs_app/utils/validators.dart';
 
+import 'package:tcs_app/custom_widgets/CustomNoteCard/custom_note_card.dart';
 import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -107,32 +109,45 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                     onTap: () => value.userRegistration(),
                   ),
                   SizedBox(height: size.height * 0.02),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Note:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "\u2022 Please use the mobile number registered as 'Primary Number' with your respective TCS Branch.",
-                        style: TextStyle(height: 1.5),
-                      ),
-                      Text(
-                        '\u2022 For assistance, please reach out to your respective School Administrator or contact TCS Support.',
-                        style: TextStyle(height: 1.5),
-                      ),
+                  const CustomNoteCard(
+                    notes: [
+                      "Please use the mobile number registered as 'Primary Number' with your respective TCS Branch.",
+                      "For assistance, please reach out to your respective School Administrator or contact TCS Support.",
                     ],
                   ),
                   SizedBox(height: size.height * 0.01),
-                  TextButton(
-                    onPressed: () {
-                      AppNavigation.navigateTo(AppNavRoutes.appFeedbackRoute);
-                    },
-                    child: const Text('Contact Support'),
+                  const SizedBox(height: 12),
+                  Center(
+                    child: TextButton.icon(
+                      onPressed: () {
+                        AppNavigation.navigateTo(AppNavRoutes.appFeedbackRoute);
+                      },
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
+                        backgroundColor: AppColors.primaryBlue.withValues(
+                          alpha: 0.05,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      icon: const Icon(
+                        Icons.email_outlined,
+                        color: AppColors.primaryBlue,
+                        size: 18,
+                      ),
+                      label: const Text(
+                        'Contact Support',
+                        style: TextStyle(
+                          color: AppColors.primaryBlue,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
                   ),
                   // InkWell(
                   // onTap:

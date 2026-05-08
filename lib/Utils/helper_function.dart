@@ -221,6 +221,13 @@ class HelperFunction {
     }
     return 'Good Evening';
   }
+
+  static Future<void> launchAlumniApp() async {
+    final String url = Platform.isIOS
+        ? "https://apps.apple.com/us/app/a-cityzen-for-life/id1660765260"
+        : "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
+    await launchURL(url);
+  }
 }
 
 enum AppUserType { student, parent, teacher }

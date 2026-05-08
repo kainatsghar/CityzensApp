@@ -9,6 +9,7 @@ import 'package:tcs_app/provider/ForgotPassword/forgot_password_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/utils/input_formatters.dart';
 import 'package:tcs_app/utils/validators.dart';
+import 'package:tcs_app/custom_widgets/CustomNoteCard/custom_note_card.dart';
 import '../../../custom_widgets/CustomLogoCover/custom_logo_cover.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -105,20 +106,9 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     onTap: () => value.forgotPassword(),
                   ),
                   SizedBox(height: size.height * 0.02),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Note:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 5.0),
-                      Text(
-                        '\u2022 Provided Mobile Number needs to be same used for TCS Mobile App registration.',
-                      ),
+                  const CustomNoteCard(
+                    notes: [
+                      'Provided Mobile Number needs to be same used for TCS Mobile App registration.',
                     ],
                   ),
                 ],

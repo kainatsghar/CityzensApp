@@ -15,6 +15,7 @@ import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/input_formatters.dart';
 import 'package:tcs_app/utils/validators.dart';
+import 'package:tcs_app/custom_widgets/CustomNoteCard/custom_note_card.dart';
 
 class AppFeedbackScreen extends StatefulWidget {
   const AppFeedbackScreen({super.key});
@@ -234,61 +235,18 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                       ),
                     ),
 
-                    // Notes Section
                     SliverToBoxAdapter(
                       child: FadeInUp(
                         delay: const Duration(milliseconds: 200),
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryBlue.withValues(
-                                alpha: 0.05,
-                              ),
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: AppColors.primaryBlue.withValues(
-                                  alpha: 0.1,
-                                ),
-                              ),
-                            ),
-                            child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.info_outline_rounded,
-                                      size: 16,
-                                      color: AppColors.primaryBlue,
-                                    ),
-                                    SizedBox(width: 8),
-                                    Text(
-                                      'Quick Notes',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w900,
-                                        color: AppColors.primaryBlue,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 12),
-                                _NoteItem(
-                                  text:
-                                      'You can attach screenshots in the generated email.',
-                                ),
-                                _NoteItem(
-                                  text:
-                                      'Ensure contact details are valid for our response.',
-                                ),
-                                _NoteItem(
-                                  text:
-                                      'Your feedback is strictly confidential.',
-                                ),
-                              ],
-                            ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                          child: CustomNoteCard(
+                            title: 'Quick Notes',
+                            notes: [
+                              'You can attach screenshots in the generated email.',
+                              'Ensure contact details are valid for our response.',
+                              'Your feedback is strictly confidential.',
+                            ],
                           ),
                         ),
                       ),
@@ -532,41 +490,6 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
 
         return CustomStudentInfo(info: _InfoWrapper(infoWrapper));
       },
-    );
-  }
-}
-
-class _NoteItem extends StatelessWidget {
-  final String text;
-  const _NoteItem({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            '\u2022',
-            style: TextStyle(
-              color: AppColors.primaryBlue,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.primaryDarkBlue.withValues(alpha: 0.8),
-                height: 1.4,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

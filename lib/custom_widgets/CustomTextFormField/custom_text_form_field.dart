@@ -63,6 +63,12 @@ class CustomTextFormField extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       readOnly: readOnly,
+      style: const TextStyle(
+        color: AppColors.primaryDarkBlue,
+        fontSize: 15,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0.2,
+      ),
       decoration: InputDecoration(
         fillColor: AppColors.whiteColor,
         filled: true,
@@ -109,9 +115,16 @@ class CustomTextFormField extends StatelessWidget {
               )
             : null,
         hintText: hintText,
-        labelStyle: const TextStyle(fontSize: 14.0),
-        hintStyle: const TextStyle(fontSize: 14.0) /*,
-            labelText: labelText*/,
+        labelStyle: TextStyle(
+          fontSize: 14.0,
+          color: AppColors.primaryBlue.withOpacity(0.7),
+          fontWeight: FontWeight.w600,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 14.0,
+          color: AppColors.softGreyText,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       enabled: isEnable,
       validator: validator,

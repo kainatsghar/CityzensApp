@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
 
@@ -7,19 +8,50 @@ class CustomLogoCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    return Card(
-      margin: EdgeInsets.zero,
-      elevation: 8,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+    return FadeInDown(
+      duration: const Duration(milliseconds: 600),
       child: Container(
         width: size.width - 32,
-        height: size.height * 0.25,
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        height: size.height * 0.22,
         decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(16.0),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.primary, AppColors.primaryDarkBlue],
+          ),
+          borderRadius: BorderRadius.circular(24.0),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryBlue.withValues(alpha: 0.3),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
+            ),
+          ],
         ),
-        child: Image.asset('assets/images/tcs_logo_white.png'),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24.0),
+          child: Stack(
+            children: [
+              Positioned(
+                top: -20,
+                right: -20,
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Colors.white.withValues(alpha: 0.05),
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Image.asset(
+                    'assets/images/tcs_logo_white.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

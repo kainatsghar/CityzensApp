@@ -27,6 +27,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/a_grade.png
   AssetGenImage get aGrade => const AssetGenImage('assets/images/a_grade.png');
 
+  /// File path: assets/images/alumni_app_logo.png
+  AssetGenImage get alumniAppLogo =>
+      const AssetGenImage('assets/images/alumni_app_logo.png');
+
   /// File path: assets/images/alumni_icon.png
   AssetGenImage get alumniIcon =>
       const AssetGenImage('assets/images/alumni_icon.png');
@@ -226,6 +230,7 @@ class $AssetsImagesGen {
     fEATURECitizansApp2,
     paper,
     aGrade,
+    alumniAppLogo,
     alumniIcon,
     appLogo,
     asGrade,

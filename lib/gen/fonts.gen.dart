@@ -14,9 +14,6 @@ class FontFamily {
   /// Font family: Axiforma
   static const String axiforma = 'Axiforma';
 
-  /// Font family: NexaText
-  // static const String nexaText = 'NexaText';
-
   /// Font family: Nunito
   static const String nunito = 'Nunito';
 }
