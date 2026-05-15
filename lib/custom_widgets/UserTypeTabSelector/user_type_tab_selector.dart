@@ -72,12 +72,8 @@ class _UserTypeTabSelectorState extends State<UserTypeTabSelector>
       height: widget.height,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F7FA),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: Colors.black.withOpacity(0.05),
-          width: 1,
-        ),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: TabBar(
         controller: _controller,
@@ -85,35 +81,19 @@ class _UserTypeTabSelectorState extends State<UserTypeTabSelector>
         splashFactory: NoSplash.splashFactory,
         dividerColor: Colors.transparent,
         indicator: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppColors.primaryBlue, AppColors.primaryDarkBlue],
-          ),
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primaryBlue.withOpacity(0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(8),
         ),
         labelColor: Colors.white,
-        unselectedLabelColor: AppColors.softGreyText,
+        unselectedLabelColor: Colors.black87,
         labelStyle: const TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 0.8,
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontSize: 13,
+          fontSize: 14,
           fontWeight: FontWeight.w600,
-          letterSpacing: 0.8,
+          letterSpacing: 0.5,
         ),
         isScrollable: false,
         tabs: widget.options
-            .map((t) => Tab(child: Text((t.title ?? '').toUpperCase())))
+            .map((t) => Tab(child: Text(t.title ?? '')))
             .toList(),
         onTap: (index) => widget.onChanged(index),
       ),
