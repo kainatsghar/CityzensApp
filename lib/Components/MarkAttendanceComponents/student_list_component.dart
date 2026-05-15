@@ -175,87 +175,27 @@ class StudentListComponent extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
+                        // Row 1: Date and Mode Badge
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.calendar_today_rounded,
-                                      size: 14,
-                                      color: AppColors.primaryBlue,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      DateFormat(
-                                        'EEEE, d MMMM y',
-                                      ).format(value.selectedDate),
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.primaryDarkColor,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ],
+                                Icon(
+                                  Icons.calendar_today_rounded,
+                                  size: 14,
+                                  color: AppColors.primaryBlue,
                                 ),
-                                const SizedBox(height: 6),
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                        vertical: 2,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primaryBlue.withValues(
-                                          alpha: 0.08,
-                                        ),
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      child: Text(
-                                        state.sectionName,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: AppColors.primaryBlue,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                    if (state.classId == 19 ||
-                                        state.classId == 20) ...[
-                                      const SizedBox(width: 6),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: 10,
-                                        color: const Color(0xFFBDBDBD),
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 2,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.purpleColor
-                                              .withValues(alpha: 0.08),
-                                          borderRadius: BorderRadius.circular(
-                                            6,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          state.subjectName,
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: AppColors.purpleColor,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ],
+                                const SizedBox(width: 8),
+                                Text(
+                                  DateFormat(
+                                    'EEEE, d MMMM y',
+                                  ).format(value.selectedDate),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.primaryDarkColor,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
                               ],
                             ),
@@ -281,6 +221,61 @@ class StudentListComponent extends StatelessWidget {
                                   ? AppColors.warningOrange
                                   : AppColors.primaryBlue,
                             ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        // Row 2: Class and Subject
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryBlue.withValues(
+                                  alpha: 0.08,
+                                ),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                state.sectionName,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.primaryBlue,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            if (state.classId == 19 || state.classId == 20) ...[
+                              const SizedBox(width: 6),
+                              const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 10,
+                                color: Color(0xFFBDBDBD),
+                              ),
+                              const SizedBox(width: 6),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.purpleColor.withValues(
+                                    alpha: 0.08,
+                                  ),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Text(
+                                  state.subjectName,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.purpleColor,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                         const Padding(
@@ -313,6 +308,12 @@ class StudentListComponent extends StatelessWidget {
                                   stats['Leave']!,
                                   AppColors.warningOrange,
                                 ),
+                                if (prov.students.any((s) => s.status == true))
+                                  _buildStatItem(
+                                    "Unreconciled",
+                                    stats['Unreconciled']!,
+                                    AppColors.softGreyText,
+                                  ),
                               ],
                             );
                           },

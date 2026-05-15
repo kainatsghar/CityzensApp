@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/DashboardComponents/navigational_drawer.dart';
@@ -18,7 +19,6 @@ import 'package:tcs_app/routes/app_navigation_routes.dart';
 import 'package:tcs_app/services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/helper_function.dart';
-import 'package:tcs_app/utils/media_query_util.dart';
 
 class TeacherDashboardScreen extends StatefulWidget {
   const TeacherDashboardScreen({super.key});
@@ -84,14 +84,14 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    final double itemHeight =
-        ((MediaQueryUtil.isLandscape() ? size.width : size.height) -
-            kToolbarHeight -
-            24) /
-        6;
-    final double itemWidth =
-        (MediaQueryUtil.isLandscape() ? size.height : size.width) / 2;
+    // Size size = MediaQuery.sizeOf(context);
+    // final double itemHeight =
+    //     ((MediaQueryUtil.isLandscape() ? size.width : size.height) -
+    //         kToolbarHeight -
+    //         24) /
+    //     6;
+    // final double itemWidth =
+    //     (MediaQueryUtil.isLandscape() ? size.height : size.width) / 2;
 
     return Consumer<LocalDataProvider>(
       builder: (context, localValue, _) {
@@ -256,19 +256,24 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
 
                                 // Teacher Profile Card
                                 SliverToBoxAdapter(
-                                  child: TeacherProfileCard(
-                                    isMale:
-                                        dashboardValue
+                                  child: Column(
+                                    children: [
+                                      TeacherProfileCard(
+                                        isMale:
+                                            dashboardValue
+                                                    .teacherProfileProvider
+                                                    .profileResponse !=
+                                                null &&
+                                            dashboardValue
                                                 .teacherProfileProvider
-                                                .profileResponse !=
-                                            null &&
-                                        dashboardValue
-                                            .teacherProfileProvider
-                                            .profileResponse!
-                                            .isMale,
-                                    onTap: () => AppNavigation.navigateTo(
-                                      AppNavRoutes.teacherProfileRoute,
-                                    ),
+                                                .profileResponse!
+                                                .isMale,
+                                        onTap: () => AppNavigation.navigateTo(
+                                          AppNavRoutes.teacherProfileRoute,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                    ],
                                   ),
                                 ),
 
@@ -350,6 +355,20 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
           )
         : null;
 
+    // Auto-select first subject if none selected
+    if (isALevel &&
+        subjects != null &&
+        subjects.isNotEmpty &&
+        attendance.subjectController.text.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        attendance.setSubjectId(
+          subjects.first.subjectId,
+          subjects.first.subjectName,
+        );
+      });
+    }
+
     final localValue = Provider.of<LocalDataProvider>(context, listen: false);
     final gradeId = localValue.userData?.info?.gradeId?.toString() ?? '';
     final localGradeId = localValue.gradeId?.toString() ?? '';
@@ -361,173 +380,278 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
         localGradeId == '3' ||
         localGradeId == '4';
 
+    final String formattedDate = DateFormat(
+      'EEEE, d MMMM yyyy',
+    ).format(DateTime.now());
+
     return _buildDashboardCard(
       title: 'Class Teacher',
       accentColor: AppColors.primaryBlue,
       icon: Icons.assignment_ind_rounded,
+      backgroundColor: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Context Selection
-          _buildWrapChips<Section>(
-            items: sections,
-            selectedItemName: attendance.sectionController.text,
-            getDisplayText: (s) => s.name ?? 'N/A',
-            onSelected: (s) =>
-                _selectClassTeacherSection(s, attendance, dashboard),
+          // Compact Context Selection
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'TARGET SECTION',
+                      style: TextStyle(
+                        color: AppColors.softGreyText,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 10,
+                        letterSpacing: 1.1,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    _buildWrapChips<Section>(
+                      items: sections,
+                      selectedItemName: attendance.sectionController.text,
+                      getDisplayText: (s) => s.name ?? 'N/A',
+                      onSelected: (s) =>
+                          _selectClassTeacherSection(s, attendance, dashboard),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
 
           if (subjects != null && subjects.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            const Text(
-              'SUBJECTS',
-              style: TextStyle(
-                color: AppColors.softGreyText,
-                fontWeight: FontWeight.w800,
-                fontSize: 10,
-                letterSpacing: 1.1,
-              ),
-            ),
-            const SizedBox(height: 8),
-            _buildWrapChips<SectionSubject>(
-              items: subjects,
-              selectedItemName: attendance.subjectController.text,
-              getDisplayText: (s) => s.subjectName ?? 'N/A',
-              onSelected: (s) =>
-                  attendance.setSubjectId(s.subjectId, s.subjectName),
-              isSubject: true,
-            ),
-          ],
-
-          const SizedBox(height: 16),
-          const Divider(height: 1, color: AppColors.primaryBlue),
-          const SizedBox(height: 16),
-
-          // Actions Grid
-          Row(
-            children: [
-              Expanded(
-                child: _buildHubActionCard(
-                  title: "Today's Attendance",
-                  icon: Icons.check_circle_outline,
-                  color: AppColors.primaryBlue,
-                  isPrimary: true,
-                  onTap: () {
-                    attendance.setSelectedDate(DateTime.now());
-                    _handleSmartNavigation(
-                      attendance,
-                      null,
-                      AppNavRoutes.markAttendanceRoute,
-                      requiresSubject: true,
-                      isDiaryTrueFlow: false,
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildHubActionCard(
-                  title: 'Past Attendance',
-                  icon: Icons.history_rounded,
-                  color: AppColors.primaryBlue,
-                  isPrimary: false,
-                  onTap: () async {
-                    final selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now().subtract(
-                        const Duration(days: 1),
-                      ),
-                      firstDate: DateTime(2026),
-                      lastDate: DateTime.now(),
-                      builder: (context, child) {
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            colorScheme: const ColorScheme.light(
-                              primary: AppColors.primaryBlue,
-                            ),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (selectedDate != null) {
-                      attendance.setSelectedDate(selectedDate);
-                      _handleSmartNavigation(
-                        attendance,
-                        null,
-                        AppNavRoutes.markAttendanceRoute,
-                        requiresSubject: true,
-                        isDiaryTrueFlow: false,
-                      );
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: _buildHubActionCard(
-                  title: 'Timetable',
-                  icon: Icons.calendar_today_outlined,
-                  color: AppColors.primaryDarkColor,
-                  isPrimary: false,
-                  onTap: () {
-                    final ttProvider = Provider.of<TimeTableProvider>(
-                      context,
-                      listen: false,
-                    );
-                    ttProvider.setSectionId(attendance.sectionId);
-                    ttProvider.setClassId(attendance.classId);
-                    ttProvider.sectionController.text =
-                        attendance.sectionController.text;
-
-                    _handleSmartNavigation(
-                      attendance,
-                      null,
-                      AppNavRoutes.teacherTimeTableRoute,
-                      requiresSubject: false,
-                      isDiaryTrueFlow: false,
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildHubActionCard(
-                  title: 'Unidentified',
-                  icon: Icons.person_search_rounded,
-                  color: AppColors.primaryDarkColor,
-                  isPrimary: false,
-                  onTap: () => AppNavigation.navigateTo(
-                    AppNavRoutes.markUnidentifiedRoute,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (showEyeOnYourChild) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: _buildHubActionCard(
-                    title: 'Eye On Your Child',
-                    icon: Icons.visibility_outlined,
-                    color: AppColors.purpleColor,
-                    isPrimary: false,
-                    onTap: () => AppNavigation.navigateTo(
-                      AppNavRoutes.eyeOnYourChildRoute,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'SUBJECT AREA',
+                        style: TextStyle(
+                          color: AppColors.softGreyText,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 10,
+                          letterSpacing: 1.1,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      _buildWrapChips<SectionSubject>(
+                        items: subjects,
+                        selectedItemName: attendance.subjectController.text,
+                        getDisplayText: (s) => s.subjectName ?? 'N/A',
+                        onSelected: (s) =>
+                            attendance.setSubjectId(s.subjectId, s.subjectName),
+                        isSubject: true,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 12),
-                const Expanded(child: SizedBox()), // spacer
               ],
             ),
           ],
+
+          const SizedBox(height: 12),
+          const Divider(height: 1, color: Colors.black12),
+          const SizedBox(height: 16),
+
+          // Hero Action: Today's Attendance
+          Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(20),
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: () {
+                attendance.setSelectedDate(DateTime.now());
+                _handleSmartNavigation(
+                  attendance,
+                  null,
+                  AppNavRoutes.markAttendanceRoute,
+                  requiresSubject: true,
+                  isDiaryTrueFlow: false,
+                );
+              },
+              borderRadius: BorderRadius.circular(20),
+              child: Ink(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 18,
+                  horizontal: 20,
+                ),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [AppColors.primary, AppColors.primaryDarkBlue],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primaryDarkBlue.withValues(alpha: 0.3),
+                      blurRadius: 15,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.25),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons
+                            .how_to_reg_rounded, // Premium registration/marking icon
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            formattedDate.toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: 0.8),
+                              fontWeight: FontWeight.w800,
+                              fontSize: 10,
+                              letterSpacing: 1.1,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          const Text(
+                            "MARK ATTENDANCE",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Secondary Actions Grid
+          Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildActionTile(
+                      title: 'Past Attendance',
+                      icon: Icons.history_rounded,
+                      color: AppColors.primaryDarkBlue,
+                      onTap: () async {
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now().subtract(
+                            const Duration(days: 1),
+                          ),
+                          firstDate: DateTime(2026),
+                          lastDate: DateTime.now(),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: const ColorScheme.light(
+                                  primary: AppColors.primaryDarkBlue,
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
+                        );
+                        if (selectedDate != null) {
+                          attendance.setSelectedDate(selectedDate);
+                          _handleSmartNavigation(
+                            attendance,
+                            null,
+                            AppNavRoutes.markAttendanceRoute,
+                            requiresSubject: true,
+                            isDiaryTrueFlow: false,
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildActionTile(
+                      title: 'Unidentified',
+                      icon: Icons.person_search_rounded,
+                      color: AppColors.errorRed,
+                      onTap: () => AppNavigation.navigateTo(
+                        AppNavRoutes.markUnidentifiedRoute,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildActionTile(
+                      title: 'Timetable',
+                      icon: Icons.calendar_today_outlined,
+                      color: AppColors.tertiaryDark,
+                      onTap: () {
+                        final ttProvider = Provider.of<TimeTableProvider>(
+                          context,
+                          listen: false,
+                        );
+                        ttProvider.setSectionId(attendance.sectionId);
+                        ttProvider.setClassId(attendance.classId);
+                        ttProvider.sectionController.text =
+                            attendance.sectionController.text;
+
+                        _handleSmartNavigation(
+                          attendance,
+                          null,
+                          AppNavRoutes.teacherTimeTableRoute,
+                          requiresSubject: false,
+                          isDiaryTrueFlow: false,
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: showEyeOnYourChild
+                        ? _buildActionTile(
+                            title: 'Eye On Child',
+                            icon: Icons.visibility_outlined,
+                            color: AppColors.purpleColor,
+                            onTap: () => AppNavigation.navigateTo(
+                              AppNavRoutes.eyeOnYourChildRoute,
+                            ),
+                          )
+                        : const SizedBox(),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -538,23 +662,24 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
       title: 'Academic Content',
       accentColor: AppColors.primaryDarkBlue,
       icon: Icons.menu_book_rounded,
+      backgroundColor: Colors.white, // Clean white card background
       child: Column(
         children: [
           _buildAcademicRow(
             title: 'Homework',
             icon: Icons.menu_book_rounded,
-            accentColor: AppColors.purpleColor,
+            accentColor: AppColors.primaryBlue, // Matches Student Dashboard
             onAdd: () => AppNavigation.navigateTo(AppNavRoutes.addDiaryRoute),
             onView: () => AppNavigation.navigateTo(
               AppNavRoutes.teacherAcademicHubRoute,
               arguments: 0,
             ),
           ),
-          const Divider(height: 24, color: AppColors.primaryBlue),
+          const Divider(height: 24, color: Colors.black12), // Neutral divider
           _buildAcademicRow(
             title: 'Classwork',
             icon: Icons.assignment_outlined,
-            accentColor: AppColors.purpleColor,
+            accentColor: AppColors.goldenColors, // Matches Student Dashboard
             onAdd: () =>
                 AppNavigation.navigateTo(AppNavRoutes.addAssignmentRoute),
             onView: () => AppNavigation.navigateTo(
@@ -562,11 +687,11 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
               arguments: 1,
             ),
           ),
-          const Divider(height: 24, color: AppColors.primaryBlue),
+          const Divider(height: 24, color: Colors.black12), // Neutral divider
           _buildAcademicRow(
             title: 'Circulars',
             icon: Icons.campaign_outlined,
-            accentColor: AppColors.purpleColor,
+            accentColor: AppColors.successGreen, // Matches Student Dashboard
             onAdd: () =>
                 AppNavigation.navigateTo(AppNavRoutes.addCircularRoute),
             onView: () => AppNavigation.navigateTo(
@@ -587,81 +712,65 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
     required VoidCallback onAdd,
     required VoidCallback onView,
   }) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: accentColor.withValues(alpha: 0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: accentColor, size: 20),
+    return InkWell(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onView();
+      },
+      borderRadius: BorderRadius.circular(12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: accentColor.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: accentColor, size: 20),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: AppColors.primaryDarkBlue,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            TextButton.icon(
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                onAdd();
+              },
+              icon: Icon(Icons.add_rounded, size: 16, color: accentColor),
+              label: Text(
+                'Add',
+                style: TextStyle(
+                  color: accentColor,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 12,
+                ),
+              ),
+              style: TextButton.styleFrom(
+                backgroundColor: accentColor.withValues(alpha: 0.1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: AppColors.primaryDarkBlue,
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
-            ),
-          ),
-        ),
-        TextButton.icon(
-          onPressed: () {
-            HapticFeedback.lightImpact();
-            onAdd();
-          },
-          icon: Icon(Icons.add_rounded, size: 16, color: accentColor),
-          label: Text(
-            'Add',
-            style: TextStyle(
-              color: accentColor,
-              fontWeight: FontWeight.w800,
-              fontSize: 12,
-            ),
-          ),
-          style: TextButton.styleFrom(
-            backgroundColor: accentColor.withValues(alpha: 0.1),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-        ),
-        const SizedBox(width: 8),
-        TextButton.icon(
-          onPressed: () {
-            HapticFeedback.lightImpact();
-            onView();
-          },
-          icon: Icon(
-            Icons.visibility_outlined,
-            size: 16,
-            color: accentColor.withValues(alpha: 0.8),
-          ),
-          label: Text(
-            'View',
-            style: TextStyle(
-              color: accentColor.withValues(alpha: 0.8),
-              fontWeight: FontWeight.w800,
-              fontSize: 12,
-            ),
-          ),
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -686,70 +795,12 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
 
     return _buildDashboardCard(
       title: 'Class Test Results',
-      accentColor: AppColors.purpleColor,
+      accentColor: AppColors.primaryBlue, // Unified to primaryBlue
       icon: Icons.analytics_rounded,
+      backgroundColor: Colors.white, // Clean white background
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FadeInRight(
-            duration: const Duration(milliseconds: 500),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColors.purpleColor.withValues(alpha: 0.1),
-                    AppColors.primaryBlue.withValues(alpha: 0.05),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: AppColors.purpleColor.withValues(alpha: 0.2),
-                ),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.info_outline_rounded,
-                    size: 18,
-                    color: AppColors.purpleColor.withValues(alpha: 0.8),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'ACTIVE SELECTION',
-                          style: TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 1.0,
-                            color: AppColors.softGreyText,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${classTest.sectionController.text} • ${classTest.subjectController.text.isEmpty ? "Select Subject" : classTest.subjectController.text}',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.primaryDarkBlue,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-
           // Sections Selector
           const _SelectionLabel(text: 'TARGET SECTION'),
           const SizedBox(height: 8),
@@ -777,66 +828,55 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
 
           const SizedBox(height: 24),
 
-          // Primary Action (High Fidelity Gradient Button)
+          // Primary Action (Clean Solid Button)
           FadeInUp(
             duration: const Duration(milliseconds: 600),
-            child: InkWell(
-              onTap: () {
-                _handleSmartNavigation(
-                  null,
-                  classTest,
-                  AppNavRoutes.teacherAddClassResultRoute,
-                  requiresSubject: true,
-                  isDiaryTrueFlow: true,
-                );
-              },
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      AppColors.purpleColor,
-                      AppColors.purpleColor.withValues(alpha: 0.8),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.purpleColor.withValues(alpha: 0.3),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.add_chart_rounded,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      'MARK CLASS TEST RESULTS',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 0.8,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            offset: const Offset(0, 2),
-                            blurRadius: 4,
-                          ),
-                        ],
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  _handleSmartNavigation(
+                    null,
+                    classTest,
+                    AppNavRoutes.teacherAddClassResultRoute,
+                    requiresSubject: true,
+                    isDiaryTrueFlow: true,
+                  );
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Ink(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryBlue,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryBlue.withValues(alpha: 0.3),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.add_chart_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 12),
+                      const Text(
+                        'MARK CLASS TEST RESULTS',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 0.8,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -877,11 +917,10 @@ Widget _buildQuickServicesHub() {
         Row(
           children: [
             Expanded(
-              child: _buildHubActionCard(
+              child: _buildActionTile(
                 title: 'School Events',
                 icon: Icons.event_available_rounded,
                 color: AppColors.goldenYellow,
-                isPrimary: false,
                 onTap: () => AppNavigation.navigateTo(
                   AppNavRoutes.teacherSchoolEventsRoute,
                 ),
@@ -889,11 +928,10 @@ Widget _buildQuickServicesHub() {
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: _buildHubActionCard(
+              child: _buildActionTile(
                 title: 'Appointments',
                 icon: Icons.calendar_month_rounded,
                 color: AppColors.goldenYellow,
-                isPrimary: false,
                 onTap: () => AppNavigation.navigateTo(
                   AppNavRoutes.parentAppointmentRoute,
                 ),
@@ -905,17 +943,16 @@ Widget _buildQuickServicesHub() {
         Row(
           children: [
             Expanded(
-              child: _buildHubActionCard(
+              child: _buildActionTile(
                 title: 'Survey',
                 icon: Icons.poll_rounded,
                 color: AppColors.goldenYellow,
-                isPrimary: false,
                 onTap: () =>
                     AppNavigation.navigateTo(AppNavRoutes.teacherSurveyRoute),
               ),
             ),
             const SizedBox(width: 12),
-            const Expanded(child: SizedBox()), // spacer
+            const Expanded(child: SizedBox()),
           ],
         ),
       ],
@@ -1060,37 +1097,65 @@ Widget _buildHubActionCard({
       },
       borderRadius: BorderRadius.circular(16),
       child: Ink(
-        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         decoration: BoxDecoration(
-          color: isPrimary ? color.withValues(alpha: 0.15) : Colors.white,
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: isPrimary
-                ? color.withValues(alpha: 0.3)
-                : AppColors.primaryBlue,
-            width: 1.2,
-          ),
+          border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.06),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: color, size: 22),
-            ),
+            Icon(icon, color: color, size: 28),
             const SizedBox(height: 10),
             Text(
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: AppColors.primaryDarkBlue,
-                fontWeight: isPrimary ? FontWeight.w800 : FontWeight.w700,
+                color: color,
+                fontWeight: FontWeight.w800,
                 fontSize: 12,
                 letterSpacing: 0.2,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildActionTile({
+  required String title,
+  required IconData icon,
+  required Color color,
+  required VoidCallback onTap,
+}) {
+  return Material(
+    color: color.withValues(alpha: 0.08),
+    borderRadius: BorderRadius.circular(16),
+    child: InkWell(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
+      borderRadius: BorderRadius.circular(16),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        child: Row(
+          children: [
+            Icon(icon, color: color, size: 22),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: AppColors.primaryDarkBlue,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 12,
+                ),
               ),
             ),
           ],
@@ -1105,13 +1170,19 @@ Widget _buildDashboardCard({
   required Color accentColor,
   required Widget child,
   IconData? icon,
+  Color? backgroundColor,
+  Gradient? backgroundGradient,
 }) {
   return RepaintBoundary(
     child: Container(
       width: double.infinity,
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       decoration: BoxDecoration(
-        color: AppColors.primaryLightBlue.withValues(alpha: 0.8),
+        color: backgroundGradient == null
+            ? (backgroundColor ??
+                  AppColors.primaryLightBlue.withValues(alpha: 0.8))
+            : null,
+        gradient: backgroundGradient,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: accentColor.withValues(alpha: 0.2),
@@ -1126,37 +1197,37 @@ Widget _buildDashboardCard({
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Container(
-                  width: 4,
-                  height: 18,
-                  decoration: BoxDecoration(
-                    color: accentColor,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                const SizedBox(width: 12),
                 if (icon != null) ...[
-                  Icon(icon, color: accentColor, size: 20),
-                  const SizedBox(width: 8),
+                  Icon(icon, color: accentColor, size: 18),
+                  const SizedBox(width: 10),
                 ],
                 Text(
                   title.toUpperCase(),
-                  style: TextStyle(
-                    color: AppColors.primaryDarkBlue.withValues(alpha: 0.8),
-                    fontSize: 14,
+                  style: const TextStyle(
+                    color: AppColors.primaryDarkBlue,
+                    fontSize: 12,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.2,
                   ),
                 ),
+                const Spacer(),
+                Container(
+                  width: 30,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: accentColor.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             child,
           ],
         ),

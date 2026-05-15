@@ -29,7 +29,12 @@ class HelperFunction {
       color: AppColors.valuesRedColors,
       value: 2,
     ),
-    Options(title: 'Leave', isSelected: false, color: Colors.amber, value: 3),
+    Options(
+      title: 'Leave',
+      isSelected: false,
+      color: AppColors.warningOrange,
+      value: 3,
+    ),
     Options(
       title: 'Unreconciled',
       isSelected: false,

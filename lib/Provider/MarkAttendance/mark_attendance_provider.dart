@@ -62,7 +62,7 @@ class MarkAttendanceProvider with ChangeNotifier {
   }
 
   Map<String, int> getLiveStatistics() {
-    int present = 0, absent = 0, leave = 0;
+    int present = 0, absent = 0, leave = 0, unreconciled = 0;
     for (var student in students) {
       if (student.attnTypeId == 1) {
         present++;
@@ -70,9 +70,16 @@ class MarkAttendanceProvider with ChangeNotifier {
         absent++;
       } else if (student.attnTypeId == 3) {
         leave++;
+      } else if (student.attnTypeId == 35) {
+        unreconciled++;
       }
     }
-    return {'Present': present, 'Absent': absent, 'Leave': leave};
+    return {
+      'Present': present,
+      'Absent': absent,
+      'Leave': leave,
+      'Unreconciled': unreconciled,
+    };
   }
 
   List<AttendanceGraph> pieData = [];

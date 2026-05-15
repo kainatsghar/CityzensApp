@@ -41,7 +41,7 @@ class TeacherProfileCard extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primaryBlue.withValues(alpha: 0.3),
+                  color: AppColors.primaryDarkBlue.withValues(alpha: 0.4),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -51,20 +51,64 @@ class TeacherProfileCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius ?? 24.0),
               child: Stack(
                 children: [
+                  // Decorative Accents
+                  Positioned(
+                    right: -40,
+                    top: -40,
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.05),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 40,
+                    bottom: -30,
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.white.withValues(alpha: 0.1),
+                            Colors.transparent,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: -20,
+                    bottom: -20,
+                    child: Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.goldenYellow.withValues(alpha: 0.1),
+                      ),
+                    ),
+                  ),
                   // Interactive Content
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: onTap,
                       child: Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(24.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             // Avatar Section
                             _buildAvatar(
                               profile.employeeCode ?? '',
-                              AppColors.whiteColor.withValues(alpha: 0.8),
+                              AppColors.goldenYellow, // Premium Gold
                             ),
                             const SizedBox(width: 20),
 
@@ -81,31 +125,25 @@ class TeacherProfileCard extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w900,
-                                      color: AppColors.whiteColor,
+                                      color: Colors.white,
                                       letterSpacing: 0.5,
                                     ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  const SizedBox(height: 6),
-                                  _buildBadge(
-                                    profile.designation ?? '',
-                                    AppColors.whiteColor.withValues(
-                                      alpha: 0.15,
-                                    ),
-                                    AppColors.whiteColor.withValues(alpha: 0.2),
-                                  ),
-                                  const SizedBox(height: 12),
+                                  const SizedBox(height: 10),
+                                  _buildBadge(profile.designation ?? ''),
+                                  const SizedBox(height: 14),
                                   _buildBranchInfo(
                                     profile.branch ?? '',
-                                    AppColors.whiteColor.withValues(alpha: 0.9),
+                                    Colors.white.withValues(alpha: 0.9),
                                   ),
                                 ],
                               ),
                             ),
-                            const Icon(
+                            Icon(
                               Icons.arrow_forward_ios_rounded,
-                              color: AppColors.whiteColor,
+                              color: Colors.white.withValues(alpha: 0.3),
                               size: 16,
                             ),
                           ],
@@ -127,45 +165,74 @@ class TeacherProfileCard extends StatelessWidget {
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: borderColor, width: 2),
-        boxShadow: const [
+        gradient: LinearGradient(
+          colors: [borderColor, borderColor.withValues(alpha: 0.3)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
           BoxShadow(
-            color: Color(0x33000000),
-            blurRadius: 10,
-            offset: Offset(0, 4),
+            color: borderColor.withValues(alpha: 0.3),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
           ),
         ],
       ),
-      child: ClipOval(
-        child: Hero(
-          tag: 'teacher_profile_image',
-          child: CustomUserImage(
-            userId: employeeCode,
-            disableUploadImage: true,
-            isMale: isMale,
-            imageSize: 75,
+      child: Container(
+        padding: const EdgeInsets.all(3),
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.primaryDarkBlue, // Inner border separator
+        ),
+        child: ClipOval(
+          child: Hero(
+            tag: 'teacher_profile_image',
+            child: CustomUserImage(
+              userId: employeeCode,
+              disableUploadImage: true,
+              isMale: isMale,
+              imageSize: 75,
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildBadge(String text, Color bg, Color border) {
+  Widget _buildBadge(String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: border),
-      ),
-      child: Text(
-        text.toUpperCase(),
-        style: const TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w900,
-          color: AppColors.goldenYellow,
-          letterSpacing: 0.5,
+        color: Colors.white.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.3),
+          width: 0.5,
         ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.verified_rounded,
+            color: AppColors.goldenYellow,
+            size: 12,
+          ),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              text.toUpperCase(),
+              style: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+                letterSpacing: 1.0,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -173,12 +240,12 @@ class TeacherProfileCard extends StatelessWidget {
   Widget _buildBranchInfo(String branch, Color color) {
     return Row(
       children: [
-        const Icon(
-          Icons.location_on_rounded,
-          size: 12,
-          color: AppColors.goldenYellow,
+        Icon(
+          Icons.apartment_rounded,
+          size: 14,
+          color: color.withValues(alpha: 0.7),
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: 6),
         Expanded(
           child: Text(
             branch.toUpperCase(),
@@ -186,7 +253,7 @@ class TeacherProfileCard extends StatelessWidget {
               fontSize: 11,
               color: color,
               fontWeight: FontWeight.w600,
-              letterSpacing: 0.2,
+              letterSpacing: 0.5,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
