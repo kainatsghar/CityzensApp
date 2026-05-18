@@ -7,6 +7,7 @@ import 'package:tcs_app/provider/StudentProfile/student_profile_provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/app_constants.dart';
 import 'package:tcs_app/utils/helper_function.dart';
+import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/gen/assets.gen.dart';
 
 class StudentProfileComponent extends StatefulWidget {
@@ -14,7 +15,8 @@ class StudentProfileComponent extends StatefulWidget {
   const StudentProfileComponent({super.key, required this.scrollController});
 
   @override
-  State<StudentProfileComponent> createState() => _StudentProfileComponentState();
+  State<StudentProfileComponent> createState() =>
+      _StudentProfileComponentState();
 }
 
 class _StudentProfileComponentState extends State<StudentProfileComponent> {
@@ -26,8 +28,11 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
   void initState() {
     super.initState();
     widget.scrollController.addListener(_onScroll);
-    
-    final provider = Provider.of<StudentProfileProvider>(context, listen: false);
+
+    final provider = Provider.of<StudentProfileProvider>(
+      context,
+      listen: false,
+    );
     final profile = provider.profileResponse?.profile?.first;
     _addressController = TextEditingController(text: profile?.address ?? '');
     _contactController = TextEditingController(text: profile?.contactNo ?? '');
@@ -53,9 +58,16 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final localProvider = Provider.of<LocalDataProvider>(
+      context,
+      listen: false,
+    );
+    final isStudent = localProvider.userData?.userType == 'Student';
+
     return Consumer<StudentProfileProvider>(
       builder: (context, value, _) {
-        if (value.profileResponse?.profile == null || value.profileResponse!.profile!.isEmpty) {
+        if (value.profileResponse?.profile == null ||
+            value.profileResponse!.profile!.isEmpty) {
           return const Center(
             child: ShowError(errorText: AppConstants.noRecordFound),
           );
@@ -102,7 +114,9 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
                   title: Opacity(
                     opacity: opacity > 0.8 ? (opacity - 0.8) * 5 : 0,
                     child: Text(
-                      HelperFunction.noNullStringText(profile.name).toUpperCase(),
+                      HelperFunction.noNullStringText(
+                        profile.name,
+                      ).toUpperCase(),
                       style: const TextStyle(
                         color: AppColors.primaryDarkBlue,
                         fontWeight: FontWeight.w900,
@@ -124,7 +138,9 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.primaryBlue.withValues(alpha: 0.15),
+                                  color: AppColors.primaryBlue.withValues(
+                                    alpha: 0.15,
+                                  ),
                                   blurRadius: 30,
                                   spreadRadius: 2,
                                 ),
@@ -135,14 +151,17 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
                               child: CustomUserImage(
                                 userId: '${profile.studentId}',
                                 disableUploadImage: false,
-                                isMale: true, // Assuming default or add gender to model
+                                isMale:
+                                    true, // Assuming default or add gender to model
                                 imageSize: 110,
                               ),
                             ),
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            HelperFunction.noNullStringText(profile.name).toUpperCase(),
+                            HelperFunction.noNullStringText(
+                              profile.name,
+                            ).toUpperCase(),
                             style: const TextStyle(
                               color: AppColors.primaryDarkBlue,
                               fontWeight: FontWeight.w900,
@@ -158,16 +177,20 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.goldenColors.withValues(alpha: 0.15),
+                              color: AppColors.tertiaryLight.withValues(
+                                alpha: 0.15,
+                              ),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: AppColors.goldenColors.withValues(alpha: 0.3),
+                                color: AppColors.goldenColors.withValues(
+                                  alpha: 0.3,
+                                ),
                               ),
                             ),
                             child: Text(
                               "ROLL NUMBER: ${profile.studentId}",
                               style: const TextStyle(
-                                color: AppColors.goldenColors,
+                                color: AppColors.tertiaryDark,
                                 fontWeight: FontWeight.w900,
                                 fontSize: 11.0,
                                 letterSpacing: 1.0,
@@ -191,72 +214,103 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
                   _ProfileSection(
                     title: 'Academic Details',
                     fields: [
-                      _FieldData(icon: Icons.school_rounded, label: 'Class', value: '${profile.className}'),
-                      _FieldData(icon: Icons.business_rounded, label: 'Campus', value: '${profile.center}'),
-                      _FieldData(icon: Icons.public_rounded, label: 'Region', value: '${profile.region}'),
+                      _FieldData(
+                        icon: Icons.school_rounded,
+                        label: 'Class',
+                        value: '${profile.className}',
+                      ),
+                      _FieldData(
+                        icon: Icons.business_rounded,
+                        label: 'Campus',
+                        value: '${profile.center}',
+                      ),
+                      _FieldData(
+                        icon: Icons.public_rounded,
+                        label: 'Region',
+                        value: '${profile.region}',
+                      ),
                     ],
                   ),
                   const SizedBox(height: 24),
                   _ProfileSection(
                     title: 'Personal Information',
                     fields: [
-                      _FieldData(icon: Icons.cake_rounded, label: 'Date of Birth', value: HelperFunction.dateFormatter('${profile.dateOfBirth}')),
-                      _FieldData(icon: Icons.location_city_rounded, label: 'City', value: '${profile.city}'),
-                      _FieldData(icon: Icons.email_rounded, label: 'Father Email', value: '${profile.fatherEmail}'),
+                      _FieldData(
+                        icon: Icons.cake_rounded,
+                        label: 'Date of Birth',
+                        value: HelperFunction.dateFormatter(
+                          '${profile.dateOfBirth}',
+                        ),
+                      ),
+                      _FieldData(
+                        icon: Icons.location_city_rounded,
+                        label: 'City',
+                        value: '${profile.city}',
+                      ),
+                      _FieldData(
+                        icon: Icons.email_rounded,
+                        label: 'Father Email',
+                        value: '${profile.fatherEmail}',
+                      ),
                     ],
                   ),
                   const SizedBox(height: 24),
-                  
-                  // Editable Section
+
+                  // 3. Editable Section (Visible to Parents/Teachers, not Students)
                   _ProfileSection(
-                    title: 'Contact Information (Editable)',
-                    isEditable: true,
+                    // title: isStudent
+                    //     ? 'Contact Information'
+                    //     : 'Contact Information (Editable)',
+                    title: 'Contact Information',
+                    // isEditable: !isStudent,
                     fields: [
                       _FieldData(
-                        icon: Icons.home_work_rounded, 
-                        label: 'Address', 
+                        icon: Icons.home_work_rounded,
+                        label: 'Address',
                         value: '${profile.address}',
-                        controller: _addressController,
-                        isEditField: true,
+                        controller: isStudent ? null : _addressController,
+                        // isEditField: !isStudent,
                       ),
                       _FieldData(
-                        icon: Icons.phone_android_rounded, 
-                        label: 'Contact Number', 
+                        icon: Icons.phone_android_rounded,
+                        label: 'Contact Number',
                         value: '${profile.contactNo}',
-                        controller: _contactController,
-                        isEditField: true,
+                        controller: isStudent ? null : _contactController,
+                        // isEditField: !isStudent,
                       ),
                     ],
                   ),
-                  
-                  const SizedBox(height: 32),
-                  
-                  // Save Button (Disabled as requested)
-                  SizedBox(
-                    width: double.infinity,
-                    height: 55,
-                    child: ElevatedButton(
-                      onPressed: null, // Disabled
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryBlue,
-                        disabledBackgroundColor: AppColors.primaryBlue.withValues(alpha: 0.3),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: const Text(
-                        'SAVE CHANGES',
-                        style: TextStyle(
-                          color: AppColors.whiteColor,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 16,
-                          letterSpacing: 1.0,
-                        ),
-                      ),
-                    ),
-                  ),
 
+                  // if (!isStudent) ...[
+                  //   const SizedBox(height: 32),
+
+                  //   // Save Button (Disabled as requested)
+                  //   SizedBox(
+                  //     width: double.infinity,
+                  //     height: 55,
+                  //     child: ElevatedButton(
+                  //       onPressed: null, // Disabled for now
+                  //       style: ElevatedButton.styleFrom(
+                  //         backgroundColor: AppColors.primaryBlue,
+                  //         disabledBackgroundColor: AppColors.primaryBlue
+                  //             .withValues(alpha: 0.3),
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(15),
+                  //         ),
+                  //         elevation: 0,
+                  //       ),
+                  //       child: const Text(
+                  //         'SAVE CHANGES',
+                  //         style: TextStyle(
+                  //           color: AppColors.whiteColor,
+                  //           fontWeight: FontWeight.w900,
+                  //           fontSize: 16,
+                  //           letterSpacing: 1.0,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ],
                   const SizedBox(height: 40),
                   Opacity(
                     opacity: 0.4,
@@ -284,10 +338,10 @@ class _FieldData {
   final String value;
   final TextEditingController? controller;
   final bool isEditField;
-  
+
   _FieldData({
-    required this.icon, 
-    required this.label, 
+    required this.icon,
+    required this.label,
     required this.value,
     this.controller,
     this.isEditField = false,
@@ -300,7 +354,7 @@ class _ProfileSection extends StatelessWidget {
   final bool isEditable;
 
   const _ProfileSection({
-    required this.title, 
+    required this.title,
     required this.fields,
     this.isEditable = false,
   });
@@ -326,8 +380,12 @@ class _ProfileSection extends StatelessWidget {
                 ),
                 if (isEditable) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.edit_note_rounded, color: AppColors.primaryBlue, size: 16),
-                ]
+                  const Icon(
+                    Icons.edit_note_rounded,
+                    color: AppColors.primaryBlue,
+                    size: 16,
+                  ),
+                ],
               ],
             ),
           ),
@@ -370,7 +428,9 @@ class _FieldItem extends StatelessWidget {
         ],
       ),
       child: Row(
-        crossAxisAlignment: data.isEditField ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+        crossAxisAlignment: data.isEditField
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.center,
         children: [
           Padding(
             padding: EdgeInsets.only(top: data.isEditField ? 12 : 0),

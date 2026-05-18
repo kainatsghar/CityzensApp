@@ -50,6 +50,9 @@ class StudentDashboardProvider with ChangeNotifier {
   ChildDashboardData? get activeChildData =>
       _activeStudentId != null ? _childDataMap[_activeStudentId] : null;
 
+  ChildDashboardData? getChildData(String studentId) =>
+      _childDataMap[studentId];
+
   LocalDataProvider get localDataProvider => Provider.of<LocalDataProvider>(
     AppNavigation.currentContext!,
     listen: false,
@@ -94,7 +97,8 @@ class StudentDashboardProvider with ChangeNotifier {
         userName: parentId.toString(),
       );
 
-      if (_multiChildResponse?.children != null && _multiChildResponse!.children!.isNotEmpty) {
+      if (_multiChildResponse?.children != null &&
+          _multiChildResponse!.children!.isNotEmpty) {
         if (localDataProvider.studentId.isEmpty) {
           final firstChild = _multiChildResponse!.children!.first;
           localDataProvider.setStudentId(firstChild.studentId.toString());

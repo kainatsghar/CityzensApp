@@ -47,8 +47,6 @@ class StudentProfileScreenState extends State<StudentProfileScreen>
     } else {
       // Data exists, set the future to complete immediately
       _stdProfile = Future.value(provider.profileResponse);
-      // Background sync
-      provider.loadStdProfile();
     }
 
     // Force dark status bar icons on initialization

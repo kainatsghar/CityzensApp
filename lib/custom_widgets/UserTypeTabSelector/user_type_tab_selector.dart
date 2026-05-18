@@ -85,7 +85,7 @@ class _UserTypeTabSelectorState extends State<UserTypeTabSelector>
           borderRadius: BorderRadius.circular(8),
         ),
         labelColor: Colors.white,
-        unselectedLabelColor: Colors.black87,
+        unselectedLabelColor: AppColors.primaryDarkBlue,
         labelStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
