@@ -25,38 +25,38 @@ class StudentALevelAttendanceSubjectComponent extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    const CustomLogoCover(),
-                    SizedBox(height: size.height * 0.02),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 25.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.secondaryColor,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Column(
-                        children: [
-                          CustomTextFormField(
-                            hintText: 'Subject',
-                            controller: value.subjectController,
-                            onTap: () => value.subjectBottomSheet(),
-                            readOnly: true,
-                            validator: HelperFunction.validator,
-                            suffixWidget: const ImageIcon(
-                              AssetImage('assets/images/dropdown_icon.png'),
-                              color: AppColors.whiteColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    CustomAppButton(
-                      buttonTitle: 'Next',
-                      onTap: () => value.navigateToAttendance(),
-                    ),
+                    //     const CustomLogoCover(),
+                    //     SizedBox(height: size.height * 0.02),
+                    //     Container(
+                    //       padding: const EdgeInsets.symmetric(
+                    //         horizontal: 20,
+                    //         vertical: 25.0,
+                    //       ),
+                    //       decoration: BoxDecoration(
+                    //         color: AppColors.secondaryColor,
+                    //         borderRadius: BorderRadius.circular(20.0),
+                    //       ),
+                    //       child: Column(
+                    //         children: [
+                    //           CustomTextFormField(
+                    //             hintText: 'Subject',
+                    //             controller: value.subjectController,
+                    //             onTap: () => value.subjectBottomSheet(),
+                    //             readOnly: true,
+                    //             validator: HelperFunction.validator,
+                    //             suffixWidget: const ImageIcon(
+                    //               AssetImage('assets/images/dropdown_icon.png'),
+                    //               color: AppColors.whiteColor,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     SizedBox(height: size.height * 0.02),
+                    //     CustomAppButton(
+                    //       buttonTitle: 'Next',
+                    //       onTap: () => value.navigateToAttendance(),
+                    //     ),
                   ],
                 ),
               ),

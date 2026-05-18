@@ -163,7 +163,7 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                     child: Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(14),
@@ -174,22 +174,23 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                             size: 28,
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                crossAxisAlignment: WrapCrossAlignment.center,
                                 children: [
-                                  const Expanded(
-                                    child: Text(
-                                      'TIMETABLE',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w900,
-                                        color: Colors.white,
-                                        letterSpacing: 2.0,
-                                      ),
+                                  const Text(
+                                    'TIMETABLE',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.white,
+                                      letterSpacing: 1.0,
                                     ),
                                   ),
                                   if (value.sectionController.text.isNotEmpty)
@@ -221,11 +222,11 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                                     ),
                                 ],
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 6),
                               Text(
                                 'FULL WEEKLY ACADEMIC SCHEDULE',
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 11,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white.withValues(alpha: 0.8),
                                   letterSpacing: 0.5,

@@ -8,6 +8,7 @@ import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/provider/StudentAttendance/student_alevel_attendance_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/custom_widgets/ShimmerEffect/attendance_shimmer.dart';
 
 class StudentAlevelAttendanceScreen extends StatefulWidget {
   const StudentAlevelAttendanceScreen({super.key});
@@ -27,7 +28,7 @@ class _StudentAlevelAttendanceScreenState
 
   @override
   void initState() {
-    attendanceData = attendanceProvider.loadAttendance();
+    attendanceData = attendanceProvider.loadInitialData();
     super.initState();
   }
 
@@ -45,15 +46,12 @@ class _StudentAlevelAttendanceScreenState
       body: FutureBuilder(
         future: attendanceData,
         builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const CustomLoader();
-            default:
-              if (snapshot.hasData) {
-                return const StudentAttendanceComponent();
-              } else {
-                return ShowError(errorText: '${snapshot.error}');
-              }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const AttendanceShimmer();
+          } else if (snapshot.hasError) {
+            return ShowError(errorText: '${snapshot.error}');
+          } else {
+            return const StudentAttendanceComponent();
           }
         },
       ),

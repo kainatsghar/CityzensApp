@@ -239,7 +239,10 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                       child: FadeInUp(
                         delay: const Duration(milliseconds: 200),
                         child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 8,
+                          ),
                           child: CustomNoteCard(
                             title: 'Quick Notes',
                             notes: [
@@ -482,7 +485,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
         }
 
         final infoWrapper = {
-          'rollNo': profile.studentId,
+          'rollNo': profile.studentId.toString(),
           'name': profile.name,
           'className': profile.className,
           'centerName': profile.center,

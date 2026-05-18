@@ -23,6 +23,79 @@ class StudentAttendanceComponent extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Column(
                 children: [
+                  // ── Subjects List ──
+                  if (value.subjects.isNotEmpty)
+                    FadeInDown(
+                      duration: const Duration(milliseconds: 300),
+                      child: Container(
+                        height: 50,
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: value.subjects.length,
+                          itemBuilder: (context, index) {
+                            final subject = value.subjects[index];
+                            final isSelected =
+                                subject.subjectId == value.selectedSubjectId;
+                            return GestureDetector(
+                              onTap: () {
+                                if (!isSelected) {
+                                  value.setSelectedSubject(subject.subjectId!);
+                                }
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                margin: const EdgeInsets.only(right: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? AppColors.primaryBlue
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(
+                                    color: isSelected
+                                        ? AppColors.primaryBlue
+                                        : AppColors.primaryBlue.withOpacity(
+                                            0.15,
+                                          ),
+                                    width: 1.5,
+                                  ),
+                                  boxShadow: isSelected
+                                      ? [
+                                          BoxShadow(
+                                            color: AppColors.primaryBlue
+                                                .withOpacity(0.3),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ]
+                                      : [],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    subject.subjectName ?? '',
+                                    style: TextStyle(
+                                      color: isSelected
+                                          ? Colors.white
+                                          : AppColors.primaryDarkBlue,
+                                      fontWeight: isSelected
+                                          ? FontWeight.w800
+                                          : FontWeight.w600,
+                                      fontSize: 14,
+                                      letterSpacing: 0.3,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+
                   // ── Statistics Card ──
                   Visibility(
                     visible: value.presentDates.isNotEmpty,

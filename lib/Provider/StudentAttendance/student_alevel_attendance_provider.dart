@@ -60,41 +60,30 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
     }
   }
 
-  void subjectBottomSheet() {
-    showModalBottomSheet(
-      context: AppNavigation.currentContext!,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext bc) => CustomFilterBottomSheet(
-        title: 'Subject',
-        controller: subjectController,
-        filterOptions: List.generate(
-          subjects.length,
-          (i) => Options(
-            title: subjects[i].subjectName,
-            value: subjects[i].subjectId,
-          ),
-        ),
-        onSelect: (v) => setSelectedSubject(v),
-      ),
-    );
+  Future<void> loadInitialData() async {
+    try {
+      if (subjects.isEmpty) {
+        await loadAttendanceSubjects();
+      }
+      if (subjects.isNotEmpty) {
+        if (selectedSubjectId == 0) {
+          selectedSubjectId = subjects.first.subjectId!;
+          selectedSubject = subjects.first.subjectId!;
+        }
+        await loadAttendance();
+      }
+    } catch (ex) {
+      rethrow;
+    }
   }
 
-  void setSelectedSubject(String v) {
-    selectedSubject = subjects
-        .singleWhere((e) => e.subjectName == v)
-        .subjectId!;
-    selectedSubjectId = subjects
-        .singleWhere((e) => e.subjectId == selectedSubject)
-        .subjectId!;
-    subjectController.text = v;
-    AppNavigation.goBack();
+  Future<void> setSelectedSubject(int subjectId) async {
+    selectedSubject = subjectId;
+    selectedSubjectId = subjectId;
     notifyListeners();
+    DialogBuilder.showLoadingIndicator();
+    await loadAttendance().whenComplete(() => DialogBuilder.hideOpenDialog());
   }
-
-  // void setSelectedSubjectId() {
-
-  //   notifyListeners();
-  // }
 
   //
 
@@ -254,14 +243,6 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
       title: '${pieData[index].attendanceCount}',
     ),
   );
-
-  Future<void> navigateToAttendance() async {
-    //
-    if (formKey.currentState!.validate()) {
-      FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
-      AppNavigation.navigateTo(AppNavRoutes.alevelAttendanceRoute);
-    }
-  }
 
   //\\
   void clearData() {

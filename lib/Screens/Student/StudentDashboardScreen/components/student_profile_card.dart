@@ -109,7 +109,7 @@ class StudentProfileCard extends StatelessWidget {
                                 ['19', '20'].contains(localGradeId);
                             AppNavigation.navigateTo(
                               isAdvanced
-                                  ? AppNavRoutes.attendanceSubjectRoute
+                                  ? AppNavRoutes.alevelAttendanceRoute
                                   : AppNavRoutes.attendanceRoute,
                             );
                           },
@@ -281,12 +281,14 @@ class StudentProfileCard extends StatelessWidget {
                   color: AppColors.goldenYellow,
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: Text(
-                  className.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.primaryDarkBlue,
+                child: FittedBox(
+                  child: Text(
+                    className.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.primaryDarkBlue,
+                    ),
                   ),
                 ),
               ),
