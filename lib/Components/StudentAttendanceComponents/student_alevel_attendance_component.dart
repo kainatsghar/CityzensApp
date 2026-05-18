@@ -96,6 +96,15 @@ class StudentAttendanceComponent extends StatelessWidget {
                       ),
                     ),
 
+                  // ── Calendar ──
+                  FadeInUp(
+                    delay: const Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 400),
+                    child: const StudentAttendance(),
+                  ),
+
+                  const SizedBox(height: 24),
+
                   // ── Statistics Card ──
                   Visibility(
                     visible: value.presentDates.isNotEmpty,
@@ -182,14 +191,6 @@ class StudentAttendanceComponent extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  // ── Calendar ──
-                  FadeInUp(
-                    delay: const Duration(milliseconds: 200),
-                    duration: const Duration(milliseconds: 400),
-                    child: const StudentAttendance(),
-                  ),
-                  const SizedBox(height: 24),
                 ],
               ),
             );
