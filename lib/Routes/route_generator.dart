@@ -12,7 +12,6 @@ import 'package:tcs_app/screens/Promotion/promotion_screen_ui.dart';
 import 'package:tcs_app/screens/SplashScreen/splash_screen_ui.dart';
 import 'package:tcs_app/screens/Student/StudentAssignmentScreen/student_assignment_screen.dart';
 import 'package:tcs_app/screens/Student/StudentAttendanceScreen/student_alevel_attendance_screen.dart';
-import 'package:tcs_app/screens/Student/StudentAttendanceScreen/student_alevel_attendance_subject_screen.dart';
 import 'package:tcs_app/screens/Student/StudentClassTestResultScreen/student_class_result_screen.dart';
 import 'package:tcs_app/screens/Student/StudentDiaryScreen/student_diary_screen.dart';
 import 'package:tcs_app/screens/Student/StudentSchoolEventScreen/student_school_event_screen.dart';
@@ -128,8 +127,6 @@ class RouteGenerator {
         return routeScreen(child: const StudentAttendanceScreen());
       case AppNavRoutes.alevelAttendanceRoute:
         return routeScreen(child: const StudentAlevelAttendanceScreen());
-      case AppNavRoutes.attendanceSubjectRoute:
-        return routeScreen(child: const StudentALevelAttendanceSubjectScreen());
       case AppNavRoutes.markUnidentifiedRoute:
         return routeScreen(child: const MarkUnidentifiedScreen());
       case AppNavRoutes.addDiaryRoute:
