@@ -29,7 +29,7 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
 
   Future<void> _launchFile(String fileName) async {
     final Uri url = Uri.parse(
-      '${AppConstants.baseUrl}/MobileAppAttachments/Circular/$fileName',
+      '${AppConstants.baseUrl}/MobileCircularAnnouncement/$fileName',
     );
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw 'Could not launch $url';

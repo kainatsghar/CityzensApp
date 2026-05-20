@@ -1,527 +1,323 @@
-# Cityzens - School Management System
+# Cityzens — School Management System
 
-[![Flutter](https://img.shields.io/badge/Flutter-3.8.1-blue.svg)](https://flutter.dev/)
-[![Dart](https://img.shields.io/badge/Dart-2.19.0-blue.svg)](https://dart.dev/)
-[![Version](https://img.shields.io/badge/version-1.12.22-brightgreen.svg)](https://github.com/tcsho/CityzensApp)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Flutter](https://img.shields.io/badge/Flutter-3.8.1-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
+[![Dart](https://img.shields.io/badge/Dart-3.8.1-0175C2?logo=dart&logoColor=white)](https://dart.dev/)
+[![Version](https://img.shields.io/badge/version-1.13.3-10B981)](https://github.com/tcsho/CityzensApp)
+[![Firebase](https://img.shields.io/badge/Firebase-Enabled-FFCA28?logo=firebase&logoColor=white)](https://firebase.google.com/)
 
-A comprehensive school management application built with Flutter, enabling teachers to manage academic activities, while students and parents monitor their academic progress and attendance in a unified ecosystem.
-
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [User Roles & Portal Flows](#user-roles--portal-flows)
-- [Features by Role](#features-by-role)
-- [🛠 Technical Stack](#-technical-stack)
-- [🚀 Getting Started](#-getting-started)
-- [🏗 Project Structure](#-project-structure)
-- [🔒 Security Features](#-security-features)
-- [📱 Feature Details](#-feature-details)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-
-## Overview
-
-Cityzens is a tri-role school management system designed to streamline communication and data management between **Teachers** (primary actors), **Students**, and **Parents**. The application integrates with the school's ERP system (AIMS+) to provide real-time access to academic records, attendance, assignments, and financial information.
-
-### Core Philosophy
-- **Teachers** are the primary content creators and managers
-- **Students** and **Parents** are content consumers with real-time visibility
-- **Seamless data synchronization** between app and ERP systems
-- **Role-based access control** ensuring data privacy and security
+> A comprehensive, tri-role school management application for **The City School** network, built with Flutter. Teachers manage academic activities; students and parents monitor progress in real time — all integrated with the AIMS+ ERP system.
 
 ---
 
-## 🔄 User Roles & Portal Flows
+## Table of Contents
+
+- [Architecture Overview](#architecture-overview)
+- [User Roles & Authentication](#user-roles--authentication)
+- [Teacher Portal](#-teacher-portal)
+- [Student Portal](#-student-portal)
+- [Parent Portal](#-parent-portal)
+- [Technical Stack](#-technical-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Build & Release](#-build--release)
+- [Design System](#-design-system)
+- [Security](#-security)
+- [API Architecture](#-api-architecture)
+- [Feature Status Matrix](#-feature-status-matrix)
+- [Support & Contact](#-support--contact)
+
+---
+
+## Architecture Overview
+
+Cityzens follows a **Provider-based MVVM** architecture with clear separation of concerns:
+
+```
+┌──────────────────────────────────────────────────┐
+│                    Screens                        │  UI Layer (StatefulWidgets)
+├──────────────────────────────────────────────────┤
+│                   Components                      │  Reusable UI Compositions
+├──────────────────────────────────────────────────┤
+│                Custom Widgets                     │  Design System Primitives
+├──────────────────────────────────────────────────┤
+│            Providers (ChangeNotifier)              │  State Management
+├──────────────────────────────────────────────────┤
+│                   Services                        │  API Call Layer
+├──────────────────────────────────────────────────┤
+│                    Models                         │  Data Models (JSON ↔ Dart)
+├──────────────────────────────────────────────────┤
+│              Network (ApiBaseHelper)               │  HTTP Client + Error Handling
+├──────────────────────────────────────────────────┤
+│              SharedPreferences                    │  Local Session Persistence
+└──────────────────────────────────────────────────┘
+```
+
+### Core Principles
+
+| Principle | Implementation |
+|---|---|
+| **Teachers are Creators** | Teachers are the primary actors who create content (homework, attendance, circulars, results). |
+| **Students & Parents are Consumers** | They receive a read-only, real-time view of all academic data. |
+| **ERP Integration** | AIMS+ provides the source of truth for profiles, term results, fees, and library records. |
+| **Role-Based Access** | The `AuthWrapper` routes users to role-specific dashboards based on `userType` stored in `LoginResponse`. |
+| **Session Caching** | `LocalDataProvider` + `SharedPreferences` persist login sessions and user data across app restarts. |
+
+---
+
+## User Roles & Authentication
 
 ### Authentication Flow
 
 ```mermaid
 graph TD
-    A[App Launch] --> B{User Logged In?}
-    B -->|No| C[Login Screen]
-    B -->|Yes| D{User Type?}
-    C --> E{Select Role}
-    E -->|Student| F[Student Login]
-    E -->|Teacher| G[Teacher Login]
-    E -->|Parent| H[Parent Login]
-    F --> I[Student Dashboard]
-    G --> J[Teacher Dashboard]
-    H --> K{Select Child}
-    K --> I
-    D -->|Student| I
-    D -->|Teacher| J
-    D -->|Parent| K
+    A["App Launch<br/><code>SplashScreenUI</code>"] --> B["<code>AuthWrapper</code>"]
+    B --> C{"Stored Token<br/>Exists?"}
+    C -->|No| D["<code>LoginScreen</code>"]
+    C -->|Yes| E{"<code>userType</code>"}
+    D --> F["User selects role tab:<br/>Student / Teacher / Parent"]
+    F -->|Student| G["Enter Roll Number + Password"]
+    F -->|Teacher| H["Enter Employee Number + Password"]
+    F -->|Parent| I["Enter Father CNIC + Password"]
+    G --> J["<code>LoginService.loginRequest()</code>"]
+    H --> J
+    I --> J
+    J -->|Success| K["Save to SharedPreferences"]
+    K --> L["Push to <code>AuthWrapper</code>"]
+    L --> E
+    E -->|Student| M["<code>StudentDashboardScreen</code>"]
+    E -->|Teacher| N["<code>TeacherDashboardScreen</code>"]
+    E -->|Parent| O["<code>StudentDashboardScreen</code><br/>(with child selector)"]
+    J -->|Failure| P["Show error SnackBar"]
 ```
 
-### Password Management Flow
+### Login Credentials by Role
+
+| Role | Username Field | Mask | Example |
+|---|---|---|---|
+| **Student** | Roll Number | `00000000` | `230935` |
+| **Teacher** | Employee Number | `00000000` | `10045678` |
+| **Parent** | Father CNIC | `00000-0000000-0` | `42101-1234567-1` |
+
+### Password Management
+
+- **Forgot Password** → Enter email/username → OTP verification → Set new password
+- **Change Password** → Available from the navigation drawer after login
+- **First-Time Login** → Some users receive a temporary password, forced to change on first use
+
+---
+
+## 👨‍🏫 Teacher Portal
+
+Teachers are the **primary actors**. They create all academic content and manage classroom activities.
+
+### Teacher Dashboard
+
+The Teacher Dashboard (`TeacherDashboardScreen`) is a premium, Sliver-based interface with:
+
+- **Teacher Profile Card** — Compact glassmorphic strip showing name, designation, and campus.
+- **Smart Class & Section Card** — A unified hub for selecting the active class/section. Auto-selects the first available section and subject. State is shared globally across the app.
+- **Navigation Guards** — Validates prerequisites (section/subject selection) before navigating to dependent screens.
+- **Pull-to-Refresh** — Refreshes all dashboard data in a single gesture.
+
+### Feature Breakdown
+
+#### Mark Attendance
+- Select from assigned class/section
+- For **A-Level classes** (Grade IDs `19`, `20`): additionally select a subject
+- Student list displayed with current date
+- Mark each student: **Present (P)**, **Absent (A)**, **Leave (L)**, or **Unreconciled**
+- View live pie chart statistics before submitting
+- Submit → Confirmation → Data syncs to student/parent portals
+
+#### Mark Unidentified Students
+- For students physically present but not yet in the system roster
+- Mark attendance with category/reason
+- System admin can later map these records
+
+#### Unified Academic Hub (`TeacherAcademicHubScreen`)
+A single tabbed screen that consolidates:
+
+| Tab | Create Screen | Purpose |
+|---|---|---|
+| **Homework** | `AddDiaryScreen` | Assign homework with optional file attachment. Auto-archives after 7 days. |
+| **Classwork** | `AddAssignmentScreen` | Assign classwork/assignments with attachments. |
+| **Circulars** | `AddCircularScreen` | Send announcements/notices to specific class/sections. |
+
+- Each tab has a context-aware floating action button.
+- Teachers can only see content they have created.
+- All three support **Edit** mode via passing the existing record as route arguments.
+
+#### Class Test Results
+- Upload up to **3 test results** per session per class/section (Test 1, Test 2, Test 3)
+- Enter student marks with input validation
+- Results immediately available on the student/parent portal
+
+#### Eye on Your Child (Early Years — Grades 1–4)
+- Share student activities with photos (up to 3 images per update) and descriptive notes
+- Select specific student(s) to share with
+- Parents receive notifications and can view in real time
+
+#### Timetable Management
+- Select class/section
+- Create/edit timetable in a **9 periods × 5 days** grid format
+- Enter subject abbreviations for each cell
+- Students view this as read-only
+
+#### Other Teacher Features
+- **Teacher Profile** — Read-only view of ERP-synced employee data
+- **Parent Appointments** — Manage appointment requests from parents
+- **Surveys** — Create and manage student surveys
+- **School Events** — Create and publish school events
+
+---
+
+## 🎓 Student Portal
+
+Students are **content consumers**. They view data created by teachers and fetched from the AIMS+ ERP system.
+
+### Student Dashboard
+
+The Student Dashboard (`StudentDashboardScreen`) features a premium profile card with:
+
+- **Student Info** — Name, class, campus, with a tappable area linking to the full profile
+- **Session Attendance** — Circular progress indicator showing the overall attendance percentage
+- **Monthly Attendance** — Quick-tap to open the detailed calendar view
+- **Action Grid** — Dashboard buttons for all features: Diary, Assignment, Results, Fee, Library, Timetable, etc.
+- **Multi-Child Selector** (Parent view) — Horizontal avatar list for parents with multiple children
+
+### Feature Breakdown
+
+#### Attendance Tracking
+- **Standard Students**: Direct calendar view with monthly navigation
+- **A-Level Students** (Grade IDs `19`, `20`): Single-screen flow with:
+  - Automatic subject fetch on screen entry (session-cached)
+  - Auto-selection of the first subject
+  - Horizontal scrollable subject chips for switching
+  - Calendar + pie chart + legend for the selected subject
+- **Calendar Indicators**: Present (🟢), Absent (🔴), Leave (🟡)
+- **Monthly Summary**: Pie chart with legend chips showing counts
+- **Month Navigation**: Reload attendance with a loading dialog on month change
+
+#### Homework Diary
+- View homework assigned by teachers
+- Date-wise grouping under single date headers
+- Shows teacher name, subject, description, and attachments
+- Auto-hides after 7 days
+
+#### Classwork / Assignments
+- Same UI pattern as homework
+- Date-wise organization with attachment support
+
+#### Term Results (from AIMS+ ERP)
+- Select Academic Session → Select Term
+- View: Subject-wise marks/grades, teacher comments, overall grade, performance indicators, highest/lowest marks
+
+#### Class Test Results
+- View results uploaded by teachers (Test 1, 2, 3)
+- Subject-wise marks and teacher feedback
+
+#### Fee Bill & Payment
+- **Two-Tab View**:
+  - **Outstanding Challans**: Fetched from ERP, tap to redirect to payment gateway
+  - **Receipts**: Last 5 payment receipts
+- Secure WebView payment via `billing.thecityschool.edu.pk`
+
+#### Library Records (from AIMS+ ERP)
+- View issued books, due dates, fine status
+- Tabs: Issued Books / Notifications (overdue alerts)
+
+#### Timetable (Read-Only)
+- View the class timetable created by the teacher
+- 9×5 grid format (9 periods, Mon–Fri)
+
+#### Student Profile
+- Read-only ERP data: Name, Roll Number, Student ID, Class/Section, Campus, Contact, DOB
+- Students cannot edit their own contact information
+- Parents can edit selected contact fields
+
+#### Other Student Features
+- **School Events** — View published school events
+- **Surveys** — Complete assigned surveys
+- **Notifications / Circulars** — View school announcements
+- **Individual Education Plan** — Specialized learning plans (if applicable)
+
+---
+
+## 👪 Parent Portal
+
+Parents monitor their children's academic progress. They share the **Student Dashboard** with an additional child-selection layer.
+
+### Multi-Child Support
 
 ```mermaid
 graph TD
-    A[Login Screen] --> B[Forgot Password?]
-    B --> C[Enter Email/Username]
-    C --> D[Receive OTP]
-    D --> E[Verify OTP]
-    E --> F[Set New Password]
-    F --> G[Login with New Password]
+    A["Parent Login<br/>(CNIC + Password)"] --> B["API returns<br/><code>ListOfChildren</code>"]
+    B --> C["<code>StudentDashboardScreen</code><br/>with child selector"]
+    C --> D["Horizontal avatar chips<br/>in <code>StudentProfileCard</code>"]
+    D -->|Tap child| E["<code>localData.setStudentId()</code>"]
+    E --> F["<code>provider.switchActiveChild()</code>"]
+    F --> G["All screens reflect<br/>selected child's data"]
 ```
 
----
+### Parent-Specific Features
 
-## 📱 Features by Role
-
-### 👨‍🏫 Teacher Portal (Primary Actor)
-
-Teachers have full control over academic content creation and student management. They are the main initiators of all academic activities.
-
-#### 1. **Profile Management**
-- **File**: [teacher_profile_provider.dart](lib/Provider/TeacherProfile/teacher_profile_provider.dart)
-- **Screen**: [teacher_profile_screen.dart](lib/Screens/Teacher/TeacherProfileScreen/teacher_profile_screen.dart)
-- View employee information from ERP database
-- Display: Name, Designation, Department, Address, Contact Details
-- Read-only access to ERP-synced data
-
-#### 2. **Timetable Management**
-- **File**: [timetable_provider.dart](lib/Provider/TimeTable/timetable_provider.dart)
-- **Component**: [teacher_timetable_component.dart](lib/Components/TimeTableComponents/teacher_timetable_component.dart)
-- Create and manage class timetables
-- **Current Implementation**: 9 periods × 5 days (Monday-Friday) format
-- **Planned**: Support for alternate timetable formats
-- Features:
-  - Select class/section to create timetable
-  - Enter subject abbreviations for each period
-  - Auto-save functionality
-  - Edit existing timetables
-  - View-only mode for students
-
-#### 3. **Mark Attendance**
-- **File**: [mark_attendance_provider.dart](lib/Provider/MarkAttendance/mark_attendance_provider.dart)
-- **Flow**: 
-  - Select from class/section assigned to teacher
-  - Select subject (A-Level students only)
-  - Get student list with current date
-  - Mark attendance: Present (P), Absent (A), Leave (L)
-  - View attendance pie chart before submission
-  - Submit and receive confirmation
-- **Features**:
-  - Only class teachers can mark attendance
-  - Default to 'Present' if not marked
-  - Visual attendance statistics
-  - Ability to edit before submission
-
-#### 4. **Mark Unidentified Students**
-- **File**: [mark_unverified_provider.dart](lib/Provider/MarkUnverified/mark_unverified_provider.dart)
-- Identify students present physically but not in the system
-- Mark unidentified student attendance with reason/category
-- Helps maintain accurate attendance records
-- Admin/System can later map identified students
-
-#### 5. **Homework Management**
-- **File**: [diary_provider.dart](lib/Provider/Diary/diary_provider.dart)
-- **Screens**: 
-  - [add_diary_screen.dart](lib/Screens/Teacher/AddDiaryScreen/add_diary_screen.dart)
-  - [teacher_diary_screen.dart](lib/Screens/Teacher/TeacherDiaryScreen/teacher_diary_screen.dart)
-- **Features**:
-  - Select class/section to assign homework
-  - Add homework title and description
-  - Optional file attachment (PDF, DOC, etc.)
-  - Assign to multiple classes if taught in multiple sections
-  - **Viewing**: Only see homework created by current teacher
-  - **Duration**: Homework visible for 7 days, then archived
-  - **Requested Features**:
-    - Display section/class info with each homework
-    - Edit functionality for existing homework
-    - Delete functionality
-    - Extend visibility period options
-
-#### 6. **Classwork/Assignment Management**
-- **File**: [assignment_provider.dart](lib/Provider/Assignment/assignment_provider.dart)
-- **Screens**: 
-  - [add_assignment_screen.dart](lib/Screens/Teacher/AddAssignmentScreen/add_assignment_screen.dart)
-  - [teacher_assignment_screen.dart](lib/Screens/Teacher/TeacherAssignmentScreen/teacher_assignment_screen.dart)
-- **Flow**: Identical to Homework management
-- **Features**:
-  - Create classwork assignments
-  - Attach supporting documents
-  - Target specific class/section
-  - Track student submissions
-  - **Planned**:
-    - Section display with classwork
-    - Edit/Delete options
-    - Submission deadline tracking
-    - Student submission view
-
-#### 7. **Circulars**
-- **File**: [circular_provider.dart](lib/Provider/Circular/circular_provider.dart)
-- **Screen**: [add_circular_screen.dart](lib/Screens/Teacher/AddCircularScreen/add_circular_screen.dart)
-- Send announcements and notices to specific class/sections
-- **Features**:
-  - Type: Notice, Announcement, Alert, etc.
-  - Select recipient class/section(s)
-  - Add detailed description
-  - Optional attachment
-  - **Current Status**: 
-    - Teachers can create and view their own circulars
-    - Student/Parent view NOT YET implemented
-  - **Requested**: 
-    - Show section/class info with circular
-    - Edit/Delete options
-    - Circular visibility on student portal
-
-#### 8. **Class Test Results**
-- **File**: [class_test_result_provider.dart](lib/Provider/ClassTestResult/class_test_result_provider.dart)
-- **Screens**: 
-  - [teacher_class_test_result_screen.dart](lib/Screens/Teacher/TeacherClassTestResultScreen/teacher_class_test_result_screen.dart)
-  - [teacher_add_class_result_screen.dart](lib/Screens/Teacher/TeacherClassTestResultScreen/teacher_add_class_result_screen.dart)
-- **Features**:
-  - Upload up to 3 test results per session per class/section
-  - Tests: Test 1, Test 2, Test 3
-  - Enter student marks for each subject
-  - Input constraints and validation
-  - Save and submit results
-  - Form state management across tabs
-  - **Planned**:
-    - Edit existing test results
-    - Delete functionality
-    - Feedback to students
-
-#### 9. **Eye on Your Child**
-- **File**: [eye_on_your_child_provider.dart](lib/Provider/EyeOnYourChild/eye_on_your_child_provider.dart)
-- **Screen**: Early Years Education feature only (Grades 1-4)
-- **Features**:
-  - Share student activities and progress with parents
-  - Upload up to 3 images per activity update
-  - Add descriptive text/notes
-  - Select student(s) to share with
-  - Parents receive notifications
-  - **Purpose**: Enhance parent engagement in early childhood education
-  - Photos and notes visible to parents in real-time
-
-#### 10. **Teacher Dashboard & Unified Academic Hub**
-- **File**: [teacher_dashboard_screen.dart](lib/Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart)
-- Quick access to all teaching features via a premium, responsive dashboard interface.
-- Display: Compact teacher profile strip.
-- **Smart Class & Section Card**:
-  - Unified selection interface for both ClassTeacher (Attendance, Timetable) and SubjectTeacher (Academics, Results) roles.
-  - Auto-selects first available section and subject.
-  - State is shared globally across the app without needing intermediate selection screens.
-- **Unified Academic Hub**:
-  - Replaces individual list screens with a single `TeacherAcademicHubScreen`.
-  - Tabbed interface to switch seamlessly between Homework, Classwork, and Circulars.
-  - Floating action button dynamically changes context based on active tab.
-- **Smart Navigation Guards**:
-  - Validates section selection before navigating to section-dependent screens
-  - Validates subject selection for A-Level classes before attendance/timetable
-  - Clear user feedback via snackbar when prerequisites are missing
-- **Pull-to-Refresh**: Refresh all dashboard data with a single gesture
-
----
-
-### 🎓 Student Portal (Content Consumer)
-
-Students view content created by teachers and access ERP data through the app.
-
-#### 1. **Student Profile**
-- **File**: [student_profile_provider.dart](lib/Provider/StudentProfile/student_profile_provider.dart)
-- **Screen**: [student_profile_screen.dart](lib/Screens/Student/StudentProfileScreen/student_profile_screen.dart)
-- Display student information from ERP:
-  - Full Name, Roll Number, Student ID
-  - Class/Section, Campus
-  - Address, Contact Number
-  - City, Region
-  - Date of Birth
-- Read-only data from ERP system
-
-#### 2. **Attendance Tracking**
-- **File**: [student_attendance_provider.dart](lib/Provider/StudentAttendance/student_attendance_provider.dart)
-- **Screen**: [student_attendance_screen.dart](lib/Screens/Student/StudentAttendanceScreen/student_attendance_screen.dart)
-- **Features**:
-  - View attendance marked by teachers
-  - **Monthly Calendar View**: Click on date to see attendance status
-  - **Attendance Indicators**:
-    - Present (P) - Green
-    - Absent (A) - Red
-    - Leave (L) - Amber
-  - **Pie Chart Statistics**:
-    - Total Present, Absent, Leave count
-    - Calculate attendance percentage
-  - **A-Level Students**: Subject-wise attendance view
-    - Select subject from dropdown
-    - View attendance for specific subject
-  - **Export/Print**: Plan to add export functionality
-
-#### 3. **Homework Diary**
-- **File**: [diary_provider.dart](lib/Provider/Diary/diary_provider.dart)
-- **Screen**: [student_diary_screen.dart](lib/Screens/Student/StudentDiaryScreen/student_diary_screen.dart)
-- View homework assigned by teachers
-- **Features**:
-  - Date-wise grouping of homework
-  - All homework for same date under single date header
-  - Display teacher name, subject
-  - View homework description
-  - Download attachments if any
-  - Homework auto-hides after 7 days
-
-#### 4. **Classwork Assignments**
-- **File**: [assignment_provider.dart](lib/Provider/Assignment/assignment_provider.dart)
-- **Screen**: [student_assignment_screen.dart](lib/Screens/Student/StudentAssignmentScreen/student_assignment_screen.dart)
-- View assignments created by teachers
-- **Features**:
-  - Similar to homework display
-  - Date-wise organization
-  - View assignment details and attachments
-  - Track submission status (if implemented)
-  - **Planned**: Submission upload interface
-
-#### 5. **Term Results**
-- **File**: [results_provider.dart](lib/Provider/Results/results_provider.dart)
-- **Screen**: [academic_term_screen.dart](lib/Screens/Student/ResultScreen/academic_term_screen.dart)
-- **Data Source**: AIMS+ ERP system (not app-uploaded)
-- **Flow**:
-  - Select Academic Session (Year)
-  - Select Term (1st, 2nd, 3rd, etc.)
-  - View compiled result
-- **Information Displayed**:
-  - Subject-wise marks and grades
-  - Teacher comments
-  - Promoted to next class/section
-  - Overall grade and percentage
-  - Performance indicators
-  - Highest and lowest marks
-
-#### 6. **Class Test Results**
-- **File**: [class_test_result_provider.dart](lib/Provider/ClassTestResult/class_test_result_provider.dart)
-- **Screen**: [student_class_result_screen.dart](lib/Screens/Student/StudentClassTestResultScreen/student_class_result_screen.dart)
-- View test results uploaded by teachers (Test 1, 2, 3)
-- **Information**:
-  - Subject-wise test marks
-  - Teacher feedback and comments
-  - Performance analysis
-  - Comparison with class average (if available)
-
-#### 7. **Fee Bill & Payment**
-- **File**: [feechallan_provider.dart](lib/Provider/FeeChallan/feechallan_provider.dart)
-- **Screen**: [fee_challans_screen.dart](lib/Screens/Student/Feechallans/fee_challans_screen.dart)
-- **Features**:
-  - **Two Tab View**:
-    - **Outstanding Challans**: Fetch from ERP, redirect to payment portal
-    - **Receipts**: Display last 5 payment receipts
-  - View challan details: Amount, Due Date, Period
-  - Initiate payment (redirects to secure payment gateway)
-  - Download receipt after payment
-  - Payment history tracking
-
-#### 8. **Circulars / Announcements**
-- **File**: [notification_provider.dart](lib/Provider/Notifications/notification_provider.dart)
-- **Screen**: [notifications_screen.dart](lib/Screens/Student/Notifications/notifications_screen.dart)
-- View school circulars and announcements from teachers
-- **Features**:
-  - List all active circulars
-  - View circular details
-  - Categorize by type
-  - **Status**: Teacher circular creation is active, but student viewing is NOT YET IMPLEMENTED
-  - **Planned**: Display in notifications and circulars section
-
-#### 9. **Library Records**
-- **File**: [library_provider.dart](lib/Provider/Library/library_provider.dart)
-- **Screen**: [library_screen.dart](lib/Screens/Student/LibraryScreen/library_screen.dart)
-- **Data Source**: ERP Library Management System
-- **Features**:
-  - View issued books
-  - Check due dates
-  - View fine status (if any)
-  - Book request functionality (if enabled)
-  - **Tabs**:
-    - Issued Books
-    - Notifications (overdue alerts)
-
-#### 10. **Timetable (Read-Only)**
-- **File**: [timetable_provider.dart](lib/Provider/TimeTable/timetable_provider.dart)
-- **Screen**: [student_timetable_screen.dart](lib/Screens/Student/StudentTimeTableScreen/student_timetable_screen.dart)
-- View class timetable uploaded by teacher
-- **Features**:
-  - Read-only access
-  - View period-wise subjects for each day
-  - 9×5 grid format (9 periods, 5 days)
-  - Download/print functionality (planned)
-
-#### 11. **Student Dashboard**
-- **File**: [dashboard_provider.dart](lib/Provider/Dashboard/dashboard_provider.dart)
-- **Screen**: [student_dashboard_screen.dart](lib/Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart)
-- Quick stats dashboard showing:
-  - Current attendance percentage (circular indicator)
-  - Quick access to all features via dashboard buttons
-  - Attendance breakdown (Present/Absent/Leave)
-  - Recent announcements
-  - Upcoming assignments
-- Responsive design for mobile and tablet
-
----
-
-### 👪 Parent Portal (Content Consumer)
-
-Parents monitor their children's academic progress with multi-child support.
-
-#### 1. **Multi-Child Selection**
-- **File**: [parent_dashboard_provider.dart](lib/Provider/ParentDashboard/parent_dashboard_provider.dart)
-- **Screen**: [parent_dashboard_screen.dart](lib/Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart)
-- **Feature**: Parents with multiple children in the school
-- **Flow**:
-  - Login as Parent
-  - View list of enrolled children
-  - Select a child
-  - Access all child-related data (similar to student view)
-  - Switch between children seamlessly
-- **Implementation**: Select child once, then all screens show that child's data
-
-#### 2. **Child Attendance Monitoring**
-- **File**: [student_attendance_provider.dart](lib/Provider/StudentAttendance/student_attendance_provider.dart)
-- View child's attendance history with same features as student view
-- Monthly calendar, pie chart, and statistics
-- Track parent notifications for low attendance
-
-#### 3. **Homework & Assignment Tracking**
-- View assignments given to child by different teachers
-- Track submission status (if implemented)
-- Help child with homework guidance
-
-#### 4. **Academic Performance**
-- View term results and class test results
-- Track performance trends across terms
-- Monitor subject-wise progress
-- Identify weak areas
-
-#### 5. **Fee & Payment Management**
-- **File**: [feechallan_provider.dart](lib/Provider/FeeChallan/feechallan_provider.dart)
-- View outstanding fee challans
-- Make payments securely
-- Track payment history
-- Download receipts
-- Receive payment reminders
-
-#### 6. **Eye on Your Child** (Early Years Only)
-- **File**: [eye_on_your_child_provider.dart](lib/Provider/EyeOnYourChild/eye_on_your_child_provider.dart)
-- **Screen**: [parent_eye_on_your_child_component.dart](lib/Components/EyeOnYourChildComponents/parent_eye_on_your_child_component.dart)
-- Receive updates from teachers about child's daily activities
-- View photos and notes from classroom
-- Real-time engagement in early childhood education
-
-#### 7. **Circulars & Announcements**
-- Receive school announcements and important notices
-- Stay informed about school events and policies
-
-#### 8. **Timetable View**
-- View child's class timetable
-- Plan homework and study schedules accordingly
-
-#### 9. **Appointment Booking** (Planned)
-- **File**: [appointment_provider.dart](lib/Provider/Appointment/appointment_provider.dart)
-- **Screen**: [parent_appointment_screen.dart](lib/Screens/Parent/AppointmentScreen/book_an_appointment_screen.dart)
-- Book parent-teacher meetings/consultations
-- View available time slots
-- Receive confirmation and reminders
-
-#### 10. **Withdrawal Request** (Planned)
-- **File**: [withdrawal_request_provider.dart](lib/Provider/WithdrawalRequest/withdrawal_request_provider.dart)
-- Submit student withdrawal request
-- Track withdrawal status
-- Manage school leaving process
-
-#### 11. **Complaint & Query**
-- **File**: [complaint_query_provider.dart](lib/Provider/ComplaintQuery/complaint_query_provider.dart)
-- **Screen**: [complaint_query_screen.dart](lib/Screens/Parent/ComplaintQueryScreen/complaint_query_screen.dart)
-- Categorize complaints into types (Academic, Financial, Administrative, etc.)
-- Submit complaints with detailed description
-- Track complaint resolution status
-- Provide feedback to school administration
+| Feature | Description | Status |
+|---|---|---|
+| **Child Selector** | Horizontal avatar list on the dashboard card | ✅ Active |
+| **All Student Features** | Attendance, Homework, Results, Fee, etc. | ✅ Active |
+| **Eye on Your Child** | Receive teacher updates for early years | ✅ Active |
+| **Profile Editing** | Parents can edit student contact fields | ✅ Active |
+| **Complaint & Query** | Submit categorized complaints with tracking | ✅ Active |
+| **Appointment Booking** | Book parent-teacher meetings | 🚧 In Progress |
+| **Withdrawal Request** | Submit student withdrawal | 🚧 In Progress |
+| **Surveys** | Complete assigned parent surveys | ✅ Active |
 
 ---
 
 ## 🛠 Technical Stack
 
-### Frontend
-- **Framework**: [Flutter 3.8.1](https://flutter.dev/)
-- **Language**: [Dart 2.19.0](https://dart.dev/)
-- **State Management**: Provider Pattern (ChangeNotifier)
-- **UI Components**:
-  - Material Design 3
-  - Custom Widget Library
-  - Responsive Layouts (tablet & mobile)
-  - Percent Indicator for charts
-  - FL Chart for data visualization
-  - Table Calendar for attendance view
+### Core Framework
 
-### Backend Integration
-- **Authentication**: 
-  - Username/Password authentication
-  - Token-based session management
-  - Role-based access control (RBAC)
-- **API**: RESTful Services (Custom HTTP Client)
-- **ERP Integration**: 
-  - AIMS+ School Management System
-  - Real-time data synchronization
-  - Student, Teacher, Fee, Attendance data
-- **Local Storage**: Shared Preferences (caching and offline support)
-- **Push Notifications**: Firebase Cloud Messaging
-- **Error Tracking**: Firebase Crashlytics
-- **Remote Configuration**: Firebase Remote Config
+| Technology | Version | Purpose |
+|---|---|---|
+| Flutter | `3.8.1` | Cross-platform UI framework |
+| Dart | `^3.8.1` | Programming language |
+| Provider | `^6.1.5` | State management (ChangeNotifier pattern) |
 
-### Additional Libraries
-- **url_launcher**: For opening external URLs and payment gateways
-- **intl**: Date and time formatting
-- **device_info_plus**: Device information for feedback
-- **table_calendar**: Interactive calendar widget
-- **fl_chart**: Charts and graphs (pie, bar, line)
-- **percent_indicator**: Progress and measurement indicators
+### Firebase Services
 
----
+| Service | Package | Purpose |
+|---|---|---|
+| Core | `firebase_core: ^4.7.0` | Firebase initialization |
+| Cloud Messaging | `firebase_messaging: ^16.2.0` | Push notifications |
+| Crashlytics | `firebase_crashlytics: ^5.2.0` | Error tracking |
+| Remote Config | `firebase_remote_config: ^6.4.0` | Feature flags, API URL management |
+| Analytics | `firebase_analytics: ^12.3.0` | Usage tracking |
+| Firestore | `cloud_firestore: ^6.3.0` | Real-time database |
 
-## 🚀 Getting Started
+### Key Dependencies
 
-### Prerequisites
-- Flutter SDK 3.8.1+
-- Dart SDK 2.19.0+
-- Xcode (for iOS development)
-- Android Studio/SDK (for Android development)
-- GitFlow for version control
+| Package | Purpose |
+|---|---|
+| `http` | HTTP client for REST API calls |
+| `shared_preferences` | Local session persistence |
+| `table_calendar` | Attendance calendar widget |
+| `fl_chart` | Pie charts for attendance statistics |
+| `percent_indicator` | Circular progress indicators |
+| `animate_do` | Micro-animations and transitions |
+| `cached_network_image` | Efficient image loading with caching |
+| `image_picker` + `image_cropper` | Profile photo management |
+| `webview_flutter` | In-app payment gateway |
+| `upgrader` | Force-update mechanism |
+| `lottie` | Premium loading animations |
+| `connectivity_plus` | Network state monitoring |
+| `flutter_local_notifications` | Local notification display |
+| `freezed` + `json_serializable` | Code generation for models |
 
-### Installation
+### Fonts
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/tcsho/CityzensApp.git
-   cd CityzensApp
-   ```
-
-2. **Install dependencies**
-   ```bash
-   flutter pub get
-   ```
-
-3. **Generate necessary files**
-   ```bash
-   flutter pub run build_runner build
-   ```
-
-4. **Run the application**
-   ```bash
-   # For development
-   flutter run
-
-   # For production build
-   # iOS
-   flutter run --release -t lib/main.dart
-
-   # Android
-   flutter build apk --release
-   flutter build appbundle --release
-   ```
-
-### Environment Configuration
-- Configure API endpoints in the network configuration
-- Set up Firebase configuration files (google-services.json for Android, GoogleService-Info.plist for iOS)
-- Configure ERP/AIMS+ API credentials
-- Set up payment gateway integration
+- **Axiforma** — Primary UI font (Regular 500, Light 400, Bold 700)
+- **Nunito** — Secondary/alternative font
 
 ---
 
@@ -529,340 +325,362 @@ Parents monitor their children's academic progress with multi-child support.
 
 ```
 lib/
-├── Components/                    # Reusable UI components
-│   ├── StudentProfileComponents/
-│   ├── TeacherProfileComponents/
-│   ├── MarkAttendanceComponents/
-│   ├── TimeTableComponents/
-│   ├── DiaryRecordComponents/
-│   ├── AssignmentComponents/
-│   ├── ClassTestResultComponents/
-│   ├── ResultsComponents/
-│   ├── EyeOnYourChildComponents/
-│   ├── AppointmentComponents/
-│   ├── ComplaintQueryComponents/
-│   └── ...more components
+├── main.dart                          # App entry point, Firebase init
+├── firebase_options.dart              # Firebase project configuration
 │
-├── CustomWidgets/                  # Custom reusable widgets
-│   ├── CustomAppBar/
-│   ├── CustomLoader/
-│   ├── CustomAppButton/
-│   ├── CustomTextFormField/
-│   ├── CustomDialog/
-│   ├── CustomBottomSheets/
-│   ├── CustomSnackbar/
-│   └── ...more custom widgets
+├── components/                        # Feature-specific UI compositions
+│   ├── StudentAttendanceComponents/   #   Calendar, pie chart, subject chips
+│   ├── MarkAttendanceComponents/      #   Student list, attendance marking
+│   ├── FeeChallanComponents/          #   Challan cards, receipt views
+│   ├── ResultsComponents/            #   Term result display
+│   ├── DiaryRecordComponents/        #   Homework/diary cards
+│   ├── AssignmentComponents/         #   Assignment/classwork cards
+│   ├── ClassTestResultComponents/    #   Test result entry/display
+│   ├── EyeOnYourChildComponents/    #   Activity feed, photo gallery
+│   ├── TimeTableComponents/         #   Timetable grid
+│   └── ...26 component directories
 │
-├── Model/                          # Data models
-│   ├── StudentProfile/
-│   ├── TeacherProfile/
-│   ├── Appointment/
-│   ├── Assignment/
-│   ├── ClassTestResult/
-│   ├── Diary/
-│   ├── FeeChallan/
-│   ├── Library/
-│   ├── Results/
-│   ├── StudentAttendance/
-│   ├── TimeTable/
-│   ├── UserData/
-│   └── ...more models
+├── custom_widgets/                    # Design system primitives
+│   ├── CustomAppBar/                  #   Unified app bar
+│   ├── CustomAppButton/               #   Primary action button
+│   ├── CustomTextFormField/           #   Themed text inputs
+│   ├── CustomCard/                    #   Card container
+│   ├── GlassmorphicCard/             #   Premium glassmorphic card
+│   ├── ShimmerEffect/                 #   Loading skeletons
+│   ├── CustomBottomSheets/            #   Filter/selection sheets
+│   ├── CustomDialogBoxes/             #   Loading dialogs
+│   ├── CustomSnackbar/                #   Themed notifications
+│   ├── UserTypeTabSelector/           #   Login role selector
+│   ├── TeacherProfileCard/            #   Dashboard profile strip
+│   └── ...38 widget directories
 │
-├── Network/                        # API services
-│   ├── api_base_helper.dart        # HTTP client wrapper
-│   └── api_endpoints.dart          # API endpoints
+├── model/                             # Data models (JSON ↔ Dart)
+│   ├── Login/login_response.dart      #   LoginResponse, UserInfo
+│   ├── StudentAttendance/             #   MonthlyAttendance, Event
+│   ├── FeeChallan/                    #   Challan, Receipt models
+│   └── ...46 model directories
 │
-├── Provider/                       # State management (ChangeNotifier)
-│   ├── LocalData/                  # Local data caching and user session
-│   ├── Login/
-│   ├── StudentProfile/
-│   ├── TeacherProfile/
-│   ├── StudentAttendance/
-│   ├── MarkAttendance/
-│   ├── TimeTable/
-│   ├── Diary/
-│   ├── Assignment/
-│   ├── Results/
-│   ├── ClassTestResult/
-│   ├── FeeChallan/
-│   ├── Library/
-│   ├── Appointment/
-│   ├── ComplaintQuery/
-│   ├── EyeOnYourChild/
-│   ├── Circular/
-│   ├── Dashboard/
-│   ├── ParentDashboard/
-│   ├── app_providers.dart          # MultiProvider setup
-│   └── ...more providers
+├── network/                           # HTTP abstraction layer
+│   ├── api_base_helper.dart           #   GET, POST, PUT, PATCH, DELETE
+│   └── app_exceptions.dart            #   Custom exception types
 │
-├── Routes/                         # Navigation
-│   ├── app_navigation.dart         # Navigation helper
-│   ├── app_navigation_routes.dart  # Route constants
-│   ├── route_generator.dart        # Route generation logic
-│   └── screen_arguments.dart       # Screen parameter passing
+├── provider/                          # State management (ChangeNotifier)
+│   ├── app_providers.dart             #   MultiProvider registration (30 providers)
+│   ├── LocalData/                     #   Session data, login persistence
+│   ├── Login/                         #   Authentication logic
+│   ├── StudentDashboard/              #   Dashboard state, multi-child support
+│   ├── StudentAttendance/             #   Standard + A-Level attendance
+│   ├── MarkAttendance/                #   Teacher attendance marking
+│   └── ...31 provider directories
 │
-├── Screens/                        # Feature screens
-│   ├── AuthWrapper/
-│   ├── LoginScreen/
-│   ├── Student/
-│   │   ├── StudentDashboardScreen/
-│   │   ├── StudentProfileScreen/
-│   │   ├── StudentAttendanceScreen/
-│   │   ├── StudentDiaryScreen/
-│   │   ├── StudentAssignmentScreen/
-│   │   ├── ResultScreen/
-│   │   ├── StudentClassTestResultScreen/
-│   │   ├── Feechallans/
-│   │   ├── LibraryScreen/
-│   │   ├── Notifications/
-│   │   └── StudentTimeTableScreen/
-│   ├── Teacher/
-│   │   ├── TeacherDashboardScreen/
-│   │   ├── TeacherProfileScreen/
-│   │   ├── TeacherTimeTableScreen/
-│   │   ├── AttendanceListScreen/
-│   │   ├── TeacherSectionScreen/
-│   │   ├── MarkUnidentifiedScreen/
-│   │   ├── AddDiaryScreen/
-│   │   ├── TeacherDiaryScreen/
-│   │   ├── AddAssignmentScreen/
-│   │   ├── TeacherAssignmentScreen/
-│   │   ├── TeacherClassTestResultScreen/
-│   │   ├── AddCircularScreen/
-│   │   └── ParentAppointmentScreen/
-│   ├── Parent/
-│   │   ├── ParentDashboardScreen/
-│   │   ├── AppointmentScreen/
-│   │   ├── ComplaintQueryScreen/
-│   │   ├── WithdrawalRequestScreen/
-│   │   ├── ChallanPaymentScreen/
-│   │   └── ParentEyeOnYourChildScreen/
-│   ├── Registration/
-│   ├── ForgotPassword/
-│   ├── SplashScreen/
-│   └── ...more screens
+├── routes/                            # Navigation
+│   ├── app_navigation.dart            #   Navigator helper (push, replace, goBack)
+│   ├── app_navigation_routes.dart     #   60+ route constants
+│   └── route_generator.dart           #   Switch-case route generation with FadeTransition
 │
-├── Services/                       # API service classes
-│   ├── StudentProfile/
-│   ├── TeacherProfile/
-│   ├── StudentAttendance/
-│   ├── MarkAttendance/
-│   ├── TimeTable/
-│   ├── StudentDiary/
-│   ├── TeacherDiary/
-│   ├── StudentAssignment/
-│   ├── TeacherAssignment/
-│   ├── Results/
-│   ├── ClassTestResult/
-│   ├── FeeChallan/
-│   ├── Library/
-│   ├── Appointment/
-│   ├── ComplaintQuery/
-│   └── ...more services
+├── screens/                           # Feature screens
+│   ├── AuthWrapper/                   #   Post-login routing by role
+│   ├── LoginScreen/                   #   Tri-role login UI
+│   ├── SplashScreen/                  #   App launch splash
+│   ├── Student/                       #   14 student screen directories
+│   ├── Teacher/                       #   21 teacher screen directories
+│   ├── Parent/                        #   6 parent screen directories
+│   ├── NavigationalDrawer/            #   About Us, Feedback, Change Password
+│   ├── ForgotPassword/                #   Password recovery flow
+│   └── Registration/                  #   New user registration
 │
-├── Utils/                          # Helper functions and constants
-│   ├── app_colors.dart             # Color palette
-│   ├── app_constants.dart          # App-wide constants
-│   ├── helper_function.dart        # Utility functions (formatting, validation)
-│   └── media_query_util.dart       # Responsive design utilities
+├── services/                          # API service classes (static methods)
+│   ├── InitServices/                  #   AppInitializer, FirebaseMaster, PushNotifications
+│   ├── Login/                         #   LoginService
+│   ├── Logout/                        #   LogoutService
+│   └── ...54 service directories
 │
-├── assets/                         # Static assets
-│   ├── images/
-│   └── fonts/
+├── shared_preference/                 # Local storage wrapper
+│   └── shared_preference.dart         #   AppLocalData (get/set/remove)
 │
-└── main.dart                       # App entry point
+├── push_notifications/                # FCM handling
+├── repositories/                      # Repository layer (if used)
+├── gen/                               # Generated assets (flutter_gen)
+│
+└── utils/                             # Constants and helpers
+    ├── app_colors.dart                #   Complete premium color palette
+    ├── app_constants.dart             #   API URLs, error messages, keys
+    ├── app_themes.dart                #   ThemeData (light theme)
+    ├── helper_function.dart           #   Date formatting, validators, utilities
+    ├── media_query_util.dart          #   Responsive sizing
+    ├── validators.dart                #   Form validation functions
+    └── input_formatters.dart          #   Text input formatters
 ```
 
 ---
 
-## 🔒 Security Features
+## 🚀 Getting Started
 
-### Authentication & Authorization
+### Prerequisites
 
-1. **User Authentication**
-   - Username/Password-based login
-   - Secure token generation and storage
-   - Session management with token validation
-   - Automatic logout on token expiration
-   - Multi-role authentication (Student/Teacher/Parent)
+- Flutter SDK `^3.8.1`
+- Xcode (for iOS)
+- Android Studio / SDK (for Android)
+- CocoaPods (for iOS dependencies)
 
-2. **Role-Based Access Control (RBAC)**
-   - Teacher-specific features (Attendance marking, Grade entry)
-   - Student/Parent read-only access to academic data
-   - Segregated APIs based on user role
-   - Prevention of unauthorized data access
+### Installation
 
-3. **Data Security**
-   - HTTPS/TLS encryption for all API calls
-   - Secure local storage using Shared Preferences
-   - Sensitive data encryption (tokens, passwords)
-   - Regular security token refresh
+```bash
+# 1. Clone the repository
+git clone https://github.com/tcsho/CityzensApp.git
+cd CityzensApp
 
-4. **Password Management**
-   - Secure password hashing
-   - Password strength requirements
-   - Forgot password with OTP verification
-   - Change password functionality (after login)
-   - Temporary password for first-time login
+# 2. Install dependencies
+make get
+# or: flutter pub get
 
-5. **Audit & Monitoring**
-   - Firebase Crashlytics for error tracking
-   - User action logging
-   - API request/response logging (in development)
-   - Suspicious activity detection
+# 3. Generate code (models, assets)
+make generate
+# or: dart run build_runner build --delete-conflicting-outputs
 
----
+# 4. iOS pod install (first time / after dependency changes)
+make pod-install
+# or: cd ios/ && pod install
 
-## 📱 Feature Details & Data Flow
-
-### A. Complete Homework Workflow
-
-```mermaid
-graph TD
-    A[Teacher Dashboard] --> B[Homework Menu]
-    B --> C[Select Class/Section]
-    C --> D["Enter Homework<br/>- Title<br/>- Description<br/>- Optional File"]
-    D --> E[Submit to Server]
-    E --> F[Confirmation Message]
-    F --> G{7 Days Pass?}
-    G -->|Yes| H[Auto-Archive]
-    G -->|No| I[Student View]
-    I --> J["Student Sees:<br/>- Date-wise Homework<br/>- Description<br/>- Attachment<br/>- Teacher Name"]
+# 5. Run the app
+flutter run
 ```
 
-### B. Attendance Marking Process
+### Environment Configuration
 
-```mermaid
-graph TD
-    A[Teacher Dashboard] --> B[Mark Attendance]
-    B --> C[Select Class/Section]
-    C --> D{A-Level?}
-    D -->|Yes| E[Select Subject]
-    D -->|No| F[Get All Students]
-    E --> F
-    F --> G[Display Student List]
-    G --> H["Mark Each Student<br/>P/A/L"]
-    H --> I[View Pie Chart Stats]
-    I --> J[Submit Attendance]
-    J --> K[Save to Server]
-    K --> L[Data Synced to Student Portal]
+The app currently uses the **Test API** by default:
+
+```dart
+// lib/utils/app_constants.dart
+static String baseUrl = apiTestBaseURL;  // ← Active
+static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
+static const String apiLiveBaseURL = "https://cityzenapi.csn.edu.pk";
 ```
 
-### C. Class Test Result Entry
+To switch to production, change `baseUrl` to `apiLiveBaseURL`, or use the `CITYZENS_ENV` flag:
 
-```mermaid
-graph TD
-    A[Teacher Dashboard] --> B[Class Test Results]
-    B --> C[Select Class/Section]
-    C --> D[Select Test: 1/2/3]
-    D --> E["Enter Student Marks<br/>- Subject-wise<br/>- Input Validation"]
-    E --> F[Form State Across Tabs]
-    F --> G["Submit Results<br/>with Feedback"]
-    G --> H[Data Saved to Server]
-    H --> I[Available to Students]
+```bash
+# Build test APK with environment flag
+make test-apk
+# Equivalent: flutter build apk --release --dart-define=CITYZENS_ENV=true
+```
+
+### Firebase Setup
+
+Firebase config files are expected at:
+- **Android**: `android/app/google-services.json`
+- **iOS**: `ios/Runner/GoogleService-Info.plist`
+- **Dart options**: `lib/firebase_options.dart` (auto-generated)
+
+Firebase Project ID: `thecityschoolapp`
+
+---
+
+## 🔨 Build & Release
+
+### Available `make` Commands
+
+| Command | Description |
+|---|---|
+| `make get` | `flutter pub get` |
+| `make clean` | Clean build + re-fetch dependencies |
+| `make generate` | Run `build_runner` for code generation |
+| `make watch` | Watch mode for code generation |
+| `make gen` | Generate asset references via `flutter_gen` |
+| `make apk` | Build release APK |
+| `make test-apk` | Build release APK with test environment flag |
+| `make appbundle` | Build release App Bundle (for Play Store) |
+| `make pod-install` | Install iOS CocoaPods |
+| `make reset-pod` | Delete Podfile.lock + reinstall |
+| `make reset-pod-cache` | Nuclear pod reset (clear cache + repo update) |
+| `make fast-pod` | Quick pod install (skip repo update) |
+| `make fix` | Auto-fix lints + format + sort imports |
+| `make git-config` | Display current git user config |
+
+### Release Builds
+
+```bash
+# Android APK
+flutter build apk --release
+
+# Android App Bundle (Play Store)
+flutter build appbundle --release
+
+# iOS (via Xcode)
+flutter build ios --release
+# Then open ios/Runner.xcworkspace in Xcode and archive
 ```
 
 ---
 
-## 📊 Key Statistics & Implementation Status
+## 🎨 Design System
 
-### Implemented Features ✅
-- Teacher Profile View
-- Timetable Creation (9×5 format)
-- Attendance Marking (P/A/L)
-- Mark Unidentified Students
-- Homework Upload
-- Classwork/Assignment Upload
-- Circular Creation
-- Class Test Results (up to 3 tests)
-- Eye on Your Child (Early Years)
-- Student Profile View
-- Attendance Tracking (with Calendar & Pie Chart)
-- Homework Viewing
-- Classwork Viewing
-- Term Results (from ERP)
-- Class Test Results Viewing
-- Fee Bill & Payment
-- Library Records
-- Timetable Viewing (Read-only)
-- Multi-Child Parent Support
+The app uses a premium, custom design system defined in `lib/utils/app_colors.dart`:
 
-### In Progress / Planned Features 🚀
-- Homework/Classwork/Circular View in Student Portal
-- Edit/Delete for Homework, Classwork, Circulars
-- Section Display in Teacher View
-- Appointment Booking System
-- Circular Notifications
-- Student Assignment Submission
-- Assignment Grading Interface
-- Withdrawal Request Processing
-- Complaint/Query Tracking
-- Second Timetable Format Support
-- Export/Print Functionality
-- Advanced Analytics & Reporting
+### Brand Colors
+
+| Token | Hex | Usage |
+|---|---|---|
+| `primaryBlue` | `#485CC7` | Primary brand, headers, active states |
+| `primaryDarkBlue` | `#303F9F` | Dark variant, gradients |
+| `goldenYellow` | `#F3CD50` | Secondary accent, badges, highlights |
+| `primaryDark` | `#1E2A6B` | Deep backgrounds |
+
+### Status Colors
+
+| Token | Hex | Usage |
+|---|---|---|
+| `success` / `successGreen` | `#10B981` / `#07CDA5` | Present, positive states |
+| `error` / `errorRed` | `#EF4444` / `#FF2B5F` | Absent, errors |
+| `warning` | `#F59E0B` | Leave, warnings |
+
+### Design Patterns
+
+- **Glassmorphism** — Used for dashboard profile cards and premium sections (`GlassmorphicCard`)
+- **Shimmer Loading** — Custom `DashboardShimmer` and `AttendanceShimmer` for skeleton screens
+- **Micro-Animations** — `animate_do` (FadeIn, FadeInDown, FadeInUp) throughout the app
+- **Gradient Cards** — `LinearGradient(primaryBlue → primaryDarkBlue)` for hero elements
+- **Pill Chips** — Rounded subject/status selectors with animated state changes
 
 ---
 
-## 🤝 Contributing
+## 🔒 Security
 
-We welcome contributions from the community. Please follow these guidelines:
+### Authentication
 
-1. **Fork the Repository**
-   ```bash
-   git clone https://github.com/yourusername/CityzensApp.git
-   ```
+| Layer | Implementation |
+|---|---|
+| **Login** | Username + Password → `LoginService` → Token returned |
+| **Session** | `TokenId` stored in `SharedPreferences` as JSON |
+| **Auto-Logout** | Invalid Access Key in API response triggers global logout |
+| **RBAC** | `AuthWrapper` routes users by `userType` field |
+| **Upgrade Guard** | `upgrader` package forces minimum app version |
 
-2. **Create a Feature Branch**
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
+### Network Security
 
-3. **Commit Your Changes**
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
+- All API calls over **HTTPS/TLS**
+- Authorization headers: `Bearer <tokenId>` (though currently some endpoints send `null` — known issue)
+- Custom exception handling for: `SocketException`, `FormatException`, `TimeoutException`
+- HTTP status code mapping to typed exceptions (400 → `BadRequestException`, 401 → `InvalidInputException`, etc.)
 
-4. **Push to Branch**
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
+### Local Data Security
 
-5. **Open a Pull Request**
-   - Provide clear description of changes
-   - Link any related issues
-   - Include testing evidence
-
-### Code Standards
-- Follow Dart naming conventions
-- Document complex logic with comments
-- Write unit tests for business logic
-- Use meaningful commit messages
-- Keep components modular and reusable
+- Login response (including `tokenId`) stored in `SharedPreferences`
+- Teacher profile data cached locally with key `teacherProfileData`
+- User images stored as local file paths
 
 ---
 
-## 📄 License
+## 🌐 API Architecture
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Base Configuration
+
+```
+Base URL (Test):  https://testcityzenapi.csn.edu.pk/api/
+Base URL (Live):  https://cityzenapi.csn.edu.pk/api/
+```
+
+### Request Pattern
+
+All API calls flow through `ApiBaseHelper`:
+
+```
+Screen → Provider → Service (static method) → ApiBaseHelper → HTTP → Parse Response → Update Provider → Notify UI
+```
+
+### Common Headers
+
+```json
+{
+  "Content-Type": "application/json; charset=UTF-8",
+  "Accept": "application/json",
+  "Authorization": "Bearer <tokenId>"
+}
+```
+
+### Key Endpoints (from observed logs)
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `GetSubjectsByStudentId` | POST | Fetch A-Level subject list for a student |
+| `GetMonthlyAttendance` | POST | Fetch monthly attendance for a subject |
+| Login endpoint | POST | Authenticate user and return token |
+| Various CRUD endpoints | POST | Homework, assignments, circulars, results |
+
+### Error Response Handling
+
+```
+200 → Return JSON
+400 → BadRequestException
+401 → InvalidInputException
+403 → UnAuthorizedException
+404 → FetchDataException
+500 → FetchDataException
+```
+
+---
+
+## 📊 Feature Status Matrix
+
+### Teacher Features
+
+| Feature | Status | Key Files |
+|---|---|---|
+| Dashboard | ✅ Complete | `teacher_dashboard_screen.dart` |
+| Mark Attendance | ✅ Complete | `mark_attendance_provider.dart` |
+| Mark Unidentified | ✅ Complete | `mark_unverified_provider.dart` |
+| Homework (Diary) | ✅ Complete | `diary_provider.dart` |
+| Classwork (Assignment) | ✅ Complete | `assignment_provider.dart` |
+| Circulars | ✅ Complete | `circular_provider.dart` |
+| Class Test Results | ✅ Complete | `class_test_result_provider.dart` |
+| Eye on Your Child | ✅ Complete | `eye_on_your_child_provider.dart` |
+| Timetable | ✅ Complete | `timetable_provider.dart` |
+| Profile | ✅ Complete | `teacher_profile_provider.dart` |
+| Academic Hub | ✅ Complete | `teacher_academic_hub_screen.dart` |
+| Surveys | ✅ Complete | `survey_provider.dart` |
+
+### Student Features
+
+| Feature | Status | Key Files |
+|---|---|---|
+| Dashboard | ✅ Complete | `student_dashboard_screen.dart` |
+| Profile | ✅ Complete | `student_profile_provider.dart` |
+| Attendance (Standard) | ✅ Complete | `student_attendance_provider.dart` |
+| Attendance (A-Level) | ✅ Complete | `student_alevel_attendance_provider.dart` |
+| Homework Diary | ✅ Complete | `diary_provider.dart` |
+| Assignments | ✅ Complete | `assignment_provider.dart` |
+| Term Results | ✅ Complete | `results_provider.dart` |
+| Class Test Results | ✅ Complete | `class_test_result_provider.dart` |
+| Fee & Payment | ✅ Complete | `feechallan_provider.dart` |
+| Library | ✅ Complete | `library_provider.dart` |
+| Timetable (Read-Only) | ✅ Complete | `timetable_provider.dart` |
+| School Events | ✅ Complete | `school_event_provider.dart` |
+| Surveys | ✅ Complete | `survey_provider.dart` |
+| Circular Viewing | 🚧 Partial | `notification_provider.dart` |
+
+### Parent Features
+
+| Feature | Status | Key Files |
+|---|---|---|
+| Multi-Child Selection | ✅ Complete | `student_dashboard_provider.dart` |
+| All Student Features | ✅ Complete | Shared with student portal |
+| Eye on Your Child | ✅ Complete | `eye_on_your_child_provider.dart` |
+| Profile Editing | ✅ Complete | `student_profile_provider.dart` |
+| Complaint & Query | ✅ Complete | `complaint_query_provider.dart` |
+| Appointment Booking | 🚧 In Progress | `appointment_provider.dart` |
+| Withdrawal Request | 🚧 In Progress | `withdrawal_request_provider.dart` |
 
 ---
 
 ## 📞 Support & Contact
 
-For support, feature requests, or bug reports:
-- **Email**: appsupport@csn.edu.pk
-- **GitHub Issues**: [Report Issues](https://github.com/tcsho/CityzensApp/issues)
-- **Documentation**: [Wiki](https://github.com/tcsho/CityzensApp/wiki)
+| Channel | Details |
+|---|---|
+| **Email** | appsupport@csn.edu.pk |
+| **GitHub Issues** | [Report Issues](https://github.com/tcsho/CityzensApp/issues) |
+| **App Store** | [iOS](https://apps.apple.com/us/app/cityzens/id1630070364) |
+| **Play Store** | [Android](https://play.google.com/store/apps/details?id=com.tcs.tcsapp) |
 
 ---
 
-## 🙏 Acknowledgments
-
-- Flutter & Dart communities
-- AIMS+ ERP system integration
-- School administrators and teachers for continuous feedback
-- All contributors who have helped improve the application
-
----
-
-**Last Updated**: 2026-02-27 | **Version**: 1.12.22 | **Status**: Active Development
+**Last Updated**: 2026-05-19 | **Version**: 1.13.3+88 | **Status**: Active Development

@@ -186,7 +186,7 @@ class CircularProvider with ChangeNotifier {
             await CircularAnnouncementService.updateAnnouncement(
               UpdateAnnouncementRequest(
                 tokenId: localDataProvider.userData!.tokenId,
-                id: existingRecord.id.toString(),
+                id: existingRecord.id,
                 subject:
                     titleController.text, // "Subject" field for Announcement
                 description: descriptionController.text,
@@ -318,6 +318,7 @@ class CircularProvider with ChangeNotifier {
     sectionResponse = TeacherSectionResponse();
     fileName = null;
     base64String = null;
+
     selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     // Do NOT notify — called from dispose(), widget tree may be locked.
   }
@@ -328,7 +329,7 @@ class CircularProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setAttachment(String name, String base64) {
+  void setAttachment(String name, String base64, [String? path]) {
     fileName = name;
     base64String = base64;
     notifyListeners();

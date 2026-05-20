@@ -1,0 +1,18 @@
+{
+  "graph": {
+    "colorGroups": [],
+    "collapse-display-text": false,
+    "collapse-color-groups": false,
+    "collapse-filter": false,
+    "search": "",
+    "showTags": false,
+    "showAttachments": false,
+    "showOrphans": true,
+    "collapse-forces": false,
+    "linkStrength": 1,
+    "repelStrength": 10,
+    "linkDistance": 250,
+    "centerStrength": 0.3,
+    "textFadeMultiplier": 0
+  }
+}
