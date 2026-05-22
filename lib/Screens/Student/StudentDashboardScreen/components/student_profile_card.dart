@@ -93,6 +93,7 @@ class StudentProfileCard extends StatelessWidget {
                                   studentName,
                                   className,
                                   branch,
+                                  studentId,
                                   white15,
                                   white10,
                                   whiteE6,
@@ -164,41 +165,96 @@ class StudentProfileCard extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          child: Row(
-            children: children.map((child) {
-              final isSelected = '${child.studentId}' == studentId;
-              return GestureDetector(
-                onTap: () {
-                  if (!isSelected) {
-                    HapticFeedback.lightImpact();
-                    localData.setStudentId('${child.studentId}');
-                    localData.setSGradeId(child.classId);
-                    provider.switchActiveChild('${child.studentId}');
-                  }
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(right: 12),
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: isSelected
-                          ? AppColors.goldenYellow
-                          : const Color(0x33FFFFFF),
-                      width: 2,
-                    ),
-                  ),
-                  child: CustomUserImage(
-                    userId: '${child.studentId}',
-                    imageSize: isSelected ? 44 : 36,
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: children.map((child) {
+            final isSelected = '${child.studentId}' == studentId;
+            final fullName = child.studentName ?? 'Student';
+            final shortName = fullName.split(' ').first.toUpperCase();
+
+            return GestureDetector(
+              onTap: () {
+                if (!isSelected) {
+                  HapticFeedback.lightImpact();
+                  localData.setStudentId('${child.studentId}');
+                  localData.setSGradeId(child.classId);
+                  provider.switchActiveChild('${child.studentId}');
+                }
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Colors.white.withValues(alpha: 0.15)
+                      : Colors.white.withValues(alpha: 0.03),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: isSelected
+                        ? AppColors.goldenYellow
+                        : Colors.white.withValues(alpha: 0.1),
+                    width: 1.5,
                   ),
                 ),
-              );
-            }).toList(),
-          ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: isSelected
+                              ? AppColors.goldenYellow
+                              : Colors.transparent,
+                          width: 1,
+                        ),
+                      ),
+                      child: ClipOval(
+                        child: CustomUserImage(
+                          userId: '${child.studentId}',
+                          imageSize: 32,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          shortName,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w900,
+                            color: isSelected
+                                ? Colors.white
+                                : Colors.white.withValues(alpha: 0.9),
+                            letterSpacing: 0.3,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          'ROLL NO: ${child.studentId}',
+                          style: TextStyle(
+                            fontSize: 8,
+                            fontWeight: FontWeight.w800,
+                            color: isSelected
+                                ? AppColors.goldenYellow
+                                : Colors.white.withValues(alpha: 0.5),
+                            letterSpacing: 0.2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
@@ -255,6 +311,7 @@ class StudentProfileCard extends StatelessWidget {
     String name,
     String className,
     String branch,
+    String studentId,
     Color detailsBg,
     Color detailsBorder,
     Color branchColor,
@@ -270,6 +327,27 @@ class StudentProfileCard extends StatelessWidget {
             color: Colors.white,
             letterSpacing: 0.5,
           ),
+        ),
+        const SizedBox(height: 4),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.badge_rounded,
+              size: 13,
+              color: Colors.white.withValues(alpha: 0.7),
+            ),
+            const SizedBox(width: 4),
+            Text(
+              'ROLL NO: $studentId',
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.white.withValues(alpha: 0.8),
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 6),
         Row(

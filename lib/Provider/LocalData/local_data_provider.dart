@@ -21,6 +21,9 @@ class LocalDataProvider with ChangeNotifier {
   String studentId = '';
   int? gradeId = 0;
 
+  final Map<String, String> _imagePaths = {};
+  Map<String, String> get imagePaths => _imagePaths;
+
   Future<LoginResponse> loadStoredData() async {
     String? localData = await AppLocalData.getStringPrefValue(
       key: AppConstants.userDataKey,
@@ -41,6 +44,14 @@ class LocalDataProvider with ChangeNotifier {
           );
         }
       }
+      // Preload image path for current user/student to eliminate startup visual flicker
+      final key = studentId.isNotEmpty ? studentId : '${userData!.userName}';
+      if (key.isNotEmpty) {
+        final path = await AppLocalData.getStringPrefValue(key: key);
+        if (path != null) {
+          _imagePaths[key] = path;
+        }
+      }
       notifyListeners();
     } else {
       userData = LoginResponse();
@@ -59,19 +70,31 @@ class LocalDataProvider with ChangeNotifier {
   }
 
   void setUserImage(File file) {
-    if (studentId.isNotEmpty) {
-      AppLocalData.setStringPrefValue(key: studentId, value: file.path);
-    } else {
-      AppLocalData.setStringPrefValue(
-        key: '${userData!.userName}',
-        value: file.path,
-      );
-    }
+    final key = studentId.isNotEmpty ? studentId : '${userData!.userName}';
+    AppLocalData.setStringPrefValue(key: key, value: file.path);
+    _imagePaths[key] = file.path;
     notifyListeners();
   }
 
-  Future<String?> loadImagePath(String userId) async =>
-      await AppLocalData.getStringPrefValue(key: userId);
+  Future<void> cacheImagePath(String userId) async {
+    if (_imagePaths.containsKey(userId)) return;
+    final path = await AppLocalData.getStringPrefValue(key: userId);
+    if (path != null) {
+      _imagePaths[userId] = path;
+      notifyListeners();
+    }
+  }
+
+  Future<String?> loadImagePath(String userId) async {
+    if (_imagePaths.containsKey(userId)) {
+      return _imagePaths[userId];
+    }
+    final path = await AppLocalData.getStringPrefValue(key: userId);
+    if (path != null) {
+      _imagePaths[userId] = path;
+    }
+    return path;
+  }
 
   Future logout(BuildContext context) async {
     DialogBuilder.showLoadingIndicator();

@@ -373,7 +373,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             icon: Icons.menu_book_rounded,
             title: hw?.subject ?? 'Homework',
             subtitle: hw?.description ?? 'No recent homework',
-            date: hw?.diaryDate ?? '',
+            date: HelperFunction.dateFormatter(
+              hw?.diaryDate ?? '',
+              format: 'dd-MMM-yyyy',
+            ),
             color: AppColors.primaryBlue,
             onTap: () =>
                 AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute),
@@ -383,7 +386,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             icon: Icons.assignment_rounded,
             title: assignment?.subject ?? 'Classwork',
             subtitle: assignment?.description ?? 'No recent assignments',
-            date: assignment?.classWorkDate ?? '',
+            date: HelperFunction.dateFormatter(
+              assignment?.classWorkDate ?? '',
+              format: 'dd-MMM-yyyy',
+            ),
             color: AppColors.goldenColors,
             onTap: () =>
                 AppNavigation.navigateTo(AppNavRoutes.studentAssignmentRoute),
@@ -393,7 +399,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             icon: Icons.campaign_rounded,
             title: 'Circular',
             subtitle: circular?.notifySubject ?? 'No new circulars',
-            date: circular?.generatedOn ?? '',
+            date: HelperFunction.dateFormatter(
+              circular?.generatedOn ?? '',
+              format: 'dd-MMM-yyyy',
+            ),
             color: AppColors.successGreen,
             onTap: () =>
                 AppNavigation.navigateTo(AppNavRoutes.notificationsRoute),
@@ -431,6 +440,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title.toUpperCase(),
