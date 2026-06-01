@@ -40,17 +40,17 @@ dependencies:
   percent_indicator: ^4.2.5
   url_launcher: ^6.3.2
   http: ^1.6.0
-  image_picker: ^1.2.1
-  image_cropper: ^12.2.0
+  image_picker: ^1.2.2
+  image_cropper: ^12.2.1
   flutter_linkify: ^6.0.0
-  fluttertoast: ^9.0.0
+  fluttertoast: ^9.1.0
   flutter_masked_text2: ^0.9.1
-  firebase_core: ^4.7.0
-  firebase_messaging: ^16.2.0
-  firebase_crashlytics: ^5.2.0
-  firebase_remote_config: ^6.4.0
-  firebase_analytics: ^12.3.0
-  cloud_firestore: ^6.3.0
+  firebase_core: ^4.9.0
+  firebase_messaging: ^16.2.2
+  firebase_crashlytics: ^5.2.2
+  firebase_remote_config: ^6.5.1
+  firebase_analytics: ^12.4.1
+  cloud_firestore: ^6.4.1
   # launch_review: ^3.0.1
   provider: ^6.1.5+1
   flutter_spinkit: ^5.2.2
@@ -67,9 +67,9 @@ dependencies:
   file_picker: ^11.0.2
   open_file: ^3.5.11
   cached_network_image: ^3.4.1
-  upgrader: ^13.1.0
+  upgrader: ^13.4.0
   animate_do: ^5.1.0
-  json_annotation: ^4.11.0
+  json_annotation: ^4.12.0
   freezed_annotation: ^3.1.0
   flutter_email_sender: ^8.0.0
   lottie: ^3.3.3
@@ -78,8 +78,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.14.1
-  json_serializable: ^6.13.1
+  build_runner: ^2.15.0
+  json_serializable: ^6.14.0
   freezed: ^3.2.5
   flutter_gen: ^5.14.1
 

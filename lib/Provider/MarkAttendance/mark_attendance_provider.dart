@@ -6,6 +6,7 @@ import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_s
 import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/model/SectionSubject/section_subject_response.dart';
+import 'package:tcs_app/provider/Dashboard/dashboard_provider.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/routes/app_navigation_routes.dart';
@@ -417,5 +418,59 @@ class MarkAttendanceProvider with ChangeNotifier {
     saveAttendanceResponse = ResponseMessage();
     studentListResponse = StudentListResponse();
     pieData = [];
+  }
+
+  Future<void> selectSection(Section s, DashboardProvider dashboard) async {
+    if (sectionId == s.classSectionId) return;
+    sectionId = s.classSectionId;
+    classId = s.classId;
+    sectionController.text = s.name ?? '';
+    subjectId = 0;
+    subjectController.clear();
+
+    // 1. Resolve and select subjects from local cache instantly
+    final localSubjects = dashboard.getSubjectsForSection(
+      classSectionId: sectionId ?? 0,
+      isDiary: false,
+    );
+    if (localSubjects != null && localSubjects.isNotEmpty) {
+      subjects = List.generate(
+        localSubjects.length,
+        (index) => Options(
+          title: localSubjects[index].subjectName!,
+          value: localSubjects[index].subjectId!,
+        ),
+      );
+      if (classId == 19 || classId == 20) {
+        subjectId = localSubjects[0].subjectId ?? 0;
+        subjectController.text = localSubjects[0].subjectName ?? '';
+      }
+    } else {
+      subjects = [];
+    }
+
+    // Notify listeners instantly so the selection and its subjects appear in 0ms
+    notifyListeners();
+
+    // 2. Perform background network sync in a non-blocking fashion
+    if (classId == 19 || classId == 20) {
+      try {
+        SectionSubjectService.getSubjectsRequest(
+          classSectionId: '$sectionId',
+          teacherId: localDataProvider.userData!.userName!,
+          token: localDataProvider.userData!.tokenId!,
+        ).then((response) {
+          subjectResponse = response;
+          subjects = List.generate(
+            subjectResponse.sectionSubject!.length,
+            (index) => Options(
+              title: subjectResponse.sectionSubject![index].subjectName!,
+              value: subjectResponse.sectionSubject![index].subjectId!,
+            ),
+          );
+          notifyListeners();
+        });
+      } catch (_) {}
+    }
   }
 }

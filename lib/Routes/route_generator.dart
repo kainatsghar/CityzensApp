@@ -10,10 +10,9 @@ import 'package:tcs_app/screens/Parent/ChallanPaymentScreen/challan_payment_scre
 import 'package:tcs_app/screens/Parent/WithdrawalRequestScreen/withdrawal_request_screen.dart';
 import 'package:tcs_app/screens/Promotion/promotion_screen_ui.dart';
 import 'package:tcs_app/screens/SplashScreen/splash_screen_ui.dart';
-import 'package:tcs_app/screens/Student/StudentAssignmentScreen/student_assignment_screen.dart';
 import 'package:tcs_app/screens/Student/StudentAttendanceScreen/student_alevel_attendance_screen.dart';
 import 'package:tcs_app/screens/Student/StudentClassTestResultScreen/student_class_result_screen.dart';
-import 'package:tcs_app/screens/Student/StudentDiaryScreen/student_diary_screen.dart';
+import 'package:tcs_app/screens/Student/StudentAcademicHubScreen/student_academic_hub_screen.dart';
 import 'package:tcs_app/screens/Student/StudentSchoolEventScreen/student_school_event_screen.dart';
 import 'package:tcs_app/screens/Teacher/AddAssignmentScreen/add_assignment_screen.dart';
 import 'package:tcs_app/screens/Teacher/AddCircularScreen/add_circular_screen.dart';
@@ -140,7 +139,17 @@ class RouteGenerator {
       case AppNavRoutes.teacherDiaryRoute:
         return routeScreen(child: const TeacherDiaryScreen());
       case AppNavRoutes.studentDiaryRoute:
-        return routeScreen(child: const StudentDiaryScreen());
+        return routeScreen(
+          child: const StudentAcademicHubScreen(initialTabIndex: 0),
+        );
+      case AppNavRoutes.studentAcademicHubRoute:
+        return routeScreen(
+          child: StudentAcademicHubScreen(
+            initialTabIndex: settings.arguments is int
+                ? settings.arguments as int
+                : 0,
+          ),
+        );
       case AppNavRoutes.challanPaymentRoute:
         return routeScreen(
           child: ChallanPaymentScreen(
@@ -150,7 +159,9 @@ class RouteGenerator {
       case AppNavRoutes.introductionRoute:
         return routeScreen(child: const IntroductionScreenPage());
       case AppNavRoutes.studentAssignmentRoute:
-        return routeScreen(child: const StudentAssignmentScreen());
+        return routeScreen(
+          child: const StudentAcademicHubScreen(initialTabIndex: 1),
+        );
       case AppNavRoutes.studentSchoolEventsRoute:
         return routeScreen(child: const StudentSchoolEventScreen());
       case AppNavRoutes.addSchoolEventRoute:

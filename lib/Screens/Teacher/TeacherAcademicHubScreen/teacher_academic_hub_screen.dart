@@ -50,7 +50,7 @@ class _TeacherAcademicHubScreenState extends State<TeacherAcademicHubScreen>
       initialIndex: widget.initialTabIndex.clamp(0, 2),
     );
 
-    // Load all three data sets in parallel
+    // Load all three data sets in parallel (reusing cached values if present)
     _diaryProvider = Provider.of<DiaryProvider>(context, listen: false);
     _assignmentProvider = Provider.of<AssignmentProvider>(
       context,
@@ -58,20 +58,28 @@ class _TeacherAcademicHubScreenState extends State<TeacherAcademicHubScreen>
     );
     _circularProvider = Provider.of<CircularProvider>(context, listen: false);
 
-    _diaryFuture = _diaryProvider.loadTeacherDiary();
-    _assignmentFuture = _assignmentProvider.loadTeacherAssignment();
-    _circularFuture = _circularProvider.loadTeacherCircular();
+    _diaryFuture = _diaryProvider.diaryResponse != null
+        ? Future.value(_diaryProvider.diaryResponse)
+        : _diaryProvider.loadTeacherDiary();
+    _assignmentFuture = _assignmentProvider.assignmentResponse != null
+        ? Future.value(_assignmentProvider.assignmentResponse)
+        : _assignmentProvider.loadTeacherAssignment();
+    _circularFuture = _circularProvider.circularResponse != null
+        ? Future.value(_circularProvider.circularResponse)
+        : _circularProvider.loadTeacherCircular();
+  }
+
+  Future<void> _refreshData() async {
+    setState(() {
+      _diaryFuture = _diaryProvider.loadTeacherDiary();
+      _assignmentFuture = _assignmentProvider.loadTeacherAssignment();
+      _circularFuture = _circularProvider.loadTeacherCircular();
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-
-    // Clear provider data on exit
-    _diaryProvider.clearLibraryData();
-    _assignmentProvider.clearLibraryData();
-    _circularProvider.clearLibraryData();
-
     super.dispose();
   }
 
@@ -79,7 +87,22 @@ class _TeacherAcademicHubScreenState extends State<TeacherAcademicHubScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.ultraLightGrey,
-      appBar: const CustomAppBar(title: 'ACADEMICS'),
+      appBar: CustomAppBar(
+        title: 'ACADEMICS',
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: IconButton(
+              icon: const Icon(
+                Icons.refresh_rounded,
+                color: AppColors.primaryBlue,
+              ),
+              tooltip: 'Refresh',
+              onPressed: _refreshData,
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           // ── Tab Bar ─────────────────────────────────────────────

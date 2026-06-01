@@ -379,7 +379,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             ),
             color: AppColors.primaryBlue,
             onTap: () =>
-                AppNavigation.navigateTo(AppNavRoutes.studentDiaryRoute),
+                AppNavigation.navigateTo(AppNavRoutes.studentAcademicHubRoute, arguments: 0),
           ),
           const Divider(height: 24),
           _buildUpdateItem(
@@ -392,7 +392,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             ),
             color: AppColors.goldenColors,
             onTap: () =>
-                AppNavigation.navigateTo(AppNavRoutes.studentAssignmentRoute),
+                AppNavigation.navigateTo(AppNavRoutes.studentAcademicHubRoute, arguments: 1),
           ),
           const Divider(height: 24),
           _buildUpdateItem(
@@ -405,7 +405,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             ),
             color: AppColors.successGreen,
             onTap: () =>
-                AppNavigation.navigateTo(AppNavRoutes.notificationsRoute),
+                AppNavigation.navigateTo(AppNavRoutes.studentAcademicHubRoute, arguments: 2),
           ),
         ],
       ),

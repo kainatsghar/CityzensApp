@@ -122,202 +122,177 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
               ),
               child: Stack(
                 children: [
-                  Consumer3<
-                    DashboardProvider,
-                    MarkAttendanceProvider,
-                    ClassTestResultProvider
-                  >(
-                    builder:
-                        (
-                          context,
-                          dashboardValue,
-                          attendanceValue,
-                          classTestValue,
-                          _,
-                        ) {
-                          // Show shimmer while loading
-                          if (dashboardValue.isDashboardDataLoading) {
-                            return const CustomScrollView(
-                              physics: NeverScrollableScrollPhysics(),
-                              slivers: [
-                                SliverToBoxAdapter(child: SizedBox(height: 60)),
-                                SliverPadding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 16.0,
-                                  ),
-                                  sliver: SliverToBoxAdapter(
-                                    child: DashboardShimmer(itemCount: 6),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-
-                          final hasClassSections =
-                              dashboardValue.diaryFalseSectionsResponse !=
-                                  null &&
-                              dashboardValue
-                                      .diaryFalseSectionsResponse!
-                                      .section !=
-                                  null &&
-                              dashboardValue
-                                  .diaryFalseSectionsResponse!
-                                  .section!
-                                  .isNotEmpty;
-
-                          final hasSubjectSections =
-                              dashboardValue
-                                  .getSectionsWithDiary(true)
-                                  ?.isNotEmpty ??
-                              false;
-
-                          // Show actual content when loaded
-                          return RefreshIndicator(
-                            onRefresh: () =>
-                                dashboardValue.refreshDashboardData(),
-                            color: AppColors.primaryBlue,
-                            displacement: 60,
-                            child: CustomScrollView(
-                              controller: _scrollController,
-                              physics: const AlwaysScrollableScrollPhysics(
-                                parent: BouncingScrollPhysics(),
+                  Consumer<DashboardProvider>(
+                    builder: (context, dashboardValue, _) {
+                      // Show shimmer while loading
+                      if (dashboardValue.isDashboardDataLoading) {
+                        return const CustomScrollView(
+                          physics: NeverScrollableScrollPhysics(),
+                          slivers: [
+                            SliverToBoxAdapter(child: SizedBox(height: 60)),
+                            SliverPadding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              sliver: SliverToBoxAdapter(
+                                child: DashboardShimmer(itemCount: 6),
                               ),
-                              slivers: [
-                                // Premium Sliver App Bar
-                                ValueListenableBuilder<double>(
-                                  valueListenable: _appBarOpacityNotifier,
-                                  builder: (context, opacity, _) {
-                                    return SliverAppBar(
-                                      expandedHeight: 75,
-                                      backgroundColor: AppColors.whiteColor
-                                          .withValues(
-                                            alpha: opacity.clamp(0.0, 0.95),
-                                          ),
-                                      surfaceTintColor: Colors.transparent,
-                                      elevation: 0,
-                                      pinned: true,
-                                      centerTitle: false,
-                                      systemOverlayStyle: SystemUiOverlayStyle
-                                          .dark
-                                          .copyWith(
-                                            statusBarColor: Colors.transparent,
-                                          ),
-                                      leading: Builder(
-                                        builder: (BuildContext context) {
-                                          return IconButton(
-                                            icon: const Icon(
-                                              Icons.menu_rounded,
-                                              color: AppColors.primaryDarkBlue,
-                                            ),
-                                            onPressed: () => Scaffold.of(
-                                              context,
-                                            ).openDrawer(),
-                                            tooltip: MaterialLocalizations.of(
-                                              context,
-                                            ).openAppDrawerTooltip,
-                                          );
-                                        },
-                                      ),
-                                      title: LayoutBuilder(
-                                        builder: (context, constraints) {
-                                          return FadeIn(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  HelperFunction.getGreeting(),
-                                                  style: const TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  teacherName,
-                                                  style: const TextStyle(
-                                                    color: AppColors
-                                                        .primaryDarkBlue,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    letterSpacing: -0.5,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-
-                                // Teacher Profile Card
-                                SliverToBoxAdapter(
-                                  child: Column(
-                                    children: [
-                                      TeacherProfileCard(
-                                        isMale:
-                                            dashboardValue
-                                                    .teacherProfileProvider
-                                                    .profileResponse !=
-                                                null &&
-                                            dashboardValue
-                                                .teacherProfileProvider
-                                                .profileResponse!
-                                                .isMale,
-                                        onTap: () => AppNavigation.navigateTo(
-                                          AppNavRoutes.teacherProfileRoute,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16),
-                                    ],
-                                  ),
-                                ),
-
-                                // Class Teacher Hub
-                                if (hasClassSections)
-                                  SliverToBoxAdapter(
-                                    child: _buildClassTeacherHub(
-                                      dashboardValue,
-                                      attendanceValue,
-                                    ),
-                                  ),
-
-                                // Academic Content Hub (HW/CW/Circulars)
-                                if (hasSubjectSections)
-                                  SliverToBoxAdapter(
-                                    child: _buildAcademicContentHub(),
-                                  ),
-
-                                // Subject Teacher Hub (Results)
-                                if (hasSubjectSections)
-                                  SliverToBoxAdapter(
-                                    child: _buildSubjectTeacherHub(
-                                      dashboardValue,
-                                      classTestValue,
-                                    ),
-                                  ),
-
-                                // Quick Services Hub
-                                // SliverToBoxAdapter(
-                                //   child: FadeInUp(
-                                //     duration: const Duration(milliseconds: 500),
-                                //     delay: const Duration(milliseconds: 300),
-                                //     child: _buildQuickServicesHub(),
-                                //   ),
-                                // ),
-
-                                // Bottom padding
-                                const SliverToBoxAdapter(
-                                  child: SizedBox(height: 40),
-                                ),
-                              ],
                             ),
-                          );
-                        },
+                          ],
+                        );
+                      }
+
+                      final hasClassSections =
+                          dashboardValue.diaryFalseSectionsResponse != null &&
+                          dashboardValue.diaryFalseSectionsResponse!.section !=
+                              null &&
+                          dashboardValue
+                              .diaryFalseSectionsResponse!
+                              .section!
+                              .isNotEmpty;
+
+                      final hasSubjectSections =
+                          dashboardValue
+                              .getSectionsWithDiary(true)
+                              ?.isNotEmpty ??
+                          false;
+
+                      // Show actual content when loaded
+                      return RefreshIndicator(
+                        onRefresh: () => dashboardValue.refreshDashboardData(),
+                        color: AppColors.primaryBlue,
+                        displacement: 60,
+                        child: CustomScrollView(
+                          controller: _scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(
+                            parent: BouncingScrollPhysics(),
+                          ),
+                          slivers: [
+                            // Premium Sliver App Bar
+                            ValueListenableBuilder<double>(
+                              valueListenable: _appBarOpacityNotifier,
+                              builder: (context, opacity, _) {
+                                return SliverAppBar(
+                                  expandedHeight: 75,
+                                  backgroundColor: AppColors.whiteColor
+                                      .withValues(
+                                        alpha: opacity.clamp(0.0, 0.95),
+                                      ),
+                                  surfaceTintColor: Colors.transparent,
+                                  elevation: 0,
+                                  pinned: true,
+                                  centerTitle: false,
+                                  systemOverlayStyle: SystemUiOverlayStyle.dark
+                                      .copyWith(
+                                        statusBarColor: Colors.transparent,
+                                      ),
+                                  leading: Builder(
+                                    builder: (BuildContext context) {
+                                      return IconButton(
+                                        icon: const Icon(
+                                          Icons.menu_rounded,
+                                          color: AppColors.primaryDarkBlue,
+                                        ),
+                                        onPressed: () =>
+                                            Scaffold.of(context).openDrawer(),
+                                        tooltip: MaterialLocalizations.of(
+                                          context,
+                                        ).openAppDrawerTooltip,
+                                      );
+                                    },
+                                  ),
+                                  title: LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      return FadeIn(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              HelperFunction.getGreeting(),
+                                              style: const TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Text(
+                                              teacherName,
+                                              style: const TextStyle(
+                                                color:
+                                                    AppColors.primaryDarkBlue,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: -0.5,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+
+                            // Teacher Profile Card
+                            SliverToBoxAdapter(
+                              child: Column(
+                                children: [
+                                  TeacherProfileCard(
+                                    isMale:
+                                        dashboardValue
+                                                .teacherProfileProvider
+                                                .profileResponse !=
+                                            null &&
+                                        dashboardValue
+                                            .teacherProfileProvider
+                                            .profileResponse!
+                                            .isMale,
+                                    onTap: () => AppNavigation.navigateTo(
+                                      AppNavRoutes.teacherProfileRoute,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                ],
+                              ),
+                            ),
+
+                            // Class Teacher Hub
+                            if (hasClassSections)
+                              SliverToBoxAdapter(
+                                child: _buildClassTeacherHub(dashboardValue),
+                              ),
+
+                            // Academic Content Hub (HW/CW/Circulars)
+                            if (hasSubjectSections)
+                              SliverToBoxAdapter(
+                                child: _buildAcademicContentHub(),
+                              ),
+
+                            // Subject Teacher Hub (Results)
+                            if (hasSubjectSections)
+                              SliverToBoxAdapter(
+                                child: _buildSubjectTeacherHub(dashboardValue),
+                              ),
+
+                            // Quick Services Hub
+                            // SliverToBoxAdapter(
+                            //   child: FadeInUp(
+                            //     duration: const Duration(milliseconds: 500),
+                            //     delay: const Duration(milliseconds: 300),
+                            //     child: _buildQuickServicesHub(),
+                            //   ),
+                            // ),
+
+                            // Bottom padding
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 40),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -332,328 +307,338 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
 
   // ── Smart Hub Components ───────────────────────────────────────
 
-  Widget _buildClassTeacherHub(
-    DashboardProvider dashboard,
-    MarkAttendanceProvider attendance,
-  ) {
-    final sections = dashboard.getSectionsWithDiary(false) ?? [];
-    if (sections.isEmpty) return const SizedBox.shrink();
+  Widget _buildClassTeacherHub(DashboardProvider dashboard) {
+    return Consumer<MarkAttendanceProvider>(
+      builder: (context, attendance, _) {
+        final sections = dashboard.getSectionsWithDiary(false) ?? [];
+        if (sections.isEmpty) return const SizedBox.shrink();
 
-    // Auto-select first section if none selected
-    if (attendance.sectionController.text.isEmpty && sections.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        _selectClassTeacherSection(sections.first, attendance, dashboard);
-      });
-    }
+        // Auto-select first section if none selected
+        if (attendance.sectionController.text.isEmpty && sections.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            _selectClassTeacherSection(sections.first, attendance, dashboard);
+          });
+        }
 
-    bool isALevel = attendance.classId == 19 || attendance.classId == 20;
-    List<SectionSubject>? subjects = isALevel
-        ? dashboard.getSubjectsForSection(
-            classSectionId: attendance.sectionId ?? 0,
-            isDiary: false,
-          )
-        : null;
+        bool isALevel = attendance.classId == 19 || attendance.classId == 20;
+        List<SectionSubject>? subjects = isALevel
+            ? dashboard.getSubjectsForSection(
+                classSectionId: attendance.sectionId ?? 0,
+                isDiary: false,
+              )
+            : null;
 
-    // Auto-select first subject if none selected
-    if (isALevel &&
-        subjects != null &&
-        subjects.isNotEmpty &&
-        attendance.subjectController.text.isEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        attendance.setSubjectId(
-          subjects.first.subjectId,
-          subjects.first.subjectName,
+        // Auto-select first subject if none selected
+        if (isALevel &&
+            subjects != null &&
+            subjects.isNotEmpty &&
+            attendance.subjectController.text.isEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            attendance.setSubjectId(
+              subjects.first.subjectId,
+              subjects.first.subjectName,
+            );
+          });
+        }
+
+        final localValue = Provider.of<LocalDataProvider>(
+          context,
+          listen: false,
         );
-      });
-    }
+        final gradeId = localValue.userData?.info?.gradeId?.toString() ?? '';
+        final localGradeId = localValue.gradeId?.toString() ?? '';
+        bool showEyeOnYourChild =
+            gradeId == '2' ||
+            gradeId == '3' ||
+            gradeId == '4' ||
+            localGradeId == '2' ||
+            localGradeId == '3' ||
+            localGradeId == '4';
 
-    final localValue = Provider.of<LocalDataProvider>(context, listen: false);
-    final gradeId = localValue.userData?.info?.gradeId?.toString() ?? '';
-    final localGradeId = localValue.gradeId?.toString() ?? '';
-    bool showEyeOnYourChild =
-        gradeId == '2' ||
-        gradeId == '3' ||
-        gradeId == '4' ||
-        localGradeId == '2' ||
-        localGradeId == '3' ||
-        localGradeId == '4';
+        final String formattedDate = DateFormat(
+          'EEEE, d MMMM yyyy',
+        ).format(DateTime.now());
 
-    final String formattedDate = DateFormat(
-      'EEEE, d MMMM yyyy',
-    ).format(DateTime.now());
-
-    return _buildDashboardCard(
-      title: 'Class Teacher',
-      accentColor: AppColors.primaryBlue,
-      icon: Icons.assignment_ind_rounded,
-      backgroundColor: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Compact Context Selection
-          Row(
+        return _buildDashboardCard(
+          title: 'Class Teacher',
+          accentColor: AppColors.primaryBlue,
+          icon: Icons.assignment_ind_rounded,
+          backgroundColor: Colors.white,
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
+              // Compact Context Selection
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'TARGET SECTION',
+                          style: TextStyle(
+                            color: AppColors.softGreyText,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 10,
+                            letterSpacing: 1.1,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        _buildWrapChips<Section>(
+                          items: sections,
+                          selectedItemName: attendance.sectionController.text,
+                          getDisplayText: (s) => s.name ?? 'N/A',
+                          onSelected: (s) => _selectClassTeacherSection(
+                            s,
+                            attendance,
+                            dashboard,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              if (subjects != null && subjects.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'TARGET SECTION',
-                      style: TextStyle(
-                        color: AppColors.softGreyText,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 10,
-                        letterSpacing: 1.1,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    _buildWrapChips<Section>(
-                      items: sections,
-                      selectedItemName: attendance.sectionController.text,
-                      getDisplayText: (s) => s.name ?? 'N/A',
-                      onSelected: (s) =>
-                          _selectClassTeacherSection(s, attendance, dashboard),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          if (subjects != null && subjects.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'SUBJECT AREA',
-                        style: TextStyle(
-                          color: AppColors.softGreyText,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 10,
-                          letterSpacing: 1.1,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      _buildWrapChips<SectionSubject>(
-                        items: subjects,
-                        selectedItemName: attendance.subjectController.text,
-                        getDisplayText: (s) => s.subjectName ?? 'N/A',
-                        onSelected: (s) =>
-                            attendance.setSubjectId(s.subjectId, s.subjectName),
-                        isSubject: true,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-
-          const SizedBox(height: 12),
-          const Divider(height: 1, color: Colors.black12),
-          const SizedBox(height: 16),
-
-          // Hero Action: Today's Attendance
-          Material(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(20),
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-              onTap: () {
-                attendance.setSelectedDate(DateTime.now());
-                _handleSmartNavigation(
-                  attendance,
-                  null,
-                  AppNavRoutes.markAttendanceRoute,
-                  requiresSubject: true,
-                  isDiaryTrueFlow: false,
-                );
-              },
-              borderRadius: BorderRadius.circular(20),
-              child: Ink(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 18,
-                  horizontal: 20,
-                ),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppColors.primary, AppColors.primaryDarkBlue],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primaryDarkBlue.withValues(alpha: 0.3),
-                      blurRadius: 15,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.25),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons
-                            .how_to_reg_rounded, // Premium registration/marking icon
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            formattedDate.toUpperCase(),
+                          const Text(
+                            'SUBJECT AREA',
                             style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.8),
+                              color: AppColors.softGreyText,
                               fontWeight: FontWeight.w800,
                               fontSize: 10,
                               letterSpacing: 1.1,
                             ),
                           ),
-                          const SizedBox(height: 2),
-                          const Text(
-                            "MARK ATTENDANCE",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18,
-                              letterSpacing: 0.5,
+                          const SizedBox(height: 8),
+                          _buildWrapChips<SectionSubject>(
+                            items: subjects,
+                            selectedItemName: attendance.subjectController.text,
+                            getDisplayText: (s) => s.subjectName ?? 'N/A',
+                            onSelected: (s) => attendance.setSubjectId(
+                              s.subjectId,
+                              s.subjectName,
                             ),
+                            isSubject: true,
                           ),
                         ],
                       ),
                     ),
-                    const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.white,
-                      size: 18,
-                    ),
                   ],
                 ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
+              ],
 
-          // Secondary Actions Grid
-          Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildActionTile(
-                      title: 'Past Attendance',
-                      icon: Icons.history_rounded,
-                      color: AppColors.primaryDarkBlue,
-                      onTap: () async {
-                        final selectedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now().subtract(
-                            const Duration(days: 1),
+              const SizedBox(height: 12),
+              const Divider(height: 1, color: Colors.black12),
+              const SizedBox(height: 16),
+
+              // Hero Action: Today's Attendance
+              Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    attendance.setSelectedDate(DateTime.now());
+                    _handleSmartNavigation(
+                      attendance,
+                      null,
+                      AppNavRoutes.markAttendanceRoute,
+                      requiresSubject: true,
+                      isDiaryTrueFlow: false,
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  child: Ink(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 18,
+                      horizontal: 20,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [AppColors.primary, AppColors.primaryDarkBlue],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primaryDarkBlue.withValues(
+                            alpha: 0.3,
                           ),
-                          firstDate: DateTime(2026),
-                          lastDate: DateTime.now(),
-                          builder: (context, child) {
-                            return Theme(
-                              data: Theme.of(context).copyWith(
-                                colorScheme: const ColorScheme.light(
-                                  primary: AppColors.primaryDarkBlue,
+                          blurRadius: 15,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.25),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.how_to_reg_rounded,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                formattedDate.toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.white.withValues(alpha: 0.8),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 10,
+                                  letterSpacing: 1.1,
                                 ),
                               ),
-                              child: child!,
+                              const SizedBox(height: 2),
+                              const Text(
+                                "MARK ATTENDANCE",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 18,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Secondary Actions Grid
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildActionTile(
+                          title: 'Past Attendance',
+                          icon: Icons.history_rounded,
+                          color: AppColors.primaryDarkBlue,
+                          onTap: () async {
+                            final selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now().subtract(
+                                const Duration(days: 1),
+                              ),
+                              firstDate: DateTime(2026),
+                              lastDate: DateTime.now(),
+                              builder: (context, child) {
+                                return Theme(
+                                  data: Theme.of(context).copyWith(
+                                    colorScheme: const ColorScheme.light(
+                                      primary: AppColors.primaryDarkBlue,
+                                    ),
+                                  ),
+                                  child: child!,
+                                );
+                              },
+                            );
+                            if (selectedDate != null) {
+                              attendance.setSelectedDate(selectedDate);
+                              _handleSmartNavigation(
+                                attendance,
+                                null,
+                                AppNavRoutes.markAttendanceRoute,
+                                requiresSubject: true,
+                                isDiaryTrueFlow: false,
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildActionTile(
+                          title: 'Unidentified',
+                          icon: Icons.person_search_rounded,
+                          color: AppColors.errorRed,
+                          onTap: () => AppNavigation.navigateTo(
+                            AppNavRoutes.markUnidentifiedRoute,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildActionTile(
+                          title: 'Timetable',
+                          icon: Icons.calendar_today_outlined,
+                          color: AppColors.tertiaryDark,
+                          onTap: () {
+                            final ttProvider = Provider.of<TimeTableProvider>(
+                              context,
+                              listen: false,
+                            );
+                            ttProvider.setSectionId(attendance.sectionId);
+                            ttProvider.setClassId(attendance.classId);
+                            ttProvider.sectionController.text =
+                                attendance.sectionController.text;
+
+                            _handleSmartNavigation(
+                              attendance,
+                              null,
+                              AppNavRoutes.teacherTimeTableRoute,
+                              requiresSubject: false,
+                              isDiaryTrueFlow: false,
                             );
                           },
-                        );
-                        if (selectedDate != null) {
-                          attendance.setSelectedDate(selectedDate);
-                          _handleSmartNavigation(
-                            attendance,
-                            null,
-                            AppNavRoutes.markAttendanceRoute,
-                            requiresSubject: true,
-                            isDiaryTrueFlow: false,
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildActionTile(
-                      title: 'Unidentified',
-                      icon: Icons.person_search_rounded,
-                      color: AppColors.errorRed,
-                      onTap: () => AppNavigation.navigateTo(
-                        AppNavRoutes.markUnidentifiedRoute,
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildActionTile(
-                      title: 'Timetable',
-                      icon: Icons.calendar_today_outlined,
-                      color: AppColors.tertiaryDark,
-                      onTap: () {
-                        final ttProvider = Provider.of<TimeTableProvider>(
-                          context,
-                          listen: false,
-                        );
-                        ttProvider.setSectionId(attendance.sectionId);
-                        ttProvider.setClassId(attendance.classId);
-                        ttProvider.sectionController.text =
-                            attendance.sectionController.text;
-
-                        _handleSmartNavigation(
-                          attendance,
-                          null,
-                          AppNavRoutes.teacherTimeTableRoute,
-                          requiresSubject: false,
-                          isDiaryTrueFlow: false,
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: showEyeOnYourChild
-                        ? _buildActionTile(
-                            title: 'Eye On Child',
-                            icon: Icons.visibility_outlined,
-                            color: AppColors.purpleColor,
-                            onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.eyeOnYourChildRoute,
-                            ),
-                          )
-                        : const SizedBox(),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: showEyeOnYourChild
+                            ? _buildActionTile(
+                                title: 'Eye On Child',
+                                icon: Icons.visibility_outlined,
+                                color: AppColors.purpleColor,
+                                onTap: () => AppNavigation.navigateTo(
+                                  AppNavRoutes.eyeOnYourChildRoute,
+                                ),
+                              )
+                            : const SizedBox(),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -774,115 +759,116 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
     );
   }
 
-  Widget _buildSubjectTeacherHub(
-    DashboardProvider dashboard,
-    ClassTestResultProvider classTest,
-  ) {
-    final sections = dashboard.getSectionsWithDiary(true) ?? [];
-    if (sections.isEmpty) return const SizedBox.shrink();
+  Widget _buildSubjectTeacherHub(DashboardProvider dashboard) {
+    return Consumer<ClassTestResultProvider>(
+      builder: (context, classTest, _) {
+        final sections = dashboard.getSectionsWithDiary(true) ?? [];
+        if (sections.isEmpty) return const SizedBox.shrink();
 
-    if (classTest.sectionController.text.isEmpty && sections.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        _selectSubjectTeacherSection(sections.first, classTest, dashboard);
-      });
-    }
+        if (classTest.sectionController.text.isEmpty && sections.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            _selectSubjectTeacherSection(sections.first, classTest, dashboard);
+          });
+        }
 
-    final subjects = dashboard.getSubjectsForSection(
-      classSectionId: classTest.sectionId ?? 0,
-      isDiary: true,
-    );
+        final subjects = dashboard.getSubjectsForSection(
+          classSectionId: classTest.sectionId ?? 0,
+          isDiary: true,
+        );
 
-    return _buildDashboardCard(
-      title: 'Class Test Results',
-      accentColor: AppColors.primaryBlue, // Unified to primaryBlue
-      icon: Icons.analytics_rounded,
-      backgroundColor: Colors.white, // Clean white background
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Sections Selector
-          const _SelectionLabel(text: 'TARGET SECTION'),
-          const SizedBox(height: 8),
-          _buildWrapChips<Section>(
-            items: sections,
-            selectedItemName: classTest.sectionController.text,
-            getDisplayText: (s) => s.name ?? 'N/A',
-            onSelected: (s) =>
-                _selectSubjectTeacherSection(s, classTest, dashboard),
-          ),
+        return _buildDashboardCard(
+          title: 'Class Test Results',
+          accentColor: AppColors.primaryBlue, // Unified to primaryBlue
+          icon: Icons.analytics_rounded,
+          backgroundColor: Colors.white, // Clean white background
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Sections Selector
+              const _SelectionLabel(text: 'TARGET SECTION'),
+              const SizedBox(height: 8),
+              _buildWrapChips<Section>(
+                items: sections,
+                selectedItemName: classTest.sectionController.text,
+                getDisplayText: (s) => s.name ?? 'N/A',
+                onSelected: (s) =>
+                    _selectSubjectTeacherSection(s, classTest, dashboard),
+              ),
 
-          if (subjects != null && subjects.isNotEmpty) ...[
-            const SizedBox(height: 20),
-            const _SelectionLabel(text: 'SUBJECT AREA'),
-            const SizedBox(height: 8),
-            _buildWrapChips<SectionSubject>(
-              items: subjects,
-              selectedItemName: classTest.subjectController.text,
-              getDisplayText: (s) => s.subjectName ?? 'N/A',
-              onSelected: (s) =>
-                  classTest.setSubjectId(s.subjectId, s.subjectName),
-              isSubject: true,
-            ),
-          ],
+              if (subjects != null && subjects.isNotEmpty) ...[
+                const SizedBox(height: 20),
+                const _SelectionLabel(text: 'SUBJECT AREA'),
+                const SizedBox(height: 8),
+                _buildWrapChips<SectionSubject>(
+                  items: subjects,
+                  selectedItemName: classTest.subjectController.text,
+                  getDisplayText: (s) => s.subjectName ?? 'N/A',
+                  onSelected: (s) =>
+                      classTest.setSubjectId(s.subjectId, s.subjectName),
+                  isSubject: true,
+                ),
+              ],
 
-          const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-          // Primary Action (Clean Solid Button)
-          FadeInUp(
-            duration: const Duration(milliseconds: 600),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  _handleSmartNavigation(
-                    null,
-                    classTest,
-                    AppNavRoutes.teacherAddClassResultRoute,
-                    requiresSubject: true,
-                    isDiaryTrueFlow: true,
-                  );
-                },
-                borderRadius: BorderRadius.circular(16),
-                child: Ink(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryBlue,
+              // Primary Action (Clean Solid Button)
+              FadeInUp(
+                duration: const Duration(milliseconds: 600),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      _handleSmartNavigation(
+                        null,
+                        classTest,
+                        AppNavRoutes.teacherAddClassResultRoute,
+                        requiresSubject: true,
+                        isDiaryTrueFlow: true,
+                      );
+                    },
                     borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryBlue.withValues(alpha: 0.3),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                    child: Ink(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryBlue,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primaryBlue.withValues(alpha: 0.3),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.add_chart_rounded,
-                        color: Colors.white,
-                        size: 20,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.add_chart_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 12),
+                          const Text(
+                            'MARK CLASS TEST RESULTS',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 0.8,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 12),
-                      const Text(
-                        'MARK CLASS TEST RESULTS',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 0.8,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -967,28 +953,7 @@ void _selectClassTeacherSection(
   MarkAttendanceProvider attendance,
   DashboardProvider dashboard,
 ) {
-  if (attendance.sectionId != s.classSectionId) {
-    attendance.setSectionId(s.classSectionId);
-    attendance.setClassId(s.classId);
-    attendance.sectionController.text = s.name ?? '';
-    attendance.subjectController.clear();
-    attendance.setSubjectId(null, null);
-
-    if (s.classId == 19 || s.classId == 20) {
-      attendance.loadSubjects().then((_) {
-        final subjects = dashboard.getSubjectsForSection(
-          classSectionId: s.classSectionId ?? 0,
-          isDiary: false,
-        );
-        if (subjects != null && subjects.isNotEmpty) {
-          attendance.setSubjectId(
-            subjects[0].subjectId,
-            subjects[0].subjectName,
-          );
-        }
-      });
-    }
-  }
+  attendance.selectSection(s, dashboard);
 }
 
 void _selectSubjectTeacherSection(
@@ -996,22 +961,7 @@ void _selectSubjectTeacherSection(
   ClassTestResultProvider classTest,
   DashboardProvider dashboard,
 ) {
-  if (classTest.sectionId != s.classSectionId) {
-    classTest.setSectionId(s.classSectionId);
-    classTest.sectionController.text = s.name ?? '';
-    classTest.subjectController.clear();
-    classTest.setSubjectId(null, null);
-
-    classTest.loadSubjects().then((_) {
-      final subjects = dashboard.getSubjectsForSection(
-        classSectionId: s.classSectionId ?? 0,
-        isDiary: true,
-      );
-      if (subjects != null && subjects.isNotEmpty) {
-        classTest.setSubjectId(subjects[0].subjectId, subjects[0].subjectName);
-      }
-    });
-  }
+  classTest.selectSection(s, dashboard);
 }
 
 Widget _buildWrapChips<T>({

@@ -58,6 +58,7 @@ class AppNavRoutes {
   static const addCircularRoute = '/addCircular';
   static const teacherCircularRoute = '/teacherCircular';
   static const teacherAcademicHubRoute = '/teacherAcademicHub';
+  static const studentAcademicHubRoute = '/studentAcademicHub';
 
   /// Returns true if the given route name matches any of the defined routes
   static bool isRouteAvailable(String routeName) {
@@ -79,7 +80,6 @@ class AppNavRoutes {
       registrationPinCodeRoute,
       createPasswordRoute,
       studentDashboardRoute,
-      parentDashboardRoute,
       studentProfileRoute,
       resultsRoute,
       academicTermRoute,
@@ -129,6 +129,7 @@ class AppNavRoutes {
       addCircularRoute,
       teacherCircularRoute,
       teacherAcademicHubRoute,
+      studentAcademicHubRoute,
     };
 
     return allRoutes.any((route) => route == normalizedRoute);

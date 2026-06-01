@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/model/ClassTestResult/student_test_result_list_response.dart';
+import 'package:tcs_app/provider/Dashboard/dashboard_provider.dart';
 import 'package:tcs_app/services/ClassTestResult/class_test_result_service.dart';
 import 'package:tcs_app/model/Options/options.dart';
 
@@ -369,5 +370,55 @@ class ClassTestResultProvider with ChangeNotifier {
     subjectId = id ?? 0;
     subjectController.text = name ?? '';
     notifyListeners();
+  }
+
+  Future<void> selectSection(Section s, DashboardProvider dashboard) async {
+    if (sectionId == s.classSectionId) return;
+    sectionId = s.classSectionId;
+    sectionController.text = s.name ?? '';
+    subjectId = 0;
+    subjectController.clear();
+
+    // 1. Resolve and select subjects from local cache instantly
+    final localSubjects = dashboard.getSubjectsForSection(
+      classSectionId: sectionId ?? 0,
+      isDiary: true,
+    );
+    if (localSubjects != null && localSubjects.isNotEmpty) {
+      subjects = List.generate(
+        localSubjects.length,
+        (index) => Options(
+          title: localSubjects[index].subjectName!,
+          value: localSubjects[index].subjectId!,
+        ),
+      );
+      subjectId = localSubjects[0].subjectId ?? 0;
+      subjectController.text = localSubjects[0].subjectName ?? '';
+    } else {
+      subjects = [];
+    }
+
+    // Notify listeners instantly so the selection and its subjects appear in 0ms
+    notifyListeners();
+
+    // 2. Perform background network sync in a non-blocking fashion
+    try {
+      SectionSubjectService.getSubjectsRequest(
+        isDiary: true,
+        classSectionId: '$sectionId',
+        teacherId: localDataProvider.userData!.userName!,
+        token: localDataProvider.userData!.tokenId!,
+      ).then((response) {
+        subjectResponse = response;
+        subjects = List.generate(
+          subjectResponse.sectionSubject!.length,
+          (index) => Options(
+            title: subjectResponse.sectionSubject![index].subjectName!,
+            value: subjectResponse.sectionSubject![index].subjectId!,
+          ),
+        );
+        notifyListeners();
+      });
+    } catch (_) {}
   }
 }
