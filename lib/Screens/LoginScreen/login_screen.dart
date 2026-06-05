@@ -145,8 +145,8 @@ class _LoginScreenState extends State<LoginScreen>
                                           ),
                                         ),
                                         Positioned(
-                                          top: 0,
-                                          right: 12,
+                                          top: 8,
+                                          right: 20,
                                           child: GestureDetector(
                                             onTap: () => value
                                                 .removeSavedAccount(account),

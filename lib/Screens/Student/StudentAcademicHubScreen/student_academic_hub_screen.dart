@@ -12,6 +12,7 @@ import 'package:tcs_app/provider/Diary/diary_provider.dart';
 import 'package:tcs_app/provider/Notifications/notification_provider.dart';
 import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/services/FirebaseServices/app_analytics_service.dart';
 
 /// Unified Academic Hub for Students — merges Homework, Classwork, and Circulars
 /// into a single premium tabbed interface matching the teacher's experience.
@@ -49,6 +50,14 @@ class _StudentAcademicHubScreenState extends State<StudentAcademicHubScreen>
       initialIndex: widget.initialTabIndex.clamp(0, 2),
     );
 
+    _logCurrentTab(_tabController.index);
+
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        _logCurrentTab(_tabController.index);
+      }
+    });
+
     _diaryProvider = Provider.of<DiaryProvider>(context, listen: false);
     _assignmentProvider = Provider.of<AssignmentProvider>(
       context,
@@ -60,6 +69,14 @@ class _StudentAcademicHubScreenState extends State<StudentAcademicHubScreen>
     );
 
     _initData();
+  }
+
+  void _logCurrentTab(int index) {
+    String featureName = 'Homework Diary';
+    if (index == 1) featureName = 'Classwork Assignment';
+    else if (index == 2) featureName = 'Circulars';
+    
+    AppAnalyticsService.logFeatureAccess(featureName);
   }
 
   void _initData() {

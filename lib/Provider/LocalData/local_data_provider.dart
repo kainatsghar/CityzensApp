@@ -17,6 +17,7 @@ import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/app_constants.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
 import 'package:tcs_app/model/ResponseMessage/response_message.dart';
+import 'package:tcs_app/services/FirebaseServices/app_analytics_service.dart';
 
 class LocalDataProvider with ChangeNotifier {
   LoginResponse? userData = LoginResponse();
@@ -125,6 +126,9 @@ class LocalDataProvider with ChangeNotifier {
         // Clear other active provider states
         studentDashboardProvider.clearData();
         loginProvider.disposeData();
+
+        // Clear analytics contexts
+        await AppAnalyticsService.logLogout();
 
         Future.delayed(
           Duration.zero,

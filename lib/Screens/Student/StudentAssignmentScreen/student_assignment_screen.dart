@@ -7,6 +7,7 @@ import '../../../custom_widgets/CustomAppBar/custom_app_bar.dart';
 import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../routes/app_navigation.dart';
+import '../../../services/FirebaseServices/app_analytics_service.dart';
 
 class StudentAssignmentScreen extends StatefulWidget {
   const StudentAssignmentScreen({super.key});
@@ -25,6 +26,7 @@ class _StudentAssignmentScreenState extends State<StudentAssignmentScreen> {
 
   @override
   void initState() {
+    AppAnalyticsService.logFeatureAccess("Classwork Assignment");
     assignmentRecords = provider.loadStudentDiary();
     super.initState();
   }

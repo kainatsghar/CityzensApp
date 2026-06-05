@@ -7,6 +7,7 @@ import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../provider/Diary/diary_provider.dart';
 import '../../../routes/app_navigation.dart';
+import '../../../services/FirebaseServices/app_analytics_service.dart';
 
 class StudentDiaryScreen extends StatefulWidget {
   const StudentDiaryScreen({super.key});
@@ -24,6 +25,7 @@ class _StudentDiaryScreenState extends State<StudentDiaryScreen> {
 
   @override
   void initState() {
+    AppAnalyticsService.logFeatureAccess("Homework Diary");
     _diaryRecords = provider.loadStudentDiary();
     super.initState();
   }

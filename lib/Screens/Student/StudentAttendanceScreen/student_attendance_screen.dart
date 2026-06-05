@@ -9,6 +9,7 @@ import '../../../custom_widgets/CustomLoader/custom_loader.dart';
 import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../provider/StudentAttendance/student_attendance_provider.dart';
 import '../../../routes/app_navigation.dart';
+import '../../../services/FirebaseServices/app_analytics_service.dart';
 
 class StudentAttendanceScreen extends StatefulWidget {
   const StudentAttendanceScreen({super.key});
@@ -27,6 +28,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
 
   @override
   void initState() {
+    AppAnalyticsService.logFeatureAccess("Attendance");
     attendanceData = attendanceProvider.loadAttendance();
     super.initState();
   }

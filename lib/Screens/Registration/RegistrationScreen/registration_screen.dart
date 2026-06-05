@@ -149,6 +149,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: size.height * 0.02),
                   // InkWell(
                   // onTap:
                   // HelperFunction.sendEmail(AppConstants.appSupportEmail),

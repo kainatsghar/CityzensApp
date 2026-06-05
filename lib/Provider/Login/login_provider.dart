@@ -14,6 +14,7 @@ import 'package:tcs_app/utils/validators.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
 import 'package:tcs_app/services/LocalAuth/local_auth_service.dart';
+import 'package:tcs_app/services/FirebaseServices/app_analytics_service.dart';
 
 class LoginProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -95,6 +96,12 @@ class LoginProvider extends ChangeNotifier {
               userType,
             );
           }
+
+          // Analytics Tracking
+          await AppAnalyticsService.logLogin(
+            user: loginResponse,
+            method: 'app_login',
+          );
 
           Future.delayed(
             Duration.zero,

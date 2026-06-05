@@ -12,6 +12,7 @@ import 'package:tcs_app/provider/ClassTestResult/class_test_result_provider.dart
 import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
+import 'package:tcs_app/services/FirebaseServices/app_analytics_service.dart';
 
 class StudentClassResultScreen extends StatefulWidget {
   const StudentClassResultScreen({super.key});
@@ -27,6 +28,7 @@ class _StudentClassResultScreenState extends State<StudentClassResultScreen> {
   @override
   void initState() {
     super.initState();
+    AppAnalyticsService.logFeatureAccess("Class Tests");
     final provider = Provider.of<ClassTestResultProvider>(
       context,
       listen: false,

@@ -5,6 +5,7 @@ import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/components/FeeChallanComponents/outstanding_fee_component.dart';
 import 'package:tcs_app/components/FeeChallanComponents/receipt_fee_component.dart';
+import 'package:tcs_app/services/FirebaseServices/app_analytics_service.dart';
 
 class FeeChallanScreen extends StatefulWidget {
   const FeeChallanScreen({super.key});
@@ -20,6 +21,7 @@ class _FeeChallanScreenState extends State<FeeChallanScreen>
   @override
   void initState() {
     super.initState();
+    AppAnalyticsService.logFeatureAccess("Fee Challans");
     _provider = Provider.of<FeeChallanProvider>(
       AppNavigation.currentContext!,
       listen: false,

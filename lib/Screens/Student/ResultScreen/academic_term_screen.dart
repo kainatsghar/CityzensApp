@@ -6,6 +6,7 @@ import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/provider/Results/results_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/services/FirebaseServices/app_analytics_service.dart';
 
 class AcademicTermScreen extends StatefulWidget {
   const AcademicTermScreen({super.key});
@@ -25,6 +26,7 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
 
   @override
   void initState() {
+    AppAnalyticsService.logFeatureAccess("Term Results");
     _academicTermService = provider.loadAcademicTerm();
     super.initState();
   }
