@@ -13,6 +13,7 @@ import 'package:tcs_app/utils/helper_function.dart';
 import 'package:tcs_app/utils/validators.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/Login/login_response.dart';
+import 'package:tcs_app/services/LocalAuth/local_auth_service.dart';
 
 class LoginProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -23,6 +24,8 @@ class LoginProvider extends ChangeNotifier {
   TextEditingController passwordController = TextEditingController();
   String userType = 'Student';
   MaskedTextController? userNameController;
+  bool rememberMe = true;
+  List<SavedAccount> savedAccounts = [];
   String? validator(String? text) => userType == 'Teacher'
       ? Validators.validator(text)
       : userType == 'Parent'
@@ -32,6 +35,38 @@ class LoginProvider extends ChangeNotifier {
   void showHidePassword() {
     obscureText = !obscureText;
     notifyListeners();
+  }
+
+  void toggleRememberMe(bool value) {
+    rememberMe = value;
+    notifyListeners();
+  }
+
+  Future<void> loadSavedAccounts() async {
+    savedAccounts = await LocalAuthService.getSavedAccounts();
+    notifyListeners();
+  }
+
+  Future<void> removeSavedAccount(SavedAccount account) async {
+    await LocalAuthService.removeAccount(account.username, account.userType);
+    await loadSavedAccounts();
+  }
+
+  Future<void> loginWithSavedAccount(SavedAccount account) async {
+    bool authenticated = await LocalAuthService.authenticate();
+    if (authenticated) {
+      userType = account.userType;
+      changeUserNameInputField(account.userType);
+      notifyListeners();
+      // Allow the widget tree to rebuild and bind the new controller before setting text values
+      await Future.delayed(const Duration(milliseconds: 100));
+      userNameController?.text = account.username;
+      passwordController.text = account.password;
+      notifyListeners();
+      // Wait another small frame duration to let FormFieldState update its internal value from the controller
+      await Future.delayed(const Duration(milliseconds: 50));
+      await login();
+    }
   }
 
   Future<void> login() async {
@@ -52,6 +87,15 @@ class LoginProvider extends ChangeNotifier {
             key: AppConstants.userDataKey,
             value: jsonEncode(loginResponse),
           );
+
+          if (rememberMe) {
+            await LocalAuthService.saveAccount(
+              loginResponse.userName!,
+              passwordController.text,
+              userType,
+            );
+          }
+
           Future.delayed(
             Duration.zero,
             () =>
@@ -79,6 +123,7 @@ class LoginProvider extends ChangeNotifier {
   void initializeData() {
     userNameController = MaskedTextController(mask: controllerMask);
     userTypeList = HelperFunction.userTypes();
+    loadSavedAccounts();
   }
 
   void onUserTypeSelection(String v) {

@@ -4,8 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
+import 'package:tcs_app/provider/Login/login_provider.dart';
+import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/routes/app_navigation_routes.dart';
 import 'package:tcs_app/services/Logout/logout_service.dart';
@@ -38,6 +41,8 @@ class LocalDataProvider with ChangeNotifier {
         if (userData!.id == 0) {
           AppLocalData.removeKeyData(key: AppConstants.userDataKey);
           userData = LoginResponse();
+          studentId = '';
+          gradeId = 0;
           showSnackBar(
             'Please login again. Your data needs to be refreshed.',
             color: AppColors.primary,
@@ -55,6 +60,8 @@ class LocalDataProvider with ChangeNotifier {
       notifyListeners();
     } else {
       userData = LoginResponse();
+      studentId = '';
+      gradeId = 0;
     }
     return userData!;
   }
@@ -98,6 +105,8 @@ class LocalDataProvider with ChangeNotifier {
 
   Future logout(BuildContext context) async {
     DialogBuilder.showLoadingIndicator();
+    final studentDashboardProvider = Provider.of<StudentDashboardProvider>(context, listen: false);
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     try {
       ResponseMessage response = await LogoutService.logoutRequest(
         userData!.tokenId!,
@@ -107,6 +116,16 @@ class LocalDataProvider with ChangeNotifier {
           AppLocalData.removeKeyData(key: AppConstants.teacherProfileData);
         }
         AppLocalData.removeKeyData(key: AppConstants.userDataKey);
+
+        // Reset states
+        studentId = '';
+        gradeId = 0;
+        userData = LoginResponse();
+
+        // Clear other active provider states
+        studentDashboardProvider.clearData();
+        loginProvider.disposeData();
+
         Future.delayed(
           Duration.zero,
           () => AppNavigation.pushAndKillAll(AppNavRoutes.authWrapperRoute),

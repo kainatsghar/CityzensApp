@@ -12,6 +12,7 @@ import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/services/ChangePassword/change_password_service.dart';
+import 'package:tcs_app/services/LocalAuth/local_auth_service.dart';
 import 'package:tcs_app/services/Results/result_service.dart';
 import 'package:tcs_app/services/UnverifiedReasons/unverified_reasons_service.dart';
 import 'package:tcs_app/utils/app_colors.dart';
@@ -135,6 +136,11 @@ class DashboardProvider with ChangeNotifier {
             );
         if (responseMessage.isSuccessful ?? false) {
           // if (responseMessage.isSuccessful) {
+          await LocalAuthService.updatePasswordIfSaved(
+            userNameController.text,
+            newPassController.text,
+            userTypeController.text,
+          );
           Future.delayed(Duration.zero, () => AppNavigation.goBack());
           showSnackBar(
             'Password for ${userNameController.text} has been changed successfully',

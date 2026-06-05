@@ -29,7 +29,6 @@ class AppConstants {
   static const String noRecordFound = 'No Record Found';
 
   /// Other Constants
-  // static const String textFontFamily = 'NexaText';
 
   /// External Links
   static const String cityzensAppAndroidLink =

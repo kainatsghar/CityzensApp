@@ -58,6 +58,8 @@
 	<string>We require camera access to allow users to capture photos for their profile or other features.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to your photo library to allow users to upload profile pictures.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>This app requires Face ID to let you login securely using biometrics.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

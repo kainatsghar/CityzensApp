@@ -64,7 +64,117 @@ class _LoginScreenState extends State<LoginScreen>
                       child: Column(
                         children: <Widget>[
                           const CustomLogoCover(),
-                          SizedBox(height: size.height * 0.03),
+                          if (value.savedAccounts.isNotEmpty) ...[
+                            SizedBox(height: size.height * 0.02),
+                            const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Saved Accounts',
+                                style: TextStyle(
+                                  color: AppColors.primaryTitleColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            SizedBox(
+                              height: 80,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: value.savedAccounts.length,
+                                itemBuilder: (context, index) {
+                                  var account = value.savedAccounts[index];
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        value.loginWithSavedAccount(account),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          width: 120,
+                                          margin: const EdgeInsets.only(
+                                            right: 12,
+                                          ),
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withValues(
+                                                  alpha: 0.05,
+                                                ),
+                                                blurRadius: 5,
+                                                offset: const Offset(0, 2),
+                                              ),
+                                            ],
+                                            border: Border.all(
+                                              color: AppColors.primaryBlue
+                                                  .withValues(alpha: 0.2),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                account.userType == 'Teacher'
+                                                    ? Icons.badge
+                                                    : account.userType ==
+                                                          'Parent'
+                                                    ? Icons.family_restroom
+                                                    : Icons.school,
+                                                color: AppColors.primaryBlue,
+                                                size: 24,
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                account.username,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                  color: AppColors
+                                                      .primaryTitleColor,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 0,
+                                          right: 12,
+                                          child: GestureDetector(
+                                            onTap: () => value
+                                                .removeSavedAccount(account),
+                                            child: Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                color: Colors.red.withValues(
+                                                  alpha: 0.1,
+                                                ),
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: const Icon(
+                                                Icons.close,
+                                                size: 14,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.02),
+                          ] else
+                            SizedBox(height: size.height * 0.03),
                           CustomCard(
                             child: Form(
                               key: value.formKey,
@@ -108,40 +218,89 @@ class _LoginScreenState extends State<LoginScreen>
                                     ),
                                     validator: Validators.validator,
                                   ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () => value.toggleRememberMe(
+                                          !value.rememberMe,
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              height: 24,
+                                              width: 24,
+                                              child: Checkbox(
+                                                value: value.rememberMe,
+                                                onChanged: (val) =>
+                                                    value.toggleRememberMe(
+                                                      val ?? false,
+                                                    ),
+                                                activeColor:
+                                                    AppColors.primaryBlue,
+                                                checkColor:
+                                                    AppColors.whiteColor,
+                                                side: const BorderSide(
+                                                  color: AppColors.primaryColor,
+                                                  width: 2.0,
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                ),
+                                                materialTapTargetSize:
+                                                    MaterialTapTargetSize
+                                                        .shrinkWrap,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            const Text(
+                                              'Remember Me',
+                                              style: TextStyle(
+                                                color:
+                                                    AppColors.primaryTitleColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () =>
+                                            AppNavigation.navigateTo(
+                                              AppNavRoutes.forgotPasswordRoute,
+                                            ),
+                                        style: TextButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          minimumSize: Size.zero,
+                                          tapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                        ),
+                                        child: const Text(
+                                          'Forgot Password?',
+                                          style: TextStyle(
+                                            color: AppColors.primaryTitleColor,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor:
+                                                AppColors.primaryTitleColor,
+                                            decorationThickness: 1.5,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
                           ),
-                          const SizedBox(height: 10),
-                          FadeIn(
-                            delay: const Duration(milliseconds: 300),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                onPressed: () => AppNavigation.navigateTo(
-                                  AppNavRoutes.forgotPasswordRoute,
-                                ),
-                                style: TextButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                  ),
-                                  minimumSize: Size.zero,
-                                  tapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                ),
-                                child: const Text(
-                                  'Forgot Password?',
-                                  style: TextStyle(
-                                    color: AppColors.primaryTitleColor,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 13,
-                                    decoration: TextDecoration.underline,
-                                    decorationThickness: 1.5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+
                           const SizedBox(height: 20),
                           CustomAppButton(
                             buttonTitle: 'Login',

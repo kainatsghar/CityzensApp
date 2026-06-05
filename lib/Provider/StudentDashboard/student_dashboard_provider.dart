@@ -292,4 +292,15 @@ class StudentDashboardProvider with ChangeNotifier {
           .catchError((_) {}),
     ]);
   }
+
+  void clearData() {
+    _childDataMap.clear();
+    _isFirstChildReady = false;
+    _isAllChildrenReady = false;
+    _isLoading = false;
+    _loadError = null;
+    _activeStudentId = null;
+    _multiChildResponse = null;
+    notifyListeners();
+  }
 }
