@@ -11,6 +11,7 @@ import 'package:tcs_app/model/Diary/diary_response.dart';
 import 'package:tcs_app/model/Notifications/notification_response.dart';
 import 'package:tcs_app/model/MultiChild/multi_child_response.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 
 import 'package:tcs_app/services/StudentProfile/student_profile_service.dart';
@@ -172,6 +173,27 @@ class StudentDashboardProvider with ChangeNotifier {
     if (_activeStudentId == studentId) return;
     _activeStudentId = studentId;
     notifyListeners();
+
+    // Immediately update FeeChallanProvider to prevent showing previous child's info
+    final context = AppNavigation.currentContext;
+    if (context != null) {
+      try {
+        final feeProvider = Provider.of<FeeChallanProvider>(
+          context,
+          listen: false,
+        );
+        final activeData = activeChildData;
+        if (activeData != null) {
+          feeProvider.outstandingChallans = activeData.outstandingChallans;
+          feeProvider.challanReceiptResponse = null;
+          feeProvider.notifyListeners();
+        }
+      } catch (e) {
+        debugPrint(
+          'Error syncing FeeChallanProvider on active child switch: $e',
+        );
+      }
+    }
   }
 
   Future<void> refreshActiveChild() async {
@@ -260,6 +282,24 @@ class StudentDashboardProvider with ChangeNotifier {
           )
           .then((res) {
             data.outstandingChallans = res;
+            // If the fetched child is currently active, sync it to FeeChallanProvider immediately
+            if (studentId == _activeStudentId) {
+              final context = AppNavigation.currentContext;
+              if (context != null && context.mounted) {
+                try {
+                  final feeProvider = Provider.of<FeeChallanProvider>(
+                    context,
+                    listen: false,
+                  );
+                  feeProvider.outstandingChallans = res;
+                  feeProvider.notifyListeners();
+                } catch (e) {
+                  debugPrint(
+                    'Error syncing FeeChallanProvider on child fee load: $e',
+                  );
+                }
+              }
+            }
           })
           .catchError((_) {}),
 

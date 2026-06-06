@@ -378,8 +378,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
               format: 'dd-MMM-yyyy',
             ),
             color: AppColors.primaryBlue,
-            onTap: () =>
-                AppNavigation.navigateTo(AppNavRoutes.studentAcademicHubRoute, arguments: 0),
+            onTap: () => AppNavigation.navigateTo(
+              AppNavRoutes.studentAcademicHubRoute,
+              arguments: 0,
+            ),
           ),
           const Divider(height: 24),
           _buildUpdateItem(
@@ -391,8 +393,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
               format: 'dd-MMM-yyyy',
             ),
             color: AppColors.goldenColors,
-            onTap: () =>
-                AppNavigation.navigateTo(AppNavRoutes.studentAcademicHubRoute, arguments: 1),
+            onTap: () => AppNavigation.navigateTo(
+              AppNavRoutes.studentAcademicHubRoute,
+              arguments: 1,
+            ),
           ),
           const Divider(height: 24),
           _buildUpdateItem(
@@ -404,8 +408,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
               format: 'dd-MMM-yyyy',
             ),
             color: AppColors.successGreen,
-            onTap: () =>
-                AppNavigation.navigateTo(AppNavRoutes.studentAcademicHubRoute, arguments: 2),
+            onTap: () => AppNavigation.navigateTo(
+              AppNavRoutes.studentAcademicHubRoute,
+              arguments: 2,
+            ),
           ),
         ],
       ),
@@ -645,59 +651,79 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       icon: Icons.grid_view_rounded,
       child: Column(
         children: [
-          InkWell(
-            onTap: () {
-              HapticFeedback.selectionClick();
-              AppNavigation.navigateTo(AppNavRoutes.teacherTimeTableRoute);
-            },
-            borderRadius: BorderRadius.circular(16),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryBlue.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.calendar_today_rounded,
-                      color: AppColors.primaryBlue,
-                      size: 26,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'WEEKLY SCHEDULE',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.primaryBlue,
-                            letterSpacing: 1.2,
-                          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              gradient: const LinearGradient(
+                colors: [AppColors.primaryBlue, Color(0xFF003875)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primaryBlue.withValues(alpha: 0.25),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  AppNavigation.navigateTo(AppNavRoutes.teacherTimeTableRoute);
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.15),
+                          shape: BoxShape.circle,
                         ),
-                        SizedBox(height: 2),
-                        Text(
-                          'View Timetable',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.primaryDarkBlue,
-                          ),
+                        child: const Icon(
+                          Icons.calendar_today_rounded,
+                          color: Colors.white,
+                          size: 26,
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(width: 16),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'WEEKLY SCHEDULE',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w900,
+                                color: AppColors.goldenYellow,
+                                letterSpacing: 1.5,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'View Timetable',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(
+                        Icons.chevron_right_rounded,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.softGreyText.withValues(alpha: 0.5),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -827,7 +853,9 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         decoration: BoxDecoration(
           color: isDormant
               ? Colors.grey.shade50
-              : (isPrimary ? AppColors.primaryDarkBlue : Colors.white),
+              : (isPrimary
+                    ? AppColors.primaryDarkBlue
+                    : color.withValues(alpha: 0.06)),
           borderRadius: BorderRadius.circular(16),
           gradient: isPrimary && !isDormant
               ? const LinearGradient(
@@ -844,13 +872,19 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                     offset: const Offset(0, 6),
                   ),
                 ]
-              : null,
+              : [
+                  BoxShadow(
+                    color: color.withValues(alpha: 0.04),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
           border: Border.all(
             color: isDormant
                 ? Colors.grey.shade200
                 : (isPrimary
                       ? Colors.transparent
-                      : AppColors.borderGrey.withValues(alpha: 0.5)),
+                      : color.withValues(alpha: 0.15)),
             width: 1,
           ),
         ),

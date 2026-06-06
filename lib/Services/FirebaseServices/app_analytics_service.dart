@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -52,11 +51,14 @@ class AppAnalyticsService {
       String centerName = user.info?.centerName ?? 'Unknown';
       String regionName = user.info?.regionName ?? 'Unknown';
       String classSection = user.info?.className ?? 'Unknown';
-      
+
       String deviceType = 'Unknown';
       if (!kIsWeb) {
-        if (Platform.isAndroid) deviceType = 'Android';
-        else if (Platform.isIOS) deviceType = 'iOS';
+        if (Platform.isAndroid) {
+          deviceType = 'Android';
+        } else if (Platform.isIOS) {
+          deviceType = 'iOS';
+        }
       } else {
         deviceType = 'Web';
       }
@@ -67,7 +69,10 @@ class AppAnalyticsService {
       await _analytics.setUserProperty(name: 'device_type', value: deviceType);
       await _analytics.setUserProperty(name: 'center_name', value: centerName);
       await _analytics.setUserProperty(name: 'region_name', value: regionName);
-      await _analytics.setUserProperty(name: 'class_section', value: classSection);
+      await _analytics.setUserProperty(
+        name: 'class_section',
+        value: classSection,
+      );
 
       // --- Crashlytics ---
       await _crashlytics.setUserIdentifier(userId);
@@ -76,7 +81,6 @@ class AppAnalyticsService {
       await _crashlytics.setCustomKey('center_name', centerName);
       await _crashlytics.setCustomKey('region_name', regionName);
       await _crashlytics.setCustomKey('class_section', classSection);
-      
     } catch (e) {
       debugPrint('[Analytics] Error setting user properties: $e');
     }
@@ -100,7 +104,6 @@ class AppAnalyticsService {
       await _crashlytics.setCustomKey('center_name', 'none');
       await _crashlytics.setCustomKey('region_name', 'none');
       await _crashlytics.setCustomKey('class_section', 'none');
-
     } catch (e) {
       debugPrint('[Analytics] Error clearing user properties: $e');
     }

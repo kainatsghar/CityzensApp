@@ -61,9 +61,6 @@ class ApiBaseHelper {
       }
       throw FetchDataException(AppConstants.exceptionMessage);
     }
-    if (kDebugMode) {
-      log('Response: ${response.body}');
-    }
     return _returnResponse(response);
   }
 
@@ -137,6 +134,9 @@ class ApiBaseHelper {
 }
 
 Map<String, dynamic> _returnResponse(http.Response response) {
+  if (kDebugMode) {
+    log('Response URL: ${response.request?.url}\n${response.body}');
+  }
   final jsonResponse = jsonDecode(response.body);
   switch (response.statusCode) {
     case 200:

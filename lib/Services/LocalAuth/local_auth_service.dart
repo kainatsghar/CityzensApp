@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -46,15 +47,26 @@ class LocalAuthService {
         localizedReason: 'Please authenticate to login securely',
       );
     } catch (e) {
+      debugPrint('LocalAuthService.authenticate error: $e');
+      // If the plugin is missing or unsupported (e.g. MissingPluginException or platform not supported),
+      // we return true to fall back to using saved credentials without biometrics.
+      if (e.toString().contains('MissingPluginException') ||
+          e.toString().contains('PlatformException(not_available')) {
+        return true;
+      }
       return false;
     }
   }
 
   static Future<List<SavedAccount>> getSavedAccounts() async {
-    String? accountsStr = await _storage.read(key: _accountsKey);
-    if (accountsStr != null) {
-      List<dynamic> jsonList = jsonDecode(accountsStr);
-      return jsonList.map((e) => SavedAccount.fromJson(e)).toList();
+    try {
+      String? accountsStr = await _storage.read(key: _accountsKey);
+      if (accountsStr != null) {
+        List<dynamic> jsonList = jsonDecode(accountsStr);
+        return jsonList.map((e) => SavedAccount.fromJson(e)).toList();
+      }
+    } catch (e) {
+      debugPrint('LocalAuthService.getSavedAccounts error: $e');
     }
     return [];
   }
@@ -64,20 +76,24 @@ class LocalAuthService {
     String password,
     String userType,
   ) async {
-    List<SavedAccount> accounts = await getSavedAccounts();
-    // Remove if already exists to update password
-    accounts.removeWhere(
-      (acc) => acc.username == username && acc.userType == userType,
-    );
+    try {
+      List<SavedAccount> accounts = await getSavedAccounts();
+      // Remove if already exists to update password
+      accounts.removeWhere(
+        (acc) => acc.username == username && acc.userType == userType,
+      );
 
-    accounts.add(
-      SavedAccount(username: username, password: password, userType: userType),
-    );
+      accounts.add(
+        SavedAccount(username: username, password: password, userType: userType),
+      );
 
-    List<Map<String, dynamic>> jsonList = accounts
-        .map((e) => e.toJson())
-        .toList();
-    await _storage.write(key: _accountsKey, value: jsonEncode(jsonList));
+      List<Map<String, dynamic>> jsonList = accounts
+          .map((e) => e.toJson())
+          .toList();
+      await _storage.write(key: _accountsKey, value: jsonEncode(jsonList));
+    } catch (e) {
+      debugPrint('LocalAuthService.saveAccount error: $e');
+    }
   }
 
   static Future<void> updatePasswordIfSaved(
@@ -85,35 +101,43 @@ class LocalAuthService {
     String newPassword,
     String userType,
   ) async {
-    List<SavedAccount> accounts = await getSavedAccounts();
-    bool updated = false;
-    for (int i = 0; i < accounts.length; i++) {
-      if (accounts[i].username == username &&
-          accounts[i].userType == userType) {
-        accounts[i] = SavedAccount(
-          username: username,
-          password: newPassword,
-          userType: userType,
-        );
-        updated = true;
+    try {
+      List<SavedAccount> accounts = await getSavedAccounts();
+      bool updated = false;
+      for (int i = 0; i < accounts.length; i++) {
+        if (accounts[i].username == username &&
+            accounts[i].userType == userType) {
+          accounts[i] = SavedAccount(
+            username: username,
+            password: newPassword,
+            userType: userType,
+          );
+          updated = true;
+        }
       }
-    }
-    if (updated) {
-      List<Map<String, dynamic>> jsonList = accounts
-          .map((e) => e.toJson())
-          .toList();
-      await _storage.write(key: _accountsKey, value: jsonEncode(jsonList));
+      if (updated) {
+        List<Map<String, dynamic>> jsonList = accounts
+            .map((e) => e.toJson())
+            .toList();
+        await _storage.write(key: _accountsKey, value: jsonEncode(jsonList));
+      }
+    } catch (e) {
+      debugPrint('LocalAuthService.updatePasswordIfSaved error: $e');
     }
   }
 
   static Future<void> removeAccount(String username, String userType) async {
-    List<SavedAccount> accounts = await getSavedAccounts();
-    accounts.removeWhere(
-      (acc) => acc.username == username && acc.userType == userType,
-    );
-    List<Map<String, dynamic>> jsonList = accounts
-        .map((e) => e.toJson())
-        .toList();
-    await _storage.write(key: _accountsKey, value: jsonEncode(jsonList));
+    try {
+      List<SavedAccount> accounts = await getSavedAccounts();
+      accounts.removeWhere(
+        (acc) => acc.username == username && acc.userType == userType,
+      );
+      List<Map<String, dynamic>> jsonList = accounts
+          .map((e) => e.toJson())
+          .toList();
+      await _storage.write(key: _accountsKey, value: jsonEncode(jsonList));
+    } catch (e) {
+      debugPrint('LocalAuthService.removeAccount error: $e');
+    }
   }
 }
