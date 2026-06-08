@@ -511,9 +511,11 @@ class DashboardProvider with ChangeNotifier {
     diaryTrueSectionsResponse = null;
     diaryFalseSectionsResponse = null;
     unverifiedReasonsResponse = null;
+    resultsResponse = ResultsResponse();
     sectionSubjectsMap.clear();
     subjectStatesMap.clear();
     _isDashboardDataInitialized = false;
     _isDashboardDataLoading = false;
+    notifyListeners();
   }
 }

@@ -98,7 +98,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
         // final gradeId = localValue.userData?.info?.gradeId?.toString() ?? '';
         // final localGradeId = localValue.gradeId?.toString() ?? '';
         final teacherName = HelperFunction.noNullStringText(
-          localValue.userData!.info!.name ?? 'CITYZENS',
+          localValue.userData?.info?.name ?? 'CITYZENS',
         );
 
         return AnnotatedRegion<SystemUiOverlayStyle>(

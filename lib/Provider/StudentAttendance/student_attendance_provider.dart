@@ -256,4 +256,16 @@ class StudentAttendanceProvider with ChangeNotifier {
   void clearDate() {
     selectedDate = DateTime.now();
   }
+
+  void clearData() {
+    studentAttendanceResponse = null;
+    attendancePercentage = null;
+    pieData = [];
+    selectedDate = DateTime.now();
+    absentDates = [];
+    presentDates = [];
+    leaveDates = [];
+    studentAttendance.clear();
+    notifyListeners();
+  }
 }

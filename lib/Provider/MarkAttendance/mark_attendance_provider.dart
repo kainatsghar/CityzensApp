@@ -473,4 +473,22 @@ class MarkAttendanceProvider with ChangeNotifier {
       } catch (_) {}
     }
   }
+
+  void clearData() {
+    selectedDate = DateTime.now();
+    isDirty = false;
+    isUpdateMode = false;
+    sectionId = null;
+    classId = null;
+    subjectId = 0;
+    sectionController.clear();
+    subjectController.clear();
+    sectionResponse = TeacherSectionResponse();
+    subjectResponse = SectionSubjectResponse();
+    studentListResponse = StudentListResponse();
+    pieData = [];
+    sections = [];
+    subjects = [];
+    notifyListeners();
+  }
 }

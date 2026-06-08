@@ -50,4 +50,9 @@ class TeacherProfileProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  void clearData() {
+    profileResponse = null;
+    notifyListeners();
+  }
 }

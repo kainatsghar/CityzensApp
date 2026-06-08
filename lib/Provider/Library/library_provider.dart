@@ -67,4 +67,11 @@ class LibraryProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  void clearData() {
+    libraryResponse = null;
+    isLoading = true;
+    loadError = null;
+    notifyListeners();
+  }
 }

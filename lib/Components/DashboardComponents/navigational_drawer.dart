@@ -111,7 +111,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
     LocalDataProvider localData,
     DashboardProvider dashboard,
   ) {
-    final bool isMale = localData.userData!.userType == 'Teacher'
+    final bool isMale = localData.userData?.userType == 'Teacher'
         ? dashboard.teacherProfileProvider.profileResponse?.isMale ?? true
         : true;
 
@@ -131,16 +131,16 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
         children: [
           // User Identity
           CustomUserImage(
-            userId: localData.userData!.userName!,
+            userId: localData.userData?.userName ?? '',
             imageSize: 100,
             isMale: isMale,
           ),
           const SizedBox(height: 20),
           Text(
             HelperFunction.noNullStringText(
-              localData.userData!.userType == 'Student'
-                  ? '${localData.userData!.info!.name}'
-                  : '${localData.userData!.name}',
+              localData.userData?.userType == 'Student'
+                  ? localData.userData?.info?.name ?? ''
+                  : localData.userData?.name ?? '',
             ),
             style: const TextStyle(
               color: Colors.white,
@@ -150,11 +150,11 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
           ),
           const SizedBox(height: 6),
           Text(
-            localData.userData!.userType == 'Student'
+            localData.userData?.userType == 'Student'
                 ? 'Roll No: ${localData.studentId}'
-                : localData.userData!.userType == 'Parent'
-                ? 'CNIC No: ${localData.userData!.userName}'
-                : 'ERP No: ${localData.userData!.userName}',
+                : localData.userData?.userType == 'Parent'
+                ? 'CNIC No: ${localData.userData?.userName ?? ''}'
+                : 'ERP No: ${localData.userData?.userName ?? ''}',
             style: TextStyle(
               color: AppColors.goldenYellow.withOpacity(0.9),
               fontSize: 13,
@@ -195,7 +195,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
               AppNavigation.navigateTo(AppNavRoutes.appFeedbackRoute);
             },
           ),
-          if (localData.userData!.userType != 'Teacher')
+          if (localData.userData?.userType != 'Teacher')
             _buildStaggeredItem(
               index: 2,
               title: 'Change Password',
@@ -211,9 +211,6 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
             icon: Icons.logout_rounded,
             isDestructive: true,
             onTap: () {
-              if (localData.userData!.userType == 'Teacher') {
-                dashboard.teacherDataDispose();
-              }
               localData.logout(context);
             },
           ),

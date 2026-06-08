@@ -90,4 +90,12 @@ class FeeChallanProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  void clearData() {
+    outstandingChallans = null;
+    challanReceiptResponse = null;
+    isLoading = true;
+    loadError = null;
+    notifyListeners();
+  }
 }

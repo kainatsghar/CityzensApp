@@ -173,5 +173,7 @@ class ResultsProvider with ChangeNotifier {
     terms = [];
     academicYears = [];
     termSelected = false;
+    resultsResponse = ResultsResponse();
+    notifyListeners();
   }
 }

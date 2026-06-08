@@ -52,6 +52,12 @@ class NotificationProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  void clearData() {
+    notifications = null;
+    currentNotificationGroup = NotificationGroup.challan;
+    notifyListeners();
+  }
 }
 
 enum NotificationGroup {

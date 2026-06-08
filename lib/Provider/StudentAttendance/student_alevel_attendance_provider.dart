@@ -241,14 +241,22 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
     ),
   );
 
-  //\\
   void clearData() {
     selectedSubject = 0;
+    selectedSubjectId = 0;
     subjectController.clear();
     subjects = [];
+    studentAttendanceResponse = null;
+    attendancePercentage = null;
+    pieData = [];
+    selectedDate = DateTime.now();
+    absentDates = [];
+    presentDates = [];
+    leaveDates = [];
+    studentAttendance.clear();
+    notifyListeners();
   }
 
-  //\\
   void clearDate() {
     selectedDate = DateTime.now();
   }
