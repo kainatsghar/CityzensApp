@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/app_constants.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../custom_widgets/CustomDialogBoxes/delete_confirm_dialog.dart';
@@ -236,15 +237,7 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                               ),
                               onTapAttachment: () =>
                                   _launchFile(circular.fileName!),
-                              onTapLink: (url) async {
-                                final Uri uri = Uri.parse(url);
-                                if (await canLaunchUrl(uri)) {
-                                  await launchUrl(
-                                    uri,
-                                    mode: LaunchMode.externalApplication,
-                                  );
-                                }
-                              },
+                              onTapLink: (url) => HelperFunction.launchURL(url),
                               extraSubtitleRow: null,
                             );
                           }),

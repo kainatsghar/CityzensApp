@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/app_constants.dart';
 import 'package:tcs_app/custom_widgets/ShowCustomMessage/show_message_image.dart';
+import 'package:tcs_app/utils/helper_function.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../custom_widgets/CustomDialogBoxes/delete_confirm_dialog.dart';
@@ -207,7 +208,7 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                           ],
                         ),
                       ),
-        
+
                       // Inner list of Diaries
                       Padding(
                         padding: const EdgeInsets.all(12),
@@ -221,7 +222,8 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                               fileName: diary.fileName,
                               badgeText: diary.sectionName,
                               accentColor: AppColors.primaryBlue,
-                              isTeacher: localData.userData!.userType == 'Teacher',
+                              isTeacher:
+                                  localData.userData!.userType == 'Teacher',
                               onEdit: () => AppNavigation.navigateTo(
                                 AppNavRoutes.addDiaryRoute,
                                 arguments: diary,
@@ -231,13 +233,9 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                                 diary.id!,
                                 value,
                               ),
-                              onTapAttachment: () => _launchFile(diary.fileName!),
-                              onTapLink: (url) async {
-                                final Uri uri = Uri.parse(url);
-                                if (await canLaunchUrl(uri)) {
-                                  await launchUrl(uri, mode: LaunchMode.externalApplication);
-                                }
-                              },
+                              onTapAttachment: () =>
+                                  _launchFile(diary.fileName!),
+                              onTapLink: (url) => HelperFunction.launchURL(url),
                             );
                           }),
                         ),

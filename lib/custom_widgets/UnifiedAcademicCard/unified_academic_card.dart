@@ -248,23 +248,23 @@ class UnifiedAcademicCard extends StatelessWidget {
                             if (description != null &&
                                 description!.isNotEmpty) ...[
                               const SizedBox(height: 8),
-                              Linkify(
-                                onOpen: onTapLink != null
-                                    ? (link) => onTapLink!(link.url)
-                                    : null,
-                                text: description!,
-                                style: const TextStyle(
-                                  fontSize: 13.0,
-                                  height: 1.5,
-                                  color: AppColors.textSecondary,
-                                  letterSpacing: 0.1,
-                                ),
-                                linkStyle: TextStyle(
-                                  color: resolvedAccent,
-                                  fontWeight: FontWeight.w700,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
+                               SelectableLinkify(
+                                 onOpen: onTapLink != null
+                                     ? (link) => onTapLink!(link.url)
+                                     : null,
+                                 text: description!,
+                                 style: const TextStyle(
+                                   fontSize: 13.0,
+                                   height: 1.5,
+                                   color: AppColors.textSecondary,
+                                   letterSpacing: 0.1,
+                                 ),
+                                 linkStyle: TextStyle(
+                                   color: resolvedAccent,
+                                   fontWeight: FontWeight.w700,
+                                   decoration: TextDecoration.underline,
+                                 ),
+                               ),
                             ],
                             // Attachment Section
                             if (fileName != null && fileName!.isNotEmpty) ...[
