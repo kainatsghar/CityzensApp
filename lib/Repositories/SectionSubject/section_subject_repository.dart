@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:tcs_app/model/OfflineState/data_state.dart';
 import 'package:tcs_app/model/SectionSubject/section_subject_response.dart';
 import 'package:tcs_app/services/LocalCache/local_cache_manager.dart';
@@ -59,11 +60,7 @@ class SectionSubjectRepository {
         await _saveToCache(cacheKey, response);
 
         onStateChange(
-          DataLoaded(
-            response,
-            isStale: false,
-            lastSyncedAt: DateTime.now(),
-          ),
+          DataLoaded(response, isStale: false, lastSyncedAt: DateTime.now()),
         );
 
         return response;
@@ -101,14 +98,10 @@ class SectionSubjectRepository {
       await _saveToCache(cacheKey, response);
 
       onStateChange(
-        DataLoaded(
-          response,
-          isStale: false,
-          lastSyncedAt: DateTime.now(),
-        ),
+        DataLoaded(response, isStale: false, lastSyncedAt: DateTime.now()),
       );
     } catch (e) {
-      print('SectionSubjectRepository: Background sync failed: $e');
+      debugPrint('SectionSubjectRepository: Background sync failed: $e');
     }
   }
 
@@ -137,11 +130,7 @@ class SectionSubjectRepository {
       await _saveToCache(cacheKey, response);
 
       onStateChange(
-        DataLoaded(
-          response,
-          isStale: false,
-          lastSyncedAt: DateTime.now(),
-        ),
+        DataLoaded(response, isStale: false, lastSyncedAt: DateTime.now()),
       );
     } catch (e) {
       final cachedData = await _getFromCache(cacheKey);
@@ -161,7 +150,10 @@ class SectionSubjectRepository {
   }
 
   /// Clear cache
-  Future<void> clearCache({required int classSectionId, required bool isDiary}) async {
+  Future<void> clearCache({
+    required int classSectionId,
+    required bool isDiary,
+  }) async {
     final cacheKey = _getCacheKey(classSectionId, isDiary);
     await LocalCacheManager.clearCache(key: cacheKey);
   }
@@ -175,7 +167,7 @@ class SectionSubjectRepository {
         return SectionSubjectResponse.fromJson(jsonDecode(jsonStr));
       }
     } catch (e) {
-      print('SectionSubjectRepository: Error getting from cache: $e');
+      debugPrint('SectionSubjectRepository: Error getting from cache: $e');
     }
     return null;
   }
@@ -189,7 +181,7 @@ class SectionSubjectRepository {
         dataType: 'section_subject_response',
       );
     } catch (e) {
-      print('SectionSubjectRepository: Error saving to cache: $e');
+      debugPrint('SectionSubjectRepository: Error saving to cache: $e');
     }
   }
 

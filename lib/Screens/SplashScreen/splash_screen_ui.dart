@@ -112,7 +112,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
                   center: const Alignment(0, -0.2),
                   radius: 1.8,
                   colors: [
-                    _bgGradientColor.value!.withOpacity(0.9),
+                    _bgGradientColor.value!.withValues(alpha: 0.9),
                     AppColors.primaryDarkBlue,
                   ],
                 ),
@@ -175,7 +175,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
                     "v${AppConstants.appVersion}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.4),
+                      color: Colors.white.withValues(alpha: 0.4),
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                       letterSpacing: 1.5,

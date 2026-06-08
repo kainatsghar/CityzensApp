@@ -146,15 +146,15 @@ class _TabSelectorState<T> extends State<TabSelector<T>>
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.primaryColor.withOpacity(
-                        widget.isEnabled ? 1.0 : 0.5,
+                    ? AppColors.primaryColor.withValues(
+                        alpha: widget.isEnabled ? 1.0 : 0.5,
                       )
                     : AppColors.white,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: isSelected
-                      ? AppColors.primaryColor.withOpacity(
-                          widget.isEnabled ? 1.0 : 0.5,
+                      ? AppColors.primaryColor.withValues(
+                          alpha: widget.isEnabled ? 1.0 : 0.5,
                         )
                       : Colors.grey.shade200,
                   width: isSelected ? 2.0 : 1.5,

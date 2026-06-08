@@ -68,7 +68,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
                 center: const Alignment(-0.5, -0.6), // Offset center for depth
                 radius: 1.5,
                 colors: [
-                  AppColors.primaryBlue.withOpacity(0.95),
+                  AppColors.primaryBlue.withValues(alpha: 0.95),
                   AppColors.primaryDarkBlue,
                 ],
               ),
@@ -122,9 +122,9 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
         bottom: 24,
       ),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         border: Border(
-          bottom: BorderSide(color: Colors.white.withOpacity(0.1), width: 1.0),
+          bottom: BorderSide(color: Colors.white.withValues(alpha: 0.1), width: 1.0),
         ),
       ),
       child: Column(
@@ -156,7 +156,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
                 ? 'CNIC No: ${localData.userData?.userName ?? ''}'
                 : 'ERP No: ${localData.userData?.userName ?? ''}',
             style: TextStyle(
-              color: AppColors.goldenYellow.withOpacity(0.9),
+              color: AppColors.goldenYellow.withValues(alpha: 0.9),
               fontSize: 13,
               fontWeight: FontWeight.w500,
               letterSpacing: 0.5,
@@ -221,7 +221,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
               'App Version: ${AppConstants.appVersion}',
               style: TextStyle(
                 fontSize: 12.0,
-                color: Colors.white.withOpacity(0.4),
+                color: Colors.white.withValues(alpha: 0.4),
                 fontWeight: FontWeight.w500,
                 letterSpacing: 1.2,
               ),
@@ -299,10 +299,10 @@ class _DrawerTile extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               width: 1.0,
             ),
           ),
@@ -311,7 +311,7 @@ class _DrawerTile extends StatelessWidget {
               Icon(
                 icon,
                 color: isDestructive
-                    ? Colors.redAccent.withOpacity(0.8)
+                    ? Colors.redAccent.withValues(alpha: 0.8)
                     : AppColors.goldenYellow,
                 size: 22,
               ),
@@ -329,7 +329,7 @@ class _DrawerTile extends StatelessWidget {
               ),
               Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 size: 14,
               ),
             ],

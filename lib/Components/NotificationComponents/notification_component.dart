@@ -89,18 +89,18 @@ class _NotificationComponentState extends State<NotificationComponent> {
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.lightRedColor.withOpacity(0.04),
+                          color: AppColors.lightRedColor.withValues(alpha: 0.04),
                           blurRadius: 16,
                           offset: const Offset(0, 8),
                         ),
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.02),
+                          color: Colors.black.withValues(alpha: 0.02),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
                       ],
                       border: Border.all(
-                        color: AppColors.lightRedColor.withOpacity(0.08),
+                        color: AppColors.lightRedColor.withValues(alpha: 0.08),
                         width: 1,
                       ),
                     ),
@@ -115,7 +115,7 @@ class _NotificationComponentState extends State<NotificationComponent> {
                             vertical: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.lightRedColor.withOpacity(0.08),
+                            color: AppColors.lightRedColor.withValues(alpha: 0.08),
                             borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(19),
                               topRight: Radius.circular(19),

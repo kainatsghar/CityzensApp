@@ -44,13 +44,13 @@ class ConnectivityProvider extends ChangeNotifier {
           _updateConnectivityStatus(results);
         },
         onError: (dynamic error) {
-          print('ConnectivityProvider Error: $error');
+          debugPrint('ConnectivityProvider Error: $error');
           _isOnline = false;
           notifyListeners();
         },
       );
     } catch (e) {
-      print('ConnectivityProvider Initialization Error: $e');
+      debugPrint('ConnectivityProvider Initialization Error: $e');
       _isOnline = true; // Assume online if we can't determine
       _isLoading = false;
       notifyListeners();

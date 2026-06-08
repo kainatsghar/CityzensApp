@@ -50,7 +50,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
 
         return Container(
           decoration: BoxDecoration(
-            color: AppColors.primaryLightBlue.withOpacity(0.01),
+            color: AppColors.primaryLightBlue.withValues(alpha: 0.01),
           ),
           child: Column(
             children: [
@@ -161,7 +161,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
         gradient: LinearGradient(
           colors: [
             AppColors.primaryBlue,
-            AppColors.primaryBlue.withOpacity(0.9),
+            AppColors.primaryBlue.withValues(alpha: 0.9),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -169,7 +169,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryBlue.withOpacity(0.2),
+            color: AppColors.primaryBlue.withValues(alpha: 0.2),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -235,10 +235,10 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.primaryBlue.withOpacity(0.08)),
+        border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.01),
+            color: Colors.black.withValues(alpha: 0.01),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -251,12 +251,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
           thumbVisibility: true,
           thickness: 4,
           radius: const Radius.circular(10),
-          thumbColor: AppColors.primaryBlue.withOpacity(0.3),
+          thumbColor: AppColors.primaryBlue.withValues(alpha: 0.3),
           child: ListView.separated(
             controller: _studentScrollController,
             padding: const EdgeInsets.all(8),
             itemCount: students.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 6),
+            separatorBuilder: (_, _) => const SizedBox(height: 6),
             itemBuilder: (context, index) {
               final student = students[index];
               final isSelected = value.selectedChild == student.studentName;
@@ -275,12 +275,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                   ),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? AppColors.primaryBlue.withOpacity(0.08)
+                        ? AppColors.primaryBlue.withValues(alpha: 0.08)
                         : Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: isSelected
-                          ? AppColors.primaryBlue.withOpacity(0.3)
+                          ? AppColors.primaryBlue.withValues(alpha: 0.3)
                           : Colors.grey.shade50,
                     ),
                   ),
@@ -304,7 +304,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                         'ID: ${student.studentId ?? "N/A"}',
                         style: TextStyle(
                           color: isSelected
-                              ? AppColors.primaryBlue.withOpacity(0.7)
+                              ? AppColors.primaryBlue.withValues(alpha: 0.7)
                               : Colors.grey.shade500,
                           fontWeight: FontWeight.w700,
                           fontSize: 9,
@@ -330,10 +330,10 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.primaryBlue.withOpacity(0.08)),
+        border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.01),
+            color: Colors.black.withValues(alpha: 0.01),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -346,12 +346,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
           thumbVisibility: true,
           thickness: 4,
           radius: const Radius.circular(10),
-          thumbColor: AppColors.primaryDarkColor.withOpacity(0.3),
+          thumbColor: AppColors.primaryDarkColor.withValues(alpha: 0.3),
           child: ListView.separated(
             controller: _updateScrollController,
             padding: const EdgeInsets.all(8),
             itemCount: updates.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 6),
+            separatorBuilder: (_, _) => const SizedBox(height: 6),
             itemBuilder: (context, index) {
               final update = updates[index];
               final isSelected = value.selectedUpdate == update.updateName;
@@ -420,7 +420,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.primaryBlue.withOpacity(0.05)),
+        border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.05)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -434,12 +434,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
               padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
                 color: value.files.length < 3
-                    ? AppColors.primaryBlue.withOpacity(0.03)
+                    ? AppColors.primaryBlue.withValues(alpha: 0.03)
                     : Colors.grey.shade50,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: value.files.length < 3
-                      ? AppColors.primaryBlue.withOpacity(0.15)
+                      ? AppColors.primaryBlue.withValues(alpha: 0.15)
                       : Colors.grey.shade200,
                   width: 1.2,
                 ),
@@ -481,7 +481,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: value.files.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 8),
+                separatorBuilder: (_, _) => const SizedBox(width: 8),
                 itemBuilder: (context, index) {
                   final File? file = value.files[index];
                   if (file == null) return const SizedBox.shrink();
@@ -500,7 +500,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                           width: 28,
                           height: 28,
                           decoration: BoxDecoration(
-                            color: AppColors.primaryBlue.withOpacity(0.1),
+                            color: AppColors.primaryBlue.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Icon(
@@ -527,7 +527,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                           child: Container(
                             padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.1),
+                              color: Colors.red.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(

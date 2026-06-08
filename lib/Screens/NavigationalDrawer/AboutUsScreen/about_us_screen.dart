@@ -106,8 +106,8 @@ class AboutUsScreenState extends State<AboutUsScreen>
                                   Text(
                                     'Since 1978',
                                     style: TextStyle(
-                                      color: AppColors.goldenYellow.withOpacity(
-                                        0.9,
+                                      color: AppColors.goldenYellow.withValues(
+                                        alpha: 0.9,
                                       ),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,

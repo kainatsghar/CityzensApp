@@ -29,10 +29,10 @@ class AttendanceGraphComponent extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
-                      color: AppColors.successGreen.withOpacity(0.06),
+                      color: AppColors.successGreen.withValues(alpha: 0.06),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppColors.successGreen.withOpacity(0.15),
+                        color: AppColors.successGreen.withValues(alpha: 0.15),
                       ),
                     ),
                     child: Column(
@@ -40,7 +40,7 @@ class AttendanceGraphComponent extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: AppColors.successGreen.withOpacity(0.1),
+                            color: AppColors.successGreen.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -75,11 +75,11 @@ class AttendanceGraphComponent extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppColors.primaryBlue.withOpacity(0.08),
+                        color: AppColors.primaryBlue.withValues(alpha: 0.08),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.03),
+                          color: Colors.black.withValues(alpha: 0.03),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -94,7 +94,7 @@ class AttendanceGraphComponent extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: AppColors.primaryBlue.withOpacity(0.08),
+                                color: AppColors.primaryBlue.withValues(alpha: 0.08),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Icon(
@@ -174,9 +174,9 @@ class AttendanceGraphComponent extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: c.withOpacity(0.08),
+        color: c.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: c.withOpacity(0.2)),
+        border: Border.all(color: c.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -192,7 +192,7 @@ class AttendanceGraphComponent extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: c.withOpacity(0.9),
+              color: c.withValues(alpha: 0.9),
             ),
           ),
         ],

@@ -491,18 +491,9 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
           'centerName': profile.center,
         };
 
-        return CustomStudentInfo(info: _InfoWrapper(infoWrapper));
+        return CustomStudentInfo(info: StudentInfoWrapper(infoWrapper));
       },
     );
   }
 }
 
-class _InfoWrapper {
-  final Map<String, dynamic> _data;
-  _InfoWrapper(this._data);
-
-  String? get rollNo => _data['rollNo'];
-  String? get name => _data['name'];
-  String? get className => _data['className'];
-  String? get centerName => _data['centerName'];
-}

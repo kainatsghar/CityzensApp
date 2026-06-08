@@ -62,7 +62,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                      border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
                     ),
                     child: Row(
                       children: [
@@ -70,7 +70,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                           width: 42,
                           height: 42,
                           decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
@@ -82,13 +82,13 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                               Container(
                                 height: 12,
                                 width: 120,
-                                color: Colors.grey.withOpacity(0.2),
+                                color: Colors.grey.withValues(alpha: 0.2),
                               ),
                               const SizedBox(height: 8),
                               Container(
                                 height: 10,
                                 width: 80,
-                                color: Colors.grey.withOpacity(0.2),
+                                color: Colors.grey.withValues(alpha: 0.2),
                               ),
                             ],
                           ),
@@ -102,7 +102,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                               height: 36,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.grey.withOpacity(0.2),
+                                color: Colors.grey.withValues(alpha: 0.2),
                               ),
                             ),
                           ),

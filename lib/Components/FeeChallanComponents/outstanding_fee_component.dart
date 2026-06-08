@@ -66,7 +66,10 @@ class OutstandingFeeComponent extends StatelessWidget {
                           builder: (context) {
                             final apiInfo = value.outstandingChallans!.info;
                             final profile = dashboardProvider
-                                .activeChildData?.profile?.profile?.firstOrNull;
+                                .activeChildData
+                                ?.profile
+                                ?.profile
+                                ?.firstOrNull;
 
                             if (apiInfo?.className == null && profile != null) {
                               final fallbackInfo = {
@@ -76,7 +79,7 @@ class OutstandingFeeComponent extends StatelessWidget {
                                 'centerName': profile.center,
                               };
                               return CustomStudentInfo(
-                                info: _FeeInfoWrapper(fallbackInfo),
+                                info: StudentInfoWrapper(fallbackInfo),
                               );
                             }
                             return CustomStudentInfo(info: apiInfo);
@@ -139,9 +142,11 @@ class OutstandingFeeComponent extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.warningOrange.withOpacity(0.08),
+        color: AppColors.warningOrange.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.warningOrange.withOpacity(0.15)),
+        border: Border.all(
+          color: AppColors.warningOrange.withValues(alpha: 0.15),
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,14 +172,4 @@ class OutstandingFeeComponent extends StatelessWidget {
       ),
     );
   }
-}
-
-class _FeeInfoWrapper {
-  final Map<String, dynamic> _data;
-  _FeeInfoWrapper(this._data);
-
-  get rollNo => _data['rollNo'];
-  get name => _data['name'];
-  get className => _data['className'];
-  get centerName => _data['centerName'];
 }

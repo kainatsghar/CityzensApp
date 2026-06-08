@@ -47,13 +47,13 @@ class AttendanceListItem extends StatelessWidget {
               border: Border.all(
                 color: isUnmarkedPast
                     ? Colors.grey.shade300
-                    : AppColors.primaryBlue.withOpacity(0.06),
+                    : AppColors.primaryBlue.withValues(alpha: 0.06),
               ),
               boxShadow: isUnmarkedPast
                   ? []
                   : [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.025),
+                        color: Colors.black.withValues(alpha: 0.025),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -66,7 +66,7 @@ class AttendanceListItem extends StatelessWidget {
                   width: 42,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: AppColors.primaryBlue.withOpacity(0.08),
+                    color: AppColors.primaryBlue.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(

@@ -95,7 +95,7 @@ class CustomTitleValue extends StatelessWidget {
                   child: Icon(
                     Icons.copy_rounded, 
                     size: 14, 
-                    color: AppColors.primaryColor.withOpacity(0.6)
+                    color: AppColors.primaryColor.withValues(alpha: 0.6)
                   ),
                 ),
               ],
@@ -106,7 +106,7 @@ class CustomTitleValue extends StatelessWidget {
           Divider(
             height: 1,
             thickness: 0.5,
-            color: Colors.grey.withOpacity(0.15),
+            color: Colors.grey.withValues(alpha: 0.15),
           ),
       ],
     );

@@ -69,7 +69,7 @@ class CustomTabBar extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(_containerPadding),
               decoration: BoxDecoration(
-                color: AppColors.primaryBlue.withOpacity(0.06),
+                color: AppColors.primaryBlue.withValues(alpha: 0.06),
                 borderRadius: BorderRadius.circular(14),
               ),
               child: TabBar(
@@ -89,7 +89,7 @@ class CustomTabBar extends StatelessWidget {
                   letterSpacing: 0.3,
                 ),
                 // ── Unselected Tab ──
-                unselectedLabelColor: AppColors.primaryBlue.withOpacity(0.7),
+                unselectedLabelColor: AppColors.primaryBlue.withValues(alpha: 0.7),
                 unselectedLabelStyle: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
@@ -101,7 +101,7 @@ class CustomTabBar extends StatelessWidget {
                   color: AppColors.primaryBlue,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryBlue.withOpacity(0.25),
+                      color: AppColors.primaryBlue.withValues(alpha: 0.25),
                       blurRadius: 6,
                       offset: const Offset(0, 3),
                     ),

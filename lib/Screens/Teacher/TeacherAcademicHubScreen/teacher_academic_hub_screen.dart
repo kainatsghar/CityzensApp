@@ -114,7 +114,7 @@ class _TeacherAcademicHubScreenState extends State<TeacherAcademicHubScreen>
                 color: AppColors.primaryLightBlue,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: AppColors.primaryBlue.withOpacity(0.08),
+                  color: AppColors.primaryBlue.withValues(alpha: 0.08),
                 ),
               ),
               child: TabBar(
@@ -124,7 +124,7 @@ class _TeacherAcademicHubScreenState extends State<TeacherAcademicHubScreen>
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryBlue.withOpacity(0.3),
+                      color: AppColors.primaryBlue.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),

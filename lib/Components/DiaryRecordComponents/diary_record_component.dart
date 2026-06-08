@@ -89,7 +89,7 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                   Icon(
                     Icons.book_outlined,
                     size: 72,
-                    color: AppColors.primaryColor.withOpacity(0.3),
+                    color: AppColors.primaryColor.withValues(alpha: 0.3),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -155,18 +155,18 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primaryBlue.withOpacity(0.04),
+                        color: AppColors.primaryBlue.withValues(alpha: 0.04),
                         blurRadius: 16,
                         offset: const Offset(0, 8),
                       ),
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.02),
+                        color: Colors.black.withValues(alpha: 0.02),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
                     ],
                     border: Border.all(
-                      color: AppColors.primaryBlue.withOpacity(0.08),
+                      color: AppColors.primaryBlue.withValues(alpha: 0.08),
                       width: 1,
                     ),
                   ),
@@ -181,7 +181,7 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primaryBlue.withOpacity(0.08),
+                          color: AppColors.primaryBlue.withValues(alpha: 0.08),
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(19),
                             topRight: Radius.circular(19),

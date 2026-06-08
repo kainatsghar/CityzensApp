@@ -325,18 +325,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
           'centerName': profile.center,
         };
 
-        return CustomStudentInfo(info: _InfoWrapper(infoWrapper));
+        return CustomStudentInfo(info: StudentInfoWrapper(infoWrapper));
       },
     );
   }
 }
 
-class _InfoWrapper {
-  final Map<String, dynamic> _data;
-  _InfoWrapper(this._data);
-
-  get rollNo => _data['rollNo'];
-  get name => _data['name'];
-  get className => _data['className'];
-  get centerName => _data['centerName'];
-}

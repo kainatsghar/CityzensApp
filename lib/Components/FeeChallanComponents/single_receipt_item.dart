@@ -24,15 +24,15 @@ class SingleReceiptItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          color: AppColors.primaryBlue.withOpacity(0.02),
+          color: AppColors.primaryBlue.withValues(alpha: 0.02),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.primaryBlue.withOpacity(0.08),
+            color: AppColors.primaryBlue.withValues(alpha: 0.08),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -53,7 +53,7 @@ class SingleReceiptItem extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         AppColors.successGreen,
-                        AppColors.successGreen.withOpacity(0.7),
+                        AppColors.successGreen.withValues(alpha: 0.7),
                       ],
                     ),
                   ),
@@ -95,10 +95,10 @@ class SingleReceiptItem extends StatelessWidget {
                             vertical: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.successGreen.withOpacity(0.06),
+                            color: AppColors.successGreen.withValues(alpha: 0.06),
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
-                              color: AppColors.successGreen.withOpacity(0.12),
+                              color: AppColors.successGreen.withValues(alpha: 0.12),
                             ),
                           ),
                           child: Row(
@@ -123,7 +123,7 @@ class SingleReceiptItem extends StatelessWidget {
                                         '+ ${HelperFunction().formatCurrency(record.overReceipt!)} Overpayment',
                                         style: TextStyle(
                                           color: AppColors.successGreen
-                                              .withOpacity(0.8),
+                                              .withValues(alpha: 0.8),
                                           fontSize: 10,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -162,7 +162,7 @@ class SingleReceiptItem extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.successGreen.withOpacity(0.1),
+            color: AppColors.successGreen.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: const Icon(
@@ -200,7 +200,7 @@ class SingleReceiptItem extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
-            color: AppColors.successGreen.withOpacity(0.12),
+            color: AppColors.successGreen.withValues(alpha: 0.12),
             borderRadius: BorderRadius.circular(8),
           ),
           child: const Text(

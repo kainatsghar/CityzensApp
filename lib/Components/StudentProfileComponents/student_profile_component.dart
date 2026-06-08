@@ -344,8 +344,7 @@ class _FieldData {
     required this.label,
     required this.value,
     this.controller,
-    this.isEditField = false,
-  });
+  }) : isEditField = false;
 }
 
 class _ProfileSection extends StatelessWidget {
@@ -356,8 +355,7 @@ class _ProfileSection extends StatelessWidget {
   const _ProfileSection({
     required this.title,
     required this.fields,
-    this.isEditable = false,
-  });
+  }) : isEditable = false;
 
   @override
   Widget build(BuildContext context) {

@@ -109,7 +109,7 @@ class _LibraryRecordsTab extends StatelessWidget {
                     'className': profile.className,
                     'centerName': profile.center,
                   };
-                  return CustomStudentInfo(info: _LibraryInfoWrapper(fallbackInfo));
+                  return CustomStudentInfo(info: StudentInfoWrapper(fallbackInfo));
                 }
 
                 return CustomStudentInfo(info: apiInfo);
@@ -151,12 +151,3 @@ class _NotificationsTab extends StatelessWidget {
   }
 }
 
-class _LibraryInfoWrapper {
-  final Map<String, dynamic> _data;
-  _LibraryInfoWrapper(this._data);
-
-  get rollNo => _data['rollNo'];
-  get name => _data['name'];
-  get className => _data['className'];
-  get centerName => _data['centerName'];
-}

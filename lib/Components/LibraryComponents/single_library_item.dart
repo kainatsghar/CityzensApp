@@ -38,15 +38,15 @@ class SingleLibraryItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          color: AppColors.primaryBlue.withOpacity(0.02),
+          color: AppColors.primaryBlue.withValues(alpha: 0.02),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.primaryBlue.withOpacity(0.08),
+            color: AppColors.primaryBlue.withValues(alpha: 0.08),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -65,7 +65,7 @@ class SingleLibraryItem extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [accentColor, accentColor.withOpacity(0.6)],
+                      colors: [accentColor, accentColor.withValues(alpha: 0.6)],
                     ),
                   ),
                 ),
@@ -146,7 +146,7 @@ class SingleLibraryItem extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: statusColor.withOpacity(0.1),
+            color: statusColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(Icons.auto_stories_rounded, color: statusColor, size: 20),
@@ -181,7 +181,7 @@ class SingleLibraryItem extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
-            color: statusColor.withOpacity(0.1),
+            color: statusColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -203,13 +203,13 @@ class SingleLibraryItem extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: hasFine
-            ? AppColors.errorRed.withOpacity(0.05)
-            : Colors.grey.withOpacity(0.04),
+            ? AppColors.errorRed.withValues(alpha: 0.05)
+            : Colors.grey.withValues(alpha: 0.04),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: hasFine
-              ? AppColors.errorRed.withOpacity(0.1)
-              : Colors.grey.withOpacity(0.08),
+              ? AppColors.errorRed.withValues(alpha: 0.1)
+              : Colors.grey.withValues(alpha: 0.08),
         ),
       ),
       child: Row(

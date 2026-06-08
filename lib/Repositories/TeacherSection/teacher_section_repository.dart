@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:tcs_app/model/OfflineState/data_state.dart';
 import 'package:tcs_app/model/TeacherSection/teacher_section_response.dart';
 import 'package:tcs_app/services/LocalCache/local_cache_manager.dart';
@@ -103,7 +104,7 @@ class TeacherSectionRepository {
       );
     } catch (e) {
       // Silently fail - don't interrupt user if background sync fails
-      print('TeacherSectionRepository: Background sync failed: $e');
+      debugPrint('TeacherSectionRepository: Background sync failed: $e');
     }
   }
 
@@ -200,7 +201,7 @@ class TeacherSectionRepository {
         return TeacherSectionResponse.fromJson(jsonDecode(jsonStr));
       }
     } catch (e) {
-      print('TeacherSectionRepository: Error getting from cache: $e');
+      debugPrint('TeacherSectionRepository: Error getting from cache: $e');
     }
     return null;
   }
@@ -231,7 +232,7 @@ class TeacherSectionRepository {
         dataType: 'teacher_sections_response',
       );
     } catch (e) {
-      print('TeacherSectionRepository: Error saving to cache: $e');
+      debugPrint('TeacherSectionRepository: Error saving to cache: $e');
     }
   }
 

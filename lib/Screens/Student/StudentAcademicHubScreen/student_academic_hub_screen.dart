@@ -73,9 +73,12 @@ class _StudentAcademicHubScreenState extends State<StudentAcademicHubScreen>
 
   void _logCurrentTab(int index) {
     String featureName = 'Homework Diary';
-    if (index == 1) featureName = 'Classwork Assignment';
-    else if (index == 2) featureName = 'Circulars';
-    
+    if (index == 1) {
+      featureName = 'Classwork Assignment';
+    } else if (index == 2) {
+      featureName = 'Circulars';
+    }
+
     AppAnalyticsService.logFeatureAccess(featureName);
   }
 
@@ -202,7 +205,7 @@ class _StudentAcademicHubScreenState extends State<StudentAcademicHubScreen>
                 color: AppColors.primaryLightBlue,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: AppColors.primaryBlue.withOpacity(0.08),
+                  color: AppColors.primaryBlue.withValues(alpha: 0.08),
                 ),
               ),
               child: TabBar(
@@ -212,7 +215,7 @@ class _StudentAcademicHubScreenState extends State<StudentAcademicHubScreen>
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryBlue.withOpacity(0.3),
+                      color: AppColors.primaryBlue.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),

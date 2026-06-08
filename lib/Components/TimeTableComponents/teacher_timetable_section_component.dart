@@ -46,7 +46,7 @@ class TeacherTimeTableSectionComponent extends StatelessWidget {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
+                          color: Colors.black.withValues(alpha: 0.04),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -63,7 +63,7 @@ class TeacherTimeTableSectionComponent extends StatelessWidget {
                                 Icon(
                                   Icons.layers_outlined,
                                   size: 18,
-                                  color: AppColors.primaryBlue.withOpacity(0.7),
+                                  color: AppColors.primaryBlue.withValues(alpha: 0.7),
                                 ),
                                 const SizedBox(width: 10),
                                 const Text(

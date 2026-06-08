@@ -46,7 +46,9 @@ class DataLoading<T> extends DataState<T> {
 
 /// Successfully loaded data
 class DataLoaded<T> extends DataState<T> {
+  @override
   final T data;
+  @override
   final bool
   isStale; // true if loaded from local cache and not yet synced with server
   final DateTime? lastSyncedAt; // Timestamp of the last successful sync
@@ -71,6 +73,7 @@ class DataError<T> extends DataState<T> {
 
 /// Offline data (showing local cache)
 class OfflineData<T> extends DataState<T> {
+  @override
   final T data;
   final DateTime? lastSyncedAt;
 

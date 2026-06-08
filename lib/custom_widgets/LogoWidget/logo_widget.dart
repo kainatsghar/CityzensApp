@@ -78,7 +78,7 @@ class _LogoWidgetState extends State<LogoWidget> with SingleTickerProviderStateM
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: widget.glowColor.withOpacity(_glowAnimation.value * 0.2),
+                          color: widget.glowColor.withValues(alpha: _glowAnimation.value * 0.2),
                           blurRadius: 70,
                           spreadRadius: 20,
                         ),

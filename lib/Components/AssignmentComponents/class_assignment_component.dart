@@ -90,7 +90,7 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
                   Icon(
                     Icons.assignment_outlined,
                     size: 72,
-                    color: AppColors.primaryColor.withOpacity(0.3),
+                    color: AppColors.primaryColor.withValues(alpha: 0.3),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -157,18 +157,18 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.goldenColors.withOpacity(0.04),
+                        color: AppColors.goldenColors.withValues(alpha: 0.04),
                         blurRadius: 16,
                         offset: const Offset(0, 8),
                       ),
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.02),
+                        color: Colors.black.withValues(alpha: 0.02),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
                     ],
                     border: Border.all(
-                      color: AppColors.goldenColors.withOpacity(0.12),
+                      color: AppColors.goldenColors.withValues(alpha: 0.12),
                       width: 1,
                     ),
                   ),
@@ -183,7 +183,7 @@ class _AssignmentRecordComponentState extends State<AssignmentRecordComponent> {
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.goldenColors.withOpacity(0.12),
+                          color: AppColors.goldenColors.withValues(alpha: 0.12),
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(19),
                             topRight: Radius.circular(19),

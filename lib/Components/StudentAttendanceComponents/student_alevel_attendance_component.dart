@@ -58,8 +58,8 @@ class StudentAttendanceComponent extends StatelessWidget {
                                   border: Border.all(
                                     color: isSelected
                                         ? AppColors.primaryBlue
-                                        : AppColors.primaryBlue.withOpacity(
-                                            0.15,
+                                        : AppColors.primaryBlue.withValues(
+                                            alpha: 0.15,
                                           ),
                                     width: 1.5,
                                   ),
@@ -67,7 +67,7 @@ class StudentAttendanceComponent extends StatelessWidget {
                                       ? [
                                           BoxShadow(
                                             color: AppColors.primaryBlue
-                                                .withOpacity(0.3),
+                                                .withValues(alpha: 0.3),
                                             blurRadius: 8,
                                             offset: const Offset(0, 3),
                                           ),
@@ -117,11 +117,11 @@ class StudentAttendanceComponent extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: AppColors.primaryBlue.withOpacity(0.08),
+                            color: AppColors.primaryBlue.withValues(alpha: 0.08),
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.03),
+                              color: Colors.black.withValues(alpha: 0.03),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -135,8 +135,8 @@ class StudentAttendanceComponent extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primaryBlue.withOpacity(
-                                      0.08,
+                                    color: AppColors.primaryBlue.withValues(
+                                      alpha: 0.08,
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -208,9 +208,9 @@ class StudentAttendanceComponent extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.08),
+        color: color.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -226,7 +226,7 @@ class StudentAttendanceComponent extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: color.withOpacity(0.9),
+              color: color.withValues(alpha: 0.9),
             ),
           ),
         ],

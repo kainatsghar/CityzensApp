@@ -51,15 +51,15 @@ class SingleChallanItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          color: AppColors.primaryBlue.withOpacity(0.02),
+          color: AppColors.primaryBlue.withValues(alpha: 0.02),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.primaryBlue.withOpacity(0.08),
+            color: AppColors.primaryBlue.withValues(alpha: 0.08),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -81,7 +81,7 @@ class SingleChallanItem extends StatelessWidget {
                       colors: isOverdue
                           ? [
                               AppColors.errorRed,
-                              AppColors.errorRed.withOpacity(0.7),
+                              AppColors.errorRed.withValues(alpha: 0.7),
                             ]
                           : [AppColors.goldenYellow, AppColors.warningOrange],
                     ),
@@ -177,8 +177,8 @@ class SingleChallanItem extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: isOverdue
-                ? AppColors.errorRed.withOpacity(0.1)
-                : AppColors.goldenYellow.withOpacity(0.15),
+                ? AppColors.errorRed.withValues(alpha: 0.1)
+                : AppColors.goldenYellow.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
@@ -218,8 +218,8 @@ class SingleChallanItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
             color: isOverdue
-                ? AppColors.errorRed.withOpacity(0.1)
-                : Colors.redAccent.withOpacity(0.08),
+                ? AppColors.errorRed.withValues(alpha: 0.1)
+                : Colors.redAccent.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -247,9 +247,9 @@ class SingleChallanItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.primaryBlue.withOpacity(0.04),
+        color: AppColors.primaryBlue.withValues(alpha: 0.04),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.primaryBlue.withOpacity(0.08)),
+        border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.08)),
       ),
       child: Column(
         children: [
@@ -280,7 +280,7 @@ class SingleChallanItem extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Divider(
                 height: 1,
-                color: AppColors.primaryBlue.withOpacity(0.1),
+                color: AppColors.primaryBlue.withValues(alpha: 0.1),
               ),
             ),
           ] else

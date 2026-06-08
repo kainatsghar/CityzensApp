@@ -59,7 +59,7 @@ class RoyalParticlePainter extends CustomPainter {
 
       final paint = Paint()
         ..style = PaintingStyle.fill
-        ..color = baseColor.withOpacity(baseOpacity)
+        ..color = baseColor.withValues(alpha: baseOpacity)
         ..isAntiAlias = true
         ..strokeCap = StrokeCap.round
         ..strokeWidth = size;

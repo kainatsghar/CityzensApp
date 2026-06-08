@@ -365,8 +365,9 @@ class ClassTestResultProvider with ChangeNotifier {
   }
 
   void setSubjectId(int? id, String? name) {
-    if (subjectId == (id ?? 0) && subjectController.text == (name ?? ''))
+    if (subjectId == (id ?? 0) && subjectController.text == (name ?? '')) {
       return;
+    }
     subjectId = id ?? 0;
     subjectController.text = name ?? '';
     notifyListeners();

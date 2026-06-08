@@ -88,7 +88,7 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                 Icon(
                   Icons.campaign_outlined,
                   size: 72,
-                  color: AppColors.primaryColor.withOpacity(0.3),
+                  color: AppColors.primaryColor.withValues(alpha: 0.3),
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -110,7 +110,8 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
         }
 
         // Group circulars by date
-        final Map<String, List<CircularAnnouncementRecords>> groupedCirculars = {};
+        final Map<String, List<CircularAnnouncementRecords>> groupedCirculars =
+            {};
         for (var record in records) {
           final date = record.circularDateOnly;
           if (date.isNotEmpty) {
@@ -132,8 +133,9 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
             itemCount: sortedDates.length,
             itemBuilder: (context, index) {
               final String dateStr = sortedDates[index];
-              final List<CircularAnnouncementRecords> circulars = groupedCirculars[dateStr]!;
-  
+              final List<CircularAnnouncementRecords> circulars =
+                  groupedCirculars[dateStr]!;
+
               String formattedDate = 'Unknown Date';
               try {
                 formattedDate = DateFormat(
@@ -142,7 +144,7 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
               } catch (e) {
                 formattedDate = dateStr;
               }
-  
+
               return KeepAliveWrapper(
                 key: ValueKey(dateStr),
                 child: Container(
@@ -152,18 +154,18 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.lightRedColor.withOpacity(0.04),
+                        color: AppColors.lightRedColor.withValues(alpha: 0.04),
                         blurRadius: 16,
                         offset: const Offset(0, 8),
                       ),
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.02),
+                        color: Colors.black.withValues(alpha: 0.02),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
                     ],
                     border: Border.all(
-                      color: AppColors.lightRedColor.withOpacity(0.08),
+                      color: AppColors.lightRedColor.withValues(alpha: 0.08),
                       width: 1,
                     ),
                   ),
@@ -178,7 +180,9 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.lightRedColor.withOpacity(0.08),
+                          color: AppColors.lightRedColor.withValues(
+                            alpha: 0.08,
+                          ),
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(19),
                             topRight: Radius.circular(19),
@@ -204,14 +208,14 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                           ],
                         ),
                       ),
-        
+
                       // Inner list of Circulars
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
                           children: List.generate(circulars.length, (idx) {
                             final circular = circulars[idx];
-        
+
                             return UnifiedAcademicCard(
                               key: ValueKey('${circular.id}_$idx'),
                               title: circular.title ?? 'No Title',
@@ -219,7 +223,8 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                               fileName: circular.fileName,
                               badgeText: circular.sectionName,
                               accentColor: AppColors.lightRedColor,
-                              isTeacher: localData.userData!.userType == 'Teacher',
+                              isTeacher:
+                                  localData.userData!.userType == 'Teacher',
                               onEdit: () => AppNavigation.navigateTo(
                                 AppNavRoutes.addCircularRoute,
                                 arguments: circular,
@@ -229,11 +234,15 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                                 circular.id!,
                                 value,
                               ),
-                              onTapAttachment: () => _launchFile(circular.fileName!),
+                              onTapAttachment: () =>
+                                  _launchFile(circular.fileName!),
                               onTapLink: (url) async {
                                 final Uri uri = Uri.parse(url);
                                 if (await canLaunchUrl(uri)) {
-                                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                  await launchUrl(
+                                    uri,
+                                    mode: LaunchMode.externalApplication,
+                                  );
                                 }
                               },
                               extraSubtitleRow: null,

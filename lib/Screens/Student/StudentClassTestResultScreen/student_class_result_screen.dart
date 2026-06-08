@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomLoader/custom_loader.dart';
@@ -92,7 +91,7 @@ class _StudentClassResultScreenState extends State<StudentClassResultScreen> {
           'centerName': profile.center,
         };
 
-        return CustomStudentInfo(info: _InfoWrapper(infoWrapper));
+        return CustomStudentInfo(info: StudentInfoWrapper(infoWrapper));
       },
     );
   }
@@ -113,15 +112,6 @@ class _StudentClassResultScreenState extends State<StudentClassResultScreen> {
   }
 }
 
-class _InfoWrapper {
-  final Map<String, dynamic> _data;
-  _InfoWrapper(this._data);
-
-  get rollNo => _data['rollNo'];
-  get name => _data['name'];
-  get className => _data['className'];
-  get centerName => _data['centerName'];
-}
 
 class _MultiTestSubjectCard extends StatelessWidget {
   final SubjectDto subject;
@@ -137,12 +127,12 @@ class _MultiTestSubjectCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryBlue.withOpacity(0.06),
+            color: AppColors.primaryBlue.withValues(alpha: 0.06),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
         ],
-        border: Border.all(color: AppColors.borderGrey.withOpacity(0.5)),
+        border: Border.all(color: AppColors.borderGrey.withValues(alpha: 0.5)),
       ),
       child: Column(
         children: [
@@ -150,7 +140,7 @@ class _MultiTestSubjectCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
             decoration: BoxDecoration(
-              color: AppColors.primaryBlue.withOpacity(0.04),
+              color: AppColors.primaryBlue.withValues(alpha: 0.04),
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(24),
               ),
@@ -160,7 +150,7 @@ class _MultiTestSubjectCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryBlue.withOpacity(0.1),
+                    color: AppColors.primaryBlue.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
@@ -206,7 +196,7 @@ class _MultiTestSubjectCard extends StatelessWidget {
     return Container(
       height: 35,
       width: 1,
-      color: AppColors.borderGrey.withOpacity(0.4),
+      color: AppColors.borderGrey.withValues(alpha: 0.4),
     );
   }
 
@@ -227,7 +217,7 @@ class _MultiTestSubjectCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w800,
-              color: AppColors.softGreyText.withOpacity(0.8),
+              color: AppColors.softGreyText.withValues(alpha: 0.8),
               letterSpacing: 1.0,
             ),
           ),
@@ -249,7 +239,7 @@ class _MultiTestSubjectCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.softGreyText.withOpacity(0.5),
+                      color: AppColors.softGreyText.withValues(alpha: 0.5),
                     ),
                   ),
                 ],

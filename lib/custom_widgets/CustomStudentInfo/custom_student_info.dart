@@ -25,13 +25,13 @@ class CustomStudentInfo extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [
               AppColors.primaryDarkColor,
-              AppColors.primaryColor.withOpacity(0.9),
+              AppColors.primaryColor.withValues(alpha: 0.9),
             ],
           ),
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryDarkColor.withOpacity(0.3),
+              color: AppColors.primaryDarkColor.withValues(alpha: 0.3),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -47,7 +47,7 @@ class CustomStudentInfo extends StatelessWidget {
                 top: -30,
                 child: CircleAvatar(
                   radius: 80,
-                  backgroundColor: Colors.white.withOpacity(0.05),
+                  backgroundColor: Colors.white.withValues(alpha: 0.05),
                 ),
               ),
 
@@ -73,7 +73,7 @@ class CustomStudentInfo extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(3),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.white24,
@@ -121,7 +121,7 @@ class CustomStudentInfo extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
+                        color: Colors.white.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: Colors.white12),
                       ),
@@ -237,4 +237,14 @@ class _DetailItem extends StatelessWidget {
       ],
     );
   }
+}
+
+class StudentInfoWrapper {
+  final Map<String, dynamic> _data;
+  StudentInfoWrapper(this._data);
+
+  dynamic get rollNo => _data['rollNo'];
+  dynamic get name => _data['name'];
+  dynamic get className => _data['className'];
+  dynamic get centerName => _data['centerName'];
 }

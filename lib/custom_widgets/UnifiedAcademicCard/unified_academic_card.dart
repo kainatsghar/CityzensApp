@@ -55,16 +55,16 @@ class UnifiedAcademicCard extends StatelessWidget {
 
     if (accentColor == AppColors.goldenColors) {
       resolvedAccent = AppColors.goldenColors;
-      resolvedBadgeBg = AppColors.goldenColors.withOpacity(0.12);
+      resolvedBadgeBg = AppColors.goldenColors.withValues(alpha: 0.12);
       resolvedBadgeText = AppColors.goldenColors;
     } else if (accentColor == AppColors.lightRedColor) {
       resolvedAccent = AppColors.lightRedColor;
-      resolvedBadgeBg = AppColors.lightRedColor.withOpacity(0.12);
+      resolvedBadgeBg = AppColors.lightRedColor.withValues(alpha: 0.12);
       resolvedBadgeText = AppColors.lightRedColor;
     } else {
       // Default / Homework (primaryBlue)
       resolvedAccent = AppColors.primaryBlue;
-      resolvedBadgeBg = AppColors.primaryBlue.withOpacity(0.12);
+      resolvedBadgeBg = AppColors.primaryBlue.withValues(alpha: 0.12);
       resolvedBadgeText = AppColors.primaryBlue;
     }
 
@@ -76,12 +76,12 @@ class UnifiedAcademicCard extends StatelessWidget {
         border: Border.all(color: AppColors.border, width: 1.2),
         boxShadow: [
           BoxShadow(
-            color: AppColors.neutral300.withOpacity(0.22),
+            color: AppColors.neutral300.withValues(alpha: 0.22),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
           BoxShadow(
-            color: AppColors.neutral100.withOpacity(0.08),
+            color: AppColors.neutral100.withValues(alpha: 0.08),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -120,7 +120,7 @@ class UnifiedAcademicCard extends StatelessWidget {
                           color: resolvedBadgeBg,
                           borderRadius: BorderRadius.circular(6),
                           border: Border.all(
-                            color: resolvedAccent.withOpacity(0.12),
+                            color: resolvedAccent.withValues(alpha: 0.12),
                             width: 1,
                           ),
                         ),
@@ -158,7 +158,7 @@ class UnifiedAcademicCard extends StatelessWidget {
                       color: AppColors.neutral50,
                       border: Border(
                         right: BorderSide(
-                          color: resolvedAccent.withOpacity(0.25),
+                          color: resolvedAccent.withValues(alpha: 0.25),
                           width: 1.2,
                         ),
                       ),
@@ -205,8 +205,8 @@ class UnifiedAcademicCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(2),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AppColors.neutral900.withOpacity(
-                                        0.08,
+                                      color: AppColors.neutral900.withValues(
+                                        alpha: 0.08,
                                       ),
                                       blurRadius: 1,
                                       offset: const Offset(0, 0.5),
@@ -225,7 +225,7 @@ class UnifiedAcademicCard extends StatelessWidget {
                   Expanded(
                     child: CustomPaint(
                       painter: DiaryRuledLinesPainter(
-                        lineColor: AppColors.border.withOpacity(0.35),
+                        lineColor: AppColors.border.withValues(alpha: 0.35),
                         lineSpacing: 26.0,
                       ),
                       child: Padding(
@@ -355,7 +355,7 @@ class UnifiedAcademicCard extends StatelessWidget {
                         icon: Icons.edit_outlined,
                         label: 'Edit',
                         color: resolvedAccent,
-                        backgroundColor: resolvedAccent.withOpacity(0.08),
+                        backgroundColor: resolvedAccent.withValues(alpha: 0.08),
                         onTap: onEdit!,
                       ),
                   ],

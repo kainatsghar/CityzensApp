@@ -56,7 +56,7 @@ class ReceiptFeeComponent extends StatelessWidget {
                     'centerName': profile.center,
                   };
                   return CustomStudentInfo(
-                    info: _ReceiptInfoWrapper(fallbackInfo),
+                    info: StudentInfoWrapper(fallbackInfo),
                   );
                 }
 
@@ -81,12 +81,3 @@ class ReceiptFeeComponent extends StatelessWidget {
   }
 }
 
-class _ReceiptInfoWrapper {
-  final Map<String, dynamic> _data;
-  _ReceiptInfoWrapper(this._data);
-
-  get rollNo => _data['rollNo'];
-  get name => _data['name'];
-  get className => _data['className'];
-  get centerName => _data['centerName'];
-}

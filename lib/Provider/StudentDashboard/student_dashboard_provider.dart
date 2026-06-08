@@ -198,8 +198,9 @@ class StudentDashboardProvider with ChangeNotifier {
 
   Future<void> refreshActiveChild() async {
     final token = localDataProvider.userData?.tokenId;
-    if (token == null || _activeStudentId == null || _activeStudentId!.isEmpty)
+    if (token == null || _activeStudentId == null || _activeStudentId!.isEmpty) {
       return;
+    }
 
     _isLoading = true;
     notifyListeners();

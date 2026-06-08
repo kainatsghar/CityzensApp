@@ -85,9 +85,9 @@ class TeacherSectionComponent extends StatelessWidget {
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primaryBlue.withOpacity(0.1),
+                                    color: AppColors.primaryBlue.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: AppColors.primaryBlue.withOpacity(0.3)),
+                                    border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.3)),
                                   ),
                                   child: const Text(
                                     "Today",

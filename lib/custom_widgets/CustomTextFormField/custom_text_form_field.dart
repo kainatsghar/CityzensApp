@@ -117,7 +117,7 @@ class CustomTextFormField extends StatelessWidget {
         hintText: hintText,
         labelStyle: TextStyle(
           fontSize: 14.0,
-          color: AppColors.primaryBlue.withOpacity(0.7),
+          color: AppColors.primaryBlue.withValues(alpha: 0.7),
           fontWeight: FontWeight.w600,
         ),
         hintStyle: TextStyle(

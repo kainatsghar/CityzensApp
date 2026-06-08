@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Handles local caching with SharedPreferences
@@ -26,7 +27,7 @@ class LocalCacheManager {
       // Save data type for validation
       await prefs.setString('${cacheKey}_type', dataType);
     } catch (e) {
-      print('LocalCacheManager Error saving $key: $e');
+      debugPrint('LocalCacheManager Error saving $key: $e');
       rethrow;
     }
   }
@@ -38,7 +39,7 @@ class LocalCacheManager {
       final cacheKey = _getCacheKey(key);
       return prefs.getString(cacheKey);
     } catch (e) {
-      print('LocalCacheManager Error retrieving $key: $e');
+      debugPrint('LocalCacheManager Error retrieving $key: $e');
       return null;
     }
   }
@@ -55,7 +56,7 @@ class LocalCacheManager {
       }
       return null;
     } catch (e) {
-      print('LocalCacheManager Error getting last sync time for $key: $e');
+      debugPrint('LocalCacheManager Error getting last sync time for $key: $e');
       return null;
     }
   }
@@ -67,7 +68,9 @@ class LocalCacheManager {
       final cacheKey = _getCacheKey(key);
       return prefs.containsKey(cacheKey);
     } catch (e) {
-      print('LocalCacheManager Error checking cache existence for $key: $e');
+      debugPrint(
+        'LocalCacheManager Error checking cache existence for $key: $e',
+      );
       return false;
     }
   }
@@ -86,7 +89,7 @@ class LocalCacheManager {
         prefs.remove(typeKey),
       ]);
     } catch (e) {
-      print('LocalCacheManager Error clearing cache for $key: $e');
+      debugPrint('LocalCacheManager Error clearing cache for $key: $e');
       rethrow;
     }
   }
@@ -104,7 +107,7 @@ class LocalCacheManager {
         }
       }
     } catch (e) {
-      print('LocalCacheManager Error clearing all caches: $e');
+      debugPrint('LocalCacheManager Error clearing all caches: $e');
       rethrow;
     }
   }

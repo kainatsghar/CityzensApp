@@ -23,7 +23,7 @@ class StudentAttendance extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryDarkColor.withOpacity(0.25),
+                color: AppColors.primaryDarkColor.withValues(alpha: 0.25),
                 blurRadius: 16,
                 offset: const Offset(0, 6),
               ),
@@ -112,7 +112,7 @@ class StudentAttendance extends StatelessWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: (event.color as Color).withOpacity(0.4),
+                              color: (event.color as Color).withValues(alpha: 0.4),
                               blurRadius: 3,
                               offset: const Offset(0, 1),
                             ),

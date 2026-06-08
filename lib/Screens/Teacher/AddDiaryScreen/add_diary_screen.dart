@@ -153,10 +153,10 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                       vertical: 14,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryBlue.withOpacity(0.04),
+                      color: AppColors.primaryBlue.withValues(alpha: 0.04),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: AppColors.primaryBlue.withOpacity(0.12),
+                        color: AppColors.primaryBlue.withValues(alpha: 0.12),
                         width: 1,
                       ),
                     ),
@@ -165,7 +165,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryBlue.withOpacity(0.1),
+                            color: AppColors.primaryBlue.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -183,7 +183,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                               style: TextStyle(
                                 fontSize: 10,
                                 letterSpacing: 0.5,
-                                color: AppColors.primaryBlue.withOpacity(0.7),
+                                color: AppColors.primaryBlue.withValues(alpha: 0.7),
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -231,8 +231,9 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                               isEnabled: !provider.isEdit,
                               onItemSelected: (section) {
                                 if (provider.sectionId ==
-                                    section.classSectionId)
+                                    section.classSectionId) {
                                   return;
+                                }
                                 provider.sectionController.text =
                                     section.name ?? '';
                                 provider.setSectionId(
@@ -336,9 +337,9 @@ class _AttachmentPreview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.primaryColor.withOpacity(0.05),
+        color: AppColors.primaryColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primaryColor.withOpacity(0.2)),
+        border: Border.all(color: AppColors.primaryColor.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [

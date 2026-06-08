@@ -82,7 +82,7 @@ class _ParticleBackgroundState extends State<ParticleBackground> {
                   final p = _particles[i];
                   final baseX = p.fx * w;
                   final baseY = p.fy * h;
-                  final color = widget.particleColor.withOpacity(p.opacity);
+                  final color = widget.particleColor.withValues(alpha: p.opacity);
 
                   final x =
                       baseX +

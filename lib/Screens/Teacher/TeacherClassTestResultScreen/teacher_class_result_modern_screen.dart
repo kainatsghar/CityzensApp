@@ -170,7 +170,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -183,7 +183,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryDarkColor.withOpacity(0.06),
+                  color: AppColors.primaryDarkColor.withValues(alpha: 0.06),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: const Icon(
@@ -289,7 +289,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
               ? Icon(
                   icon,
                   size: 18,
-                  color: AppColors.primaryDarkColor.withOpacity(0.6),
+                  color: AppColors.primaryDarkColor.withValues(alpha: 0.6),
                 )
               : null,
           hintText: label,
@@ -335,7 +335,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryDarkColor.withOpacity(0.3),
+                      color: AppColors.primaryDarkColor.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -440,7 +440,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 15,
             offset: const Offset(0, -4),
           ),
@@ -529,7 +529,7 @@ class _SaveButton extends StatelessWidget {
           foregroundColor: Colors.white,
           disabledBackgroundColor: Colors.grey.shade300,
           elevation: onPressed == null ? 0 : 4,
-          shadowColor: AppColors.primaryDarkColor.withOpacity(0.35),
+          shadowColor: AppColors.primaryDarkColor.withValues(alpha: 0.35),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -625,8 +625,8 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
         boxShadow: [
           BoxShadow(
             color: _isFocused
-                ? AppColors.primaryDarkColor.withOpacity(0.08)
-                : Colors.black.withOpacity(0.03),
+                ? AppColors.primaryDarkColor.withValues(alpha: 0.08)
+                : Colors.black.withValues(alpha: 0.03),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -635,7 +635,7 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
           color: isInvalid
               ? Colors.red.shade400
               : (_isFocused
-                    ? AppColors.primaryDarkColor.withOpacity(0.3)
+                    ? AppColors.primaryDarkColor.withValues(alpha: 0.3)
                     : Colors.transparent),
           width: 1.8,
         ),
@@ -646,8 +646,8 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
             width: 62,
             height: 44,
             decoration: BoxDecoration(
-              color: AppColors.primaryDarkColor.withOpacity(
-                _isFocused ? 1 : 0.08,
+              color: AppColors.primaryDarkColor.withValues(
+                alpha: _isFocused ? 1 : 0.08,
               ),
               borderRadius: BorderRadius.circular(12),
             ),

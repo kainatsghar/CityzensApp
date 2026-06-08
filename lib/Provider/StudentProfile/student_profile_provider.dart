@@ -11,24 +11,26 @@ class StudentProfileProvider with ChangeNotifier {
   Map<String, StudentProfileResponse> cachedProfiles = {};
 
   StudentProfileResponse? get profileResponse {
-    String currentStudentId = localDataProvider.studentId ?? '';
+    String currentStudentId = localDataProvider.studentId;
     if (cachedProfiles.containsKey(currentStudentId)) {
       return cachedProfiles[currentStudentId];
     }
-    
+
     // Attempt to load from Dashboard provider to avoid redundant fetches
     try {
       final dashboardProvider = Provider.of<StudentDashboardProvider>(
         AppNavigation.currentContext!,
         listen: false,
       );
-      final dashboardProfile = dashboardProvider.getChildData(currentStudentId)?.profile;
+      final dashboardProfile = dashboardProvider
+          .getChildData(currentStudentId)
+          ?.profile;
       if (dashboardProfile != null) {
         cachedProfiles[currentStudentId] = dashboardProfile;
         return dashboardProfile;
       }
     } catch (_) {}
-    
+
     return null;
   }
 
@@ -38,7 +40,7 @@ class StudentProfileProvider with ChangeNotifier {
   );
 
   void setStdProfileData(StudentProfileResponse response) {
-    String currentStudentId = localDataProvider.studentId ?? '';
+    String currentStudentId = localDataProvider.studentId;
 
     // Only notify if data has actually changed to prevent unnecessary UI jitters
     if (cachedProfiles.containsKey(currentStudentId)) {
@@ -49,7 +51,7 @@ class StudentProfileProvider with ChangeNotifier {
         return;
       }
     }
-    
+
     cachedProfiles[currentStudentId] = response;
     notifyListeners();
   }
