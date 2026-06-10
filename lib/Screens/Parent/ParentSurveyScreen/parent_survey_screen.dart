@@ -31,7 +31,6 @@ class _ParentSurveyScreenState extends State<ParentSurveyScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

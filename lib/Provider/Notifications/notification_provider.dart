@@ -56,7 +56,6 @@ class NotificationProvider with ChangeNotifier {
   void clearData() {
     notifications = null;
     currentNotificationGroup = NotificationGroup.challan;
-    notifyListeners();
   }
 }
 

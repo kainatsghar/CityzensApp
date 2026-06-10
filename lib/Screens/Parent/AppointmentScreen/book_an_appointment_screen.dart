@@ -25,13 +25,13 @@ class _BookanAppointmentScreenState extends State<BookanAppointmentScreen> {
 
   @override
   void initState() {
+    provider.clearFormState();
     appointmentRecords = provider.loadAppointmentConfig();
     super.initState();
   }
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

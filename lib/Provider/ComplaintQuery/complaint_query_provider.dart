@@ -229,6 +229,16 @@ class ComplaintQueryProvider with ChangeNotifier {
     }
   }
 
+  /// Clears only form input state. Call in initState() of complaint screens.
+  /// Does NOT clear withdrawalResponse (list data).
+  void clearFormState() {
+    selectedCategory = "";
+    category = "";
+    subCategory = "";
+    type = "";
+    descriptionController.clear();
+  }
+
   void clearData() {
     withdrawalResponse = null;
     selectedCategory = "";

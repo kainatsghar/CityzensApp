@@ -254,7 +254,6 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
     presentDates = [];
     leaveDates = [];
     studentAttendance.clear();
-    notifyListeners();
   }
 
   void clearDate() {

@@ -159,6 +159,18 @@ class SchoolEventProvider with ChangeNotifier {
     }
   }
 
+  /// Clears only form input state. Call in initState() of form screens.
+  /// Does NOT clear eventResponse (list data).
+  void clearFormState() {
+    sectionId = null;
+    dateController.clear();
+    sectionController.clear();
+    eventController.clear();
+    noteController.clear();
+    sections = [];
+    sectionResponse = TeacherSectionResponse();
+  }
+
   void clearData() {
     sectionId = null;
     dateController.clear();

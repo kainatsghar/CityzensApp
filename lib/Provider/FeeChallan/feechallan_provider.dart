@@ -96,6 +96,5 @@ class FeeChallanProvider with ChangeNotifier {
     challanReceiptResponse = null;
     isLoading = true;
     loadError = null;
-    notifyListeners();
   }
 }

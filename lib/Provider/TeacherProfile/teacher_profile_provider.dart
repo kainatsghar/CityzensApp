@@ -53,6 +53,5 @@ class TeacherProfileProvider with ChangeNotifier {
 
   void clearData() {
     profileResponse = null;
-    notifyListeners();
   }
 }

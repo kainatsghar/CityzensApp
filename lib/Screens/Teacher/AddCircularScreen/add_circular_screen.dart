@@ -43,6 +43,9 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
     _provider = Provider.of<CircularProvider>(context, listen: false);
     _dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
 
+    // Always start with a clean form
+    _provider.clearFormState();
+
     if (_isEdit) {
       // Step 1: Populate controllers synchronously BEFORE first build
       _provider.initForEdit(widget.editRecord!);
@@ -61,7 +64,6 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
 
   @override
   void dispose() {
-    _provider.clearData();
     super.dispose();
   }
 

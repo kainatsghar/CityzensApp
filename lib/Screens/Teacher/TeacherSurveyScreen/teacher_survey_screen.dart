@@ -24,6 +24,7 @@ class _TeacherSurveyScreenState extends State<TeacherSurveyScreen> {
 
   @override
   void initState() {
+    provider.clearFormState();
     surveyQuestionRecords = provider.loadSurvey();
 
     super.initState();
@@ -31,7 +32,6 @@ class _TeacherSurveyScreenState extends State<TeacherSurveyScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

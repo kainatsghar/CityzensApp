@@ -26,6 +26,14 @@ class OutstandingChallanResponse {
       outstandingList: feeRecords,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'IsSuccessful': isSuccessful,
+    'Message': message,
+    'IsServerException': isException,
+    'StudentInfo': info?.toJson(),
+    'OutstandingChallan': outstandingList?.map((e) => e.toJson()).toList(),
+  };
 }
 
 class StudentInfo {
@@ -58,6 +66,16 @@ class StudentInfo {
       primaryContactNo: json['PrimaryContactNo'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'StudentName': name,
+    'Student_Id': rollNo,
+    'Class_Name': className,
+    'Center_Name': centerName,
+    'Region_Name': regionName,
+    'Father_CNIC': fatherCnic,
+    'PrimaryContactNo': primaryContactNo,
+  };
 }
 
 class OutstandingChallan {
@@ -93,4 +111,15 @@ class OutstandingChallan {
       periodName: json['PERIOD_NAME'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'CHALLAN_NO': challanNo,
+    'CHALLAN_TYPE': challanType,
+    'ISSUE_DATE': issueDate,
+    'DUE_DATE': dueDate,
+    'VALIDITY_DATE': validityDate,
+    'ORIGINAL_FEE': originalFee,
+    'OUTSTANDING_FEE': outstandingFee,
+    'PERIOD_NAME': periodName,
+  };
 }

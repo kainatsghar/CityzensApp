@@ -23,6 +23,13 @@ class NotificationResponse {
       notifications: notificationList,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'IsSuccessful': isSuccessful,
+    'Message': message,
+    'IsServerException': isException,
+    'notifications': notifications?.map((e) => e.toJson()).toList(),
+  };
 }
 
 class Notifications {
@@ -48,4 +55,12 @@ class Notifications {
       filePath: json['FilePath'] as String?,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'Notif_Subject': notifySubject,
+    'Notif_Message': notifyMessage,
+    'GeneratedOn': generatedOn,
+    'FileName': fileName,
+    'FilePath': filePath,
+  };
 }

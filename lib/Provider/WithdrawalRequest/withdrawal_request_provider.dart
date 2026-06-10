@@ -267,6 +267,22 @@ class WithdrawalRequestProvider with ChangeNotifier {
     }
   }
 
+  /// Clears only form input state. Call in initState() of withdrawal screens.
+  /// Does NOT clear withdrawalResponse (list data).
+  void clearFormState() {
+    selectedReasons = [];
+    isRelocationSelected = false;
+    townCity = "";
+    specify = "";
+    reasonString = "";
+    isCommunicating = "";
+    isContacted = "";
+    isSatisfied = "";
+    isWithdraw = "";
+    inFavour = "";
+    chequeAddress = "";
+  }
+
   void clearData() {
     withdrawalResponse = null;
     selectedReasons = [];

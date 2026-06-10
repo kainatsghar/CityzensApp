@@ -344,6 +344,25 @@ class DiaryProvider with ChangeNotifier {
     }
   }
 
+  /// Clears only form input state. Call in initState() of form screens
+  /// to ensure a fresh form every time the screen opens.
+  /// Does NOT clear diaryResponse (list data).
+  void clearFormState() {
+    isEdit = false;
+    sectionId = null;
+    subjectId = null;
+    subjectController.clear();
+    sectionController.clear();
+    descriptionController.clear();
+    sections = [];
+    subjects = [];
+    subjectResponse = SectionSubjectResponse();
+    sectionResponse = TeacherSectionResponse();
+    fileName = null;
+    base64String = null;
+    selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  }
+
   /// Clears all form state. Use from dispose() to avoid notifying
   /// a locked widget tree. Any active consumers will not be rebuilt
   /// (they are being disposed anyway).

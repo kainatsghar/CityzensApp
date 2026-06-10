@@ -344,6 +344,24 @@ class AssignmentProvider with ChangeNotifier {
     }
   }
 
+  /// Clears only form input state. Call in initState() of form screens.
+  /// Does NOT clear assignmentResponse (list data).
+  void clearFormState() {
+    isEdit = false;
+    sectionId = null;
+    subjectId = null;
+    subjectController.clear();
+    sectionController.clear();
+    descriptionController.clear();
+    sections = [];
+    subjects = [];
+    subjectResponse = SectionSubjectResponse();
+    sectionResponse = TeacherSectionResponse();
+    fileName = null;
+    base64String = null;
+    selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  }
+
   /// Clears all form state. Safe to call from dispose().
   void clearData() {
     isEdit = false;

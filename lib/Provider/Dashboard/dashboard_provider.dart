@@ -516,6 +516,7 @@ class DashboardProvider with ChangeNotifier {
     subjectStatesMap.clear();
     _isDashboardDataInitialized = false;
     _isDashboardDataLoading = false;
-    notifyListeners();
+    // Do NOT notify — called during logout after navigation away.
+    // No listeners exist, and notifying risks markNeedsBuild errors.
   }
 }

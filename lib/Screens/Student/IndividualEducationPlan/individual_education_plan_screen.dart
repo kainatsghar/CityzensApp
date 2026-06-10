@@ -32,7 +32,6 @@ class IndividualEducationPlanState
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

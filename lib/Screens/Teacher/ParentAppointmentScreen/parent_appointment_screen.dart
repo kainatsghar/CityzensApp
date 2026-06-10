@@ -31,7 +31,6 @@ class _ParentAppointmentScreenState extends State<ParentAppointmentScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

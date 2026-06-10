@@ -66,13 +66,24 @@ class ResultsProvider with ChangeNotifier {
     controller = TabController(length: 2, vsync: tickerProvider);
   }
 
-  Future<AcademicTermResponse> loadAcademicTerm() async {
+  final Map<String, AcademicTermResponse> _termCache = {};
+
+  Future<AcademicTermResponse> loadAcademicTerm({bool forceRefresh = false}) async {
+    final studentId = localDataProvider.studentId;
+
+    if (!forceRefresh && _termCache.containsKey(studentId)) {
+      final cachedResponse = _termCache[studentId]!;
+      setResponse(cachedResponse);
+      return cachedResponse;
+    }
+
     try {
       AcademicTermResponse response =
           await AcademicTermService.academicTermRequest(
-            userName: localDataProvider.studentId,
+            userName: studentId,
             token: localDataProvider.userData!.tokenId!,
           );
+      _termCache[studentId] = response;
       setResponse(response);
       return response;
     } catch (ex) {
@@ -80,7 +91,18 @@ class ResultsProvider with ChangeNotifier {
     }
   }
 
-  Future<dynamic> loadResults() async {
+  final Map<String, dynamic> _cachedResultsMap = {};
+
+  Future<dynamic> loadResults({bool forceRefresh = false}) async {
+    final cacheKey = '${localDataProvider.studentId}-$selectAcademicYear-$selectedTerm';
+
+    if (!forceRefresh && _cachedResultsMap.containsKey(cacheKey)) {
+      final cachedResponse = _cachedResultsMap[cacheKey];
+      setResultsResponse(ResultsResponse.fromJson(cachedResponse));
+      setEyeResultResponse(cachedResponse['EyeResult']);
+      return cachedResponse;
+    }
+
     try {
       var response = await ResultService.resultsRequest(
         userName: localDataProvider.studentId,
@@ -88,6 +110,7 @@ class ResultsProvider with ChangeNotifier {
         academicYearId: selectAcademicYear,
         termId: selectedTerm,
       );
+      _cachedResultsMap[cacheKey] = response;
       setResultsResponse(ResultsResponse.fromJson(response));
       setEyeResultResponse(response['EyeResult']);
       return response;
@@ -165,6 +188,18 @@ class ResultsProvider with ChangeNotifier {
     }
   }
 
+  /// Clears only form selection state. Call in initState() of results screens.
+  /// Does NOT clear resultsResponse.
+  void clearFormState() {
+    selectedTerm = 0;
+    selectAcademicYear = 0;
+    academicYearController.clear();
+    termController.clear();
+    terms = [];
+    academicYears = [];
+    termSelected = false;
+  }
+
   void clearData() {
     selectedTerm = 0;
     selectAcademicYear = 0;
@@ -174,6 +209,7 @@ class ResultsProvider with ChangeNotifier {
     academicYears = [];
     termSelected = false;
     resultsResponse = ResultsResponse();
-    notifyListeners();
+    _cachedResultsMap.clear();
+    _termCache.clear();
   }
 }

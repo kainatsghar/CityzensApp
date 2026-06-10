@@ -226,6 +226,21 @@ class AppointmentProvider with ChangeNotifier {
     }
   }
 
+  /// Clears only booking form state. Call in initState() of booking screens.
+  /// Does NOT clear meetingResponse (appointment list data).
+  void clearFormState() {
+    sectionId = null;
+    subjectController.clear();
+    sectionController.clear();
+    descriptionController.clear();
+    selectedIndex = null;
+    selectedTeacherType = null;
+    selectedDate = null;
+    selectedTime = null;
+    selectedReason = null;
+    appointmentResponse = null;
+  }
+
   void clearData() {
     sectionId = null;
     subjectController.clear();

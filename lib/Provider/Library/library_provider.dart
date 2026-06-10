@@ -7,7 +7,18 @@ import 'package:tcs_app/services/Library/library_service.dart';
 import 'package:tcs_app/model/Library/library_response.dart';
 
 class LibraryProvider with ChangeNotifier {
-  LibraryResponse? libraryResponse;
+  final Map<String, LibraryResponse> _libraryResponseCache = {};
+
+  LibraryResponse? get libraryResponse =>
+      _libraryResponseCache[localDataProvider.studentId];
+
+  set libraryResponse(LibraryResponse? val) {
+    if (val != null) {
+      _libraryResponseCache[localDataProvider.studentId] = val;
+    } else {
+      _libraryResponseCache.remove(localDataProvider.studentId);
+    }
+  }
 
   ScrollController? scrollController;
   TabController? tabController;
@@ -32,7 +43,11 @@ class LibraryProvider with ChangeNotifier {
 
   /// Loads both Library records AND library notifications concurrently.
   /// Called once on init and again on pull-to-refresh from any tab.
-  Future<void> loadAllData() async {
+  Future<void> loadAllData({bool forceRefresh = false}) async {
+    if (!forceRefresh && libraryResponse != null) {
+      return;
+    }
+
     isLoading = true;
     loadError = null;
     notifyListeners();
@@ -69,9 +84,8 @@ class LibraryProvider with ChangeNotifier {
   }
 
   void clearData() {
-    libraryResponse = null;
+    _libraryResponseCache.clear();
     isLoading = true;
     loadError = null;
-    notifyListeners();
   }
 }

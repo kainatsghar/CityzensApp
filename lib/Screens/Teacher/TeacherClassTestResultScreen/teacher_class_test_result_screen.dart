@@ -30,7 +30,6 @@ class _TeacherClassTestResultScreenState
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

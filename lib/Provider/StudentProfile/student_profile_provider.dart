@@ -72,6 +72,5 @@ class StudentProfileProvider with ChangeNotifier {
 
   void clearData() {
     cachedProfiles.clear();
-    notifyListeners();
   }
 }

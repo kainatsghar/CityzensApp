@@ -26,6 +26,7 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
 
   @override
   void initState() {
+    provider.clearFormState();
     AppAnalyticsService.logFeatureAccess("Term Results");
     _academicTermService = provider.loadAcademicTerm();
     super.initState();
@@ -33,7 +34,6 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 
@@ -57,7 +57,7 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
             }
           },
         ),
-        onRefresh: () => provider.loadAcademicTerm(),
+        onRefresh: () => provider.loadAcademicTerm(forceRefresh: true),
       ),
     );
   }

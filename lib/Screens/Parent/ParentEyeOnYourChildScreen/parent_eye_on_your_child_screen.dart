@@ -32,7 +32,6 @@ class _ParentEyeOnYourChildScreenState
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

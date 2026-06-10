@@ -24,6 +24,7 @@ class _ComplaintQueryScreenState extends State<ComplaintQueryScreen> {
 
   @override
   void initState() {
+    provider.clearFormState();
     provider.initializeUserData();
     withdrawalReasonsRecords = provider.loadComplaintQuery();
 
@@ -32,7 +33,6 @@ class _ComplaintQueryScreenState extends State<ComplaintQueryScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

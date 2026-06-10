@@ -113,6 +113,12 @@ class SurveyProvider with ChangeNotifier {
     }
   }
 
+  /// Clears only survey answer state. Call in initState() of survey screens.
+  /// Does NOT clear surveyResponse (survey questions data).
+  void clearFormState() {
+    surveyAnswers = [];
+  }
+
   void clearData() {
     surveyAnswers = [];
   }

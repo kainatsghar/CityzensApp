@@ -120,6 +120,14 @@ class SupportFormProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Clears only user-editable form fields. Call in initState() of feedback screens.
+  void clearFormState() {
+    titleController.clear();
+    detailsController.clear();
+    selectedFeedbackType = "Bug Report";
+    mobileContactController.clear();
+  }
+
   void clearData() {
     nameController.clear();
     idController.clear();

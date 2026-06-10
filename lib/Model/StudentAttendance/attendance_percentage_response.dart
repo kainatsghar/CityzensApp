@@ -11,6 +11,12 @@ class AttendancePercentageResponse {
         message: json['Message'],
         data: Data.fromJson(json['Data'] ?? {}));
   }
+
+  Map<String, dynamic> toJson() => {
+    'IsSuccessful': isSuccessful,
+    'Message': message,
+    'Data': data?.toJson(),
+  };
 }
 
 class Data {
@@ -21,4 +27,8 @@ class Data {
   factory Data.fromJson(Map json) {
     return Data(attendancePercentage: json['AttendancePercentage']);
   }
+
+  Map<String, dynamic> toJson() => {
+    'AttendancePercentage': attendancePercentage,
+  };
 }

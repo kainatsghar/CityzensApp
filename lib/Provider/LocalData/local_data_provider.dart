@@ -32,6 +32,7 @@ import 'package:tcs_app/provider/Appointment/appointment_provider.dart';
 import 'package:tcs_app/provider/WithdrawalRequest/withdrawal_request_provider.dart';
 import 'package:tcs_app/provider/SupportForm/support_form_provider.dart';
 import 'package:tcs_app/provider/Library/library_provider.dart';
+import 'package:tcs_app/services/LocalCache/local_cache_manager.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/routes/app_navigation_routes.dart';
 import 'package:tcs_app/services/Logout/logout_service.dart';
@@ -211,6 +212,9 @@ class LocalDataProvider with ChangeNotifier {
           withdrawalRequestProvider.clearData();
           supportFormProvider.clearData();
           libraryProvider.clearData();
+
+          // Clear all offline caches to prevent data leaking between users
+          LocalCacheManager.clearAllCaches();
         });
       } else {
         DialogBuilder.hideOpenDialog();

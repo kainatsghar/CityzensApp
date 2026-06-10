@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/model/Assignment/assignment_response.dart';
-import 'package:tcs_app/services/StudentAssignment/student_assignment_service.dart';
 import 'package:tcs_app/model/StudentProfile/student_profile_response.dart';
 import 'package:tcs_app/model/StudentAttendance/attendance_percentage_response.dart';
 import 'package:tcs_app/model/StudentAttendance/student_attendance_response.dart';
@@ -13,14 +11,8 @@ import 'package:tcs_app/model/MultiChild/multi_child_response.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
-
-import 'package:tcs_app/services/StudentProfile/student_profile_service.dart';
-import 'package:tcs_app/services/AttendancePercentage/attendance_percentage_service.dart';
-import 'package:tcs_app/services/StudentAttendance/student_attendance_service.dart';
-import 'package:tcs_app/services/FeeChallan/feechallan_service.dart';
-import 'package:tcs_app/services/StudentDiary/student_diary_service.dart';
-import 'package:tcs_app/services/Notifications/notification_service.dart';
 import 'package:tcs_app/services/MultiChild/multi_child_service.dart';
+import 'package:tcs_app/repositories/StudentDashboard/student_dashboard_repository.dart';
 
 class ChildDashboardData {
   StudentProfileResponse? profile;
@@ -34,6 +26,7 @@ class ChildDashboardData {
 
 class StudentDashboardProvider with ChangeNotifier {
   final Map<String, ChildDashboardData> _childDataMap = {};
+  final StudentDashboardRepository _repository = StudentDashboardRepository();
 
   bool _isFirstChildReady = false;
   bool _isAllChildrenReady = false;
@@ -245,93 +238,39 @@ class StudentDashboardProvider with ChangeNotifier {
     String token,
     ChildDashboardData data,
   ) async {
-    final currentMonthStr = DateFormat('yyyyMM').format(DateTime.now());
+    await _repository.fetchChildDataOfflineFirst(
+      studentId: studentId,
+      token: token,
+      data: data,
+      onCacheHit: (cachedData) {
+        // Cache hit — immediately show cached dashboard
+        // The UI is already bound to `data`, so just notify.
+        if (studentId == _activeStudentId) {
+          _isFirstChildReady = true;
+          _isLoading = false;
+          notifyListeners();
+        }
+      },
+    );
 
-    await Future.wait([
-      // Profile
-      StudentProfileService.stdProfileRequest(userName: studentId, token: token)
-          .then((res) {
-            data.profile = res;
-          })
-          .catchError((_) {}),
-
-      // Attendance %
-      AttendancePercentageService.attendancePercentage(
-            userName: studentId,
-            tokenId: token,
-          )
-          .then((res) {
-            data.attendancePercentage = res;
-          })
-          .catchError((_) {}),
-
-      // Current Month Attendance
-      StudentAttendanceService.studentAttendanceRequest(
-            userName: studentId,
-            attendanceDate: currentMonthStr,
-            tokenId: token,
-          )
-          .then((res) {
-            data.currentMonthAttendance = res;
-          })
-          .catchError((_) {}),
-
-      // Outstanding Fees
-      FeeChallanService.outStandingChallanRequest(
-            userName: studentId,
-            token: token,
-          )
-          .then((res) {
-            data.outstandingChallans = res;
-            // If the fetched child is currently active, sync it to FeeChallanProvider immediately
-            if (studentId == _activeStudentId) {
-              final context = AppNavigation.currentContext;
-              if (context != null && context.mounted) {
-                try {
-                  final feeProvider = Provider.of<FeeChallanProvider>(
-                    context,
-                    listen: false,
-                  );
-                  feeProvider.outstandingChallans = res;
-                  feeProvider.notifyListeners();
-                } catch (e) {
-                  debugPrint(
-                    'Error syncing FeeChallanProvider on child fee load: $e',
-                  );
-                }
-              }
-            }
-          })
-          .catchError((_) {}),
-
-      // Latest Homework
-      StudentDiaryService.getDiaryRecords(userName: studentId, tokenId: token)
-          .then((res) {
-            data.latestHomework = res;
-          })
-          .catchError((_) {}),
-
-      // Circulars (group = '3')
-      NotificationService.notificationRequest(
-            userName: studentId,
-            token: token,
-            group: '3',
-          )
-          .then((res) {
-            data.latestCirculars = res;
-          })
-          .catchError((_) {}),
-
-      // Latest Assignments
-      StudentAssignmentService.getAssignmentRecords(
-            userName: studentId,
-            tokenId: token,
-          )
-          .then((res) {
-            data.latestAssignments = res;
-          })
-          .catchError((_) {}),
-    ]);
+    // Sync FeeChallanProvider if this is the active child
+    if (studentId == _activeStudentId) {
+      final context = AppNavigation.currentContext;
+      if (context != null && context.mounted) {
+        try {
+          final feeProvider = Provider.of<FeeChallanProvider>(
+            context,
+            listen: false,
+          );
+          feeProvider.outstandingChallans = data.outstandingChallans;
+          feeProvider.notifyListeners();
+        } catch (e) {
+          debugPrint(
+            'Error syncing FeeChallanProvider on child fee load: $e',
+          );
+        }
+      }
+    }
   }
 
   void clearData() {
@@ -342,6 +281,5 @@ class StudentDashboardProvider with ChangeNotifier {
     _loadError = null;
     _activeStudentId = null;
     _multiChildResponse = null;
-    notifyListeners();
   }
 }

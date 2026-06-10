@@ -490,6 +490,5 @@ class MarkAttendanceProvider with ChangeNotifier {
     pieData = [];
     sections = [];
     subjects = [];
-    notifyListeners();
   }
 }

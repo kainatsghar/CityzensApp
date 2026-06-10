@@ -47,7 +47,7 @@ class OverallResultScreenState extends State<OverallResultScreen> {
           }
         },
       ),
-      onRefresh: () => provider.loadAcademicTerm(),
+      onRefresh: () => provider.loadAcademicTerm(forceRefresh: true),
     );
   }
 }

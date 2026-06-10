@@ -21,6 +21,7 @@ class _MarkUnidentifiedScreenState extends State<MarkUnidentifiedScreen> {
 
   @override
   void initState() {
+    provider.clearFormState();
     // _sections = provider.loadSections();
     // _reasons = provider.loadReasons();
     super.initState();
@@ -28,7 +29,6 @@ class _MarkUnidentifiedScreenState extends State<MarkUnidentifiedScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

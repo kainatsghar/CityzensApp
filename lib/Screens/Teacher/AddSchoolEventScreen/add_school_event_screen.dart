@@ -24,13 +24,13 @@ class _AddSchoolEventScreenState extends State<AddSchoolEventScreen> {
 
   @override
   void initState() {
+    provider.clearFormState();
     sections = provider.loadSections();
     super.initState();
   }
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

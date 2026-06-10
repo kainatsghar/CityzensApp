@@ -25,6 +25,7 @@ class _WithdrawalRequestScreenState extends State<WithdrawalRequestScreen> {
 
   @override
   void initState() {
+    provider.clearFormState();
     withdrawalReasonsRecords = provider.loadWithdrawal();
 
     super.initState();
@@ -32,7 +33,6 @@ class _WithdrawalRequestScreenState extends State<WithdrawalRequestScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

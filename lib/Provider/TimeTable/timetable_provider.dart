@@ -20,7 +20,18 @@ import '../../model/ResponseMessage/response_message.dart';
 import '../LocalData/local_data_provider.dart';
 
 class TimeTableProvider with ChangeNotifier {
-  TimeTableResponse? timeTableResponse;
+  final Map<String, TimeTableResponse> _timeTableResponseCache = {};
+
+  TimeTableResponse? get timeTableResponse =>
+      _timeTableResponseCache[localDataProvider.studentId];
+
+  set timeTableResponse(TimeTableResponse? val) {
+    if (val != null) {
+      _timeTableResponseCache[localDataProvider.studentId] = val;
+    } else {
+      _timeTableResponseCache.remove(localDataProvider.studentId);
+    }
+  }
   final sectionController = TextEditingController();
   // late final formKey = GlobalKey<FormState>();
 
@@ -359,7 +370,14 @@ class TimeTableProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<TimeTableResponse> loadTimeTable() async {
+  Future<TimeTableResponse> loadTimeTable({bool forceRefresh = false}) async {
+    bool isStudentOrParent = localDataProvider.userData!.userType == 'Student' ||
+        localDataProvider.userData!.userType == 'Parent';
+
+    if (!forceRefresh && isStudentOrParent && timeTableResponse != null) {
+      return timeTableResponse!;
+    }
+
     try {
       int? userId = localDataProvider.userData!.userType == 'Student'
           ? int.tryParse(localDataProvider.studentId)
@@ -394,5 +412,6 @@ class TimeTableProvider with ChangeNotifier {
     timetableValues = [];
     periodslist = [];
     isInitial = false;
+    _timeTableResponseCache.clear();
   }
 }

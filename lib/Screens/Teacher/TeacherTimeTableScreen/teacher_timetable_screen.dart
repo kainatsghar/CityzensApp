@@ -32,7 +32,6 @@ class _TeacherTimeTableScreenState extends State<TeacherTimeTableScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

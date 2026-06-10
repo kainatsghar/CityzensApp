@@ -50,8 +50,8 @@ class _LibraryScreenState extends State<LibraryScreen>
               Tab(child: Text('NOTIFICATIONS')),
             ],
             widgets: <Widget>[
-              _LibraryRecordsTab(onRefresh: _provider.loadAllData),
-              _NotificationsTab(onRefresh: _provider.loadAllData),
+              _LibraryRecordsTab(onRefresh: () => _provider.loadAllData(forceRefresh: true)),
+              _NotificationsTab(onRefresh: () => _provider.loadAllData(forceRefresh: true)),
             ],
             controller: value.tabController,
           );

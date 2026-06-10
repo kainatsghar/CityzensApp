@@ -50,7 +50,18 @@ class ClassTestResultProvider with ChangeNotifier {
 
   ClassTestResultStudentListResponse? classTestResultStudentResponse;
   AddClassTestResultRequest? addClassTestResultRequest;
-  StudentTestResultListResponse? studentTestResultListResponse;
+  final Map<String, StudentTestResultListResponse> _studentTestResultCache = {};
+
+  StudentTestResultListResponse? get studentTestResultListResponse =>
+      _studentTestResultCache[localDataProvider.studentId];
+
+  set studentTestResultListResponse(StudentTestResultListResponse? val) {
+    if (val != null) {
+      _studentTestResultCache[localDataProvider.studentId] = val;
+    } else {
+      _studentTestResultCache.remove(localDataProvider.studentId);
+    }
+  }
 
   List<Options> students = [];
 
@@ -241,6 +252,7 @@ class ClassTestResultProvider with ChangeNotifier {
     sectionResponse = TeacherSectionResponse();
     classTestResultStudentResponse = ClassTestResultStudentListResponse();
     addClassTestResultRequest = AddClassTestResultRequest();
+    _studentTestResultCache.clear();
   }
 
   void clearLibraryData() {
@@ -327,7 +339,11 @@ class ClassTestResultProvider with ChangeNotifier {
   }
 
   Future<StudentTestResultListResponse>
-  loadStudentsTestResultswithMarks() async {
+  loadStudentsTestResultswithMarks({bool forceRefresh = false}) async {
+    if (!forceRefresh && studentTestResultListResponse != null) {
+      return studentTestResultListResponse!;
+    }
+
     int? userId = localDataProvider.userData!.userType == 'Student'
         ? int.tryParse(localDataProvider.studentId)
         : localDataProvider.userData!.userType == 'Parent'

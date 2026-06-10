@@ -43,7 +43,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
     );
     _provider.initializeData();
     if (_provider.userType.isNotEmpty) {
-      _provider.clearData();
+      _provider.clearFormState();
       _provider.initializeUserData();
     }
     _provider.loadDeviceInfo();
@@ -52,7 +52,6 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
   @override
   void dispose() {
     _particleController.dispose();
-    _provider.clearData();
     super.dispose();
   }
 

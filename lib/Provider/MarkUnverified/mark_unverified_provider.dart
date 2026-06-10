@@ -177,6 +177,18 @@ class MarkUnverifiedProvider with ChangeNotifier {
     );
   }
 
+  /// Clears only form input state. Call in initState() of mark unverified screens.
+  /// Does NOT clear unverifiedReasons or sectionResponse (list data).
+  void clearFormState() {
+    sectionId = null;
+    reasonId = null;
+    remarksController.clear();
+    sectionController.clear();
+    studentIdController.clear();
+    reasonController.clear();
+    studentNameController.clear();
+  }
+
   void clearData() {
     sectionId = null;
     reasonId = null;

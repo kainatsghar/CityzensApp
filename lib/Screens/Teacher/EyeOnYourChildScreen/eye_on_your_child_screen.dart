@@ -30,7 +30,6 @@ class _EyeOnYourChildScreenState extends State<EyeOnYourChildScreen> {
 
   @override
   void dispose() {
-    provider.clearData();
     super.dispose();
   }
 

@@ -46,7 +46,7 @@ class DetailResultScreenState extends State<DetailResultScreen> {
           }
         },
       ),
-      onRefresh: () => provider.loadAcademicTerm(),
+      onRefresh: () => provider.loadAcademicTerm(forceRefresh: true),
     );
   }
 }
