@@ -18,6 +18,9 @@ import 'package:tcs_app/services/FeeChallan/feechallan_service.dart';
 import 'package:tcs_app/services/StudentDiary/student_diary_service.dart';
 import 'package:tcs_app/services/Notifications/notification_service.dart';
 import 'package:tcs_app/services/StudentAssignment/student_assignment_service.dart';
+import 'package:tcs_app/model/StudentSubjects/student_subject_response.dart';
+import 'package:tcs_app/services/StudentSubjects/student_subject_service.dart';
+import 'package:tcs_app/shared_preference/shared_preference.dart';
 
 /// Offline-first repository for student dashboard data.
 ///
@@ -40,6 +43,7 @@ class StudentDashboardRepository {
     required String token,
     required ChildDashboardData data,
     Function(ChildDashboardData cachedData)? onCacheHit,
+    Function()? onSyncComplete,
   }) async {
     final cacheKey = _getCacheKey(studentId);
 
@@ -53,7 +57,7 @@ class StudentDashboardRepository {
       onCacheHit?.call(data);
 
       // 2. Background sync — don't await, let it update in background
-      _backgroundSync(studentId, token, data, cacheKey);
+      _backgroundSync(studentId, token, data, cacheKey, onSyncComplete);
 
       return data;
     }
@@ -80,10 +84,12 @@ class StudentDashboardRepository {
     String token,
     ChildDashboardData data,
     String cacheKey,
+    Function()? onSyncComplete,
   ) async {
     try {
       await _fetchFromNetwork(studentId, token, data);
       await _saveToCache(cacheKey, data);
+      onSyncComplete?.call();
     } catch (e) {
       debugPrint('StudentDashboardRepository: Background sync failed: $e');
     }
@@ -97,6 +103,13 @@ class StudentDashboardRepository {
   ) async {
     final currentMonthStr = DateFormat('yyyyMM').format(DateTime.now());
 
+    final cachedSessionStr = await AppLocalData.getStringPrefValue(
+      key: 'cached_session_id_$studentId',
+    );
+    final cachedSessionId = int.tryParse(cachedSessionStr ?? '') ?? 17;
+
+    StudentSubjectResponse? parallelSubjectsRes;
+
     await Future.wait([
       StudentProfileService.stdProfileRequest(
         userName: studentId,
@@ -104,9 +117,13 @@ class StudentDashboardRepository {
       ).then((res) => data.profile = res).catchError((_) {}),
 
       AttendancePercentageService.attendancePercentage(
-        userName: studentId,
-        tokenId: token,
-      ).then((res) => data.attendancePercentage = res).catchError((_) {}),
+            userName: studentId,
+            tokenId: token,
+          )
+          .then((res) {
+            data.attendancePercentage = res;
+          })
+          .catchError((_) {}),
 
       StudentAttendanceService.studentAttendanceRequest(
         userName: studentId,
@@ -134,7 +151,33 @@ class StudentDashboardRepository {
         userName: studentId,
         tokenId: token,
       ).then((res) => data.latestAssignments = res).catchError((_) {}),
+
+      StudentSubjectService.getSubjects(
+        studentId: studentId,
+        tokenId: token,
+        sessionId: cachedSessionId,
+      ).then((res) => parallelSubjectsRes = res).catchError((_) {}),
     ]);
+
+    final newSessionId = data.attendancePercentage?.data?.sessionId;
+
+    if (newSessionId != null && newSessionId != cachedSessionId) {
+      await AppLocalData.setStringPrefValue(
+        key: 'cached_session_id_$studentId',
+        value: newSessionId.toString(),
+      );
+
+      final updatedSubjectsRes = await StudentSubjectService.getSubjects(
+        studentId: studentId,
+        tokenId: token,
+        sessionId: newSessionId,
+      );
+      data.subjects = updatedSubjectsRes;
+    } else {
+      if (parallelSubjectsRes != null) {
+        data.subjects = parallelSubjectsRes;
+      }
+    }
   }
 
   // ============= Cache Helpers =============
@@ -147,6 +190,7 @@ class StudentDashboardRepository {
     target.latestHomework = cached.latestHomework;
     target.latestCirculars = cached.latestCirculars;
     target.latestAssignments = cached.latestAssignments;
+    target.subjects = cached.subjects;
   }
 
   Future<_CachedBundle?> _getFromCache(String key) async {
@@ -179,6 +223,7 @@ class StudentDashboardRepository {
         latestHomework: data.latestHomework,
         latestCirculars: data.latestCirculars,
         latestAssignments: data.latestAssignments,
+        subjects: data.subjects,
       );
 
       await LocalCacheManager.saveData(
@@ -203,6 +248,7 @@ class _CachedBundle {
   final DiaryResponse? latestHomework;
   final NotificationResponse? latestCirculars;
   final AssignmentResponse? latestAssignments;
+  final StudentSubjectResponse? subjects;
 
   _CachedBundle({
     this.profile,
@@ -212,6 +258,7 @@ class _CachedBundle {
     this.latestHomework,
     this.latestCirculars,
     this.latestAssignments,
+    this.subjects,
   });
 
   Map<String, dynamic> toJson() => {
@@ -223,10 +270,10 @@ class _CachedBundle {
     if (outstandingChallans != null)
       'outstandingChallans': outstandingChallans!.toJson(),
     if (latestHomework != null) 'latestHomework': latestHomework!.toJson(),
-    if (latestCirculars != null)
-      'latestCirculars': latestCirculars!.toJson(),
+    if (latestCirculars != null) 'latestCirculars': latestCirculars!.toJson(),
     if (latestAssignments != null)
       'latestAssignments': latestAssignments!.toJson(),
+    if (subjects != null) 'subjects': subjects!.toJson(),
   };
 
   factory _CachedBundle.fromJson(Map<String, dynamic> json) {
@@ -251,6 +298,9 @@ class _CachedBundle {
           : null,
       latestAssignments: json['latestAssignments'] != null
           ? AssignmentResponse.fromJson(json['latestAssignments'])
+          : null,
+      subjects: json['subjects'] != null
+          ? StudentSubjectResponse.fromJson(json['subjects'])
           : null,
     );
   }

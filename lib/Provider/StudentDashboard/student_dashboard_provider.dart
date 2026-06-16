@@ -13,6 +13,7 @@ import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/services/MultiChild/multi_child_service.dart';
 import 'package:tcs_app/repositories/StudentDashboard/student_dashboard_repository.dart';
+import 'package:tcs_app/model/StudentSubjects/student_subject_response.dart';
 
 class ChildDashboardData {
   StudentProfileResponse? profile;
@@ -22,6 +23,7 @@ class ChildDashboardData {
   DiaryResponse? latestHomework;
   NotificationResponse? latestCirculars;
   AssignmentResponse? latestAssignments;
+  StudentSubjectResponse? subjects;
 }
 
 class StudentDashboardProvider with ChangeNotifier {
@@ -248,6 +250,11 @@ class StudentDashboardProvider with ChangeNotifier {
         if (studentId == _activeStudentId) {
           _isFirstChildReady = true;
           _isLoading = false;
+          notifyListeners();
+        }
+      },
+      onSyncComplete: () {
+        if (studentId == _activeStudentId) {
           notifyListeners();
         }
       },

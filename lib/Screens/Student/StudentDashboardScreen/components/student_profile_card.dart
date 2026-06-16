@@ -103,24 +103,36 @@ class StudentProfileCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 25),
-                        _buildTappableSection(
-                          onTap: () {
-                            final isAdvanced =
-                                ['19', '20'].contains(gradeId) ||
-                                ['19', '20'].contains(localGradeId);
-                            AppNavigation.navigateTo(
-                              isAdvanced
-                                  ? AppNavRoutes.alevelAttendanceRoute
-                                  : AppNavRoutes.attendanceRoute,
-                            );
-                          },
-                          borderRadius: 20,
-                          backgroundColor: white10,
-                          child: _buildAttendanceContent(
-                            attendanceVal.toDouble(),
-                            white10,
-                          ),
-                        ),
+                        () {
+                          final attendanceData =
+                              data?.attendancePercentage?.data;
+                          final sessionName =
+                              attendanceData?.sessionName ?? 'Current Session';
+                          final presentDays = attendanceData?.presentDays;
+                          final absentDays = attendanceData?.absentDays;
+
+                          return _buildTappableSection(
+                            onTap: () {
+                              final isAdvanced =
+                                  ['19', '20'].contains(gradeId) ||
+                                  ['19', '20'].contains(localGradeId);
+                              AppNavigation.navigateTo(
+                                isAdvanced
+                                    ? AppNavRoutes.alevelAttendanceRoute
+                                    : AppNavRoutes.attendanceRoute,
+                              );
+                            },
+                            borderRadius: 20,
+                            backgroundColor: white10,
+                            child: _buildAttendanceContent(
+                              attendanceVal.toDouble(),
+                              white10,
+                              sessionName,
+                              presentDays,
+                              absentDays,
+                            ),
+                          );
+                        }(),
                       ],
                     ),
                   ),
@@ -414,7 +426,13 @@ class StudentProfileCard extends StatelessWidget {
     );
   }
 
-  Widget _buildAttendanceContent(double value, Color progressBg) {
+  Widget _buildAttendanceContent(
+    double value,
+    Color progressBg,
+    String sessionName,
+    int? presentDays,
+    int? absentDays,
+  ) {
     return Column(
       children: [
         Row(
@@ -439,11 +457,11 @@ class StudentProfileCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 15),
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'SESSION ATTENDANCE',
                     style: TextStyle(
                       fontSize: 10,
@@ -452,15 +470,33 @@ class StudentProfileCard extends StatelessWidget {
                       letterSpacing: 1.2,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    'Current Session',
-                    style: TextStyle(
+                    sessionName,
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
                   ),
+                  if (presentDays != null && absentDays != null) ...[
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        _buildStatPill(
+                          'PRESENT',
+                          presentDays,
+                          Colors.greenAccent,
+                        ),
+                        const SizedBox(width: 8),
+                        _buildStatPill(
+                          'ABSENT',
+                          absentDays,
+                          AppColors.lightRed,
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -493,6 +529,43 @@ class StudentProfileCard extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildStatPill(String label, int value, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            '$label:',
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w900,
+              color: AppColors.white.withValues(alpha: 0.8),
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            '$value',
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w900,
+              color: color,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 }

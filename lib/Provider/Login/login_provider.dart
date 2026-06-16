@@ -27,11 +27,31 @@ class LoginProvider extends ChangeNotifier {
   MaskedTextController? userNameController;
   bool rememberMe = true;
   List<SavedAccount> savedAccounts = [];
-  String? validator(String? text) => userType == 'Teacher'
-      ? Validators.validator(text)
-      : userType == 'Parent'
-      ? Validators.validatorForCNICNo(text)
-      : Validators.validator(text);
+  String? validator(String? text) {
+    if (text == null || text.trim().isEmpty) {
+      return "Required*";
+    }
+
+    if (userType == 'Parent') {
+      return Validators.validatorForCNICNo(text);
+    }
+
+    if (userType == 'Student') {
+      if (text.trim().length != 6) {
+        return "Roll Number must be exactly 6 digits";
+      }
+      return null;
+    }
+
+    if (userType == 'Teacher') {
+      if (text.trim().length == 6) {
+        return "Teacher ID cannot be 6 digits";
+      }
+      return null;
+    }
+
+    return Validators.validator(text);
+  }
 
   void showHidePassword() {
     obscureText = !obscureText;

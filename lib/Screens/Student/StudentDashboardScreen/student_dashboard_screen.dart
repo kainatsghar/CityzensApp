@@ -266,6 +266,11 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
           SliverToBoxAdapter(child: const StudentProfileCard()),
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
+          _buildAnimatedSliver(
+            _buildSubjectsCarousel(provider.activeChildData),
+            delay: 50,
+          ),
+
           // Primary Data Hubs
           _buildAnimatedSliver(
             _buildAcademicUpdatesHub(provider.activeChildData),
@@ -918,6 +923,152 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
           ],
         ),
       ),
+    );
+  }
+
+  Color _getColorForSubject(String subjectName) {
+    final hash = subjectName.hashCode;
+    final hue = (hash % 360).toDouble();
+    return HSLColor.fromAHSL(1.0, hue, 0.65, 0.85).toColor(); // Soft pastel
+  }
+
+  Color _getDarkColorForSubject(String subjectName) {
+    final hash = subjectName.hashCode;
+    final hue = (hash % 360).toDouble();
+    return HSLColor.fromAHSL(
+      1.0,
+      hue,
+      0.75,
+      0.40,
+    ).toColor(); // Darker text/icon
+  }
+
+  Widget _buildSubjectsCarousel(ChildDashboardData? data) {
+    final subjects = data?.subjects?.studentSubjects ?? [];
+    final validSubjects = subjects
+        .where((s) => s.fullName != null && s.fullName!.trim().isNotEmpty)
+        .toList();
+
+    if (validSubjects.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Text(
+            'My Subjects & Teachers',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w900,
+              color: AppColors.primaryDarkBlue,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 120,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            scrollDirection: Axis.horizontal,
+            itemCount: validSubjects.length,
+            separatorBuilder: (context, index) => const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              final subject = validSubjects[index];
+              final name = subject.subjectName ?? 'Unknown';
+              final teacher = subject.fullName ?? 'Unknown';
+              final bgColor = _getColorForSubject(name);
+              final darkColor = _getDarkColorForSubject(name);
+
+              return Container(
+                width: 220,
+                decoration: BoxDecoration(
+                  color: bgColor,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: darkColor.withValues(alpha: 0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.5),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.menu_book_rounded,
+                            color: darkColor,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            name,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w900,
+                              color: darkColor,
+                              height: 1.2,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.6),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.person_rounded,
+                            size: 12,
+                            color: darkColor.withValues(alpha: 0.9),
+                          ),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              teacher,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w800,
+                                color: darkColor.withValues(alpha: 0.9),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
