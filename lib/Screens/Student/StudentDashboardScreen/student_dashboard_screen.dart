@@ -624,7 +624,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                   icon: Icons.emoji_events_rounded,
                   color: AppColors.primaryBlue,
                   onTap: () =>
-                      AppNavigation.navigateTo(AppNavRoutes.academicTermRoute),
+                      AppNavigation.navigateTo(AppNavRoutes.allPDFResultsRoute),
                 ),
               ),
               const SizedBox(width: 12),

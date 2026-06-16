@@ -9,6 +9,7 @@ import 'package:tcs_app/services/Results/result_service.dart';
 import 'package:tcs_app/model/AcademicTerm/academic_term_response.dart';
 import 'package:tcs_app/model/Options/options.dart';
 import 'package:tcs_app/model/Results/results_response.dart';
+import 'package:tcs_app/model/Results/all_pdf_results_response.dart';
 
 class ResultsProvider with ChangeNotifier {
   final academicYearController = TextEditingController(); //
@@ -26,6 +27,8 @@ class ResultsProvider with ChangeNotifier {
   String url = "";
 
   ResultsResponse resultsResponse = ResultsResponse();
+  AllPDFResultsResponse? allPDFResultsResponse;
+  final Map<String, AllPDFResultsResponse> _allResultsCache = {};
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
     AppNavigation.currentContext!,
@@ -68,7 +71,9 @@ class ResultsProvider with ChangeNotifier {
 
   final Map<String, AcademicTermResponse> _termCache = {};
 
-  Future<AcademicTermResponse> loadAcademicTerm({bool forceRefresh = false}) async {
+  Future<AcademicTermResponse> loadAcademicTerm({
+    bool forceRefresh = false,
+  }) async {
     final studentId = localDataProvider.studentId;
 
     if (!forceRefresh && _termCache.containsKey(studentId)) {
@@ -94,7 +99,8 @@ class ResultsProvider with ChangeNotifier {
   final Map<String, dynamic> _cachedResultsMap = {};
 
   Future<dynamic> loadResults({bool forceRefresh = false}) async {
-    final cacheKey = '${localDataProvider.studentId}-$selectAcademicYear-$selectedTerm';
+    final cacheKey =
+        '${localDataProvider.studentId}-$selectAcademicYear-$selectedTerm';
 
     if (!forceRefresh && _cachedResultsMap.containsKey(cacheKey)) {
       final cachedResponse = _cachedResultsMap[cacheKey];
@@ -114,6 +120,32 @@ class ResultsProvider with ChangeNotifier {
       setResultsResponse(ResultsResponse.fromJson(response));
       setEyeResultResponse(response['EyeResult']);
       return response;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<AllPDFResultsResponse> loadAllPDFResults({
+    bool forceRefresh = false,
+  }) async {
+    final studentId = localDataProvider.studentId;
+
+    if (!forceRefresh && _allResultsCache.containsKey(studentId)) {
+      allPDFResultsResponse = _allResultsCache[studentId];
+      Future.microtask(() => notifyListeners());
+      return allPDFResultsResponse!;
+    }
+
+    try {
+      var response = await ResultService.allPDFResultsRequest(
+        studentId: studentId,
+        token: localDataProvider.userData!.tokenId!,
+      );
+      final parsed = AllPDFResultsResponse.fromJson(response);
+      _allResultsCache[studentId] = parsed;
+      allPDFResultsResponse = parsed;
+      notifyListeners();
+      return parsed;
     } catch (ex) {
       rethrow;
     }
@@ -209,7 +241,9 @@ class ResultsProvider with ChangeNotifier {
     academicYears = [];
     termSelected = false;
     resultsResponse = ResultsResponse();
+    allPDFResultsResponse = null;
     _cachedResultsMap.clear();
     _termCache.clear();
+    _allResultsCache.clear();
   }
 }

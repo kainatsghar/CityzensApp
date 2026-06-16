@@ -12,6 +12,7 @@ class AppNavRoutes {
   static const studentProfileRoute = '/studentProfile';
   static const resultsRoute = '/results';
   static const academicTermRoute = '/academicTerm';
+  static const allPDFResultsRoute = '/allPDFResults';
   static const libraryRoute = '/library';
   static const notificationsRoute = '/notifications';
   static const feeChallansRoute = '/feeChallans';
@@ -83,6 +84,7 @@ class AppNavRoutes {
       studentProfileRoute,
       resultsRoute,
       academicTermRoute,
+      allPDFResultsRoute,
       libraryRoute,
       notificationsRoute,
       feeChallansRoute,

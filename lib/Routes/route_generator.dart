@@ -42,6 +42,7 @@ import '../screens/Student/LibraryScreen/library_screen.dart';
 import '../screens/Student/Notifications/notifications_screen.dart';
 import '../screens/Student/OSRegistrationScreen/os_registration_screen.dart';
 import '../screens/Student/ResultScreen/academic_term_screen.dart';
+import '../screens/Student/ResultScreen/all_pdf_results_screen.dart';
 import '../screens/Student/ResultScreen/results_screen.dart';
 import '../screens/Student/StudentAttendanceScreen/student_attendance_screen.dart';
 import '../screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
@@ -94,6 +95,8 @@ class RouteGenerator {
         return routeScreen(child: const StudentProfileScreen());
       case AppNavRoutes.academicTermRoute:
         return routeScreen(child: const AcademicTermScreen());
+      case AppNavRoutes.allPDFResultsRoute:
+        return routeScreen(child: const AllPDFResultsScreen());
       case AppNavRoutes.resultsRoute:
         return routeScreen(child: const ResultsScreen());
       case AppNavRoutes.libraryRoute:
