@@ -61,7 +61,7 @@ class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
   void _resolveEditIds() {
     final sections = _dashboardProvider.getSectionsWithDiary(true) ?? [];
     final matchedSection = sections.cast<Section?>().firstWhere(
-      (s) => s?.name == _provider.sectionController.text,
+      (s) => s?.classSectionId == _provider.sectionId,
       orElse: () => null,
     );
     final subjects = matchedSection != null
@@ -258,6 +258,7 @@ class _AddAssignmentScreenState extends State<AddAssignmentScreen> {
                               ),
                               getDisplayText: (s) => s.subjectName ?? 'N/A',
                               initialItemName: provider.subjectController.text,
+                              isEnabled: !provider.isEdit,
                               onItemSelected: (subject) {
                                 provider.setSubjectId(
                                   subject.subjectId,

@@ -249,6 +249,7 @@ class CircularProvider with ChangeNotifier {
     titleController.text = record.title ?? '';
     descriptionController.text = record.description ?? '';
     sectionController.text = record.sectionName ?? '';
+    sectionId = record.sectionId;
     fileName = record.fileName;
     selectedDate = record.announcementDate;
     base64String = null;
@@ -257,7 +258,15 @@ class CircularProvider with ChangeNotifier {
 
   /// Resolves sectionId from the section name, then fires a SINGLE notifyListeners.
   void resolveIds(List<Section> availableSections) {
-    if (sectionController.text.isNotEmpty) {
+    if (sectionId != null) {
+      final matchedSection = availableSections.cast<Section?>().firstWhere(
+        (s) => s?.classSectionId == sectionId,
+        orElse: () => null,
+      );
+      if (matchedSection != null) {
+        sectionController.text = matchedSection.name ?? '';
+      }
+    } else if (sectionController.text.isNotEmpty) {
       final matchedSection = availableSections.cast<Section?>().firstWhere(
         (s) => s?.name == sectionController.text,
         orElse: () => null,

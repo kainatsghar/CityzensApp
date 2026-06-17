@@ -125,7 +125,9 @@ class DiaryProvider with ChangeNotifier {
 
   Future<void> setSelectedSection(String sectionName) async {
     AppNavigation.goBack();
-    final newSectionId = sections.singleWhere((e) => e.title == sectionName).value;
+    final newSectionId = sections
+        .singleWhere((e) => e.title == sectionName)
+        .value;
 
     // BUG FIX: Only reset subject and reload if section actually changed
     if (sectionId != newSectionId) {
@@ -247,6 +249,7 @@ class DiaryProvider with ChangeNotifier {
     subjectController.text = record.subject ?? '';
     descriptionController.text = record.description ?? '';
     sectionController.text = record.sectionName ?? '';
+    sectionId = record.sectionId;
     selectedDate = record.diaryDate;
     fileName = record.fileName;
     base64String = null;
@@ -260,7 +263,15 @@ class DiaryProvider with ChangeNotifier {
     List<Section> availableSections,
     List<SectionSubject> availableSubjects,
   ) {
-    if (sectionController.text.isNotEmpty) {
+    if (sectionId != null) {
+      final matchedSection = availableSections.cast<Section?>().firstWhere(
+        (s) => s?.classSectionId == sectionId,
+        orElse: () => null,
+      );
+      if (matchedSection != null) {
+        sectionController.text = matchedSection.name ?? '';
+      }
+    } else if (sectionController.text.isNotEmpty) {
       final matchedSection = availableSections.cast<Section?>().firstWhere(
         (s) => s?.name == sectionController.text,
         orElse: () => null,
@@ -274,11 +285,14 @@ class DiaryProvider with ChangeNotifier {
       final matchedSubject = availableSubjects
           .cast<SectionSubject?>()
           .firstWhere(
-            (s) => s?.subjectName == subjectController.text,
+            (s) =>
+                s?.subjectName?.trim().toLowerCase() ==
+                subjectController.text.trim().toLowerCase(),
             orElse: () => null,
           );
       if (matchedSubject != null) {
         subjectId = matchedSubject.subjectId;
+        subjectController.text = matchedSubject.subjectName ?? '';
       }
     }
     // Single notification fires after all mutations are complete.

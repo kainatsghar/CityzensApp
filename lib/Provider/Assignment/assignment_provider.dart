@@ -247,6 +247,7 @@ class AssignmentProvider with ChangeNotifier {
     subjectController.text = record.subject ?? '';
     descriptionController.text = record.description ?? '';
     sectionController.text = record.sectionName ?? '';
+    sectionId = record.sectionId;
     selectedDate = record.classWorkDate;
     fileName = record.fileName;
     base64String = null;
@@ -258,7 +259,15 @@ class AssignmentProvider with ChangeNotifier {
     List<Section> availableSections,
     List<SectionSubject> availableSubjects,
   ) {
-    if (sectionController.text.isNotEmpty) {
+    if (sectionId != null) {
+      final matchedSection = availableSections.cast<Section?>().firstWhere(
+        (s) => s?.classSectionId == sectionId,
+        orElse: () => null,
+      );
+      if (matchedSection != null) {
+        sectionController.text = matchedSection.name ?? '';
+      }
+    } else if (sectionController.text.isNotEmpty) {
       final matchedSection = availableSections.cast<Section?>().firstWhere(
         (s) => s?.name == sectionController.text,
         orElse: () => null,
@@ -272,11 +281,12 @@ class AssignmentProvider with ChangeNotifier {
       final matchedSubject = availableSubjects
           .cast<SectionSubject?>()
           .firstWhere(
-            (s) => s?.subjectName == subjectController.text,
+            (s) => s?.subjectName?.trim().toLowerCase() == subjectController.text.trim().toLowerCase(),
             orElse: () => null,
           );
       if (matchedSubject != null) {
         subjectId = matchedSubject.subjectId;
+        subjectController.text = matchedSubject.subjectName ?? '';
       }
     }
     // Single notification fires after all mutations are complete.
