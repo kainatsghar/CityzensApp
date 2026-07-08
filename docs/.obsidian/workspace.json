@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Flows/Circulars Flow.md",
+                "file": "Features/Index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Circulars Flow"
+              "title": "Index"
             }
           }
         ]
@@ -185,11 +185,17 @@
   },
   "active": "7f565243360a17d1",
   "lastOpenFiles": [
-    "Flows/Authentication Flow.md",
-    "Flows/Complaint and Query Flow.md",
-    "Flows/Circulars Flow.md",
+    "Design System/Index.md",
+    "Credentials/Index.md",
+    "Architecture/Provider Map.md",
+    "Architecture/Index.md",
     "API/Index.md",
+    "Home.md",
+    "Notes/Index.md",
+    "Flows/Complaint and Query Flow.md",
     "Flows/Class Test Results Flow.md",
+    "Flows/Circulars Flow.md",
+    "Flows/Authentication Flow.md",
     "Flows/Timetable Flow.md",
     "Flows/Eye on Your Child Flow.md",
     "Flows/Term Results Flow.md",
@@ -197,13 +203,7 @@
     "Flows/Homework and Classwork Flow.md",
     "Flows/Student Attendance Flow.md",
     "Flows/Mark Attendance Flow.md",
-    "Architecture/Provider Map.md",
-    "Home.md",
-    "Notes/Index.md",
     "Features/Index.md",
-    "Design System/Index.md",
-    "Credentials/secrets.md",
-    "Credentials/Index.md",
-    "Architecture/Index.md"
+    "Credentials/secrets.md"
   ]
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/components/ResultsComponents/all_pdf_results_list_component.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
@@ -27,6 +28,8 @@ class AllPDFResultsScreenState extends State<AllPDFResultsScreen> {
   @override
   void initState() {
     AppAnalyticsService.logFeatureAccess("Term Results");
+    // Clear previously selected class to auto-select the latest one
+    provider.selectedPDFClassName = null;
     _allResultsFuture = provider.loadAllPDFResults();
     super.initState();
   }
@@ -34,7 +37,20 @@ class AllPDFResultsScreenState extends State<AllPDFResultsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'TERM RESULTS'),
+      appBar: CustomAppBar(
+        title: 'TERM RESULTS',
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh, color: AppColors.primaryTitleColor),
+            onPressed: () {
+              setState(() {
+                _allResultsFuture = provider.loadAllPDFResults(forceRefresh: true);
+              });
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: RefreshIndicator(
         child: FutureBuilder(
           future: _allResultsFuture,

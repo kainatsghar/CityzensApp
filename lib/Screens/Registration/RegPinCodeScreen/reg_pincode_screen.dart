@@ -41,49 +41,51 @@ class RegPinCodeScreenState extends State<RegPinCodeScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Consumer<RegistrationProvider>(
           builder: (context, value, _) {
-            return Column(
-              children: <Widget>[
-                const CustomLogoCover(),
-                SizedBox(height: size.height * 0.02),
-                CustomCard(
-                  child: Column(
-                    children: <Widget>[
-                      Form(
-                        key: value.pinCodeFormKey,
-                        child: Column(
-                          children: <Widget>[
-                            CustomTextFormField(
-                              isEnable: false,
-                              hintText: value.userNameController.text,
-                              prefixIcon: Icons.person,
-                            ),
-                            SizedBox(height: size.height * 0.02),
-                            CustomTextFormField(
-                              inputType: TextInputType.number,
-                              controller: value.pinCodeController,
-                              hintText: 'PIN Code',
-                              prefixIcon: Icons.security,
-                              validator: Validators.validator,
-                            ),
-                          ],
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  const CustomLogoCover(),
+                  SizedBox(height: size.height * 0.02),
+                  CustomCard(
+                    child: Column(
+                      children: <Widget>[
+                        Form(
+                          key: value.pinCodeFormKey,
+                          child: Column(
+                            children: <Widget>[
+                              CustomTextFormField(
+                                isEnable: false,
+                                hintText: value.userNameController.text,
+                                prefixIcon: Icons.person,
+                              ),
+                              SizedBox(height: size.height * 0.02),
+                              CustomTextFormField(
+                                inputType: TextInputType.number,
+                                controller: value.pinCodeController,
+                                hintText: 'PIN Code',
+                                prefixIcon: Icons.security,
+                                validator: Validators.validator,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  CustomAppButton(
+                    buttonTitle: 'Next',
+                    onTap: () => value.verifyPinCode(),
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  const CustomNoteCard(
+                    notes: [
+                      'TCS app will send you a message containing a PIN code you will use to verify your number.',
+                      'Verification message might not reach you if promotional message are blocked from your service provider.',
                     ],
                   ),
-                ),
-                SizedBox(height: size.height * 0.02),
-                CustomAppButton(
-                  buttonTitle: 'Next',
-                  onTap: () => value.verifyPinCode(),
-                ),
-                SizedBox(height: size.height * 0.02),
-                const CustomNoteCard(
-                  notes: [
-                    'TCS app will send you a message containing a PIN code you will use to verify your number.',
-                    'Verification message might not reach you if promotional message are blocked from your service provider.',
-                  ],
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),

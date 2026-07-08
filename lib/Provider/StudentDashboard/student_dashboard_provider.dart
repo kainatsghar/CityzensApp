@@ -13,6 +13,7 @@ import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/services/MultiChild/multi_child_service.dart';
 import 'package:tcs_app/repositories/StudentDashboard/student_dashboard_repository.dart';
+import 'package:tcs_app/provider/ClassTestResult/class_test_result_provider.dart';
 import 'package:tcs_app/model/StudentSubjects/student_subject_response.dart';
 
 class ChildDashboardData {
@@ -193,7 +194,9 @@ class StudentDashboardProvider with ChangeNotifier {
 
   Future<void> refreshActiveChild() async {
     final token = localDataProvider.userData?.tokenId;
-    if (token == null || _activeStudentId == null || _activeStudentId!.isEmpty) {
+    if (token == null ||
+        _activeStudentId == null ||
+        _activeStudentId!.isEmpty) {
       return;
     }
 
@@ -201,10 +204,20 @@ class StudentDashboardProvider with ChangeNotifier {
     notifyListeners();
 
     try {
+      final context = AppNavigation.currentContext;
+      if (context != null && context.mounted) {
+        try {
+          Provider.of<ClassTestResultProvider>(
+            context,
+            listen: false,
+          ).studentTestResultListResponse = null;
+        } catch (_) {}
+      }
       await _fetchDataForChild(
         _activeStudentId!,
         token,
         _childDataMap[_activeStudentId!]!,
+        forceRefresh: true,
       );
     } catch (e) {
       _loadError = e.toString();
@@ -222,9 +235,20 @@ class StudentDashboardProvider with ChangeNotifier {
     notifyListeners();
 
     try {
+      final context = AppNavigation.currentContext;
+      if (context != null && context.mounted) {
+        try {
+          Provider.of<ClassTestResultProvider>(
+            context,
+            listen: false,
+          ).clearData();
+        } catch (_) {}
+      }
       List<Future> tasks = [];
       _childDataMap.forEach((studentId, data) {
-        tasks.add(_fetchDataForChild(studentId, token, data));
+        tasks.add(
+          _fetchDataForChild(studentId, token, data, forceRefresh: true),
+        );
       });
       await Future.wait(tasks);
     } catch (e) {
@@ -238,27 +262,39 @@ class StudentDashboardProvider with ChangeNotifier {
   Future<void> _fetchDataForChild(
     String studentId,
     String token,
-    ChildDashboardData data,
-  ) async {
-    await _repository.fetchChildDataOfflineFirst(
-      studentId: studentId,
-      token: token,
-      data: data,
-      onCacheHit: (cachedData) {
-        // Cache hit — immediately show cached dashboard
-        // The UI is already bound to `data`, so just notify.
-        if (studentId == _activeStudentId) {
-          _isFirstChildReady = true;
-          _isLoading = false;
-          notifyListeners();
-        }
-      },
-      onSyncComplete: () {
-        if (studentId == _activeStudentId) {
-          notifyListeners();
-        }
-      },
-    );
+    ChildDashboardData data, {
+    bool forceRefresh = false,
+  }) async {
+    if (forceRefresh) {
+      await _repository.forceRefresh(
+        studentId: studentId,
+        token: token,
+        data: data,
+      );
+      if (studentId == _activeStudentId) {
+        notifyListeners();
+      }
+    } else {
+      await _repository.fetchChildDataOfflineFirst(
+        studentId: studentId,
+        token: token,
+        data: data,
+        onCacheHit: (cachedData) {
+          // Cache hit — immediately show cached dashboard
+          // The UI is already bound to `data`, so just notify.
+          if (studentId == _activeStudentId) {
+            _isFirstChildReady = true;
+            _isLoading = false;
+            notifyListeners();
+          }
+        },
+        onSyncComplete: () {
+          if (studentId == _activeStudentId) {
+            notifyListeners();
+          }
+        },
+      );
+    }
 
     // Sync FeeChallanProvider if this is the active child
     if (studentId == _activeStudentId) {
@@ -272,9 +308,7 @@ class StudentDashboardProvider with ChangeNotifier {
           feeProvider.outstandingChallans = data.outstandingChallans;
           feeProvider.notifyListeners();
         } catch (e) {
-          debugPrint(
-            'Error syncing FeeChallanProvider on child fee load: $e',
-          );
+          debugPrint('Error syncing FeeChallanProvider on child fee load: $e');
         }
       }
     }

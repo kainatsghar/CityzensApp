@@ -237,6 +237,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     String localGradeId,
   ) {
     return RefreshIndicator(
+      color: AppColors.primaryBlue,
+      displacement: 80,
       onRefresh: () async {
         if (_isParent) {
           await provider.refreshAllChildren();
@@ -248,8 +250,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       },
       child: CustomScrollView(
         controller: _scrollController,
-        physics: const BouncingScrollPhysics(
-          parent: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
         ),
         slivers: [
           ValueListenableBuilder<double>(

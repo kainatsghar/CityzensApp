@@ -35,6 +35,17 @@ class _StudentClassResultScreenState extends State<StudentClassResultScreen> {
     _resultsFuture = provider.loadStudentsTestResultswithMarks();
   }
 
+  Future<void> _handleRefresh() async {
+    final provider = Provider.of<ClassTestResultProvider>(
+      context,
+      listen: false,
+    );
+    final newResults = await provider.loadStudentsTestResultswithMarks(forceRefresh: true);
+    setState(() {
+      _resultsFuture = Future.value(newResults);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,21 +58,58 @@ class _StudentClassResultScreenState extends State<StudentClassResultScreen> {
           }
 
           if (snapshot.hasError) {
-            return ShowError(errorText: snapshot.error.toString());
+            return RefreshIndicator(
+              color: AppColors.primaryBlue,
+              onRefresh: _handleRefresh,
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+                  ShowError(errorText: snapshot.error.toString()),
+                ],
+              ),
+            );
           }
 
           final response = snapshot.data;
-          if (response == null ||
-              response.subjectDto == null ||
-              response.subjectDto!.isEmpty) {
-            return const ShowMessageOnImage(message: 'No results uploaded yet');
-          }
+          final hasResults = response != null &&
+              response.subjectDto != null &&
+              response.subjectDto!.isNotEmpty;
 
-          return Column(
-            children: [
-              _buildReusableHeader(),
-              Expanded(child: _buildAllTestsView(response.subjectDto!)),
-            ],
+          return RefreshIndicator(
+            color: AppColors.primaryBlue,
+            onRefresh: _handleRefresh,
+            child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics(),
+              ),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: _buildReusableHeader(),
+                ),
+                if (!hasResults)
+                  const SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: ShowMessageOnImage(message: 'No results uploaded yet'),
+                  )
+                else
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 40),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final subject = response.subjectDto![index];
+                          return FadeInUp(
+                            delay: Duration(milliseconds: 50 * index),
+                            child: _MultiTestSubjectCard(subject: subject),
+                          );
+                        },
+                        childCount: response.subjectDto!.length,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           );
         },
       ),
@@ -92,21 +140,6 @@ class _StudentClassResultScreenState extends State<StudentClassResultScreen> {
         };
 
         return CustomStudentInfo(info: StudentInfoWrapper(infoWrapper));
-      },
-    );
-  }
-
-  Widget _buildAllTestsView(List<SubjectDto> subjects) {
-    return ListView.builder(
-      padding: const EdgeInsets.fromLTRB(16, 10, 16, 40),
-      itemCount: subjects.length,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, index) {
-        final subject = subjects[index];
-        return FadeInUp(
-          delay: Duration(milliseconds: 50 * index),
-          child: _MultiTestSubjectCard(subject: subject),
-        );
       },
     );
   }

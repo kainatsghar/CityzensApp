@@ -14,7 +14,9 @@ import 'package:tcs_app/model/Results/all_pdf_results_response.dart';
 class ResultsProvider with ChangeNotifier {
   final academicYearController = TextEditingController(); //
   final termController = TextEditingController();
+  final pdfClassFilterController = TextEditingController();
   int selectAcademicYear = 0, selectedTerm = 0;
+  String? selectedPDFClassName;
   final formKey = GlobalKey<FormState>(); //
   TabController? controller;
   ScrollController? scrollController;
@@ -62,6 +64,12 @@ class ResultsProvider with ChangeNotifier {
     termController.text = v;
     termSelected = true;
     AppNavigation.goBack();
+    notifyListeners();
+  }
+
+  void setSelectedPDFClassName(String v) {
+    selectedPDFClassName = v;
+    pdfClassFilterController.text = v;
     notifyListeners();
   }
 
@@ -212,6 +220,23 @@ class ResultsProvider with ChangeNotifier {
     );
   }
 
+  void pdfClassBottomSheet(List<String> classes) {
+    pdfClassFilterController.text = selectedPDFClassName ?? '';
+    showModalBottomSheet(
+      context: AppNavigation.currentContext!,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bc) => CustomFilterBottomSheet(
+        title: 'Select Class',
+        controller: pdfClassFilterController,
+        filterOptions: classes.map((c) => Options(title: c, value: 0)).toList(),
+        onSelect: (v) {
+          setSelectedPDFClassName(v);
+          AppNavigation.goBack();
+        },
+      ),
+    );
+  }
+
   Future<void> navigateToResults() async {
     //
     if (formKey.currentState!.validate()) {
@@ -227,6 +252,8 @@ class ResultsProvider with ChangeNotifier {
     selectAcademicYear = 0;
     academicYearController.clear();
     termController.clear();
+    pdfClassFilterController.clear();
+    selectedPDFClassName = null;
     terms = [];
     academicYears = [];
     termSelected = false;
@@ -237,6 +264,8 @@ class ResultsProvider with ChangeNotifier {
     selectAcademicYear = 0;
     academicYearController.clear();
     termController.clear();
+    pdfClassFilterController.clear();
+    selectedPDFClassName = null;
     terms = [];
     academicYears = [];
     termSelected = false;
