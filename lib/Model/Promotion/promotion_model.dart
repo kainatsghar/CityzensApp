@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tcs_app/model/Firebase/timestamp_converter.dart';
 
 part 'promotion_model.freezed.dart';
 part 'promotion_model.g.dart';
@@ -7,18 +6,21 @@ part 'promotion_model.g.dart';
 @freezed
 abstract class PromotionModel with _$PromotionModel {
   factory PromotionModel({
-    required String id,
+    @JsonKey(name: 'promotionId') required int id,
+    @JsonKey(name: 'promotionKey') String? promotionKey,
+    @JsonKey(name: 'adPosition') String? adPosition,
     String? title,
     String? description,
     @Default(false) bool isLive,
     @Default(false) bool isTesting,
-    @Default(false) bool isFullScreen,
+    @Default(true) bool isFullScreen,
     @Default('image') String promotionType,
     String? url,
     String? tapLinkURL,
-    @Default(10) int displayDuration,
-    @TimestampConverter() DateTime? startDate,
-    @TimestampConverter() DateTime? endDate,
+    @Default(30) int displayDuration,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? displayFileName,
   }) = _PromotionModel;
 
   factory PromotionModel.fromJson(Map<String, dynamic> json) =>

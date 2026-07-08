@@ -2,6 +2,7 @@ class AppNavRoutes {
   static const initialRoute = '/';
   static const loginRoute = '/login';
   static const promotionRoute = '/promotion';
+  static const promotionManagementRoute = '/promotionManagement';
   static const authWrapperRoute = '/authWrapper';
   static const registrationRoute = '/userRegistration';
   static const forgotPinCodeRoute = '/forgotPinCode';

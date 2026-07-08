@@ -8,23 +8,32 @@ part of 'promotion_model.dart';
 
 _PromotionModel _$PromotionModelFromJson(Map<String, dynamic> json) =>
     _PromotionModel(
-      id: json['id'] as String,
+      id: (json['promotionId'] as num).toInt(),
+      promotionKey: json['promotionKey'] as String?,
+      adPosition: json['adPosition'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,
       isLive: json['isLive'] as bool? ?? false,
       isTesting: json['isTesting'] as bool? ?? false,
-      isFullScreen: json['isFullScreen'] as bool? ?? false,
+      isFullScreen: json['isFullScreen'] as bool? ?? true,
       promotionType: json['promotionType'] as String? ?? 'image',
       url: json['url'] as String?,
       tapLinkURL: json['tapLinkURL'] as String?,
-      displayDuration: (json['displayDuration'] as num?)?.toInt() ?? 10,
-      startDate: const TimestampConverter().fromJson(json['startDate']),
-      endDate: const TimestampConverter().fromJson(json['endDate']),
+      displayDuration: (json['displayDuration'] as num?)?.toInt() ?? 30,
+      startDate: json['startDate'] == null
+          ? null
+          : DateTime.parse(json['startDate'] as String),
+      endDate: json['endDate'] == null
+          ? null
+          : DateTime.parse(json['endDate'] as String),
+      displayFileName: json['displayFileName'] as String?,
     );
 
 Map<String, dynamic> _$PromotionModelToJson(_PromotionModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'promotionId': instance.id,
+      'promotionKey': instance.promotionKey,
+      'adPosition': instance.adPosition,
       'title': instance.title,
       'description': instance.description,
       'isLive': instance.isLive,
@@ -34,6 +43,7 @@ Map<String, dynamic> _$PromotionModelToJson(_PromotionModel instance) =>
       'url': instance.url,
       'tapLinkURL': instance.tapLinkURL,
       'displayDuration': instance.displayDuration,
-      'startDate': const TimestampConverter().toJson(instance.startDate),
-      'endDate': const TimestampConverter().toJson(instance.endDate),
+      'startDate': instance.startDate?.toIso8601String(),
+      'endDate': instance.endDate?.toIso8601String(),
+      'displayFileName': instance.displayFileName,
     };

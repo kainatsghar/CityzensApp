@@ -59,9 +59,7 @@ class PushNotifications {
   }
 
   Future<void> _initializeLocal() async {
-    final android = const AndroidInitializationSettings(
-      '@mipmap/ic_notification',
-    );
+    final android = const AndroidInitializationSettings('ic_notification');
     final ios = const DarwinInitializationSettings();
     final settings = InitializationSettings(android: android, iOS: ios);
 
@@ -147,8 +145,8 @@ class PushNotifications {
       priority: Priority.high,
       importance: Importance.max,
       playSound: true,
-      icon: '@mipmap/ic_notification',
-      largeIcon: const DrawableResourceAndroidBitmap('@mipmap/ic_notification'),
+      icon: 'ic_notification',
+      largeIcon: const DrawableResourceAndroidBitmap('ic_notification'),
     );
     const iosDetails = DarwinNotificationDetails(
       presentAlert: true,

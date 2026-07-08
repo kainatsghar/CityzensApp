@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomAppButton/custom_app_button.dart';
@@ -49,6 +50,14 @@ class _LoginScreenState extends State<LoginScreen>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const CustomAppBar(title: 'LOGIN'),
+      floatingActionButton: kDebugMode
+          ? FloatingActionButton(
+              onPressed: () => AppNavigation.navigateTo(
+                AppNavRoutes.promotionManagementRoute,
+              ),
+              child: const Icon(Icons.settings),
+            )
+          : null,
       body: SafeArea(
         child: Column(
           children: [

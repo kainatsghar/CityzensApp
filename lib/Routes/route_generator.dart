@@ -9,6 +9,7 @@ import 'package:tcs_app/screens/LoginScreen/login_screen.dart';
 import 'package:tcs_app/screens/Parent/ChallanPaymentScreen/challan_payment_screen.dart';
 import 'package:tcs_app/screens/Parent/WithdrawalRequestScreen/withdrawal_request_screen.dart';
 import 'package:tcs_app/screens/Promotion/promotion_screen_ui.dart';
+import 'package:tcs_app/screens/Promotion/promotion_management_screen.dart';
 import 'package:tcs_app/screens/SplashScreen/splash_screen_ui.dart';
 import 'package:tcs_app/screens/Student/StudentAttendanceScreen/student_alevel_attendance_screen.dart';
 import 'package:tcs_app/screens/Student/StudentClassTestResultScreen/student_class_result_screen.dart';
@@ -71,6 +72,8 @@ class RouteGenerator {
         return routeScreen(child: const SplashScreenUI());
       case AppNavRoutes.promotionRoute:
         return routeScreen(child: const PromotionScreenUI());
+      case AppNavRoutes.promotionManagementRoute:
+        return routeScreen(child: const PromotionManagementScreen());
       case AppNavRoutes.loginRoute:
         return routeScreen(child: const LoginScreen());
       case AppNavRoutes.authWrapperRoute:

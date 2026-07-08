@@ -137,30 +137,50 @@ Map<String, dynamic> _returnResponse(http.Response response) {
   if (kDebugMode) {
     log('Response URL: ${response.request?.url}\n${response.body}');
   }
-  final jsonResponse = jsonDecode(response.body);
+  
+  Map<String, dynamic> jsonResponse = {};
+  if (response.body.isNotEmpty) {
+    try {
+      final dynamic decoded = jsonDecode(response.body);
+      if (decoded is Map<String, dynamic>) {
+        jsonResponse = decoded;
+      } else {
+        // If the API returns a List or primitive, wrap it in a map to prevent TypeErrors
+        jsonResponse = {'data': decoded};
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        log('Failed to decode JSON: $e');
+      }
+    }
+  }
+
+  // Any 2xx status code is a success (e.g. 200 OK, 201 Created, 204 No Content)
+  if (response.statusCode >= 200 && response.statusCode < 300) {
+    return jsonResponse;
+  }
+
   switch (response.statusCode) {
-    case 200:
-      return jsonResponse;
     case 400:
       throw BadRequestException(
-        jsonResponse['message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
       );
     case 401:
       throw InvalidInputException(
-        jsonResponse['message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
       );
     case 403:
       throw UnAuthorizedException(
-        jsonResponse['message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
       );
     case 404:
       throw FetchDataException(
-        jsonResponse['message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
       );
     case 500:
     default:
       throw FetchDataException(
-        jsonResponse['message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
       );
   }
 }

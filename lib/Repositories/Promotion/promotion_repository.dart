@@ -1,24 +1,31 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tcs_app/model/Firebase/Promotion/promotion_model.dart';
+import 'package:tcs_app/model/Promotion/promotion_model.dart';
+import 'package:tcs_app/network/api_base_helper.dart';
 
 class PromotionRepository {
   PromotionRepository() : super();
 
-  PromotionModel fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
-    return PromotionModel.fromJson(doc.data()!);
-  }
-
   // Get active promotions
   Future<PromotionModel?> getActivePromotion() async {
     try {
-      final snapshot = await FirebaseFirestore.instance
-          .collection('promotions')
-          .doc('launchPromotion')
-          .get();
+      final response = await ApiBaseHelper.httpPostRequest(
+        "GetAllLaunchPromotions",
+      );
 
-      if (snapshot.exists) {
-        return fromFirestore(snapshot);
+      final isSuccess = response['IsSuccess'] == true || response['isSuccess'] == true;
+      final responseData = response['Data'] ?? response['data'];
+
+      if (isSuccess && responseData != null) {
+        List data = responseData;
+        if (data.isNotEmpty) {
+          for (var item in data) {
+            var promo = PromotionModel.fromJson(item);
+            if (promo.promotionKey == 'launchPromotion') {
+              return promo;
+            }
+          }
+          return PromotionModel.fromJson(data.first);
+        }
       }
       return null;
     } catch (e) {
@@ -27,48 +34,77 @@ class PromotionRepository {
     }
   }
 
-  // Get active promotions
+  // Get active promotions list
   Future<List<PromotionModel>?> getActivePromotionList() async {
     try {
-      final snapshot = await FirebaseFirestore.instance
-          .collection('promotions')
-          .get();
+      final response = await ApiBaseHelper.httpPostRequest(
+        "GetAllLaunchPromotions",
+      );
 
-      if (snapshot.docs.isNotEmpty) {
-        return snapshot.docs.map(fromFirestore).toList();
+      final isSuccess = response['IsSuccess'] == true || response['isSuccess'] == true;
+      final responseData = response['Data'] ?? response['data'];
+
+      if (isSuccess && responseData != null) {
+        List data = responseData;
+        return data.map((e) => PromotionModel.fromJson(e)).toList();
       }
       return null;
     } catch (e) {
-      debugPrint('Failed to get active promotion: $e');
+      debugPrint('Failed to get active promotion list: $e');
       return null;
     }
   }
 
   // Stream active promotions
   Stream<PromotionModel?> streamActivePromotion() {
-    return FirebaseFirestore.instance
-        .collection('promotions')
-        .doc('launchPromotion')
-        .snapshots()
-        .map((snapshot) {
-          if (snapshot.exists) {
-            return fromFirestore(snapshot);
-          }
-          return null;
-        });
+    return Stream.fromFuture(getActivePromotion());
   }
 
   Future<void> addPromotion(PromotionModel promotion) async {
+    if (!kDebugMode) {
+      debugPrint("Add promotion is only allowed in debug mode.");
+      return;
+    }
     try {
-      await FirebaseFirestore.instance
-          .collection('promotions')
-          .doc(
-            promotion.id,
-          ) // you can also use .add() if you want Firestore to generate an ID
-          .set(promotion.toJson());
+      await ApiBaseHelper.httpPostRequest(
+        "CreateLaunchPromotion",
+        body: promotion.toJson(),
+      );
       debugPrint("Promotion added successfully ✅");
     } catch (e) {
       debugPrint("Failed to add promotion: $e");
+    }
+  }
+
+  Future<void> updatePromotion(PromotionModel promotion) async {
+    if (!kDebugMode) {
+      debugPrint("Update promotion is only allowed in debug mode.");
+      return;
+    }
+    try {
+      await ApiBaseHelper.httpPostRequest(
+        "UpdateLaunchPromotion",
+        body: promotion.toJson(),
+      );
+      debugPrint("Promotion updated successfully ✅");
+    } catch (e) {
+      debugPrint("Failed to update promotion: $e");
+    }
+  }
+
+  Future<void> deletePromotion(int promotionId) async {
+    if (!kDebugMode) {
+      debugPrint("Delete promotion is only allowed in debug mode.");
+      return;
+    }
+    try {
+      await ApiBaseHelper.httpPostRequest(
+        "DeleteLaunchPromotion",
+        body: {"promotionId": promotionId},
+      );
+      debugPrint("Promotion deleted successfully ✅");
+    } catch (e) {
+      debugPrint("Failed to delete promotion: $e");
     }
   }
 }
