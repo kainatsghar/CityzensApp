@@ -948,7 +948,12 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   Widget _buildSubjectsCarousel(ChildDashboardData? data) {
     final subjects = data?.subjects?.studentSubjects ?? [];
     final validSubjects = subjects
-        .where((s) => s.fullName != null && s.fullName!.trim().isNotEmpty)
+        .where(
+          (s) =>
+              s.fullName != null &&
+              s.fullName!.trim().isNotEmpty &&
+              s.subjectId != 55,
+        )
         .toList();
 
     if (validSubjects.isEmpty) return const SizedBox.shrink();

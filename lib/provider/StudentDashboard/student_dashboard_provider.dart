@@ -1,31 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/model/Assignment/assignment_response.dart';
-import 'package:tcs_app/model/StudentProfile/student_profile_response.dart';
-import 'package:tcs_app/model/StudentAttendance/attendance_percentage_response.dart';
-import 'package:tcs_app/model/StudentAttendance/student_attendance_response.dart';
-import 'package:tcs_app/model/FeeChallan/outstanding_challan_response.dart';
-import 'package:tcs_app/model/Diary/diary_response.dart';
-import 'package:tcs_app/model/Notifications/notification_response.dart';
 import 'package:tcs_app/model/MultiChild/multi_child_response.dart';
+import 'package:tcs_app/model/StudentDashboard/child_dashboard_data.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/services/MultiChild/multi_child_service.dart';
 import 'package:tcs_app/repositories/StudentDashboard/student_dashboard_repository.dart';
 import 'package:tcs_app/provider/ClassTestResult/class_test_result_provider.dart';
-import 'package:tcs_app/model/StudentSubjects/student_subject_response.dart';
 
-class ChildDashboardData {
-  StudentProfileResponse? profile;
-  AttendancePercentageResponse? attendancePercentage;
-  StudentAttendanceResponse? currentMonthAttendance;
-  OutstandingChallanResponse? outstandingChallans;
-  DiaryResponse? latestHomework;
-  NotificationResponse? latestCirculars;
-  AssignmentResponse? latestAssignments;
-  StudentSubjectResponse? subjects;
-}
+export 'package:tcs_app/model/StudentDashboard/child_dashboard_data.dart';
 
 class StudentDashboardProvider with ChangeNotifier {
   final Map<String, ChildDashboardData> _childDataMap = {};

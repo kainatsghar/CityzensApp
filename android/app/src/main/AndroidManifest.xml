@@ -62,6 +62,10 @@
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="mailto" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="application/pdf" />
+        </intent>
     </queries>
     <!-- Provide required visibility configuration for API level 30 and above -->
 </manifest>

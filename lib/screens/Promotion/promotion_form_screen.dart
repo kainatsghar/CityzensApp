@@ -1,5 +1,6 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tcs_app/custom_widgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/custom_widgets/CustomCard/custom_card.dart';
 import 'package:tcs_app/custom_widgets/CustomTextFormField/custom_text_form_field.dart';
@@ -29,6 +30,9 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
   late TextEditingController _urlController;
   late TextEditingController _tapLinkURLController;
   late TextEditingController _displayDurationController;
+  late TextEditingController _filePathController;
+
+  File? _pickedFile;
 
   bool _isLive = false;
   bool _isTesting = false;
@@ -62,6 +66,8 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
     _adPosition = AdPosition.fromString(p?.adPosition);
     _startDate = p?.startDate;
     _endDate = p?.endDate;
+    _filePathController = TextEditingController(text: p?.filePath ?? '');
+    _pickedFile = null; // Reset on populate
   }
 
   @override
@@ -71,6 +77,7 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
     _urlController.dispose();
     _tapLinkURLController.dispose();
     _displayDurationController.dispose();
+    _filePathController.dispose();
     super.dispose();
   }
 
@@ -155,7 +162,10 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
       tapLinkURL: _tapLinkURLController.text.isEmpty
           ? null
           : _tapLinkURLController.text,
-      displayFileName: '', // Explicitly send empty string
+      displayFileName: '',
+      filePath: _filePathController.text.isEmpty
+          ? null
+          : _filePathController.text,
       adPosition: _adPosition.value,
       displayDuration: int.tryParse(_displayDurationController.text) ?? 30,
       isLive: _isLive,
@@ -167,9 +177,9 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
     );
 
     if (_currentPromotion == null) {
-      await _repository.addPromotion(newPromotion);
+      await _repository.addPromotion(newPromotion, file: _pickedFile);
     } else {
-      await _repository.updatePromotion(newPromotion);
+      await _repository.updatePromotion(newPromotion, file: _pickedFile);
     }
 
     // Refetch to get the latest DB ID and populated data
@@ -280,6 +290,23 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
     );
   }
 
+  Future<void> _pickFile() async {
+    final result = await FilePicker.pickFiles(
+      type: FileType.media,
+      allowMultiple: false,
+    );
+    if (result != null && result.files.single.path != null) {
+      final file = result.files.single;
+      final ext = file.extension?.toLowerCase() ?? '';
+      final isVideo = ['mp4', 'mov', 'avi', 'mkv', 'webm', 'flv'].contains(ext);
+      setState(() {
+        _pickedFile = File(file.path!);
+        _filePathController.text = file.name;
+        _promotionType = isVideo ? PromotionType.video : PromotionType.image;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -331,7 +358,7 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // --- Media Configuration ---
+                      // --- Media Configuration & File Upload ---
                       CustomCard(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -340,9 +367,11 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
                               'Media Configuration',
                               Icons.perm_media_outlined,
                             ),
+                            // Type dropdown (auto-set on file pick)
                             DropdownButtonFormField<PromotionType>(
-                              initialValue: _promotionType,
+                              value: _promotionType,
                               decoration: InputDecoration(
+                                labelText: 'Type',
                                 filled: true,
                                 fillColor: AppColors.white,
                                 contentPadding: const EdgeInsets.symmetric(
@@ -368,52 +397,100 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
                               onChanged: (val) =>
                                   setState(() => _promotionType = val!),
                             ),
-                            const SizedBox(height: 12),
-                            CustomTextFormField(
-                              controller: _urlController,
-                              hintText: 'Media URL',
-                              validator: _urlValidator,
-                              onChange: (val) => setState(
-                                () {},
-                              ), // Trigger rebuild for preview
-                            ),
-                            if (_promotionType == PromotionType.image &&
-                                _urlController.text.isNotEmpty)
-                              Container(
-                                margin: const EdgeInsets.only(top: 12),
-                                height: 150,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: AppColors.grey,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: CachedNetworkImage(
-                                    imageUrl: _urlController.text,
-                                    fit: BoxFit.cover,
-                                    errorWidget: (context, url, error) =>
-                                        const Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.broken_image,
-                                              color: AppColors.softGreyText,
-                                              size: 40,
-                                            ),
-                                            SizedBox(height: 8),
-                                            Text(
-                                              'Invalid Image URL',
-                                              style: TextStyle(
-                                                color: AppColors.softGreyText,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                            const SizedBox(height: 16),
+                            // File display row
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 14,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.ultraLightGrey,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppColors.primaryBlue.withValues(
+                                    alpha: 0.15,
                                   ),
                                 ),
                               ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    _pickedFile != null
+                                        ? Icons.insert_drive_file_rounded
+                                        : Icons.file_open_outlined,
+                                    size: 18,
+                                    color: _pickedFile != null
+                                        ? AppColors.primaryBlue
+                                        : AppColors.softGreyText,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      _filePathController.text.isEmpty
+                                          ? 'No file selected'
+                                          : _filePathController.text,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: _pickedFile != null
+                                            ? AppColors.primaryDarkColor
+                                            : AppColors.softGreyText,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  if (_pickedFile != null)
+                                    GestureDetector(
+                                      onTap: () => setState(() {
+                                        _pickedFile = null;
+                                        _filePathController.clear();
+                                      }),
+                                      child: const Icon(
+                                        Icons.close_rounded,
+                                        size: 18,
+                                        color: AppColors.errorRed,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            // Browse button
+                            SizedBox(
+                              width: double.infinity,
+                              child: OutlinedButton.icon(
+                                onPressed: _pickFile,
+                                style: OutlinedButton.styleFrom(
+                                  side: const BorderSide(
+                                    color: AppColors.primaryBlue,
+                                    width: 1.5,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                icon: const Icon(
+                                  Icons.attach_file_rounded,
+                                  color: AppColors.primaryBlue,
+                                  size: 18,
+                                ),
+                                label: Text(
+                                  _pickedFile != null
+                                      ? 'CHANGE FILE'
+                                      : 'BROWSE FILE',
+                                  style: const TextStyle(
+                                    color: AppColors.primaryBlue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ),
+                            ),
                             const SizedBox(height: 12),
                             CustomTextFormField(
                               controller: _tapLinkURLController,

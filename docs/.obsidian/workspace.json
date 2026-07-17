@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Features/Index.md",
+                "file": "Flows/Circulars Flow.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Index"
+              "title": "Circulars Flow"
             }
           }
         ]
@@ -185,6 +185,7 @@
   },
   "active": "7f565243360a17d1",
   "lastOpenFiles": [
+    "Features/Index.md",
     "Design System/Index.md",
     "Credentials/Index.md",
     "Architecture/Provider Map.md",
@@ -203,7 +204,6 @@
     "Flows/Homework and Classwork Flow.md",
     "Flows/Student Attendance Flow.md",
     "Flows/Mark Attendance Flow.md",
-    "Features/Index.md",
     "Credentials/secrets.md"
   ]
 }

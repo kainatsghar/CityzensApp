@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:tcs_app/model/Promotion/promotion_model.dart';
 import 'package:tcs_app/network/api_base_helper.dart';
@@ -60,32 +61,50 @@ class PromotionRepository {
     return Stream.fromFuture(getActivePromotion());
   }
 
-  Future<void> addPromotion(PromotionModel promotion) async {
+  Future<void> addPromotion(PromotionModel promotion, {File? file}) async {
     if (!kDebugMode) {
       debugPrint("Add promotion is only allowed in debug mode.");
       return;
     }
     try {
-      await ApiBaseHelper.httpPostRequest(
-        "CreateLaunchPromotion",
-        body: promotion.toJson(),
-      );
+      if (file != null) {
+        await ApiBaseHelper.httpMultipartPostRequest(
+          "CreateLaunchPromotion",
+          fields: _promotionToFields(promotion),
+          filePath: file.path,
+          fileField: 'file',
+        );
+      } else {
+        await ApiBaseHelper.httpPostRequest(
+          "CreateLaunchPromotion",
+          body: promotion.toJson(),
+        );
+      }
       debugPrint("Promotion added successfully ✅");
     } catch (e) {
       debugPrint("Failed to add promotion: $e");
     }
   }
 
-  Future<void> updatePromotion(PromotionModel promotion) async {
+  Future<void> updatePromotion(PromotionModel promotion, {File? file}) async {
     if (!kDebugMode) {
       debugPrint("Update promotion is only allowed in debug mode.");
       return;
     }
     try {
-      await ApiBaseHelper.httpPostRequest(
-        "UpdateLaunchPromotion",
-        body: promotion.toJson(),
-      );
+      if (file != null) {
+        await ApiBaseHelper.httpMultipartPostRequest(
+          "UpdateLaunchPromotion",
+          fields: _promotionToFields(promotion),
+          filePath: file.path,
+          fileField: 'file',
+        );
+      } else {
+        await ApiBaseHelper.httpPostRequest(
+          "UpdateLaunchPromotion",
+          body: promotion.toJson(),
+        );
+      }
       debugPrint("Promotion updated successfully ✅");
     } catch (e) {
       debugPrint("Failed to update promotion: $e");
@@ -106,5 +125,27 @@ class PromotionRepository {
     } catch (e) {
       debugPrint("Failed to delete promotion: $e");
     }
+  }
+
+  /// Converts a [PromotionModel] to a flat String map for multipart requests.
+  Map<String, String> _promotionToFields(PromotionModel p) {
+    return {
+      'promotionId': p.id.toString(),
+      if (p.promotionKey != null) 'promotionKey': p.promotionKey!,
+      if (p.adPosition != null) 'adPosition': p.adPosition!,
+      if (p.title != null) 'title': p.title!,
+      if (p.description != null) 'description': p.description!,
+      'isLive': p.isLive.toString(),
+      'isTesting': p.isTesting.toString(),
+      'isFullScreen': p.isFullScreen.toString(),
+      'promotionType': p.promotionType,
+      if (p.url != null) 'url': p.url!,
+      if (p.tapLinkURL != null) 'tapLinkURL': p.tapLinkURL!,
+      'displayDuration': p.displayDuration.toString(),
+      if (p.startDate != null) 'startDate': p.startDate!.toIso8601String(),
+      if (p.endDate != null) 'endDate': p.endDate!.toIso8601String(),
+      if (p.displayFileName != null) 'displayFileName': p.displayFileName!,
+      if (p.filePath != null) 'filePath': p.filePath!,
+    };
   }
 }

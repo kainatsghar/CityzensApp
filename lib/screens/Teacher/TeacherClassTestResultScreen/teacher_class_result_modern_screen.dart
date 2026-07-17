@@ -13,6 +13,8 @@ import 'package:tcs_app/custom_widgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/model/AddClassTestResult/add_class_test_result_request.dart';
 import 'package:tcs_app/services/ClassTestResult/class_test_result_service.dart';
 
+enum StudentSortOption { name, rollNo }
+
 class ClassTestResultsScreen extends StatefulWidget {
   const ClassTestResultsScreen({super.key});
 
@@ -31,6 +33,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
 
   int _activeTestIndex = 0; // 0, 1, 2
   String _searchQuery = '';
+  StudentSortOption _sortOption = StudentSortOption.rollNo;
   late EnhancedClassTestProvider _state;
 
   @override
@@ -225,7 +228,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
           Row(
             children: [
               Expanded(
-                flex: 4,
+                flex: 3,
                 child: _buildInputBox(
                   label: 'MAX MARKS',
                   controller: _maxMarksControllers[_activeTestIndex + 1]!,
@@ -237,14 +240,58 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               Expanded(
-                flex: 6,
+                flex: 5,
                 child: _buildInputBox(
                   label: 'SEARCH STUDENT...',
                   controller: _searchController,
                   icon: Icons.search_rounded,
                   onChanged: (val) => setState(() => _searchQuery = val),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                height: 52,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF8FAFD),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: Colors.grey.shade200, width: 1.5),
+                ),
+                child: PopupMenuButton<StudentSortOption>(
+                  icon: Icon(
+                    Icons.sort_rounded,
+                    color: AppColors.primaryDarkColor.withValues(alpha: 0.6),
+                  ),
+                  tooltip: 'Sort Students',
+                  onSelected: (StudentSortOption result) {
+                    setState(() {
+                      _sortOption = result;
+                    });
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<StudentSortOption>>[
+                    const PopupMenuItem<StudentSortOption>(
+                      value: StudentSortOption.rollNo,
+                      child: Text(
+                        'Sort by Roll No',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    const PopupMenuItem<StudentSortOption>(
+                      value: StudentSortOption.name,
+                      child: Text(
+                        'Sort by Name',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -375,12 +422,20 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
 
   Widget _buildStudentList(EnhancedClassTestProvider state, int categoryId) {
     final students = state.getStudents(categoryId);
-    final filtered = students
+    var filtered = students
         .where(
           (s) =>
               s.studentName!.toLowerCase().contains(_searchQuery.toLowerCase()),
         )
         .toList();
+
+    filtered.sort((a, b) {
+      if (_sortOption == StudentSortOption.name) {
+        return (a.studentName ?? '').compareTo(b.studentName ?? '');
+      } else {
+        return (a.studentId ?? 0).compareTo(b.studentId ?? 0);
+      }
+    });
 
     if (filtered.isEmpty) {
       return Center(

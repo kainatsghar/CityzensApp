@@ -12,8 +12,22 @@ import 'package:tcs_app/provider/MarkAttendance/mark_attendance_provider.dart';
 import 'package:tcs_app/utils/app_colors.dart';
 import 'package:tcs_app/utils/app_constants.dart';
 
-class StudentListComponent extends StatelessWidget {
+class StudentListComponent extends StatefulWidget {
   const StudentListComponent({super.key});
+
+  @override
+  State<StudentListComponent> createState() => _StudentListComponentState();
+}
+
+class _StudentListComponentState extends State<StudentListComponent> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -322,20 +336,130 @@ class StudentListComponent extends StatelessWidget {
                     ),
                   ),
 
+                  // ── Search Bar ──
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: AppColors.primaryBlue.withValues(alpha: 0.15),
+                          width: 1.5,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.03),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: TextField(
+                        controller: _searchController,
+                        onChanged: (val) =>
+                            setState(() => _searchQuery = val.trim()),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryDarkColor,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Search by name or roll no...',
+                          hintStyle: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey.shade400,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search_rounded,
+                            color: AppColors.primaryBlue.withValues(alpha: 0.6),
+                            size: 20,
+                          ),
+                          suffixIcon: _searchQuery.isNotEmpty
+                              ? IconButton(
+                                  icon: Icon(
+                                    Icons.close_rounded,
+                                    size: 18,
+                                    color: Colors.grey.shade400,
+                                  ),
+                                  onPressed: () {
+                                    _searchController.clear();
+                                    setState(() => _searchQuery = '');
+                                  },
+                                )
+                              : null,
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
                   // ── Student List ──
                   // List avoids rebuilds on toggle taps because of Selector above
-                  Expanded(
-                    child: ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
-                      itemCount: studentList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return AttendanceListItem(
-                          index: index,
-                          student: studentList[index],
+                  Builder(
+                    builder: (context) {
+                      final filteredList = _searchQuery.isEmpty
+                          ? studentList
+                          : studentList
+                                .where(
+                                  (s) =>
+                                      (s.name ?? '').toLowerCase().contains(
+                                        _searchQuery.toLowerCase(),
+                                      ) ||
+                                      (s.studentId?.toString() ?? '').contains(
+                                        _searchQuery,
+                                      ),
+                                )
+                                .toList();
+
+                      if (filteredList.isEmpty) {
+                        return Expanded(
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.search_off_rounded,
+                                  size: 56,
+                                  color: Colors.grey.shade300,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  'No student found',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade400,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
-                      },
-                    ),
+                      }
+
+                      return Expanded(
+                        child: ListView.builder(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+                          itemCount: filteredList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final student = filteredList[index];
+                            final originalIndex =
+                                studentList.indexOf(student);
+                            return AttendanceListItem(
+                              index: originalIndex,
+                              student: student,
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
 
                   // ── Sticky Save Button ──

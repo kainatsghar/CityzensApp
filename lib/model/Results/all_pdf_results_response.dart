@@ -45,6 +45,10 @@ class PDFResultItem {
   final String? sms;
   final bool? isSMSSent;
   final String? url;
+  /// Direct PDF download URL when backend provides one (`PDFURL`).
+  final String? pdfUrl;
+  /// Stable document id for cache keys when backend provides one (`Document_Id`).
+  final String? documentId;
   final int? records;
   final int? sendSMS;
   final String? smsDate;
@@ -73,6 +77,8 @@ class PDFResultItem {
     this.sms,
     this.isSMSSent,
     this.url,
+    this.pdfUrl,
+    this.documentId,
     this.records,
     this.sendSMS,
     this.smsDate,
@@ -103,6 +109,9 @@ class PDFResultItem {
       sms: json['SMS'],
       isSMSSent: json['isSMSSent'],
       url: json['URL'],
+      pdfUrl: json['PDFURL'] ?? json['DownloadUrl'] ?? json['PdfUrl'],
+      documentId: json['Document_Id']?.toString() ??
+          json['ResultDocumentId']?.toString(),
       records: json['Records'],
       sendSMS: json['SendSMS'],
       smsDate: json['SMSDate'],

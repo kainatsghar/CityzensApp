@@ -43,6 +43,27 @@ class AppAnalyticsService {
     }
   }
 
+  /// Result PDF download funnel events (no PII / no full URLs).
+  static Future<void> logResultPdfEvent(
+    String eventName, {
+    String? stage,
+    String? errorType,
+    int? byteCount,
+  }) async {
+    try {
+      await _analytics.logEvent(
+        name: 'result_pdf_$eventName',
+        parameters: {
+          'stage': ?stage,
+          'error_type': ?errorType,
+          'byte_count': ?byteCount,
+        },
+      );
+    } catch (e) {
+      debugPrint('[Analytics] Error logging result PDF event: $e');
+    }
+  }
+
   /// Set user properties for Analytics and custom keys for Crashlytics
   static Future<void> setUserProperties(LoginResponse user) async {
     try {

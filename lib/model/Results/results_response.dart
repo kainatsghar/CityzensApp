@@ -184,6 +184,8 @@ class PDFResults {
   int? sectionId;
   int? termGroupId;
   String? url;
+  String? pdfUrl;
+  String? documentId;
 
   PDFResults({
     this.studentId,
@@ -192,6 +194,8 @@ class PDFResults {
     this.sectionId,
     this.termGroupId,
     this.url,
+    this.pdfUrl,
+    this.documentId,
   });
 
   factory PDFResults.fromJson(Map<String, dynamic> json) {
@@ -202,6 +206,9 @@ class PDFResults {
       sectionId: json['SectionId'],
       termGroupId: json['TermGroupId'],
       url: json['URL'],
+      pdfUrl: json['PDFURL'] ?? json['DownloadUrl'] ?? json['PdfUrl'],
+      documentId: json['Document_Id']?.toString() ??
+          json['ResultDocumentId']?.toString(),
     );
   }
 }

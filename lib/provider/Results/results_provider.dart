@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/routes/app_navigation_routes.dart';
 import 'package:tcs_app/services/AcademicTerm/academic_term_service.dart';
+import 'package:tcs_app/services/Results/result_pdf_cache_service.dart';
+import 'package:tcs_app/services/Results/result_pdf_download_service.dart';
 import 'package:tcs_app/services/Results/result_service.dart';
 import 'package:tcs_app/model/AcademicTerm/academic_term_response.dart';
 import 'package:tcs_app/model/Options/options.dart';
@@ -31,6 +34,15 @@ class ResultsProvider with ChangeNotifier {
   ResultsResponse resultsResponse = ResultsResponse();
   AllPDFResultsResponse? allPDFResultsResponse;
   final Map<String, AllPDFResultsResponse> _allResultsCache = {};
+
+  /// Cache keys currently on disk.
+  final Set<String> downloadedPdfKeys = {};
+
+  /// Cache keys currently downloading.
+  final Set<String> downloadingPdfKeys = {};
+
+  /// Last download error message per cache key (for RETRY UX).
+  final Map<String, String> pdfDownloadErrors = {};
 
   LocalDataProvider localDataProvider = Provider.of<LocalDataProvider>(
     AppNavigation.currentContext!,
@@ -127,6 +139,7 @@ class ResultsProvider with ChangeNotifier {
       _cachedResultsMap[cacheKey] = response;
       setResultsResponse(ResultsResponse.fromJson(response));
       setEyeResultResponse(response['EyeResult']);
+      await refreshDownloadedPdfKeys();
       return response;
     } catch (ex) {
       rethrow;
@@ -140,6 +153,7 @@ class ResultsProvider with ChangeNotifier {
 
     if (!forceRefresh && _allResultsCache.containsKey(studentId)) {
       allPDFResultsResponse = _allResultsCache[studentId];
+      await refreshDownloadedPdfKeys();
       Future.microtask(() => notifyListeners());
       return allPDFResultsResponse!;
     }
@@ -152,11 +166,76 @@ class ResultsProvider with ChangeNotifier {
       final parsed = AllPDFResultsResponse.fromJson(response);
       _allResultsCache[studentId] = parsed;
       allPDFResultsResponse = parsed;
+      await refreshDownloadedPdfKeys();
       notifyListeners();
       return parsed;
     } catch (ex) {
       rethrow;
     }
+  }
+
+  Future<void> refreshDownloadedPdfKeys() async {
+    downloadedPdfKeys
+      ..clear()
+      ..addAll(await ResultPdfCacheService.downloadedKeys());
+  }
+
+  bool isPdfDownloaded(PDFResultItem item) =>
+      downloadedPdfKeys.contains(ResultPdfCacheService.buildKey(item));
+
+  bool isPdfDownloading(PDFResultItem item) =>
+      downloadingPdfKeys.contains(ResultPdfCacheService.buildKey(item));
+
+  String? pdfDownloadError(PDFResultItem item) =>
+      pdfDownloadErrors[ResultPdfCacheService.buildKey(item)];
+
+  /// Downloads the backend PDF (or reuses cache) then optionally opens it.
+  ///
+  /// Throws [NoServerPdfException] when the backend has no PDF for this result,
+  /// so the caller can fall back to the system print flow. That case is not
+  /// recorded as a download error.
+  Future<SavedResultPdf?> downloadResultPdf(
+    PDFResultItem item, {
+    bool forceRedownload = false,
+    bool openAfterDownload = true,
+  }) async {
+    final key = ResultPdfCacheService.buildKey(item);
+    if (downloadingPdfKeys.contains(key)) return null;
+
+    downloadingPdfKeys.add(key);
+    pdfDownloadErrors.remove(key);
+    notifyListeners();
+
+    try {
+      final saved = await ResultPdfDownloadService.download(
+        item,
+        forceRedownload: forceRedownload,
+      );
+      downloadedPdfKeys.add(key);
+      if (openAfterDownload) {
+        await OpenFilex.open(saved.localPath);
+      }
+      return saved;
+    } on NoServerPdfException {
+      rethrow;
+    } catch (e) {
+      pdfDownloadErrors[key] = e.toString();
+      rethrow;
+    } finally {
+      downloadingPdfKeys.remove(key);
+      notifyListeners();
+    }
+  }
+
+  Future<void> openCachedResultPdf(PDFResultItem item) async {
+    final key = ResultPdfCacheService.buildKey(item);
+    final file = await ResultPdfCacheService.getLocalFile(key);
+    if (file == null) {
+      downloadedPdfKeys.remove(key);
+      notifyListeners();
+      throw Exception('Saved PDF not found. Please download again.');
+    }
+    await OpenFilex.open(file.path);
   }
 
   void setResultsResponse(ResultsResponse response) {
@@ -274,5 +353,12 @@ class ResultsProvider with ChangeNotifier {
     _cachedResultsMap.clear();
     _termCache.clear();
     _allResultsCache.clear();
+    downloadingPdfKeys.clear();
+    pdfDownloadErrors.clear();
+    downloadedPdfKeys.clear();
+    final studentId = localDataProvider.studentId;
+    if (studentId.isNotEmpty) {
+      ResultPdfCacheService.deleteForStudent(studentId);
+    }
   }
 }

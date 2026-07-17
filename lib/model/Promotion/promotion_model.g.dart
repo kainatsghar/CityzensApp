@@ -27,6 +27,7 @@ _PromotionModel _$PromotionModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['endDate'] as String),
       displayFileName: json['displayFileName'] as String?,
+      filePath: json['filePath'] as String?,
     );
 
 Map<String, dynamic> _$PromotionModelToJson(_PromotionModel instance) =>
@@ -46,4 +47,5 @@ Map<String, dynamic> _$PromotionModelToJson(_PromotionModel instance) =>
       'startDate': instance.startDate?.toIso8601String(),
       'endDate': instance.endDate?.toIso8601String(),
       'displayFileName': instance.displayFileName,
+      'filePath': instance.filePath,
     };

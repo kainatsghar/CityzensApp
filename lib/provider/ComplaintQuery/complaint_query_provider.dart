@@ -10,7 +10,7 @@ import '../../services/WithdrawalRequest/withdrawal_request_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 import '../LocalData/local_data_provider.dart';
-import '../StudentDashboard/student_dashboard_provider.dart';
+import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
 
 class ComplaintQueryProvider with ChangeNotifier {
   WithdrawalResponse? withdrawalResponse;

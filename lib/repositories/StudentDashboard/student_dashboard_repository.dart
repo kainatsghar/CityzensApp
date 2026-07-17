@@ -8,7 +8,7 @@ import 'package:tcs_app/model/Notifications/notification_response.dart';
 import 'package:tcs_app/model/StudentAttendance/attendance_percentage_response.dart';
 import 'package:tcs_app/model/StudentAttendance/student_attendance_response.dart';
 import 'package:tcs_app/model/StudentProfile/student_profile_response.dart';
-import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
+import 'package:tcs_app/model/StudentDashboard/child_dashboard_data.dart';
 import 'package:tcs_app/services/LocalCache/local_cache_manager.dart';
 
 import 'package:tcs_app/services/StudentProfile/student_profile_service.dart';

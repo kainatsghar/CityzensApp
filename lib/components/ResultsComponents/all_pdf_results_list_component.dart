@@ -3,13 +3,75 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/model/Results/all_pdf_results_response.dart';
 import 'package:tcs_app/provider/Results/results_provider.dart';
-import 'package:tcs_app/utils/helper_function.dart';
+import 'package:tcs_app/screens/Results/result_pdf_viewer_screen.dart';
+import 'package:tcs_app/services/Results/result_pdf_download_service.dart';
 import '../../custom_widgets/ShowCustomMessage/show_custom_message.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 
 class AllPDFResultsListComponent extends StatelessWidget {
   const AllPDFResultsListComponent({super.key});
+
+  /// Downloads the backend PDF (cache-first) and opens it. Falls back to the
+  /// system print sheet (via the viewer) when the backend has no PDF.
+  Future<void> _handleSaveOrOpen(
+    BuildContext context,
+    ResultsProvider provider,
+    PDFResultItem item,
+  ) async {
+    HapticFeedback.lightImpact();
+    if ((item.url ?? '').isEmpty) return;
+
+    final messenger = ScaffoldMessenger.of(context);
+
+    if (provider.isPdfDownloaded(item)) {
+      try {
+        await provider.openCachedResultPdf(item);
+      } catch (_) {
+        _showError(messenger);
+      }
+      return;
+    }
+
+    try {
+      await provider.downloadResultPdf(item);
+    } on NoServerPdfException {
+      // Backend has no PDF → use the system print fallback in the viewer.
+      if (context.mounted) _openViewer(context, item, autoPrint: true);
+    } catch (_) {
+      _showError(messenger);
+    }
+  }
+
+  void _openViewer(
+    BuildContext context,
+    PDFResultItem item, {
+    bool autoPrint = false,
+  }) {
+    HapticFeedback.lightImpact();
+    final url = item.url ?? '';
+    if (url.isEmpty) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ResultPDFViewerScreen(
+          url: url,
+          title: item.displayName,
+          autoPrint: autoPrint,
+        ),
+      ),
+    );
+  }
+
+  void _showError(ScaffoldMessengerState messenger) {
+    messenger.removeCurrentSnackBar();
+    messenger.showSnackBar(
+      const SnackBar(
+        content: Text('Could not open the PDF. Please try again.'),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +82,6 @@ class AllPDFResultsListComponent extends StatelessWidget {
             value.allPDFResultsResponse?.pdfResults ?? [],
           );
 
-          // Sort in descending order based on SMSDate (latest at top, oldest at bottom)
           allResults.sort((a, b) {
             final aDate = a.smsDate ?? '';
             final bDate = b.smsDate ?? '';
@@ -150,6 +211,9 @@ class AllPDFResultsListComponent extends StatelessWidget {
                     final item = resultsList[index];
                     final title = item.displayName;
                     final String url = item.url ?? '';
+                    final hasUrl = url.isNotEmpty;
+                    final downloaded = value.isPdfDownloaded(item);
+                    final downloading = value.isPdfDownloading(item);
 
                     return Container(
                       margin: const EdgeInsets.only(bottom: 16.0),
@@ -173,7 +237,6 @@ class AllPDFResultsListComponent extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         child: Stack(
                           children: [
-                            // Side Accent Bar
                             Positioned(
                               left: 0,
                               top: 0,
@@ -204,6 +267,31 @@ class AllPDFResultsListComponent extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(width: 8),
+                                      if (downloaded)
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 4,
+                                          ),
+                                          margin: const EdgeInsets.only(
+                                            right: 6,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.successGreen
+                                                .withValues(alpha: 0.12),
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'SAVED',
+                                            style: TextStyle(
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.w800,
+                                              color: AppColors.successGreen,
+                                            ),
+                                          ),
+                                        ),
                                       Container(
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 8,
@@ -254,12 +342,69 @@ class AllPDFResultsListComponent extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
+                                      OutlinedButton.icon(
+                                        onPressed: (hasUrl && !downloading)
+                                            ? () => _handleSaveOrOpen(
+                                                context,
+                                                value,
+                                                item,
+                                              )
+                                            : null,
+                                        style: OutlinedButton.styleFrom(
+                                          side: BorderSide(
+                                            color: hasUrl
+                                                ? AppColors.primaryBlue
+                                                : AppColors.softGreyText,
+                                            width: 1.5,
+                                          ),
+                                          foregroundColor:
+                                              AppColors.primaryBlue,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 10,
+                                          ),
+                                          elevation: 0,
+                                        ),
+                                        icon: downloading
+                                            ? const SizedBox(
+                                                width: 16,
+                                                height: 16,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      color:
+                                                          AppColors.primaryBlue,
+                                                    ),
+                                              )
+                                            : Icon(
+                                                downloaded
+                                                    ? Icons.folder_open_rounded
+                                                    : Icons
+                                                          .picture_as_pdf_rounded,
+                                                size: 16,
+                                              ),
+                                        label: Text(
+                                          downloading
+                                              ? 'PREPARING…'
+                                              : (downloaded
+                                                    ? 'OPEN PDF'
+                                                    : 'SAVE AS PDF'),
+                                          style: const TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w900,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
                                       ElevatedButton.icon(
-                                        onPressed: url.isNotEmpty
-                                            ? () {
-                                                HapticFeedback.lightImpact();
-                                                HelperFunction.launchURL(url);
-                                              }
+                                        onPressed: hasUrl
+                                            ? () => _openViewer(context, item)
                                             : null,
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:
@@ -277,7 +422,7 @@ class AllPDFResultsListComponent extends StatelessWidget {
                                           elevation: 0,
                                         ),
                                         icon: const Icon(
-                                          Icons.open_in_new_rounded,
+                                          Icons.visibility_rounded,
                                           size: 16,
                                         ),
                                         label: const Text(

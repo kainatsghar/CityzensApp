@@ -131,13 +131,49 @@ class ApiBaseHelper {
     }
     return _returnResponse(response);
   }
+
+  static Future<Map<String, dynamic>> httpMultipartPostRequest(
+    String endPoint, {
+    required Map<String, String> fields,
+    required String filePath,
+    String fileField = 'file',
+  }) async {
+    try {
+      final uri = Uri.parse('${AppConstants.apiBaseURL}$endPoint');
+      final request = http.MultipartRequest('POST', uri);
+      request.headers.addAll(
+        AppConstants.appHeaders.map((key, value) => MapEntry(key, value)),
+      );
+      request.fields.addAll(fields);
+      request.files.add(await http.MultipartFile.fromPath(fileField, filePath));
+
+      if (kDebugMode) {
+        log('Multipart Request URL: $uri');
+        log('Multipart Fields: $fields');
+        log('Multipart File: $filePath');
+      }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      return _returnResponse(response);
+    } on SocketException {
+      throw FetchDataException(AppConstants.noInternetMsg);
+    } on FormatException {
+      throw FetchDataException(AppConstants.badResponseFormat);
+    } on TimeoutException {
+      throw FetchDataException(AppConstants.slowInternetMsg);
+    } catch (e) {
+      if (kDebugMode) log('Multipart Error: ${e.toString()}');
+      throw FetchDataException(AppConstants.exceptionMessage);
+    }
+  }
 }
 
 Map<String, dynamic> _returnResponse(http.Response response) {
   if (kDebugMode) {
     log('Response URL: ${response.request?.url}\n${response.body}');
   }
-  
+
   Map<String, dynamic> jsonResponse = {};
   if (response.body.isNotEmpty) {
     try {
@@ -163,24 +199,34 @@ Map<String, dynamic> _returnResponse(http.Response response) {
   switch (response.statusCode) {
     case 400:
       throw BadRequestException(
-        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ??
+            jsonResponse['Message'] ??
+            AppConstants.exceptionMessage,
       );
     case 401:
       throw InvalidInputException(
-        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ??
+            jsonResponse['Message'] ??
+            AppConstants.exceptionMessage,
       );
     case 403:
       throw UnAuthorizedException(
-        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ??
+            jsonResponse['Message'] ??
+            AppConstants.exceptionMessage,
       );
     case 404:
       throw FetchDataException(
-        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ??
+            jsonResponse['Message'] ??
+            AppConstants.exceptionMessage,
       );
     case 500:
     default:
       throw FetchDataException(
-        jsonResponse['message'] ?? jsonResponse['Message'] ?? AppConstants.exceptionMessage,
+        jsonResponse['message'] ??
+            jsonResponse['Message'] ??
+            AppConstants.exceptionMessage,
       );
   }
 }

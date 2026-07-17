@@ -21,6 +21,7 @@ abstract class PromotionModel with _$PromotionModel {
     DateTime? startDate,
     DateTime? endDate,
     String? displayFileName,
+    @JsonKey(name: 'filePath') String? filePath,
   }) = _PromotionModel;
 
   factory PromotionModel.fromJson(Map<String, dynamic> json) =>
