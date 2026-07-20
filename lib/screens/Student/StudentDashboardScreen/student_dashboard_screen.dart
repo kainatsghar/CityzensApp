@@ -608,9 +608,11 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   }
 
   Widget _buildAcademicsNavHub(String gradeId, String localGradeId) {
-    // Check if any academic items are active
-    final bool isNotGradeOne = gradeId != '1' && localGradeId != '1';
-    if (!isNotGradeOne) return const SizedBox.shrink();
+    const hiddenResultHubGrades = {'2', '3', '4', '5', '6'};
+    final bool hideResultHub =
+        hiddenResultHubGrades.contains(gradeId) ||
+        hiddenResultHubGrades.contains(localGradeId);
+    if (hideResultHub) return const SizedBox.shrink();
 
     return _buildDashboardCard(
       title: 'Academic Results',

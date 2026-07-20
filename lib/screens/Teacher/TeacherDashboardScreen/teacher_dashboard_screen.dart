@@ -765,6 +765,21 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
         final sections = dashboard.getSectionsWithDiary(true) ?? [];
         if (sections.isEmpty) return const SizedBox.shrink();
 
+        final localValue = Provider.of<LocalDataProvider>(
+          context,
+          listen: false,
+        );
+        final gradeId = localValue.userData?.info?.gradeId?.toString() ?? '';
+        final localGradeId = localValue.gradeId?.toString() ?? '';
+
+        const hiddenResultHubGrades = {'2', '3', '4', '5', '6'};
+
+        final bool hideResultHub =
+            hiddenResultHubGrades.contains(gradeId) ||
+            hiddenResultHubGrades.contains(localGradeId);
+
+        if (hideResultHub) return const SizedBox.shrink();
+
         if (classTest.sectionController.text.isEmpty && sections.isNotEmpty) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!mounted) return;
