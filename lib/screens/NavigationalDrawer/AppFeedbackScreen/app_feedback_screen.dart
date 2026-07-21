@@ -107,7 +107,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(
+                                      color: AppColors.black.withValues(
                                         alpha: 0.05,
                                       ),
                                       blurRadius: 20,
@@ -179,7 +179,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                                       const Divider(
                                         height: 32,
                                         thickness: 0.5,
-                                        color: AppColors.primaryTitleColor,
+                                        color: AppColors.primaryBlue,
                                       ),
                                       _buildSectionTitle('FEEDBACK DETAILS'),
                                       const SizedBox(height: 16),
@@ -293,12 +293,12 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
     return Container(
       height: 50,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.95),
+        color: AppColors.white.withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+        border: Border.all(color: AppColors.white.withValues(alpha: 0.5)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -319,7 +319,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
             ),
             child: const Icon(
               Icons.feedback_rounded,
-              color: Colors.white,
+              color: AppColors.white,
               size: 20,
             ),
           ),
@@ -330,7 +330,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
               child: DropdownButton<String>(
                 value: provider.selectedFeedbackType,
                 isExpanded: true,
-                dropdownColor: Colors.white,
+                dropdownColor: AppColors.white,
                 icon: const Padding(
                   padding: EdgeInsets.only(right: 12),
                   child: Icon(
@@ -370,7 +370,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.5),
+        color: AppColors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.1)),
       ),
@@ -416,7 +416,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppColors.primaryDarkBlue, Color(0xED002D62)],
+            colors: [AppColors.primaryDarkBlue, AppColors.navyOverlay],
           ),
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
@@ -432,12 +432,12 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
+                color: AppColors.white.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.rate_review_rounded,
-                color: AppColors.goldenYellow,
+                color: AppColors.secondaryColor,
                 size: 32,
               ),
             ),
@@ -451,7 +451,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.goldenYellow,
+                      color: AppColors.secondaryColor,
                       letterSpacing: 1.5,
                     ),
                   ),
@@ -461,7 +461,7 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
                   ),
                 ],

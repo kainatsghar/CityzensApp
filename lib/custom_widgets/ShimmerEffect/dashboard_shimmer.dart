@@ -64,7 +64,7 @@ class _DashboardShimmerState extends State<DashboardShimmer>
         height: 140,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
             color: AppColors.borderGrey.withValues(alpha: 0.5),
@@ -81,7 +81,7 @@ class _DashboardShimmerState extends State<DashboardShimmer>
         height: 100,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
             color: AppColors.borderGrey.withValues(alpha: 0.5),
@@ -108,7 +108,7 @@ class _DashboardShimmerState extends State<DashboardShimmer>
           animation: _animation,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: AppColors.borderGrey.withValues(alpha: 0.5),

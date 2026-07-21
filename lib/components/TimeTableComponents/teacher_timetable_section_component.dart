@@ -46,7 +46,7 @@ class TeacherTimeTableSectionComponent extends StatelessWidget {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.04),
+                          color: AppColors.black.withValues(alpha: 0.04),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -69,7 +69,7 @@ class TeacherTimeTableSectionComponent extends StatelessWidget {
                                 const Text(
                                   'Select Your Class & Section',
                                   style: TextStyle(
-                                    color: AppColors.primaryDarkColor,
+                                    color: AppColors.primaryDarkBlue,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 15,
                                   ),

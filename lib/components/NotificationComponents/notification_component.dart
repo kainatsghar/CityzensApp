@@ -85,22 +85,22 @@ class _NotificationComponentState extends State<NotificationComponent> {
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.lightRedColor.withValues(alpha: 0.04),
+                          color: AppColors.lightRed.withValues(alpha: 0.04),
                           blurRadius: 16,
                           offset: const Offset(0, 8),
                         ),
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.02),
+                          color: AppColors.black.withValues(alpha: 0.02),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
                       ],
                       border: Border.all(
-                        color: AppColors.lightRedColor.withValues(alpha: 0.08),
+                        color: AppColors.lightRed.withValues(alpha: 0.08),
                         width: 1,
                       ),
                     ),
@@ -115,7 +115,7 @@ class _NotificationComponentState extends State<NotificationComponent> {
                             vertical: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.lightRedColor.withValues(alpha: 0.08),
+                            color: AppColors.lightRed.withValues(alpha: 0.08),
                             borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(19),
                               topRight: Radius.circular(19),
@@ -126,13 +126,13 @@ class _NotificationComponentState extends State<NotificationComponent> {
                               const Icon(
                                 Icons.calendar_today_rounded,
                                 size: 16,
-                                color: AppColors.lightRedColor,
+                                color: AppColors.lightRed,
                               ),
                               const SizedBox(width: 10),
                               Text(
                                 formattedDate,
                                 style: const TextStyle(
-                                  color: AppColors.primaryDarkColor,
+                                  color: AppColors.primaryDarkBlue,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w800,
                                   letterSpacing: 0.3,

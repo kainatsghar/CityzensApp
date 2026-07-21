@@ -24,16 +24,16 @@ class ProgressButton extends StatelessWidget {
           progress: progress,
           primaryColor: AppColors.secondaryColor,
           radius: 20,
-          backgroundColor: AppColors.whiteColor.withValues(alpha: 0.3),
+          backgroundColor: AppColors.white.withValues(alpha: 0.3),
         ),
         child: Container(
           margin: const EdgeInsets.all(2), // Space for the border
           decoration: BoxDecoration(
-            color: AppColors.whiteColor,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(18),
             boxShadow: [
               BoxShadow(
-                color: AppColors.blackColor.withValues(alpha: 0.1),
+                color: AppColors.black.withValues(alpha: 0.1),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
               ),

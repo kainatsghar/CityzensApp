@@ -72,7 +72,7 @@ class _UserTypeTabSelectorState extends State<UserTypeTabSelector>
       height: widget.height,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: TabBar(
@@ -84,7 +84,7 @@ class _UserTypeTabSelectorState extends State<UserTypeTabSelector>
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(8),
         ),
-        labelColor: Colors.white,
+        labelColor: AppColors.white,
         unselectedLabelColor: AppColors.primaryDarkBlue,
         labelStyle: const TextStyle(
           fontSize: 14,

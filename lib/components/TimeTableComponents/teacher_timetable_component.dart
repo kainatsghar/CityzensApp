@@ -42,11 +42,11 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
 
   // Unique accent color per day for visual distinction
   final Map<String, Color> _dayColors = {
-    'Monday': const Color(0xFF5C6BC0),
-    'Tuesday': const Color(0xFF26A69A),
-    'Wednesday': const Color(0xFFEF5350),
-    'Thursday': const Color(0xFFFF7043),
-    'Friday': const Color(0xFF42A5F5),
+    'Monday': AppColors.indigoLight,
+    'Tuesday': AppColors.teal,
+    'Wednesday': AppColors.red400,
+    'Thursday': AppColors.deepOrange,
+    'Friday': AppColors.lightBlue,
   };
 
   @override
@@ -147,7 +147,7 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [AppColors.primaryBlue, Color(0xFF3F51B5)],
+                        colors: [AppColors.primaryBlue, AppColors.indigo],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -165,12 +165,12 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.15),
+                            color: AppColors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(14),
                           ),
                           child: const Icon(
                             Icons.calendar_view_week_rounded,
-                            color: Colors.white,
+                            color: AppColors.white,
                             size: 28,
                           ),
                         ),
@@ -189,7 +189,7 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w900,
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       letterSpacing: 1.0,
                                     ),
                                   ),
@@ -200,12 +200,12 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                                         vertical: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withValues(
+                                        color: AppColors.white.withValues(
                                           alpha: 0.2,
                                         ),
                                         borderRadius: BorderRadius.circular(8),
                                         border: Border.all(
-                                          color: Colors.white.withValues(
+                                          color: AppColors.white.withValues(
                                             alpha: 0.3,
                                           ),
                                         ),
@@ -216,7 +216,7 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                                         style: const TextStyle(
                                           fontSize: 11,
                                           fontWeight: FontWeight.w900,
-                                          color: Colors.white,
+                                          color: AppColors.white,
                                         ),
                                       ),
                                     ),
@@ -228,7 +228,7 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.white.withValues(alpha: 0.8),
+                                  color: AppColors.white.withValues(alpha: 0.8),
                                   letterSpacing: 0.5,
                                 ),
                               ),
@@ -247,14 +247,14 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
                   duration: const Duration(milliseconds: 400),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: AppColors.primaryBlue.withValues(alpha: 0.06),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.04),
+                          color: AppColors.black.withValues(alpha: 0.04),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -469,12 +469,12 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
       decoration: BoxDecoration(
         color: isToday
             ? AppColors.primaryBlue.withValues(alpha: 0.04)
-            : Colors.white,
+            : AppColors.white,
         border: Border(
           bottom: isLast
               ? BorderSide.none
               : BorderSide(
-                  color: Colors.grey.withValues(alpha: 0.08),
+                  color: AppColors.grey500.withValues(alpha: 0.08),
                   width: 1,
                 ),
           left: isToday
@@ -576,7 +576,7 @@ class _TeacherTimeTableComponentState extends State<TeacherTimeTableComponent> {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: AppColors.primaryDarkColor.withValues(alpha: 0.65),
+              color: AppColors.primaryDarkBlue.withValues(alpha: 0.65),
               height: 1.4,
             ),
           ),

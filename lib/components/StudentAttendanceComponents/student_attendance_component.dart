@@ -41,14 +41,14 @@ class StudentAttendanceComponent extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 20),
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             color: AppColors.primaryBlue.withValues(alpha: 0.08),
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.03),
+                              color: AppColors.black.withValues(alpha: 0.03),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -79,7 +79,7 @@ class StudentAttendanceComponent extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
-                                    color: AppColors.primaryDarkColor,
+                                    color: AppColors.primaryDarkBlue,
                                     letterSpacing: 0.2,
                                   ),
                                 ),

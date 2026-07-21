@@ -60,7 +60,7 @@ class _AddSchoolEventComponentState extends State<AddSchoolEventComponent> {
                           validator: HelperFunction.validator,
                           suffixWidget: const ImageIcon(
                             AssetImage('assets/images/dropdown_icon.png'),
-                            color: AppColors.whiteColor,
+                            color: AppColors.white,
                           ),
                         ),
                         SizedBox(height: size.height * 0.02),

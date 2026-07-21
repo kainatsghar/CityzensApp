@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class SuccessDialogBox extends StatefulWidget {
   final String title, description, buttonText;
@@ -33,12 +34,12 @@ class _SuccessDialogBoxState extends State<SuccessDialogBox> {
             ),
             margin: const EdgeInsets.only(top: Const.avatarRadius),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(Const.padding),
               boxShadow: const [
                 BoxShadow(
-                  color: Colors.black26,
+                  color: AppColors.black26,
                   blurRadius: 10.0,
                   offset: Offset(0.0, 10.0),
                 ),
@@ -78,7 +79,7 @@ class _SuccessDialogBoxState extends State<SuccessDialogBox> {
             left: Const.padding,
             right: Const.padding,
             child: CircleAvatar(
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.white,
               radius: Const.avatarRadius,
               child: Image.asset('assets/images/icon_success.png'),
             ),

@@ -91,12 +91,7 @@ class SurveyComponent extends StatelessWidget {
                                                           ),
                                                     ),
                                                     elevation: 2,
-                                                    color: const Color.fromARGB(
-                                                      255,
-                                                      227,
-                                                      165,
-                                                      236,
-                                                    ),
+                                                    color: AppColors.softLavender,
                                                     child: Align(
                                                       alignment:
                                                           Alignment.center,
@@ -232,7 +227,7 @@ class SurveyComponent extends StatelessWidget {
                                                                     borderSide:
                                                                         const BorderSide(
                                                                           color:
-                                                                              AppColors.whiteColor,
+                                                                              AppColors.white,
                                                                         ),
                                                                   ),
                                                                 ),
@@ -306,7 +301,7 @@ class SurveyComponent extends StatelessWidget {
                                                                                     ),
                                                                                     elevation: 2,
                                                                                     color: isChanged
-                                                                                        ? AppColors.primaryDarkColor
+                                                                                        ? AppColors.primaryDarkBlue
                                                                                         : AppColors.secondaryColor,
                                                                                     child: Align(
                                                                                       alignment: Alignment.center,
@@ -316,8 +311,8 @@ class SurveyComponent extends StatelessWidget {
                                                                                         style: TextStyle(
                                                                                           fontSize: 14,
                                                                                           color: isChanged
-                                                                                              ? AppColors.whiteColor
-                                                                                              : AppColors.blackColor,
+                                                                                              ? AppColors.white
+                                                                                              : AppColors.black,
                                                                                         ),
                                                                                       ),
                                                                                     ),

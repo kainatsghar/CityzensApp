@@ -184,7 +184,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                 const Text(
                   'SELECTION SUMMARY',
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: AppColors.white70,
                     fontSize: 9,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.0,
@@ -194,7 +194,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                 Text(
                   '${value.selectedChild ?? "None"} • ${value.selectedUpdate ?? "None"}',
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 13,
                     fontWeight: FontWeight.w800,
                   ),
@@ -202,7 +202,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
               ],
             ),
           ),
-          const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 18),
+          const Icon(Icons.auto_awesome_rounded, color: AppColors.white, size: 18),
         ],
       ),
     );
@@ -216,7 +216,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
         Text(
           title,
           style: const TextStyle(
-            color: AppColors.primaryDarkColor,
+            color: AppColors.primaryDarkBlue,
             fontWeight: FontWeight.w900,
             fontSize: 10,
             letterSpacing: 1.0,
@@ -233,12 +233,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
     return Container(
       height: 300,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.01),
+            color: AppColors.black.withValues(alpha: 0.01),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -276,12 +276,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.primaryBlue.withValues(alpha: 0.08)
-                        : Colors.white,
+                        : AppColors.white,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: isSelected
                           ? AppColors.primaryBlue.withValues(alpha: 0.3)
-                          : Colors.grey.shade50,
+                          : AppColors.grey50,
                     ),
                   ),
                   child: Column(
@@ -292,7 +292,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                         style: TextStyle(
                           color: isSelected
                               ? AppColors.primaryBlue
-                              : AppColors.primaryDarkColor,
+                              : AppColors.primaryDarkBlue,
                           fontWeight: isSelected
                               ? FontWeight.w800
                               : FontWeight.w600,
@@ -305,7 +305,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                         style: TextStyle(
                           color: isSelected
                               ? AppColors.primaryBlue.withValues(alpha: 0.7)
-                              : Colors.grey.shade500,
+                              : AppColors.grey500,
                           fontWeight: FontWeight.w700,
                           fontSize: 9,
                         ),
@@ -328,12 +328,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
     return Container(
       height: 300,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.01),
+            color: AppColors.black.withValues(alpha: 0.01),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -346,7 +346,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
           thumbVisibility: true,
           thickness: 4,
           radius: const Radius.circular(10),
-          thumbColor: AppColors.primaryDarkColor.withValues(alpha: 0.3),
+          thumbColor: AppColors.primaryDarkBlue.withValues(alpha: 0.3),
           child: ListView.separated(
             controller: _updateScrollController,
             padding: const EdgeInsets.all(8),
@@ -370,13 +370,13 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                   ),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? AppColors.primaryDarkColor
-                        : Colors.white,
+                        ? AppColors.primaryDarkBlue
+                        : AppColors.white,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: isSelected
-                          ? AppColors.primaryDarkColor
-                          : Colors.grey.shade50,
+                          ? AppColors.primaryDarkBlue
+                          : AppColors.grey50,
                     ),
                   ),
                   child: Row(
@@ -385,7 +385,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                         isSelected
                             ? Icons.check_circle_rounded
                             : Icons.radio_button_off_rounded,
-                        color: isSelected ? Colors.white : Colors.grey.shade200,
+                        color: isSelected ? AppColors.white : AppColors.grey200,
                         size: 14,
                       ),
                       const SizedBox(width: 8),
@@ -394,8 +394,8 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                           update.updateName ?? '',
                           style: TextStyle(
                             color: isSelected
-                                ? Colors.white
-                                : AppColors.primaryDarkColor,
+                                ? AppColors.white
+                                : AppColors.primaryDarkBlue,
                             fontWeight: isSelected
                                 ? FontWeight.w800
                                 : FontWeight.w600,
@@ -418,7 +418,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.primaryBlue.withValues(alpha: 0.05)),
       ),
@@ -435,12 +435,12 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
               decoration: BoxDecoration(
                 color: value.files.length < 3
                     ? AppColors.primaryBlue.withValues(alpha: 0.03)
-                    : Colors.grey.shade50,
+                    : AppColors.grey50,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: value.files.length < 3
                       ? AppColors.primaryBlue.withValues(alpha: 0.15)
-                      : Colors.grey.shade200,
+                      : AppColors.grey200,
                   width: 1.2,
                 ),
               ),
@@ -451,7 +451,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                     size: 24,
                     color: value.files.length < 3
                         ? AppColors.primaryBlue
-                        : Colors.grey,
+                        : AppColors.grey500,
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -460,15 +460,15 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                         : 'Limit Reached',
                     style: TextStyle(
                       color: value.files.length < 3
-                          ? AppColors.primaryDarkColor
-                          : Colors.grey,
+                          ? AppColors.primaryDarkBlue
+                          : AppColors.grey500,
                       fontWeight: FontWeight.w800,
                       fontSize: 12,
                     ),
                   ),
                   Text(
                     '${value.files.length}/3 photos',
-                    style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
+                    style: TextStyle(color: AppColors.grey500, fontSize: 10),
                   ),
                 ],
               ),
@@ -490,9 +490,9 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                     width: 140,
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey.shade100),
+                      border: Border.all(color: AppColors.grey100),
                     ),
                     child: Row(
                       children: [
@@ -516,7 +516,7 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                             style: const TextStyle(
                               fontSize: 9,
                               fontWeight: FontWeight.w700,
-                              color: AppColors.primaryDarkColor,
+                              color: AppColors.primaryDarkBlue,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -527,13 +527,13 @@ class _EyeOnYourChildComponentState extends State<EyeOnYourChildComponent> {
                           child: Container(
                             padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color: Colors.red.withValues(alpha: 0.1),
+                              color: AppColors.materialRed.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
                               Icons.close,
                               size: 12,
-                              color: Colors.red,
+                              color: AppColors.materialRed,
                             ),
                           ),
                         ),

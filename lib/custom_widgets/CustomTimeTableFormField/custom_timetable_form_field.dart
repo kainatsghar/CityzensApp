@@ -73,13 +73,13 @@ class CustomTimeTableFormField extends StatelessWidget {
         fontSize: 12,
         fontWeight: FontWeight.w700,
         color: isEnable
-            ? AppColors.primaryDarkColor
-            : AppColors.primaryDarkColor.withValues(alpha: 0.65),
+            ? AppColors.primaryDarkBlue
+            : AppColors.primaryDarkBlue.withValues(alpha: 0.65),
       ),
       decoration: InputDecoration(
         fillColor: isEnable
             ? AppColors.primaryBlue.withValues(alpha: 0.04)
-            : Colors.grey.shade50,
+            : AppColors.grey50,
         filled: true,
         focusColor: AppColors.primaryLightBlue,
         border: OutlineInputBorder(
@@ -104,7 +104,7 @@ class CustomTimeTableFormField extends StatelessWidget {
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: AppColors.grey500.withValues(alpha: 0.1),
           ),
         ),
         enabled: isEnable,
@@ -137,14 +137,14 @@ class CustomTimeTableFormField extends StatelessWidget {
                     bottomLeft: Radius.circular(10),
                   ),
                 ),
-                child: Icon(prefixIcon, color: AppColors.whiteColor),
+                child: Icon(prefixIcon, color: AppColors.white),
               )
             : null,
         hintText: hintText,
         labelStyle: const TextStyle(fontSize: 14.0),
         hintStyle: TextStyle(
           fontSize: 12.0,
-          color: Colors.grey.shade400,
+          color: AppColors.grey400,
         ),
       ),
       enabled: isEnable,

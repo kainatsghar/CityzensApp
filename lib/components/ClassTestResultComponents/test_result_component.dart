@@ -47,7 +47,7 @@ class TestResultComponent extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.primaryTitleColor,
+                            color: AppColors.primaryBlue,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -62,16 +62,16 @@ class TestResultComponent extends StatelessWidget {
                   child: Column(
                     children: [
                       TabBar(
-                        labelColor: AppColors.whiteColor,
+                        labelColor: AppColors.white,
                         labelStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
-                        indicatorColor: AppColors.whiteColor,
+                        indicatorColor: AppColors.white,
                         indicatorSize: TabBarIndicatorSize.tab,
                         splashBorderRadius: BorderRadius.circular(16),
                         indicator: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: AppColors.primaryDarkColor,
+                          color: AppColors.primaryDarkBlue,
                         ),
                         tabs: const [
                           Tab(text: 'TEST 1'),

@@ -29,7 +29,7 @@ class ResultCardInfo extends StatelessWidget {
               child: Text(
                 '${stdInfo.name}',
                 style: const TextStyle(
-                  color: AppColors.primaryTitleColor,
+                  color: AppColors.primaryBlue,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -44,7 +44,7 @@ class ResultCardInfo extends StatelessWidget {
               child: Text(
                 '${stdInfo.centerName}',
                 style: const TextStyle(
-                  color: AppColors.primaryTitleColor,
+                  color: AppColors.primaryBlue,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -60,7 +60,7 @@ class ResultCardInfo extends StatelessWidget {
                       const Text(
                         'REGION',
                         style: TextStyle(
-                          color: AppColors.primaryTitleColor,
+                          color: AppColors.primaryBlue,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
@@ -70,7 +70,7 @@ class ResultCardInfo extends StatelessWidget {
                         '${stdInfo.regionName}',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          color: Colors.black54,
+                          color: AppColors.black54,
                           fontSize: 12,
                         ),
                       ),
@@ -81,7 +81,7 @@ class ResultCardInfo extends StatelessWidget {
                   height: 30,
                   child: VerticalDivider(
                     width: 15.0,
-                    color: AppColors.blackColor,
+                    color: AppColors.black,
                     thickness: 1,
                   ),
                 ),
@@ -92,7 +92,7 @@ class ResultCardInfo extends StatelessWidget {
                       const Text(
                         'ROLL NUMBER',
                         style: TextStyle(
-                          color: AppColors.primaryTitleColor,
+                          color: AppColors.primaryBlue,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
@@ -101,7 +101,7 @@ class ResultCardInfo extends StatelessWidget {
                       Text(
                         '${stdInfo.rollNo}',
                         style: const TextStyle(
-                          color: Colors.black54,
+                          color: AppColors.black54,
                           fontSize: 12,
                         ),
                       ),
@@ -123,7 +123,7 @@ class ResultCardInfo extends StatelessWidget {
                         const Text(
                           'CLASS',
                           style: TextStyle(
-                            color: AppColors.primaryTitleColor,
+                            color: AppColors.primaryBlue,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -132,7 +132,7 @@ class ResultCardInfo extends StatelessWidget {
                         Text(
                           '${stdInfo.className}',
                           style: const TextStyle(
-                            color: Colors.black54,
+                            color: AppColors.black54,
                             fontSize: 12,
                           ),
                         ),
@@ -143,7 +143,7 @@ class ResultCardInfo extends StatelessWidget {
                     height: 30,
                     child: VerticalDivider(
                       width: 15.0,
-                      color: AppColors.blackColor,
+                      color: AppColors.black,
                       thickness: 1,
                     ),
                   ),
@@ -154,7 +154,7 @@ class ResultCardInfo extends StatelessWidget {
                         const Text(
                           'SECTION',
                           style: TextStyle(
-                            color: AppColors.primaryTitleColor,
+                            color: AppColors.primaryBlue,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -163,7 +163,7 @@ class ResultCardInfo extends StatelessWidget {
                         Text(
                           '${stdInfo.section}',
                           style: const TextStyle(
-                            color: Colors.black54,
+                            color: AppColors.black54,
                             fontSize: 12,
                           ),
                         ),
@@ -186,7 +186,7 @@ class ResultCardInfo extends StatelessWidget {
                         const Text(
                           'SESSION',
                           style: TextStyle(
-                            color: AppColors.primaryTitleColor,
+                            color: AppColors.primaryBlue,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -195,7 +195,7 @@ class ResultCardInfo extends StatelessWidget {
                         Text(
                           session,
                           style: const TextStyle(
-                            color: Colors.black54,
+                            color: AppColors.black54,
                             fontSize: 12,
                           ),
                         ),
@@ -206,7 +206,7 @@ class ResultCardInfo extends StatelessWidget {
                     height: 30,
                     child: VerticalDivider(
                       width: 15.0,
-                      color: AppColors.blackColor,
+                      color: AppColors.black,
                       thickness: 1,
                     ),
                   ),
@@ -217,7 +217,7 @@ class ResultCardInfo extends StatelessWidget {
                         const Text(
                           'TERM',
                           style: TextStyle(
-                            color: AppColors.primaryTitleColor,
+                            color: AppColors.primaryBlue,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -226,7 +226,7 @@ class ResultCardInfo extends StatelessWidget {
                         Text(
                           term,
                           style: const TextStyle(
-                            color: Colors.black54,
+                            color: AppColors.black54,
                             fontSize: 12,
                           ),
                         ),

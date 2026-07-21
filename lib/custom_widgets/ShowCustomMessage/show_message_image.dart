@@ -62,7 +62,7 @@ class ShowMessageOnImage extends StatelessWidget {
                                 fontSize: fontSize,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Nunito',
-                                color: AppColors.primaryDarkColor,
+                                color: AppColors.primaryDarkBlue,
                                 height: 1.1,
                               ),
                             ),

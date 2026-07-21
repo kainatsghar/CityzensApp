@@ -53,7 +53,7 @@ class StudentAttendanceComponent extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: isSelected
                                       ? AppColors.primaryBlue
-                                      : Colors.white,
+                                      : AppColors.white,
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
                                     color: isSelected
@@ -79,7 +79,7 @@ class StudentAttendanceComponent extends StatelessWidget {
                                     subject.subjectName ?? '',
                                     style: TextStyle(
                                       color: isSelected
-                                          ? Colors.white
+                                          ? AppColors.white
                                           : AppColors.primaryDarkBlue,
                                       fontWeight: isSelected
                                           ? FontWeight.w800
@@ -114,14 +114,14 @@ class StudentAttendanceComponent extends StatelessWidget {
                         padding: const EdgeInsets.all(20),
                         margin: const EdgeInsets.only(bottom: 20),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             color: AppColors.primaryBlue.withValues(alpha: 0.08),
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.03),
+                              color: AppColors.black.withValues(alpha: 0.03),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -152,7 +152,7 @@ class StudentAttendanceComponent extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
-                                    color: AppColors.primaryDarkColor,
+                                    color: AppColors.primaryDarkBlue,
                                     letterSpacing: 0.2,
                                   ),
                                 ),

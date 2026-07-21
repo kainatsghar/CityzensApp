@@ -90,7 +90,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
           ),
           content: Text(
             'You haven\'t entered marks for $emptyCount students. They will be recorded as "0".\n\nDo you want to continue?',
-            style: TextStyle(height: 1.5, color: Colors.grey.shade700),
+            style: TextStyle(height: 1.5, color: AppColors.grey700),
           ),
           actions: [
             TextButton(
@@ -98,7 +98,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
               child: Text(
                 'WAIT',
                 style: TextStyle(
-                  color: Colors.grey.shade600,
+                  color: AppColors.grey600,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -108,7 +108,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
               child: const Text(
                 'YES, SAVE',
                 style: TextStyle(
-                  color: AppColors.primaryDarkColor,
+                  color: AppColors.primaryDarkBlue,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -130,7 +130,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
       child: ChangeNotifierProvider.value(
         value: _state,
         child: Scaffold(
-          backgroundColor: const Color(0xFFF6F8FB),
+          backgroundColor: AppColors.softBlueGrey,
           resizeToAvoidBottomInset: true,
           appBar: const CustomAppBar(title: 'CLASS TEST RESULTS'),
           body: Consumer<EnhancedClassTestProvider>(
@@ -169,11 +169,11 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: AppColors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -186,12 +186,12 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryDarkColor.withValues(alpha: 0.06),
+                  color: AppColors.primaryDarkBlue.withValues(alpha: 0.06),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: const Icon(
                   Icons.school_rounded,
-                  color: AppColors.primaryDarkColor,
+                  color: AppColors.primaryDarkBlue,
                   size: 24,
                 ),
               ),
@@ -205,7 +205,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w900,
-                        color: AppColors.primaryDarkColor,
+                        color: AppColors.primaryDarkBlue,
                         letterSpacing: 0.3,
                       ),
                       maxLines: 1,
@@ -215,7 +215,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
                       'SECTION: ${state.base.sectionController.text.toUpperCase()}',
                       style: TextStyle(
                         fontSize: 13,
-                        color: Colors.grey.shade500,
+                        color: AppColors.grey500,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -254,14 +254,14 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
               Container(
                 height: 52,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF8FAFD),
+                  color: AppColors.softBlueGreyAlt,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: Colors.grey.shade200, width: 1.5),
+                  border: Border.all(color: AppColors.grey200, width: 1.5),
                 ),
                 child: PopupMenuButton<StudentSortOption>(
                   icon: Icon(
                     Icons.sort_rounded,
-                    color: AppColors.primaryDarkColor.withValues(alpha: 0.6),
+                    color: AppColors.primaryDarkBlue.withValues(alpha: 0.6),
                   ),
                   tooltip: 'Sort Students',
                   onSelected: (StudentSortOption result) {
@@ -311,9 +311,9 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFD),
+        color: AppColors.softBlueGreyAlt,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.grey.shade200, width: 1.5),
+        border: Border.all(color: AppColors.grey200, width: 1.5),
       ),
       child: TextField(
         controller: controller,
@@ -322,7 +322,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
         style: const TextStyle(
           fontWeight: FontWeight.w800,
           fontSize: 14,
-          color: AppColors.primaryDarkColor,
+          color: AppColors.primaryDarkBlue,
         ),
         keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
         inputFormatters: isNumeric
@@ -336,12 +336,12 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
               ? Icon(
                   icon,
                   size: 18,
-                  color: AppColors.primaryDarkColor.withValues(alpha: 0.6),
+                  color: AppColors.primaryDarkBlue.withValues(alpha: 0.6),
                 )
               : null,
           hintText: label,
           hintStyle: TextStyle(
-            color: Colors.grey.shade400,
+            color: AppColors.grey400,
             fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
@@ -361,7 +361,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
       child: Container(
         height: 52,
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
+          color: AppColors.grey200,
           borderRadius: BorderRadius.circular(18),
         ),
         child: Stack(
@@ -378,11 +378,11 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
               bottom: 4,
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primaryDarkColor,
+                  color: AppColors.primaryDarkBlue,
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryDarkColor.withValues(alpha: 0.3),
+                      color: AppColors.primaryDarkBlue.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -405,8 +405,8 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
                           fontSize: 14,
                           fontWeight: FontWeight.w900,
                           color: isSelected
-                              ? Colors.white
-                              : Colors.grey.shade600,
+                              ? AppColors.white
+                              : AppColors.grey600,
                         ),
                       ),
                     ),
@@ -445,13 +445,13 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
             Icon(
               Icons.search_off_rounded,
               size: 60,
-              color: Colors.grey.shade300,
+              color: AppColors.grey300,
             ),
             const SizedBox(height: 12),
             Text(
               'No records found',
               style: TextStyle(
-                color: Colors.grey.shade400,
+                color: AppColors.grey400,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -491,11 +491,11 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
     return Container(
       padding: EdgeInsets.fromLTRB(20, 14, 20, isKeyboardVisible ? 14 : 28),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
+            color: AppColors.black.withValues(alpha: 0.06),
             blurRadius: 15,
             offset: const Offset(0, -4),
           ),
@@ -514,11 +514,11 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
                 style: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w900,
-                  color: AppColors.primaryDarkColor,
+                  color: AppColors.primaryDarkBlue,
                 ),
               ),
-              progressColor: AppColors.primaryDarkColor,
-              backgroundColor: Colors.grey.shade100,
+              progressColor: AppColors.primaryDarkBlue,
+              backgroundColor: AppColors.grey100,
               circularStrokeCap: CircularStrokeCap.round,
               animation: true,
               animateFromLastPercent: true,
@@ -541,7 +541,7 @@ class _ClassTestResultsScreenState extends State<ClassTestResultsScreen> {
                         ? 'Current Test Results'
                         : 'Wait... Set Max Marks',
                     style: TextStyle(
-                      color: Colors.grey.shade500,
+                      color: AppColors.grey500,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),
@@ -580,11 +580,11 @@ class _SaveButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryDarkColor,
-          foregroundColor: Colors.white,
-          disabledBackgroundColor: Colors.grey.shade300,
+          backgroundColor: AppColors.primaryDarkBlue,
+          foregroundColor: AppColors.white,
+          disabledBackgroundColor: AppColors.grey300,
           elevation: onPressed == null ? 0 : 4,
-          shadowColor: AppColors.primaryDarkColor.withValues(alpha: 0.35),
+          shadowColor: AppColors.primaryDarkBlue.withValues(alpha: 0.35),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -595,7 +595,7 @@ class _SaveButton extends StatelessWidget {
                 height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  color: Colors.white,
+                  color: AppColors.white,
                 ),
               )
             : Text(
@@ -675,22 +675,22 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
             color: _isFocused
-                ? AppColors.primaryDarkColor.withValues(alpha: 0.08)
-                : Colors.black.withValues(alpha: 0.03),
+                ? AppColors.primaryDarkBlue.withValues(alpha: 0.08)
+                : AppColors.black.withValues(alpha: 0.03),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
         ],
         border: Border.all(
           color: isInvalid
-              ? Colors.red.shade400
+              ? AppColors.red400
               : (_isFocused
-                    ? AppColors.primaryDarkColor.withValues(alpha: 0.3)
+                    ? AppColors.primaryDarkBlue.withValues(alpha: 0.3)
                     : Colors.transparent),
           width: 1.8,
         ),
@@ -701,7 +701,7 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
             width: 62,
             height: 44,
             decoration: BoxDecoration(
-              color: AppColors.primaryDarkColor.withValues(
+              color: AppColors.primaryDarkBlue.withValues(
                 alpha: _isFocused ? 1 : 0.08,
               ),
               borderRadius: BorderRadius.circular(12),
@@ -710,7 +710,7 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
               child: Text(
                 '${widget.student.studentId}',
                 style: TextStyle(
-                  color: _isFocused ? Colors.white : AppColors.primaryDarkColor,
+                  color: _isFocused ? AppColors.white : AppColors.primaryDarkBlue,
                   fontWeight: FontWeight.w900,
                   fontSize: 13,
                 ),
@@ -727,7 +727,7 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
                   style: const TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 15,
-                    color: Color(0xFF1B1E28),
+                    color: AppColors.darkSurface,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -741,8 +741,8 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
                           : Icons.radio_button_unchecked_rounded,
                       size: 15,
                       color: isMarked
-                          ? Colors.green.shade600
-                          : Colors.grey.shade400,
+                          ? AppColors.green600
+                          : AppColors.grey400,
                     ),
                     const SizedBox(width: 6),
                     Text(
@@ -751,8 +751,8 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
                         fontSize: 10,
                         fontWeight: FontWeight.w900,
                         color: isMarked
-                            ? Colors.green.shade600
-                            : Colors.grey.shade400,
+                            ? AppColors.green600
+                            : AppColors.grey400,
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -777,10 +777,10 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
           width: 72,
           height: 46,
           decoration: BoxDecoration(
-            color: const Color(0xFFF6F8FB),
+            color: AppColors.softBlueGrey,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isInvalid ? Colors.red.shade300 : Colors.grey.shade200,
+              color: isInvalid ? AppColors.red300 : AppColors.grey200,
               width: 1.2,
             ),
           ),
@@ -798,13 +798,13 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
                 fontWeight: FontWeight.w900,
                 fontSize: 19,
                 color: isInvalid
-                    ? Colors.red.shade800
-                    : AppColors.primaryDarkColor,
+                    ? AppColors.red800
+                    : AppColors.primaryDarkBlue,
               ),
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: '0',
-                hintStyle: TextStyle(color: Color(0xFFD1D5DB)),
+                hintStyle: TextStyle(color: AppColors.neutral300),
               ),
               onChanged: (v) {
                 widget.onMarksChanged(int.tryParse(v) ?? 0);
@@ -821,7 +821,7 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
               style: TextStyle(
                 fontSize: 9,
                 fontWeight: FontWeight.w900,
-                color: isInvalid ? Colors.red.shade700 : Colors.grey.shade500,
+                color: isInvalid ? AppColors.red700 : AppColors.grey500,
                 letterSpacing: 0.3,
               ),
             ),
@@ -968,7 +968,7 @@ class EnhancedClassTestProvider with ChangeNotifier {
       );
       showSnackBar(
         'Test $testId Results Saved Successfully',
-        color: AppColors.successGreenColor,
+        color: AppColors.successGreen,
       );
     } catch (e) {
       showSnackBar('Error while saving Test $testId');

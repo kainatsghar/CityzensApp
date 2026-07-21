@@ -136,9 +136,9 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                     //       data: Theme.of(context).copyWith(
                     //         colorScheme: const ColorScheme.light(
                     //           primary: AppColors.primaryBlue,
-                    //           onPrimary: Colors.white,
-                    //           surface: Colors.white,
-                    //           onSurface: AppColors.primaryDarkColor,
+                    //           onPrimary: AppColors.white,
+                    //           surface: AppColors.white,
+                    //           onSurface: AppColors.primaryDarkBlue,
                     //         ),
                     //       ),
                     //       child: child!,
@@ -197,7 +197,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.primaryDarkColor,
+                                color: AppColors.primaryDarkBlue,
                               ),
                             ),
                           ],
@@ -321,7 +321,7 @@ class _FieldLabel extends StatelessWidget {
       child: Text(
         text,
         style: const TextStyle(
-          color: AppColors.primaryDarkColor,
+          color: AppColors.primaryDarkBlue,
           fontWeight: FontWeight.w600,
           fontSize: 13,
         ),
@@ -356,7 +356,7 @@ class _AttachmentPreview extends StatelessWidget {
                   'Attachment',
                   style: TextStyle(
                     fontSize: 11,
-                    color: Colors.grey,
+                    color: AppColors.grey500,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -365,7 +365,7 @@ class _AttachmentPreview extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.primaryDarkColor,
+                    color: AppColors.primaryDarkBlue,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -374,7 +374,7 @@ class _AttachmentPreview extends StatelessWidget {
           ),
           IconButton(
             onPressed: onRemove,
-            icon: const Icon(Icons.cancel_outlined, color: Colors.redAccent),
+            icon: const Icon(Icons.cancel_outlined, color: AppColors.redAccent),
             tooltip: 'Remove attachment',
           ),
         ],
@@ -396,22 +396,22 @@ class _AttachmentUploadButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 18),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: AppColors.grey300),
         ),
         child: const Column(
           children: [
-            Icon(Icons.cloud_upload_outlined, color: Colors.grey, size: 32),
+            Icon(Icons.cloud_upload_outlined, color: AppColors.grey500, size: 32),
             SizedBox(height: 8),
             Text(
               'Upload Attachment',
-              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+              style: TextStyle(color: AppColors.grey500, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 2),
             Text(
               'PDF, DOC, PPT supported',
-              style: TextStyle(color: Colors.grey, fontSize: 11),
+              style: TextStyle(color: AppColors.grey500, fontSize: 11),
             ),
           ],
         ),

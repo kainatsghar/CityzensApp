@@ -59,7 +59,7 @@ class SingleChallanItem extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: AppColors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -83,7 +83,7 @@ class SingleChallanItem extends StatelessWidget {
                               AppColors.errorRed,
                               AppColors.errorRed.withValues(alpha: 0.7),
                             ]
-                          : [AppColors.goldenYellow, AppColors.warningOrange],
+                          : [AppColors.secondaryColor, AppColors.warningOrange],
                     ),
                   ),
                 ),
@@ -178,12 +178,12 @@ class SingleChallanItem extends StatelessWidget {
           decoration: BoxDecoration(
             color: isOverdue
                 ? AppColors.errorRed.withValues(alpha: 0.1)
-                : AppColors.goldenYellow.withValues(alpha: 0.15),
+                : AppColors.secondaryColor.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
             Icons.receipt_long_rounded,
-            color: isOverdue ? AppColors.errorRed : AppColors.goldenYellow,
+            color: isOverdue ? AppColors.errorRed : AppColors.secondaryColor,
             size: 20,
           ),
         ),
@@ -198,14 +198,14 @@ class SingleChallanItem extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
                   letterSpacing: 0.5,
-                  color: AppColors.primaryDarkColor,
+                  color: AppColors.primaryDarkBlue,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 'Fee Challan Entry',
                 style: TextStyle(
-                  color: Colors.grey.shade500,
+                  color: AppColors.grey500,
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                 ),
@@ -219,13 +219,13 @@ class SingleChallanItem extends StatelessWidget {
           decoration: BoxDecoration(
             color: isOverdue
                 ? AppColors.errorRed.withValues(alpha: 0.1)
-                : Colors.redAccent.withValues(alpha: 0.08),
+                : AppColors.redAccent.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
             isOverdue ? 'OVERDUE' : 'PENDING',
             style: TextStyle(
-              color: isOverdue ? AppColors.errorRed : Colors.redAccent,
+              color: isOverdue ? AppColors.errorRed : AppColors.redAccent,
               fontSize: 10,
               fontWeight: FontWeight.w900,
               letterSpacing: 0.4,
@@ -257,7 +257,7 @@ class SingleChallanItem extends StatelessWidget {
           _feeRow(
             label: 'Current Month',
             amount: currentMonthFee,
-            color: AppColors.primaryDarkColor,
+            color: AppColors.primaryDarkBlue,
             isBold: false,
           ),
 
@@ -290,7 +290,7 @@ class SingleChallanItem extends StatelessWidget {
           _feeRow(
             label: 'TOTAL PAYABLE',
             amount: totalPayable,
-            color: AppColors.primaryDarkColor,
+            color: AppColors.primaryDarkBlue,
             isBold: true,
             fontSize: 15,
           ),
@@ -315,7 +315,7 @@ class SingleChallanItem extends StatelessWidget {
             fontWeight: isBold ? FontWeight.w900 : FontWeight.w600,
             fontSize: isBold ? 13 : 12,
             letterSpacing: isBold ? 0.5 : 0.2,
-            color: isBold ? color : Colors.grey.shade600,
+            color: isBold ? color : AppColors.grey600,
           ),
         ),
         Text(

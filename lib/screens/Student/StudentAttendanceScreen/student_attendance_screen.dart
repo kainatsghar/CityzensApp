@@ -10,6 +10,7 @@ import '../../../custom_widgets/ShowError/show_error.dart';
 import '../../../provider/StudentAttendance/student_attendance_provider.dart';
 import '../../../routes/app_navigation.dart';
 import '../../../services/FirebaseServices/app_analytics_service.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class StudentAttendanceScreen extends StatefulWidget {
   const StudentAttendanceScreen({super.key});
@@ -44,7 +45,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
     return Scaffold(
       // Modern consistent AppBar
       appBar: const CustomAppBar(title: "ATTENDANCE"),
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: AppColors.grey50,
       body: FutureBuilder(
         future: attendanceData,
         builder: (context, snapshot) {

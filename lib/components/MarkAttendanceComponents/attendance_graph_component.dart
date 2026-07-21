@@ -56,7 +56,7 @@ class AttendanceGraphComponent extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.primaryDarkColor,
+                            color: AppColors.primaryDarkBlue,
                           ),
                         ),
                       ],
@@ -72,14 +72,14 @@ class AttendanceGraphComponent extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: AppColors.primaryBlue.withValues(alpha: 0.08),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.03),
+                          color: AppColors.black.withValues(alpha: 0.03),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -109,7 +109,7 @@ class AttendanceGraphComponent extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.primaryDarkColor,
+                                color: AppColors.primaryDarkBlue,
                               ),
                             ),
                           ],
@@ -170,7 +170,7 @@ class AttendanceGraphComponent extends StatelessWidget {
     required Color? color,
     required int count,
   }) {
-    final c = color ?? Colors.grey;
+    final c = color ?? AppColors.grey500;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(

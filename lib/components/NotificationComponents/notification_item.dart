@@ -38,7 +38,7 @@ class NotificationItem extends StatelessWidget {
       title: notification.notifySubject ?? 'No Subject',
       description: notification.notifyMessage,
       fileName: notification.fileName,
-      accentColor: AppColors.lightRedColor,
+      accentColor: AppColors.lightRed,
       isTeacher: false,
       onTapAttachment: () => _launchFile(notification.fileName ?? ''),
       onTapLink: onTap,

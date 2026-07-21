@@ -178,7 +178,7 @@ class RegistrationProvider with ChangeNotifier {
           );
           showSnackBar(
             'Password for ${userNameController.text} has been created successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
           disposeData();
         } else {

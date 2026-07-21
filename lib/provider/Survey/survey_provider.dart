@@ -81,7 +81,7 @@ class SurveyProvider with ChangeNotifier {
             );
             showSnackBar(
               'Survey Answer Added Successfully',
-              color: AppColors.successGreenColor,
+              color: AppColors.successGreen,
             );
           } else {
             showSnackBar(response.message);

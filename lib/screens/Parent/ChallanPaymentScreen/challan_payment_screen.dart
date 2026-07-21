@@ -164,7 +164,7 @@ class _ChallanPaymentScreenState extends State<ChallanPaymentScreen> {
           if (_errorMessage == null && loadingPercentage < 100)
             LinearProgressIndicator(
               value: loadingPercentage / 100.0,
-              color: AppColors.lightRedColor,
+              color: AppColors.lightRed,
             ),
           Expanded(
             child: _errorMessage != null
@@ -215,7 +215,7 @@ class _WebErrorState extends StatelessWidget {
                 onPressed: onRetry,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryBlue,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

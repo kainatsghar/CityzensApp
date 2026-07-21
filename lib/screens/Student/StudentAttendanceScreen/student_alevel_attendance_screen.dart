@@ -8,6 +8,7 @@ import 'package:tcs_app/custom_widgets/ShowError/show_error.dart';
 import 'package:tcs_app/provider/StudentAttendance/student_alevel_attendance_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/custom_widgets/ShimmerEffect/attendance_shimmer.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class StudentAlevelAttendanceScreen extends StatefulWidget {
   const StudentAlevelAttendanceScreen({super.key});
@@ -41,7 +42,7 @@ class _StudentAlevelAttendanceScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "ATTENDANCE"),
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: AppColors.grey50,
       body: FutureBuilder(
         future: attendanceData,
         builder: (context, snapshot) {

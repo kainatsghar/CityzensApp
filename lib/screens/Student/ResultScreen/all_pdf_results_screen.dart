@@ -41,7 +41,7 @@ class AllPDFResultsScreenState extends State<AllPDFResultsScreen> {
         title: 'TERM RESULTS',
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh, color: AppColors.primaryTitleColor),
+            icon: const Icon(Icons.refresh, color: AppColors.primaryBlue),
             onPressed: () {
               setState(() {
                 _allResultsFuture = provider.loadAllPDFResults(forceRefresh: true);

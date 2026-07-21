@@ -24,14 +24,14 @@ class CustomStudentInfo extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.primaryDarkColor,
+              AppColors.primaryDarkBlue,
               AppColors.primaryColor.withValues(alpha: 0.9),
             ],
           ),
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryDarkColor.withValues(alpha: 0.3),
+              color: AppColors.primaryDarkBlue.withValues(alpha: 0.3),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -47,7 +47,7 @@ class CustomStudentInfo extends StatelessWidget {
                 top: -30,
                 child: CircleAvatar(
                   radius: 80,
-                  backgroundColor: Colors.white.withValues(alpha: 0.05),
+                  backgroundColor: AppColors.white.withValues(alpha: 0.05),
                 ),
               ),
 
@@ -57,7 +57,7 @@ class CustomStudentInfo extends StatelessWidget {
                 top: 0,
                 bottom: 0,
                 width: 6,
-                child: Container(color: AppColors.goldenYellow),
+                child: Container(color: AppColors.secondaryColor),
               ),
 
               Padding(
@@ -73,10 +73,10 @@ class CustomStudentInfo extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(3),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
+                            color: AppColors.white.withValues(alpha: 0.2),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.white24,
+                              color: AppColors.white24,
                               width: 1.5,
                             ),
                           ),
@@ -96,7 +96,7 @@ class CustomStudentInfo extends StatelessWidget {
                                 info.name?.toString().toUpperCase() ??
                                     'NAME N/A',
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 0.8,
@@ -121,9 +121,9 @@ class CustomStudentInfo extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.08),
+                        color: AppColors.white.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.white12),
+                        border: Border.all(color: AppColors.white12),
                       ),
                       child: IntrinsicHeight(
                         child: Row(
@@ -136,7 +136,7 @@ class CustomStudentInfo extends StatelessWidget {
                               ),
                             ),
                             VerticalDivider(
-                              color: Colors.white.withValues(alpha: 0.2),
+                              color: AppColors.white.withValues(alpha: 0.2),
                               thickness: 1,
                               indent: 5,
                               endIndent: 5,
@@ -166,19 +166,19 @@ class CustomStudentInfo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white10,
+        color: AppColors.white10,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white24),
+        border: Border.all(color: AppColors.white24),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppColors.goldenYellow),
+          Icon(icon, size: 14, color: AppColors.secondaryColor),
           const SizedBox(width: 6),
           Text(
             label,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.white,
               fontSize: 11,
               fontWeight: FontWeight.w700,
             ),
@@ -211,12 +211,12 @@ class _DetailItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 12, color: AppColors.goldenYellow),
+            Icon(icon, size: 12, color: AppColors.secondaryColor),
             const SizedBox(width: 6),
             Text(
               title,
               style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.7),
+                color: AppColors.white.withValues(alpha: 0.7),
                 fontSize: 10,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.0,
@@ -229,7 +229,7 @@ class _DetailItem extends StatelessWidget {
           displayValue,
           textAlign: TextAlign.center,
           style: const TextStyle(
-            color: Colors.white,
+            color: AppColors.white,
             fontSize: 13,
             fontWeight: FontWeight.bold,
           ),

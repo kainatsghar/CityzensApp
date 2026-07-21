@@ -96,7 +96,7 @@ class _TabSelectorState<T> extends State<TabSelector<T>>
         child: const Center(
           child: Text(
             'No items available',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: AppColors.grey500),
           ),
         ),
       );
@@ -156,7 +156,7 @@ class _TabSelectorState<T> extends State<TabSelector<T>>
                       ? AppColors.primaryColor.withValues(
                           alpha: widget.isEnabled ? 1.0 : 0.5,
                         )
-                      : Colors.grey.shade200,
+                      : AppColors.grey200,
                   width: isSelected ? 2.0 : 1.5,
                 ),
                 boxShadow: isSelected
@@ -173,8 +173,8 @@ class _TabSelectorState<T> extends State<TabSelector<T>>
                 duration: const Duration(milliseconds: 300),
                 style: TextStyle(
                   color: isSelected
-                      ? AppColors.whiteColor
-                      : Colors.grey.shade800,
+                      ? AppColors.white
+                      : AppColors.grey800,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                   fontSize: 12,
                 ),

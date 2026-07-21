@@ -163,7 +163,7 @@ class AssignmentProvider with ChangeNotifier {
           );
           showSnackBar(
             'Assignment Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);
@@ -203,7 +203,7 @@ class AssignmentProvider with ChangeNotifier {
           );
           showSnackBar(
             'Assignment Updated Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);
@@ -229,7 +229,7 @@ class AssignmentProvider with ChangeNotifier {
         await loadTeacherAssignment();
         showSnackBar(
           'Assignment Deleted Successfully',
-          color: AppColors.successGreenColor,
+          color: AppColors.successGreen,
         );
       } else {
         showSnackBar(response.message);

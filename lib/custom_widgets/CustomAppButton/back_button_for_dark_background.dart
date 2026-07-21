@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class BackButtonForDarkBackground extends StatelessWidget {
   const BackButtonForDarkBackground({super.key, this.onPressed});
@@ -12,12 +13,12 @@ class BackButtonForDarkBackground extends StatelessWidget {
       icon: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.15),
+          color: AppColors.white.withValues(alpha: 0.15),
           shape: BoxShape.circle,
         ),
         child: const Icon(
           Icons.arrow_back_ios_new,
-          color: Colors.white,
+          color: AppColors.white,
           size: 18,
         ),
       ),

@@ -62,7 +62,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primaryBlackText.withValues(alpha: 0.04),
+                    color: AppColors.black.withValues(alpha: 0.04),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -83,7 +83,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primaryDarkColor,
+                      color: AppColors.primaryDarkBlue,
                       height: 1.3,
                     ),
                   ),
@@ -179,7 +179,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primaryBlackText.withValues(
+                          color: AppColors.black.withValues(
                             alpha: 0.03,
                           ),
                           blurRadius: 10,
@@ -207,7 +207,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                                   ).format(value.selectedDate),
                                   style: const TextStyle(
                                     fontSize: 14,
-                                    color: AppColors.primaryDarkColor,
+                                    color: AppColors.primaryDarkBlue,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
@@ -266,7 +266,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                               const Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 size: 10,
-                                color: Color(0xFFBDBDBD),
+                                color: AppColors.grey400,
                               ),
                               const SizedBox(width: 6),
                               Container(
@@ -275,7 +275,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                                   vertical: 2,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.purpleColor.withValues(
+                                  color: AppColors.purple.withValues(
                                     alpha: 0.08,
                                   ),
                                   borderRadius: BorderRadius.circular(6),
@@ -284,7 +284,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                                   state.subjectName,
                                   style: const TextStyle(
                                     fontSize: 12,
-                                    color: AppColors.purpleColor,
+                                    color: AppColors.purple,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -341,7 +341,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                     padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
                           color: AppColors.primaryBlue.withValues(alpha: 0.15),
@@ -349,7 +349,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.03),
+                            color: AppColors.black.withValues(alpha: 0.03),
                             blurRadius: 6,
                             offset: const Offset(0, 2),
                           ),
@@ -362,13 +362,13 @@ class _StudentListComponentState extends State<StudentListComponent> {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.primaryDarkColor,
+                          color: AppColors.primaryDarkBlue,
                         ),
                         decoration: InputDecoration(
                           hintText: 'Search by name or roll no...',
                           hintStyle: TextStyle(
                             fontSize: 13,
-                            color: Colors.grey.shade400,
+                            color: AppColors.grey400,
                             fontWeight: FontWeight.w500,
                           ),
                           prefixIcon: Icon(
@@ -381,7 +381,7 @@ class _StudentListComponentState extends State<StudentListComponent> {
                                   icon: Icon(
                                     Icons.close_rounded,
                                     size: 18,
-                                    color: Colors.grey.shade400,
+                                    color: AppColors.grey400,
                                   ),
                                   onPressed: () {
                                     _searchController.clear();
@@ -426,13 +426,13 @@ class _StudentListComponentState extends State<StudentListComponent> {
                                 Icon(
                                   Icons.search_off_rounded,
                                   size: 56,
-                                  color: Colors.grey.shade300,
+                                  color: AppColors.grey300,
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
                                   'No student found',
                                   style: TextStyle(
-                                    color: Colors.grey.shade400,
+                                    color: AppColors.grey400,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 15,
                                   ),

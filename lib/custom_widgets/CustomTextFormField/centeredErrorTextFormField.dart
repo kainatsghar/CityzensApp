@@ -34,14 +34,14 @@ class CenteredErrorTextFormField extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                color: const Color.fromARGB(255, 240, 240, 240),
+                color: AppColors.nearWhite,
               ),
               child: TextField(
                 controller: controller,
                 keyboardType: keyboardType,
                 inputFormatters: inputFormatters,
                 style: TextStyle(
-                  color: AppColors.primaryTitleColor,
+                  color: AppColors.primaryBlue,
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
                 ),
@@ -59,7 +59,7 @@ class CenteredErrorTextFormField extends StatelessWidget {
                   floatingLabelBehavior: FloatingLabelBehavior.auto,
                   floatingLabelAlignment: FloatingLabelAlignment.center,
                   labelStyle: const TextStyle(
-                    color: AppColors.primaryTitleColor,
+                    color: AppColors.primaryBlue,
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),
@@ -73,7 +73,7 @@ class CenteredErrorTextFormField extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
                   field.errorText!,
-                  style: const TextStyle(color: Colors.red, fontSize: 13),
+                  style: const TextStyle(color: AppColors.materialRed, fontSize: 13),
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -117,7 +117,7 @@ class SchoolEventProvider with ChangeNotifier {
           );
           showSnackBar(
             'Event Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);

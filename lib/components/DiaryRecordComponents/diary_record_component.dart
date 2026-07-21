@@ -98,13 +98,13 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Colors.grey.shade600,
+                      color: AppColors.grey600,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Tap + to add homework for your class',
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade400),
+                    style: TextStyle(fontSize: 14, color: AppColors.grey400),
                   ),
                 ],
               ),
@@ -152,7 +152,7 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
@@ -161,7 +161,7 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                         offset: const Offset(0, 8),
                       ),
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.02),
+                        color: AppColors.black.withValues(alpha: 0.02),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
@@ -199,7 +199,7 @@ class _DiaryRecordComponentState extends State<DiaryRecordComponent> {
                             Text(
                               formattedDate,
                               style: const TextStyle(
-                                color: AppColors.primaryDarkColor,
+                                color: AppColors.primaryDarkBlue,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w800,
                                 letterSpacing: 0.3,

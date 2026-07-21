@@ -17,7 +17,7 @@ class CustomLogoCover extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppColors.primary, AppColors.primaryDarkBlue],
+            colors: [AppColors.primaryColor, AppColors.primaryDarkBlue],
           ),
           borderRadius: BorderRadius.circular(24.0),
           boxShadow: [
@@ -37,7 +37,7 @@ class CustomLogoCover extends StatelessWidget {
                 right: -20,
                 child: CircleAvatar(
                   radius: 60,
-                  backgroundColor: Colors.white.withValues(alpha: 0.05),
+                  backgroundColor: AppColors.white.withValues(alpha: 0.05),
                 ),
               ),
               Center(

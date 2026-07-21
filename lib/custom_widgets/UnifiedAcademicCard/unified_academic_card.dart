@@ -53,14 +53,14 @@ class UnifiedAcademicCard extends StatelessWidget {
     final Color resolvedBadgeBg;
     final Color resolvedBadgeText;
 
-    if (accentColor == AppColors.goldenColors) {
-      resolvedAccent = AppColors.goldenColors;
-      resolvedBadgeBg = AppColors.goldenColors.withValues(alpha: 0.12);
-      resolvedBadgeText = AppColors.goldenColors;
-    } else if (accentColor == AppColors.lightRedColor) {
-      resolvedAccent = AppColors.lightRedColor;
-      resolvedBadgeBg = AppColors.lightRedColor.withValues(alpha: 0.12);
-      resolvedBadgeText = AppColors.lightRedColor;
+    if (accentColor == AppColors.warningOrange) {
+      resolvedAccent = AppColors.warningOrange;
+      resolvedBadgeBg = AppColors.warningOrange.withValues(alpha: 0.12);
+      resolvedBadgeText = AppColors.warningOrange;
+    } else if (accentColor == AppColors.lightRed) {
+      resolvedAccent = AppColors.lightRed;
+      resolvedBadgeBg = AppColors.lightRed.withValues(alpha: 0.12);
+      resolvedBadgeText = AppColors.lightRed;
     } else {
       // Default / Homework (primaryBlue)
       resolvedAccent = AppColors.primaryBlue;

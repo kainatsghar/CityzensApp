@@ -27,7 +27,7 @@ class CustomDashboardButton extends StatelessWidget {
       onTap: onTap,
       child: FadeInUp(
         child: Card(
-          color: onTap == null ? Colors.grey : AppColors.primaryLightBlue,
+          color: onTap == null ? AppColors.grey500 : AppColors.primaryLightBlue,
           elevation: 4,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
@@ -49,7 +49,7 @@ class CustomDashboardButton extends StatelessWidget {
                             fontSize: 17.0,
                             fontWeight: FontWeight.bold,
                             height: 1.2,
-                            color: AppColors.primaryTitleColor,
+                            color: AppColors.primaryBlue,
                           ),
                         ),
                         if (onTap == null) // Show "Coming Soon" if disabled
@@ -63,7 +63,7 @@ class CustomDashboardButton extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                             ),
                           ),

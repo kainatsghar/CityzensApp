@@ -92,7 +92,7 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
               primary: AppColors.primaryBlue,
-              onPrimary: Colors.white,
+              onPrimary: AppColors.white,
               onSurface: AppColors.primaryDarkBlue,
             ),
           ),
@@ -203,7 +203,7 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
         const SnackBar(
           content: Text(
             'Promotion saved successfully!',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: AppColors.white),
           ),
           backgroundColor: AppColors.successGreen,
         ),
@@ -434,7 +434,7 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,
                                         color: _pickedFile != null
-                                            ? AppColors.primaryDarkColor
+                                            ? AppColors.primaryDarkBlue
                                             : AppColors.softGreyText,
                                       ),
                                       overflow: TextOverflow.ellipsis,

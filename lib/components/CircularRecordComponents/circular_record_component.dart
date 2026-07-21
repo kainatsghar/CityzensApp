@@ -97,13 +97,13 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.grey.shade600,
+                    color: AppColors.grey600,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Tap + to send a new circular announcement',
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade400),
+                  style: TextStyle(fontSize: 14, color: AppColors.grey400),
                 ),
               ],
             ),
@@ -151,22 +151,22 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.lightRedColor.withValues(alpha: 0.04),
+                        color: AppColors.lightRed.withValues(alpha: 0.04),
                         blurRadius: 16,
                         offset: const Offset(0, 8),
                       ),
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.02),
+                        color: AppColors.black.withValues(alpha: 0.02),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
                     ],
                     border: Border.all(
-                      color: AppColors.lightRedColor.withValues(alpha: 0.08),
+                      color: AppColors.lightRed.withValues(alpha: 0.08),
                       width: 1,
                     ),
                   ),
@@ -181,7 +181,7 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.lightRedColor.withValues(
+                          color: AppColors.lightRed.withValues(
                             alpha: 0.08,
                           ),
                           borderRadius: const BorderRadius.only(
@@ -194,13 +194,13 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                             const Icon(
                               Icons.calendar_today_rounded,
                               size: 16,
-                              color: AppColors.lightRedColor,
+                              color: AppColors.lightRed,
                             ),
                             const SizedBox(width: 10),
                             Text(
                               formattedDate,
                               style: const TextStyle(
-                                color: AppColors.primaryDarkColor,
+                                color: AppColors.primaryDarkBlue,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w800,
                                 letterSpacing: 0.3,
@@ -223,7 +223,7 @@ class _CircularRecordComponentState extends State<CircularRecordComponent> {
                               description: circular.description,
                               fileName: circular.fileName,
                               badgeText: circular.sectionName,
-                              accentColor: AppColors.lightRedColor,
+                              accentColor: AppColors.lightRed,
                               isTeacher:
                                   localData.userData!.userType == 'Teacher',
                               onEdit: () => AppNavigation.navigateTo(

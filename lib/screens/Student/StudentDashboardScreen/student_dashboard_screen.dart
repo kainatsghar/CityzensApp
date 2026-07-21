@@ -142,9 +142,9 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                 end: Alignment.bottomCenter,
                 stops: [0.0, 0.4, 1.0],
                 colors: [
-                  AppColors.whiteColor,
-                  Color(0xFFF8FAFC),
-                  Color(0xFFF1F5F9),
+                  AppColors.white,
+                  AppColors.slate50,
+                  AppColors.slate100,
                 ],
               ),
             ),
@@ -193,7 +193,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         children: [
           const Icon(
             Icons.error_outline,
-            color: AppColors.lightRedColor,
+            color: AppColors.lightRed,
             size: 48,
           ),
           const SizedBox(height: 16),
@@ -315,7 +315,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       pinned: true,
       centerTitle: false,
       elevation: 0,
-      backgroundColor: AppColors.whiteColor.withValues(alpha: effectiveOpacity),
+      backgroundColor: AppColors.white.withValues(alpha: effectiveOpacity),
       surfaceTintColor: Colors.transparent,
       leading: Builder(
         builder: (ctx) => IconButton(
@@ -399,7 +399,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
               assignment?.classWorkDate ?? '',
               format: 'dd-MMM-yyyy',
             ),
-            color: AppColors.goldenColors,
+            color: AppColors.warningOrange,
             onTap: () => AppNavigation.navigateTo(
               AppNavRoutes.studentAcademicHubRoute,
               arguments: 1,
@@ -506,7 +506,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
 
     return _buildDashboardCard(
       title: 'Financial Status',
-      accentColor: hasFees ? AppColors.valuesRedColors : AppColors.successGreen,
+      accentColor: hasFees ? AppColors.errorRed : AppColors.successGreen,
       icon: Icons.account_balance_wallet_rounded,
       child: Column(
         children: [
@@ -525,7 +525,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                     decoration: BoxDecoration(
                       color:
                           (hasFees
-                                  ? AppColors.valuesRedColors
+                                  ? AppColors.errorRed
                                   : AppColors.successGreen)
                               .withValues(alpha: 0.1),
                       shape: BoxShape.circle,
@@ -533,7 +533,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         BoxShadow(
                           color:
                               (hasFees
-                                      ? AppColors.valuesRedColors
+                                      ? AppColors.errorRed
                                       : AppColors.successGreen)
                                   .withValues(alpha: 0.05),
                           blurRadius: 10,
@@ -546,7 +546,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                           ? Icons.pending_actions_rounded
                           : Icons.check_circle_rounded,
                       color: hasFees
-                          ? AppColors.valuesRedColors
+                          ? AppColors.errorRed
                           : AppColors.successGreen,
                       size: 32,
                     ),
@@ -562,7 +562,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                             fontSize: 10,
                             fontWeight: FontWeight.w900,
                             color: hasFees
-                                ? AppColors.valuesRedColors
+                                ? AppColors.errorRed
                                 : AppColors.successGreen,
                             letterSpacing: 1.2,
                           ),
@@ -597,7 +597,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
           _buildHubActionCard(
             title: 'View Fee Bill & Payment History',
             icon: Icons.receipt_long_rounded,
-            color: hasFees ? AppColors.valuesRedColors : AppColors.primaryBlue,
+            color: hasFees ? AppColors.errorRed : AppColors.primaryBlue,
             onTap: () =>
                 AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
             isPrimary: true,
@@ -664,7 +664,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               gradient: const LinearGradient(
-                colors: [AppColors.primaryBlue, Color(0xFF003875)],
+                colors: [AppColors.primaryBlue, AppColors.navyBlue],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -691,12 +691,12 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.15),
+                          color: AppColors.white.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
                           Icons.calendar_today_rounded,
-                          color: Colors.white,
+                          color: AppColors.white,
                           size: 26,
                         ),
                       ),
@@ -710,7 +710,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w900,
-                                color: AppColors.goldenYellow,
+                                color: AppColors.secondaryColor,
                                 letterSpacing: 1.5,
                               ),
                             ),
@@ -720,7 +720,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                             ),
                           ],
@@ -728,7 +728,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                       ),
                       const Icon(
                         Icons.chevron_right_rounded,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ],
                   ),
@@ -754,7 +754,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                   child: _buildHubActionCard(
                     title: 'Eye On Child',
                     icon: Icons.visibility_rounded,
-                    color: AppColors.purpleColor,
+                    color: AppColors.purple,
                     onTap: () => AppNavigation.navigateTo(
                       AppNavRoutes.parentEyeOnYourChildRoute,
                     ),
@@ -787,7 +787,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
@@ -861,7 +861,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         decoration: BoxDecoration(
           color: isDormant
-              ? Colors.grey.shade50
+              ? AppColors.grey50
               : (isPrimary
                     ? AppColors.primaryDarkBlue
                     : color.withValues(alpha: 0.06)),
@@ -890,7 +890,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                 ],
           border: Border.all(
             color: isDormant
-                ? Colors.grey.shade200
+                ? AppColors.grey200
                 : (isPrimary
                       ? Colors.transparent
                       : color.withValues(alpha: 0.15)),
@@ -903,8 +903,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             Icon(
               icon,
               color: isDormant
-                  ? Colors.grey.shade300
-                  : (isPrimary ? Colors.white : color),
+                  ? AppColors.grey300
+                  : (isPrimary ? AppColors.white : color),
               size: 20,
             ),
             const SizedBox(width: 10),
@@ -914,8 +914,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: isDormant
-                      ? Colors.grey.shade400
-                      : (isPrimary ? Colors.white : AppColors.primaryDarkBlue),
+                      ? AppColors.grey400
+                      : (isPrimary ? AppColors.white : AppColors.primaryDarkBlue),
                   fontWeight: FontWeight.w800,
                   fontSize: 13,
                   letterSpacing: 0.2,
@@ -1012,7 +1012,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.5),
+                            color: AppColors.white.withValues(alpha: 0.5),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -1044,7 +1044,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.6),
+                        color: AppColors.white.withValues(alpha: 0.6),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(

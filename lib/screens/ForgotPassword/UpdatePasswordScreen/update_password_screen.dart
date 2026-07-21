@@ -56,7 +56,7 @@ class UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     value.obscureTextPassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: AppColors.whiteColor,
+                                    color: AppColors.white,
                                   ),
                                 ),
                                 inputType: TextInputType.text,
@@ -79,7 +79,7 @@ class UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                                     value.obscureTextConfirmPassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: AppColors.whiteColor,
+                                    color: AppColors.white,
                                   ),
                                 ),
                                 validator: value.confirmPasswordValidator,

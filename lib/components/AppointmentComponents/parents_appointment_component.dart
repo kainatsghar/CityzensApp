@@ -97,8 +97,7 @@ class _ParentAppointmentComponentState
                                                         dayOfWeek,
                                                         style: const TextStyle(
                                                           fontSize: 16,
-                                                          color: AppColors
-                                                              .blackColor,
+                                                          color: AppColors.black,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -123,16 +122,14 @@ class _ParentAppointmentComponentState
                                                       height:
                                                           size.height * 0.05,
                                                       child: Card(
-                                                        color: AppColors
-                                                            .primaryDarkColor,
+                                                        color: AppColors.primaryDarkBlue,
                                                         child: Center(
                                                           child: Text(
                                                             //'DATE: 14TH MAY 2024',
                                                             'DATE: $formattedDate',
                                                             style: const TextStyle(
                                                               fontSize: 12,
-                                                              color: AppColors
-                                                                  .whiteColor,
+                                                              color: AppColors.white,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
@@ -152,8 +149,7 @@ class _ParentAppointmentComponentState
                                                       height:
                                                           size.height * 0.05,
                                                       child: Card(
-                                                        color: AppColors
-                                                            .primaryDarkColor,
+                                                        color: AppColors.primaryDarkBlue,
                                                         child: Center(
                                                           child: Text(
                                                             responseData
@@ -162,8 +158,7 @@ class _ParentAppointmentComponentState
                                                                 '',
                                                             style: const TextStyle(
                                                               fontSize: 12,
-                                                              color: AppColors
-                                                                  .whiteColor,
+                                                              color: AppColors.white,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
@@ -193,8 +188,7 @@ class _ParentAppointmentComponentState
                                                   children: [
                                                     Center(
                                                       child: CircleAvatar(
-                                                        backgroundColor: AppColors
-                                                            .successGreenColor,
+                                                        backgroundColor: AppColors.successGreen,
                                                         child: Text(
                                                           //'1',
                                                           //responseData.meetingDetails?[index].studentName ?? '',
@@ -238,8 +232,7 @@ class _ParentAppointmentComponentState
                                                         'STUDENT NAME:',
                                                         style: TextStyle(
                                                           fontSize: 16,
-                                                          color: AppColors
-                                                              .primaryTitleColor,
+                                                          color: AppColors.primaryBlue,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -281,8 +274,7 @@ class _ParentAppointmentComponentState
                                                             textAlign: TextAlign
                                                                 .center, // Center align the text horizontally
                                                             style: const TextStyle(
-                                                              color: AppColors
-                                                                  .primaryTitleColor,
+                                                              color: AppColors.primaryBlue,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
@@ -321,8 +313,7 @@ class _ParentAppointmentComponentState
                                                           'ROLL NUMBER:',
                                                           style: TextStyle(
                                                             fontSize: 16,
-                                                            color: AppColors
-                                                                .primaryTitleColor,
+                                                            color: AppColors.primaryBlue,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
@@ -367,8 +358,7 @@ class _ParentAppointmentComponentState
                                                                       .toString() ??
                                                                   '',
                                                               style: const TextStyle(
-                                                                color: AppColors
-                                                                    .primaryTitleColor,
+                                                                color: AppColors.primaryBlue,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -407,8 +397,7 @@ class _ParentAppointmentComponentState
                                                           'CLASS:',
                                                           style: TextStyle(
                                                             fontSize: 16,
-                                                            color: AppColors
-                                                                .primaryTitleColor,
+                                                            color: AppColors.primaryBlue,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
@@ -452,8 +441,7 @@ class _ParentAppointmentComponentState
                                                                       .classSection ??
                                                                   '',
                                                               style: const TextStyle(
-                                                                color: AppColors
-                                                                    .primaryTitleColor,
+                                                                color: AppColors.primaryBlue,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -492,8 +480,7 @@ class _ParentAppointmentComponentState
                                                           'REASON:',
                                                           style: TextStyle(
                                                             fontSize: 16,
-                                                            color: AppColors
-                                                                .primaryTitleColor,
+                                                            color: AppColors.primaryBlue,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
@@ -544,8 +531,7 @@ class _ParentAppointmentComponentState
                                                                 textAlign: TextAlign
                                                                     .center, // Center align the text horizontally
                                                                 style: const TextStyle(
-                                                                  color: AppColors
-                                                                      .primaryTitleColor,
+                                                                  color: AppColors.primaryBlue,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,

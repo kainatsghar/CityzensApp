@@ -60,7 +60,7 @@ class _TeacherSchoolEventScreenState extends State<TeacherSchoolEventScreen> {
         onPressed: () =>
             AppNavigation.navigateTo(AppNavRoutes.addSchoolEventRoute),
         backgroundColor: AppColors.primaryColor,
-        child: const Icon(Icons.add, color: AppColors.whiteColor),
+        child: const Icon(Icons.add, color: AppColors.white),
       ),
     );
   }

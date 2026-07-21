@@ -21,7 +21,7 @@ class DetailResult extends StatelessWidget {
         var info = value.resultsResponse.info;
         return Card(
           shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.grey),
+            side: const BorderSide(color: AppColors.grey500),
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: Row(
@@ -59,7 +59,7 @@ class DetailResult extends StatelessWidget {
                             child: Text(
                               'GRADE',
                               style: TextStyle(
-                                color: AppColors.primaryDarkColor,
+                                color: AppColors.primaryDarkBlue,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),

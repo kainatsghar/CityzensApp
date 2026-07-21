@@ -120,10 +120,10 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
                     //     return Theme(
                     //       data: Theme.of(context).copyWith(
                     //         colorScheme: const ColorScheme.light(
-                    //           primary: AppColors.lightRedColor,
-                    //           onPrimary: Colors.white,
-                    //           surface: Colors.white,
-                    //           onSurface: AppColors.primaryDarkColor,
+                    //           primary: AppColors.lightRed,
+                    //           onPrimary: AppColors.white,
+                    //           surface: AppColors.white,
+                    //           onSurface: AppColors.primaryDarkBlue,
                     //         ),
                     //       ),
                     //       child: child!,
@@ -140,10 +140,10 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
                       vertical: 14,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.lightRedColor.withValues(alpha: 0.04),
+                      color: AppColors.lightRed.withValues(alpha: 0.04),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: AppColors.lightRedColor.withValues(alpha: 0.12),
+                        color: AppColors.lightRed.withValues(alpha: 0.12),
                         width: 1,
                       ),
                     ),
@@ -152,12 +152,12 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: AppColors.lightRedColor.withValues(alpha: 0.1),
+                            color: AppColors.lightRed.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
                             Icons.calendar_month_rounded,
-                            color: AppColors.lightRedColor,
+                            color: AppColors.lightRed,
                             size: 20,
                           ),
                         ),
@@ -170,7 +170,7 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
                               style: TextStyle(
                                 fontSize: 10,
                                 letterSpacing: 0.5,
-                                color: AppColors.lightRedColor.withValues(alpha: 0.7),
+                                color: AppColors.lightRed.withValues(alpha: 0.7),
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -182,7 +182,7 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.primaryDarkColor,
+                                color: AppColors.primaryDarkBlue,
                               ),
                             ),
                           ],
@@ -191,7 +191,7 @@ class _AddCircularScreenState extends State<AddCircularScreen> {
                         const Icon(
                           Icons.edit_calendar_rounded,
                           size: 18,
-                          color: AppColors.lightRedColor,
+                          color: AppColors.lightRed,
                         ),
                       ],
                     ),
@@ -295,7 +295,7 @@ class _FieldLabel extends StatelessWidget {
       child: Text(
         text,
         style: const TextStyle(
-          color: AppColors.primaryDarkColor,
+          color: AppColors.primaryDarkBlue,
           fontWeight: FontWeight.w600,
           fontSize: 13,
         ),
@@ -330,7 +330,7 @@ class _AttachmentPreview extends StatelessWidget {
                   'Attachment',
                   style: TextStyle(
                     fontSize: 11,
-                    color: Colors.grey,
+                    color: AppColors.grey500,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -339,7 +339,7 @@ class _AttachmentPreview extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.primaryDarkColor,
+                    color: AppColors.primaryDarkBlue,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -348,7 +348,7 @@ class _AttachmentPreview extends StatelessWidget {
           ),
           IconButton(
             onPressed: onRemove,
-            icon: const Icon(Icons.cancel_outlined, color: Colors.redAccent),
+            icon: const Icon(Icons.cancel_outlined, color: AppColors.redAccent),
             tooltip: 'Remove',
           ),
         ],
@@ -370,22 +370,22 @@ class _AttachmentUploadButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 18),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: AppColors.grey300),
         ),
         child: const Column(
           children: [
-            Icon(Icons.cloud_upload_outlined, color: Colors.grey, size: 32),
+            Icon(Icons.cloud_upload_outlined, color: AppColors.grey500, size: 32),
             SizedBox(height: 8),
             Text(
               'Upload Attachment',
-              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+              style: TextStyle(color: AppColors.grey500, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 2),
             Text(
               'PDF, DOC, PPT supported',
-              style: TextStyle(color: Colors.grey, fontSize: 11),
+              style: TextStyle(color: AppColors.grey500, fontSize: 11),
             ),
           ],
         ),

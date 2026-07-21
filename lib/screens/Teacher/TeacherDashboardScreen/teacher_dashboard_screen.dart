@@ -172,7 +172,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                               builder: (context, opacity, _) {
                                 return SliverAppBar(
                                   expandedHeight: 75,
-                                  backgroundColor: AppColors.whiteColor
+                                  backgroundColor: AppColors.white
                                       .withValues(
                                         alpha: opacity.clamp(0.0, 0.95),
                                       ),
@@ -211,7 +211,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                                             Text(
                                               HelperFunction.getGreeting(),
                                               style: const TextStyle(
-                                                color: Colors.grey,
+                                                color: AppColors.grey500,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -365,7 +365,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
           title: 'Class Teacher',
           accentColor: AppColors.primaryBlue,
           icon: Icons.assignment_ind_rounded,
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -440,7 +440,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
               ],
 
               const SizedBox(height: 12),
-              const Divider(height: 1, color: Colors.black12),
+              const Divider(height: 1, color: AppColors.black12),
               const SizedBox(height: 16),
 
               // Hero Action: Today's Attendance
@@ -467,7 +467,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                     ),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [AppColors.primary, AppColors.primaryDarkBlue],
+                        colors: [AppColors.primaryColor, AppColors.primaryDarkBlue],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -487,12 +487,12 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.25),
+                            color: AppColors.white.withValues(alpha: 0.25),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
                             Icons.how_to_reg_rounded,
-                            color: Colors.white,
+                            color: AppColors.white,
                             size: 30,
                           ),
                         ),
@@ -504,7 +504,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                               Text(
                                 formattedDate.toUpperCase(),
                                 style: TextStyle(
-                                  color: Colors.white.withValues(alpha: 0.8),
+                                  color: AppColors.white.withValues(alpha: 0.8),
                                   fontWeight: FontWeight.w800,
                                   fontSize: 10,
                                   letterSpacing: 1.1,
@@ -514,7 +514,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                               const Text(
                                 "MARK ATTENDANCE",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                   fontWeight: FontWeight.w900,
                                   fontSize: 18,
                                   letterSpacing: 0.5,
@@ -525,7 +525,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                         ),
                         const Icon(
                           Icons.arrow_forward_ios_rounded,
-                          color: Colors.white,
+                          color: AppColors.white,
                           size: 18,
                         ),
                       ],
@@ -624,7 +624,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                             ? _buildActionTile(
                                 title: 'Eye On Child',
                                 icon: Icons.visibility_outlined,
-                                color: AppColors.purpleColor,
+                                color: AppColors.purple,
                                 onTap: () => AppNavigation.navigateTo(
                                   AppNavRoutes.eyeOnYourChildRoute,
                                 ),
@@ -647,7 +647,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
       title: 'Academic Content',
       accentColor: AppColors.primaryDarkBlue,
       icon: Icons.menu_book_rounded,
-      backgroundColor: Colors.white, // Clean white card background
+      backgroundColor: AppColors.white, // Clean white card background
       child: Column(
         children: [
           _buildAcademicRow(
@@ -660,11 +660,11 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
               arguments: 0,
             ),
           ),
-          const Divider(height: 24, color: Colors.black12), // Neutral divider
+          const Divider(height: 24, color: AppColors.black12), // Neutral divider
           _buildAcademicRow(
             title: 'Classwork',
             icon: Icons.assignment_outlined,
-            accentColor: AppColors.goldenColors, // Matches Student Dashboard
+            accentColor: AppColors.warningOrange, // Matches Student Dashboard
             onAdd: () =>
                 AppNavigation.navigateTo(AppNavRoutes.addAssignmentRoute),
             onView: () => AppNavigation.navigateTo(
@@ -672,7 +672,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
               arguments: 1,
             ),
           ),
-          const Divider(height: 24, color: Colors.black12), // Neutral divider
+          const Divider(height: 24, color: AppColors.black12), // Neutral divider
           _buildAcademicRow(
             title: 'Circulars',
             icon: Icons.campaign_outlined,
@@ -796,7 +796,7 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
           title: 'Class Test Results',
           accentColor: AppColors.primaryBlue, // Unified to primaryBlue
           icon: Icons.analytics_rounded,
-          backgroundColor: Colors.white, // Clean white background
+          backgroundColor: AppColors.white, // Clean white background
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -861,14 +861,14 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                         children: [
                           const Icon(
                             Icons.add_chart_rounded,
-                            color: Colors.white,
+                            color: AppColors.white,
                             size: 20,
                           ),
                           const SizedBox(width: 12),
                           const Text(
                             'MARK CLASS TEST RESULTS',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppColors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 0.8,
@@ -911,7 +911,7 @@ class _SelectionLabel extends StatelessWidget {
 Widget _buildQuickServicesHub() {
   return _buildDashboardCard(
     title: 'Quick Services',
-    accentColor: AppColors.goldenYellow,
+    accentColor: AppColors.secondaryColor,
     icon: Icons.flash_on_rounded,
     child: Column(
       children: [
@@ -921,7 +921,7 @@ Widget _buildQuickServicesHub() {
               child: _buildActionTile(
                 title: 'School Events',
                 icon: Icons.event_available_rounded,
-                color: AppColors.goldenYellow,
+                color: AppColors.secondaryColor,
                 onTap: () => AppNavigation.navigateTo(
                   AppNavRoutes.teacherSchoolEventsRoute,
                 ),
@@ -932,7 +932,7 @@ Widget _buildQuickServicesHub() {
               child: _buildActionTile(
                 title: 'Appointments',
                 icon: Icons.calendar_month_rounded,
-                color: AppColors.goldenYellow,
+                color: AppColors.secondaryColor,
                 onTap: () => AppNavigation.navigateTo(
                   AppNavRoutes.parentAppointmentRoute,
                 ),
@@ -947,7 +947,7 @@ Widget _buildQuickServicesHub() {
               child: _buildActionTile(
                 title: 'Survey',
                 icon: Icons.poll_rounded,
-                color: AppColors.goldenYellow,
+                color: AppColors.secondaryColor,
                 onTap: () =>
                     AppNavigation.navigateTo(AppNavRoutes.teacherSurveyRoute),
               ),
@@ -1002,7 +1002,7 @@ Widget _buildWrapChips<T>({
           curve: Curves.easeOutCubic,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primaryBlue : Colors.white,
+            color: isSelected ? AppColors.primaryBlue : AppColors.white,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: isSelected ? AppColors.primaryBlue : AppColors.primaryBlue,
@@ -1022,7 +1022,7 @@ Widget _buildWrapChips<T>({
             mainAxisSize: MainAxisSize.min,
             children: [
               if (isSubject && isSelected) ...[
-                const Icon(Icons.book_rounded, size: 14, color: Colors.white),
+                const Icon(Icons.book_rounded, size: 14, color: AppColors.white),
                 const SizedBox(width: 8),
               ],
               Flexible(
@@ -1030,7 +1030,7 @@ Widget _buildWrapChips<T>({
                   text,
                   style: TextStyle(
                     color: isSelected
-                        ? Colors.white
+                        ? AppColors.white
                         : AppColors.primaryDarkBlue,
                     fontWeight: isSelected ? FontWeight.w800 : FontWeight.w700,
                     fontSize: 13,

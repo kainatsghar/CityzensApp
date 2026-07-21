@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 /// A premium glassmorphic card with frosted glass effect and subtle depth gradients.
 ///
@@ -19,7 +20,7 @@ class GlassmorphicCard extends StatelessWidget {
     this.content,
     this.borderRadius = 28.0,
     this.blur = 12.0,
-    this.accentColor = const Color(0xFFF3CD50), // Default school gold
+    this.accentColor = AppColors.secondaryColor, // Default school gold
   });
 
   @override
@@ -35,18 +36,18 @@ class GlassmorphicCard extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.white.withValues(alpha: 0.18),
-                Colors.white.withValues(alpha: 0.06),
+                AppColors.white.withValues(alpha: 0.18),
+                AppColors.white.withValues(alpha: 0.06),
               ],
             ),
             borderRadius: BorderRadius.circular(borderRadius),
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.25),
+              color: AppColors.white.withValues(alpha: 0.25),
               width: 1.2,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
+                color: AppColors.black.withValues(alpha: 0.15),
                 blurRadius: 24,
                 offset: const Offset(0, 10),
               ),
@@ -79,7 +80,7 @@ class GlassmorphicCard extends StatelessWidget {
                 child: Text(
                   title!.toUpperCase(),
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
@@ -94,7 +95,7 @@ class GlassmorphicCard extends StatelessWidget {
           Text(
             content!,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.95),
+              color: AppColors.white.withValues(alpha: 0.95),
               fontSize: 15,
               height: 1.7,
               fontWeight: FontWeight.w400,

@@ -37,7 +37,7 @@ class TeacherAddClassResultComponent extends StatelessWidget {
                       const Text(
                         'Select Section',
                         style: TextStyle(
-                          color: AppColors.primaryDarkColor,
+                          color: AppColors.primaryDarkBlue,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -61,7 +61,7 @@ class TeacherAddClassResultComponent extends StatelessWidget {
                       const Text(
                         'Select Subject',
                         style: TextStyle(
-                          color: AppColors.primaryDarkColor,
+                          color: AppColors.primaryDarkBlue,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

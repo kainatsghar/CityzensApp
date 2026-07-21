@@ -170,7 +170,7 @@ class _MarkUnverifiedComponentState extends State<MarkUnverifiedComponent> {
         Text(
           title,
           style: const TextStyle(
-            color: AppColors.primaryDarkColor,
+            color: AppColors.primaryDarkBlue,
             fontWeight: FontWeight.w700,
             fontSize: 14,
           ),

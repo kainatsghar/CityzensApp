@@ -17,10 +17,10 @@ class StudentProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white10 = Color(0x1AFFFFFF);
-    const white15 = Color(0x26FFFFFF);
-    const white80 = Color(0xCCFFFFFF);
-    const whiteE6 = Color(0xE6FFFFFF);
+    const white10 = AppColors.white10;
+    const white15 = AppColors.white15;
+    const white80 = AppColors.white80;
+    const whiteE6 = AppColors.white90;
 
     return Consumer2<StudentDashboardProvider, LocalDataProvider>(
       builder: (context, provider, localData, _) {
@@ -48,7 +48,7 @@ class StudentProfileCard extends StatelessWidget {
               gradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [AppColors.primaryBlue, Color(0xED002D62)],
+                colors: [AppColors.primaryBlue, AppColors.navyOverlay],
               ),
               boxShadow: [
                 BoxShadow(
@@ -162,7 +162,7 @@ class StudentProfileCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w900,
-                color: AppColors.goldenYellow,
+                color: AppColors.secondaryColor,
                 letterSpacing: 1.5,
               ),
             ),
@@ -170,7 +170,7 @@ class StudentProfileCard extends StatelessWidget {
               '${children.length} CHILDREN',
               style: const TextStyle(
                 fontSize: 10,
-                color: Color(0x99FFFFFF),
+                color: AppColors.white60,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -202,13 +202,13 @@ class StudentProfileCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? Colors.white.withValues(alpha: 0.15)
-                      : Colors.white.withValues(alpha: 0.03),
+                      ? AppColors.white.withValues(alpha: 0.15)
+                      : AppColors.white.withValues(alpha: 0.03),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: isSelected
-                        ? AppColors.goldenYellow
-                        : Colors.white.withValues(alpha: 0.1),
+                        ? AppColors.secondaryColor
+                        : AppColors.white.withValues(alpha: 0.1),
                     width: 1.5,
                   ),
                 ),
@@ -220,7 +220,7 @@ class StudentProfileCard extends StatelessWidget {
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: isSelected
-                              ? AppColors.goldenYellow
+                              ? AppColors.secondaryColor
                               : Colors.transparent,
                           width: 1,
                         ),
@@ -243,8 +243,8 @@ class StudentProfileCard extends StatelessWidget {
                             fontSize: 11,
                             fontWeight: FontWeight.w900,
                             color: isSelected
-                                ? Colors.white
-                                : Colors.white.withValues(alpha: 0.9),
+                                ? AppColors.white
+                                : AppColors.white.withValues(alpha: 0.9),
                             letterSpacing: 0.3,
                           ),
                         ),
@@ -255,8 +255,8 @@ class StudentProfileCard extends StatelessWidget {
                             fontSize: 8,
                             fontWeight: FontWeight.w800,
                             color: isSelected
-                                ? AppColors.goldenYellow
-                                : Colors.white.withValues(alpha: 0.5),
+                                ? AppColors.secondaryColor
+                                : AppColors.white.withValues(alpha: 0.5),
                             letterSpacing: 0.2,
                           ),
                         ),
@@ -276,7 +276,7 @@ class StudentProfileCard extends StatelessWidget {
     required VoidCallback onTap,
     required double borderRadius,
     required Widget child,
-    Color backgroundColor = const Color(0x0DFFFFFF),
+    Color backgroundColor = AppColors.white05,
   }) {
     return Material(
       color: Colors.transparent,
@@ -288,7 +288,7 @@ class StudentProfileCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(borderRadius),
-            border: Border.all(color: const Color(0x0DFFFFFF)),
+            border: Border.all(color: AppColors.white05),
           ),
           child: child,
         ),
@@ -304,7 +304,7 @@ class StudentProfileCard extends StatelessWidget {
         border: Border.all(color: borderColor, width: 2),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x33000000),
+            color: AppColors.black20,
             blurRadius: 10,
             offset: Offset(0, 4),
           ),
@@ -336,7 +336,7 @@ class StudentProfileCard extends StatelessWidget {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w900,
-            color: Colors.white,
+            color: AppColors.white,
             letterSpacing: 0.5,
           ),
         ),
@@ -347,14 +347,14 @@ class StudentProfileCard extends StatelessWidget {
             Icon(
               Icons.badge_rounded,
               size: 13,
-              color: Colors.white.withValues(alpha: 0.7),
+              color: AppColors.white.withValues(alpha: 0.7),
             ),
             const SizedBox(width: 4),
             Text(
               'ROLL NO: $studentId',
               style: TextStyle(
                 fontSize: 11,
-                color: Colors.white.withValues(alpha: 0.8),
+                color: AppColors.white.withValues(alpha: 0.8),
                 fontWeight: FontWeight.w800,
                 letterSpacing: 0.5,
               ),
@@ -368,7 +368,7 @@ class StudentProfileCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: AppColors.goldenYellow,
+                  color: AppColors.secondaryColor,
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: FittedBox(
@@ -398,14 +398,14 @@ class StudentProfileCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 9,
                       fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
                   ),
                   SizedBox(width: 4),
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 8,
-                    color: Colors.white,
+                    color: AppColors.white,
                   ),
                 ],
               ),
@@ -447,10 +447,10 @@ class StudentProfileCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                    color: AppColors.white,
                   ),
                 ),
-                progressColor: AppColors.goldenYellow,
+                progressColor: AppColors.secondaryColor,
                 backgroundColor: progressBg,
                 circularStrokeCap: CircularStrokeCap.round,
                 animation: false,
@@ -466,7 +466,7 @@ class StudentProfileCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.goldenYellow,
+                      color: AppColors.secondaryColor,
                       letterSpacing: 1.2,
                     ),
                   ),
@@ -476,7 +476,7 @@ class StudentProfileCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
                   ),
                   if (presentDays != null && absentDays != null) ...[
@@ -486,7 +486,7 @@ class StudentProfileCard extends StatelessWidget {
                         _buildStatPill(
                           'PRESENT',
                           presentDays,
-                          Colors.greenAccent,
+                          AppColors.greenAccent,
                         ),
                         const SizedBox(width: 8),
                         _buildStatPill(
@@ -507,21 +507,21 @@ class StudentProfileCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.1),
+            color: AppColors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+            border: Border.all(color: AppColors.white.withValues(alpha: 0.1)),
           ),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.calendar_month_rounded, size: 14, color: Colors.white),
+              Icon(Icons.calendar_month_rounded, size: 14, color: AppColors.white),
               SizedBox(width: 8),
               Text(
                 'MONTHLY ATTENDANCE',
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w900,
-                  color: Colors.white,
+                  color: AppColors.white,
                   letterSpacing: 0.5,
                 ),
               ),

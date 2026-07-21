@@ -39,7 +39,7 @@ class _TeacherTimeTableScreenState extends State<TeacherTimeTableScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'TIMETABLE'),
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: AppColors.grey50,
       body: FutureBuilder(
         future: timetableRecords,
         builder: (context, snapshot) {
@@ -72,8 +72,8 @@ class _TeacherTimeTableScreenState extends State<TeacherTimeTableScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.grey.shade200,
-                  Colors.grey.shade100,
+                  AppColors.grey200,
+                  AppColors.grey100,
                 ],
               ),
               borderRadius: BorderRadius.circular(20),
@@ -85,9 +85,9 @@ class _TeacherTimeTableScreenState extends State<TeacherTimeTableScreen> {
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.grey.shade100),
+              border: Border.all(color: AppColors.grey100),
             ),
             child: Column(
               children: [
@@ -98,7 +98,7 @@ class _TeacherTimeTableScreenState extends State<TeacherTimeTableScreen> {
                       width: 56,
                       height: 24,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
+                        color: AppColors.grey100,
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),
@@ -125,7 +125,7 @@ class _TeacherTimeTableScreenState extends State<TeacherTimeTableScreen> {
                           width: 56,
                           height: 36,
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
+                            color: AppColors.grey100,
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
@@ -137,10 +137,10 @@ class _TeacherTimeTableScreenState extends State<TeacherTimeTableScreen> {
                               height: 36,
                               margin: const EdgeInsets.only(left: 4),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade50,
+                                color: AppColors.grey50,
                                 borderRadius: BorderRadius.circular(8),
                                 border:
-                                    Border.all(color: Colors.grey.shade100),
+                                    Border.all(color: AppColors.grey100),
                               ),
                             ),
                           ),

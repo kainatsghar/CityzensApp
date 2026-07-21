@@ -26,7 +26,7 @@ class CustomBottomSheet extends StatelessWidget {
     return Container(
       height: height,
       decoration: const BoxDecoration(
-        color: AppColors.whiteColor,
+        color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
       ),
       child: Column(
@@ -51,7 +51,7 @@ class CustomBottomSheet extends StatelessWidget {
                     height: 5,
                     width: 50,
                     decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
@@ -67,7 +67,7 @@ class CustomBottomSheet extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 16,
-                          color: AppColors.whiteColor,
+                          color: AppColors.white,
                         ),
                       ),
                     ],

@@ -89,7 +89,7 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
         Text(
           'Result will be available in',
           style: TextStyle(
-            color: AppColors.whiteColor,
+            color: AppColors.white,
             fontWeight: FontWeight.w600,
             fontSize: MediaQueryUtil.getResponsiveFontSize(
               14,
@@ -122,7 +122,7 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
           const SizedBox(height: 6),
           Text(
             label,
-            style: const TextStyle(fontSize: 11, color: AppColors.whiteColor),
+            style: const TextStyle(fontSize: 11, color: AppColors.white),
           ),
         ],
       ),
@@ -149,7 +149,7 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
               Text(
                 'Your result is now available',
                 style: TextStyle(
-                  color: AppColors.whiteColor,
+                  color: AppColors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: MediaQueryUtil.getResponsiveFontSize(
                     14,
@@ -184,7 +184,7 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
                   onPressed: widget.onViewResult,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.secondaryColor,
-                    foregroundColor: Colors.black,
+                    foregroundColor: AppColors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -195,7 +195,7 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
                       fontSize: MediaQueryUtil.getResponsiveFontSize(
                         16,
                       ).clamp(14.0, 18.0),
-                      color: AppColors.blackColor,
+                      color: AppColors.black,
                     ),
                   ),
                 ),
@@ -214,7 +214,7 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
                     onPressed: loading ? null : widget.onViewResult,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.secondaryColor,
-                      foregroundColor: Colors.black,
+                      foregroundColor: AppColors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -238,7 +238,7 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
                               fontSize: MediaQueryUtil.getResponsiveFontSize(
                                 16,
                               ).clamp(14.0, 18.0),
-                              color: AppColors.blackColor,
+                              color: AppColors.black,
                             ),
                           ),
                   ),
@@ -283,12 +283,12 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: Colors.greenAccent,
+        color: AppColors.greenAccent,
         borderRadius: BorderRadius.circular(10),
       ),
       child: const Text(
         'NEW',
-        style: TextStyle(fontSize: 10, color: Colors.black),
+        style: TextStyle(fontSize: 10, color: AppColors.black),
       ),
     );
   }
@@ -306,16 +306,16 @@ class _ResultDashboardCardState extends State<ResultDashboardCard> {
       margin: const EdgeInsets.symmetric(horizontal: 4),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 31),
+            color: AppColors.black.withValues(alpha: 31),
             offset: const Offset(3, 3),
             blurRadius: 6,
           ),
           BoxShadow(
-            color: Colors.white.withValues(alpha: 153),
+            color: AppColors.white.withValues(alpha: 153),
             offset: const Offset(-2, -2),
             blurRadius: 4,
           ),

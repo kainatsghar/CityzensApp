@@ -135,11 +135,11 @@ class AllPDFResultsListComponent extends StatelessWidget {
                               }
                             },
                             selectedColor: AppColors.primaryBlue,
-                            backgroundColor: Colors.white,
-                            checkmarkColor: Colors.white,
+                            backgroundColor: AppColors.white,
+                            checkmarkColor: AppColors.white,
                             labelStyle: TextStyle(
                               color: isSelected
-                                  ? Colors.white
+                                  ? AppColors.white
                                   : AppColors.primaryBlue,
                               fontWeight: FontWeight.bold,
                             ),
@@ -218,7 +218,7 @@ class AllPDFResultsListComponent extends StatelessWidget {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 16.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
@@ -409,7 +409,7 @@ class AllPDFResultsListComponent extends StatelessWidget {
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:
                                               AppColors.primaryBlue,
-                                          foregroundColor: Colors.white,
+                                          foregroundColor: AppColors.white,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
                                               12,

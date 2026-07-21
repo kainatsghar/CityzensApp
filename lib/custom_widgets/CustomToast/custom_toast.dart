@@ -6,6 +6,6 @@ dynamic showToast(String message, {Color? color}) => Fluttertoast.showToast(
   msg: message,
   toastLength: Toast.LENGTH_LONG,
   gravity: ToastGravity.BOTTOM,
-  backgroundColor: color ?? AppColors.successGreenColor,
-  textColor: AppColors.whiteColor,
+  backgroundColor: color ?? AppColors.successGreen,
+  textColor: AppColors.white,
 );

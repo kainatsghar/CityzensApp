@@ -165,7 +165,7 @@ class DiaryProvider with ChangeNotifier {
           );
           showSnackBar(
             'Diary Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);
@@ -204,7 +204,7 @@ class DiaryProvider with ChangeNotifier {
           );
           showSnackBar(
             'Diary Updated Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);
@@ -229,7 +229,7 @@ class DiaryProvider with ChangeNotifier {
         await loadTeacherDiary();
         showSnackBar(
           'Diary Deleted Successfully',
-          color: AppColors.successGreenColor,
+          color: AppColors.successGreen,
         );
       } else {
         showSnackBar(response.message);

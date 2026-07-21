@@ -70,7 +70,7 @@ class _WithdrawalRequestComponentState
                                             style: TextStyle(
                                               fontSize: 14,
                                               color:
-                                                  AppColors.primaryTitleColor,
+                                                  AppColors.primaryBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -89,7 +89,7 @@ class _WithdrawalRequestComponentState
                                             style: TextStyle(
                                               fontSize: 14,
                                               color:
-                                                  AppColors.primaryTitleColor,
+                                                  AppColors.primaryBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -118,12 +118,7 @@ class _WithdrawalRequestComponentState
                                                 borderRadius:
                                                     BorderRadius.circular(0),
                                               ),
-                                              color: const Color.fromARGB(
-                                                255,
-                                                235,
-                                                234,
-                                                234,
-                                              ),
+                                              color: AppColors.grey,
                                               child: Center(
                                                 child: Text(
                                                   value.truncateText(
@@ -133,12 +128,7 @@ class _WithdrawalRequestComponentState
                                                         '',
                                                   ),
                                                   style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      83,
-                                                      83,
-                                                      83,
-                                                    ),
+                                                    color: AppColors.charcoal,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 14,
                                                   ),
@@ -164,12 +154,7 @@ class _WithdrawalRequestComponentState
                                                 borderRadius:
                                                     BorderRadius.circular(0),
                                               ),
-                                              color: const Color.fromARGB(
-                                                255,
-                                                235,
-                                                234,
-                                                234,
-                                              ),
+                                              color: AppColors.grey,
                                               child: Center(
                                                 child: Text(
                                                   responseData
@@ -177,12 +162,7 @@ class _WithdrawalRequestComponentState
                                                           .className ??
                                                       '',
                                                   style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      83,
-                                                      83,
-                                                      83,
-                                                    ),
+                                                    color: AppColors.charcoal,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 14,
                                                   ),
@@ -212,7 +192,7 @@ class _WithdrawalRequestComponentState
                                             style: TextStyle(
                                               fontSize: 14,
                                               color:
-                                                  AppColors.primaryTitleColor,
+                                                  AppColors.primaryBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -231,7 +211,7 @@ class _WithdrawalRequestComponentState
                                             style: TextStyle(
                                               fontSize: 14,
                                               color:
-                                                  AppColors.primaryTitleColor,
+                                                  AppColors.primaryBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -260,12 +240,7 @@ class _WithdrawalRequestComponentState
                                                 borderRadius:
                                                     BorderRadius.circular(0),
                                               ),
-                                              color: const Color.fromARGB(
-                                                255,
-                                                235,
-                                                234,
-                                                234,
-                                              ),
+                                              color: AppColors.grey,
                                               child: Center(
                                                 child: Text(
                                                   responseData
@@ -273,12 +248,7 @@ class _WithdrawalRequestComponentState
                                                           .sectionName ??
                                                       '',
                                                   style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      83,
-                                                      83,
-                                                      83,
-                                                    ),
+                                                    color: AppColors.charcoal,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 14,
                                                   ),
@@ -304,12 +274,7 @@ class _WithdrawalRequestComponentState
                                                 borderRadius:
                                                     BorderRadius.circular(0),
                                               ),
-                                              color: const Color.fromARGB(
-                                                255,
-                                                235,
-                                                234,
-                                                234,
-                                              ),
+                                              color: AppColors.grey,
                                               child: Center(
                                                 child: Text(
                                                   responseData
@@ -317,12 +282,7 @@ class _WithdrawalRequestComponentState
                                                       .studentId
                                                       .toString(),
                                                   style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      83,
-                                                      83,
-                                                      83,
-                                                    ),
+                                                    color: AppColors.charcoal,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 14,
                                                   ),
@@ -352,7 +312,7 @@ class _WithdrawalRequestComponentState
                                             style: TextStyle(
                                               fontSize: 14,
                                               color:
-                                                  AppColors.primaryTitleColor,
+                                                  AppColors.primaryBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -380,12 +340,7 @@ class _WithdrawalRequestComponentState
                                                 borderRadius:
                                                     BorderRadius.circular(0),
                                               ),
-                                              color: const Color.fromARGB(
-                                                255,
-                                                235,
-                                                234,
-                                                234,
-                                              ),
+                                              color: AppColors.grey,
                                               child: Center(
                                                 child: Text(
                                                   responseData
@@ -393,12 +348,7 @@ class _WithdrawalRequestComponentState
                                                           .phone ??
                                                       '',
                                                   style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      83,
-                                                      83,
-                                                      83,
-                                                    ),
+                                                    color: AppColors.charcoal,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 14,
                                                   ),
@@ -448,7 +398,7 @@ class _WithdrawalRequestComponentState
                                         style: TextStyle(
                                           fontSize: 14,
                                           //fontWeight: FontWeight.bold,
-                                          color: AppColors.primaryDarkColor,
+                                          color: AppColors.primaryDarkBlue,
                                         ),
                                         textAlign: TextAlign
                                             .start, // Added textAlign property
@@ -513,7 +463,7 @@ class _WithdrawalRequestComponentState
                                               },
                                               child: Card(
                                                 color: value.isSelected
-                                                    ? AppColors.primaryDarkColor
+                                                    ? AppColors.primaryDarkBlue
                                                     : AppColors.secondaryColor,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -527,9 +477,8 @@ class _WithdrawalRequestComponentState
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       color: value.isSelected
-                                                          ? AppColors.whiteColor
-                                                          : AppColors
-                                                                .blackColor,
+                                                          ? AppColors.white
+                                                          : AppColors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -560,7 +509,7 @@ class _WithdrawalRequestComponentState
                                   8.0,
                                 ), // Rounded corners
                                 border: Border.all(
-                                  color: Colors.orange, // Orange border
+                                  color: AppColors.orange, // Orange border
                                   width: 2.0, // Border width
                                 ),
                               ),
@@ -656,7 +605,7 @@ class _WithdrawalRequestComponentState
                                                 color:
                                                     value.isCommunicating ==
                                                         options
-                                                    ? AppColors.primaryDarkColor
+                                                    ? AppColors.primaryDarkBlue
                                                     : AppColors.secondaryColor,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -672,9 +621,8 @@ class _WithdrawalRequestComponentState
                                                       color:
                                                           value.isCommunicating ==
                                                               options
-                                                          ? AppColors.whiteColor
-                                                          : AppColors
-                                                                .blackColor,
+                                                          ? AppColors.white
+                                                          : AppColors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -757,7 +705,7 @@ class _WithdrawalRequestComponentState
                                               child: Card(
                                                 color:
                                                     value.isContacted == options
-                                                    ? AppColors.primaryDarkColor
+                                                    ? AppColors.primaryDarkBlue
                                                     : AppColors.secondaryColor,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -773,9 +721,8 @@ class _WithdrawalRequestComponentState
                                                       color:
                                                           value.isContacted ==
                                                               options
-                                                          ? AppColors.whiteColor
-                                                          : AppColors
-                                                                .blackColor,
+                                                          ? AppColors.white
+                                                          : AppColors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -858,7 +805,7 @@ class _WithdrawalRequestComponentState
                                               child: Card(
                                                 color:
                                                     value.isSatisfied == options
-                                                    ? AppColors.primaryDarkColor
+                                                    ? AppColors.primaryDarkBlue
                                                     : AppColors.secondaryColor,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -874,9 +821,8 @@ class _WithdrawalRequestComponentState
                                                       color:
                                                           value.isSatisfied ==
                                                               options
-                                                          ? AppColors.whiteColor
-                                                          : AppColors
-                                                                .blackColor,
+                                                          ? AppColors.white
+                                                          : AppColors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -957,7 +903,7 @@ class _WithdrawalRequestComponentState
                                               child: Card(
                                                 color:
                                                     value.isWithdraw == options
-                                                    ? AppColors.primaryDarkColor
+                                                    ? AppColors.primaryDarkBlue
                                                     : AppColors.secondaryColor,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -973,9 +919,8 @@ class _WithdrawalRequestComponentState
                                                       color:
                                                           value.isWithdraw ==
                                                               options
-                                                          ? AppColors.whiteColor
-                                                          : AppColors
-                                                                .blackColor,
+                                                          ? AppColors.white
+                                                          : AppColors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -1004,7 +949,7 @@ class _WithdrawalRequestComponentState
                                             style: TextStyle(
                                               fontSize: 14,
                                               color:
-                                                  AppColors.primaryTitleColor,
+                                                  AppColors.primaryBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                             textAlign: TextAlign.start,
@@ -1018,7 +963,7 @@ class _WithdrawalRequestComponentState
                                               borderRadius:
                                                   BorderRadius.circular(0),
                                             ),
-                                            color: AppColors.greyColor,
+                                            color: AppColors.grey,
                                             child: Center(
                                               child: SizedBox(
                                                 height: size.height * 0.03,
@@ -1032,8 +977,7 @@ class _WithdrawalRequestComponentState
                                                           ),
                                                       borderSide:
                                                           const BorderSide(
-                                                            color: AppColors
-                                                                .greyColor,
+                                                            color: AppColors.grey,
                                                           ),
                                                     ),
                                                     focusedBorder:
@@ -1044,8 +988,7 @@ class _WithdrawalRequestComponentState
                                                               ),
                                                           borderSide:
                                                               const BorderSide(
-                                                                color: AppColors
-                                                                    .greyColor,
+                                                                color: AppColors.grey,
                                                               ),
                                                         ),
                                                     enabledBorder:
@@ -1056,8 +999,7 @@ class _WithdrawalRequestComponentState
                                                               ),
                                                           borderSide:
                                                               const BorderSide(
-                                                                color: AppColors
-                                                                    .greyColor,
+                                                                color: AppColors.grey,
                                                               ),
                                                         ),
                                                   ),
@@ -1092,8 +1034,7 @@ class _WithdrawalRequestComponentState
                                                 'ADDRESS TO WHICH CHEQUE MAY BE SENT:',
                                                 style: TextStyle(
                                                   fontSize: 14,
-                                                  color: AppColors
-                                                      .primaryTitleColor,
+                                                  color: AppColors.primaryBlue,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -1108,7 +1049,7 @@ class _WithdrawalRequestComponentState
                                               borderRadius:
                                                   BorderRadius.circular(0),
                                             ),
-                                            color: AppColors.greyColor,
+                                            color: AppColors.grey,
                                             child: Center(
                                               child: SizedBox(
                                                 height: size.height * 0.03,
@@ -1122,8 +1063,7 @@ class _WithdrawalRequestComponentState
                                                           ),
                                                       borderSide:
                                                           const BorderSide(
-                                                            color: AppColors
-                                                                .greyColor,
+                                                            color: AppColors.grey,
                                                           ),
                                                     ),
                                                     focusedBorder:
@@ -1134,8 +1074,7 @@ class _WithdrawalRequestComponentState
                                                               ),
                                                           borderSide:
                                                               const BorderSide(
-                                                                color: AppColors
-                                                                    .greyColor,
+                                                                color: AppColors.grey,
                                                               ),
                                                         ),
                                                     enabledBorder:
@@ -1146,8 +1085,7 @@ class _WithdrawalRequestComponentState
                                                               ),
                                                           borderSide:
                                                               const BorderSide(
-                                                                color: AppColors
-                                                                    .greyColor,
+                                                                color: AppColors.grey,
                                                               ),
                                                         ),
                                                   ),
@@ -1192,7 +1130,7 @@ class _WithdrawalRequestComponentState
                                       'TOWN/CITY:',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: AppColors.primaryTitleColor,
+                                        color: AppColors.primaryBlue,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       textAlign: TextAlign.start,
@@ -1204,7 +1142,7 @@ class _WithdrawalRequestComponentState
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(0),
                                       ),
-                                      color: AppColors.greyColor,
+                                      color: AppColors.grey,
                                       child: Center(
                                         child: SizedBox(
                                           height: size.height * 0.03,
@@ -1215,21 +1153,21 @@ class _WithdrawalRequestComponentState
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                                 borderSide: const BorderSide(
-                                                  color: AppColors.greyColor,
+                                                  color: AppColors.grey,
                                                 ),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                                 borderSide: const BorderSide(
-                                                  color: AppColors.greyColor,
+                                                  color: AppColors.grey,
                                                 ),
                                               ),
                                               enabledBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(0.0),
                                                 borderSide: const BorderSide(
-                                                  color: AppColors.greyColor,
+                                                  color: AppColors.grey,
                                                 ),
                                               ),
                                             ),
@@ -1261,7 +1199,7 @@ class _WithdrawalRequestComponentState
                                           'PLEASE SPECIFY:',
                                           style: TextStyle(
                                             fontSize: 14,
-                                            color: AppColors.primaryTitleColor,
+                                            color: AppColors.primaryBlue,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -1275,7 +1213,7 @@ class _WithdrawalRequestComponentState
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(0),
                                       ),
-                                      color: AppColors.greyColor,
+                                      color: AppColors.grey,
                                       child: Center(
                                         child: SizedBox(
                                           height: size.height * 0.03,
@@ -1286,21 +1224,21 @@ class _WithdrawalRequestComponentState
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                                 borderSide: const BorderSide(
-                                                  color: AppColors.greyColor,
+                                                  color: AppColors.grey,
                                                 ),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                                 borderSide: const BorderSide(
-                                                  color: AppColors.greyColor,
+                                                  color: AppColors.grey,
                                                 ),
                                               ),
                                               enabledBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(0.0),
                                                 borderSide: const BorderSide(
-                                                  color: AppColors.greyColor,
+                                                  color: AppColors.grey,
                                                 ),
                                               ),
                                             ),

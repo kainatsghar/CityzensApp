@@ -6,14 +6,14 @@ class AppThemes {
 
   /// Light Theme Settings
   static final lightTheme = ThemeData(
-    scaffoldBackgroundColor: AppColors.whiteColor,
+    scaffoldBackgroundColor: AppColors.white,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     brightness: Brightness.light,
     primaryColor: AppColors.primaryColor,
     // fontFamily: AppConstants.textFontFamily,
     drawerTheme: const DrawerThemeData(backgroundColor: AppColors.primaryColor),
     appBarTheme: const AppBarTheme(
-      iconTheme: IconThemeData(color: AppColors.primaryTitleColor),
+      iconTheme: IconThemeData(color: AppColors.primaryBlue),
     ),
     colorScheme: const ColorScheme.light(
       primary: AppColors.primaryColor,

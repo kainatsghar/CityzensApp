@@ -98,7 +98,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(
+                                      color: AppColors.black.withValues(
                                         alpha: 0.05,
                                       ),
                                       blurRadius: 20,
@@ -142,7 +142,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
                                       const Divider(
                                         height: 32,
                                         thickness: 0.5,
-                                        color: AppColors.primaryTitleColor,
+                                        color: AppColors.primaryBlue,
                                       ),
                                       _buildSectionTitle('NEW PASSWORD'),
                                       const SizedBox(height: 16),
@@ -242,7 +242,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppColors.primaryDarkBlue, Color(0xED002D62)],
+            colors: [AppColors.primaryDarkBlue, AppColors.navyOverlay],
           ),
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
@@ -258,12 +258,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
+                color: AppColors.white.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.admin_panel_settings_rounded,
-                color: AppColors.goldenYellow,
+                color: AppColors.secondaryColor,
                 size: 32,
               ),
             ),
@@ -277,7 +277,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w900,
-                      color: AppColors.goldenYellow,
+                      color: AppColors.secondaryColor,
                       letterSpacing: 1.5,
                     ),
                   ),
@@ -287,7 +287,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -295,7 +295,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
                     'CNIC: ${localData.userData?.userName ?? 'N/A'}',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.white.withValues(alpha: 0.7),
+                      color: AppColors.white.withValues(alpha: 0.7),
                       fontWeight: FontWeight.w600,
                     ),
                   ),

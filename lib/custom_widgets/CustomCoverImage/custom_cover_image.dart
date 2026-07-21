@@ -45,7 +45,7 @@ class CustomCoverImage extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 23.0,
                   letterSpacing: 1.5,
-                  color: AppColors.whiteColor,
+                  color: AppColors.white,
                   fontWeight: FontWeight.bold,
                 ),
                 maxLines: 1,

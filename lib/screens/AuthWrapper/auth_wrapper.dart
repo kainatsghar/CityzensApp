@@ -40,9 +40,9 @@ class _AuthWrapperState extends State<AuthWrapper> {
             end: Alignment.bottomCenter,
             stops: [0.0, 0.4, 1.0],
             colors: [
-              AppColors.whiteColor,
-              Color(0xFFF8FAFC),
-              Color(0xFFF1F5F9),
+              AppColors.white,
+              AppColors.slate50,
+              AppColors.slate100,
             ],
           ),
         ),

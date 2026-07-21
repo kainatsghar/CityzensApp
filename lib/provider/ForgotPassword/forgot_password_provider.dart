@@ -154,7 +154,7 @@ class ForgotPasswordProvider with ChangeNotifier {
           );
           showSnackBar(
             'Password for ${userNameController?.text} has been updated successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
           disposeData();
         } else {

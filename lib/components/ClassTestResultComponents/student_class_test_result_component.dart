@@ -37,7 +37,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                             decoration: const BoxDecoration(
                               border: Border(
                                 right: BorderSide(
-                                  color: Colors.white,
+                                  color: AppColors.white,
                                   width: 0,
                                 ),
                               ),
@@ -46,7 +46,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                               'SUBJECT',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.primaryDarkColor,
+                                color: AppColors.primaryDarkBlue,
                                 fontSize: 16,
                                 letterSpacing: 2,
                               ),
@@ -56,7 +56,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                             width: size.width * 0.21,
                             decoration: const BoxDecoration(
                               border: Border(
-                                left: BorderSide(color: Colors.grey, width: 1),
+                                left: BorderSide(color: AppColors.grey500, width: 1),
                               ),
                             ),
                             child: const Padding(
@@ -65,7 +65,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                                 'TEST 1',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryDarkColor,
+                                  color: AppColors.primaryDarkBlue,
                                   fontSize: 16,
                                   letterSpacing: 2,
                                 ),
@@ -76,7 +76,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                             width: size.width * 0.21,
                             decoration: const BoxDecoration(
                               border: Border(
-                                left: BorderSide(color: Colors.grey, width: 1),
+                                left: BorderSide(color: AppColors.grey500, width: 1),
                               ),
                             ),
                             child: const Padding(
@@ -85,7 +85,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                                 'TEST 2',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryDarkColor,
+                                  color: AppColors.primaryDarkBlue,
                                   fontSize: 16,
                                   letterSpacing: 2,
                                 ),
@@ -96,7 +96,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                             width: size.width * 0.21,
                             decoration: const BoxDecoration(
                               border: Border(
-                                left: BorderSide(color: Colors.grey, width: 1),
+                                left: BorderSide(color: AppColors.grey500, width: 1),
                               ),
                             ),
                             child: const Padding(
@@ -105,7 +105,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                                 'TEST 3',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryDarkColor,
+                                  color: AppColors.primaryDarkBlue,
                                   fontSize: 16,
                                   letterSpacing: 2,
                                 ),
@@ -127,7 +127,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   right: BorderSide(
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                     width: 0,
                                   ),
                                 ),
@@ -136,7 +136,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                                 e.subjectName ?? '',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.blackColor,
+                                  color: AppColors.black,
                                   fontSize: 16,
                                   letterSpacing: 1,
                                 ),
@@ -151,7 +151,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   left: BorderSide(
-                                    color: Colors.grey,
+                                    color: AppColors.grey500,
                                     width: 1,
                                   ),
                                 ),
@@ -212,7 +212,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   left: BorderSide(
-                                    color: Colors.grey,
+                                    color: AppColors.grey500,
                                     width: 1,
                                   ),
                                 ),
@@ -273,7 +273,7 @@ class StudentClassTestResultComponent extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   left: BorderSide(
-                                    color: Colors.grey,
+                                    color: AppColors.grey500,
                                     width: 1,
                                   ),
                                 ),

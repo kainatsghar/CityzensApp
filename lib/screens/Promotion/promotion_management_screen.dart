@@ -190,7 +190,7 @@ class _PromotionManagementScreenState extends State<PromotionManagementScreen> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primaryBlackText.withValues(
+                        color: AppColors.black.withValues(
                           alpha: 0.05,
                         ),
                         blurRadius: 10,
@@ -322,11 +322,11 @@ class _PromotionManagementScreenState extends State<PromotionManagementScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showPromotionDialog(),
         backgroundColor: AppColors.primaryBlue,
-        icon: const Icon(Icons.add, color: AppColors.whiteColor),
+        icon: const Icon(Icons.add, color: AppColors.white),
         label: const Text(
           'Create',
           style: TextStyle(
-            color: AppColors.whiteColor,
+            color: AppColors.white,
             fontWeight: FontWeight.bold,
           ),
         ),

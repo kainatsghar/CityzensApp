@@ -176,7 +176,7 @@ class ComplaintQueryProvider with ChangeNotifier {
           );
           showSnackBar(
             'Complaint Query Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
           // AddWithdrawalRequest request = AddWithdrawalRequest();
 
@@ -198,7 +198,7 @@ class ComplaintQueryProvider with ChangeNotifier {
           //   );
           //   showSnackBar(
           //     'Complaint Query Added Successfully',
-          //     color: AppColors.successGreenColor,
+          //     color: AppColors.successGreen,
           //   );
           // } else {
           //   showSnackBar(response.message);

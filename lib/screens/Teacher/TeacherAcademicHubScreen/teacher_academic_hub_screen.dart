@@ -133,7 +133,7 @@ class _TeacherAcademicHubScreenState extends State<TeacherAcademicHubScreen>
                 indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
                 padding: const EdgeInsets.all(4),
-                labelColor: Colors.white,
+                labelColor: AppColors.white,
                 unselectedLabelColor: AppColors.primaryBlue,
                 labelStyle: const TextStyle(
                   fontWeight: FontWeight.w800,
@@ -230,11 +230,11 @@ class _TeacherAcademicHubScreenState extends State<TeacherAcademicHubScreen>
           return FloatingActionButton.extended(
             onPressed: _onFabPressed,
             backgroundColor: _getFabColor(),
-            icon: const Icon(Icons.add, color: Colors.white),
+            icon: const Icon(Icons.add, color: AppColors.white),
             label: Text(
               _getFabLabel(),
               style: const TextStyle(
-                color: Colors.white,
+                color: AppColors.white,
                 fontWeight: FontWeight.w700,
                 fontSize: 13,
               ),
@@ -283,9 +283,9 @@ class _TeacherAcademicHubScreenState extends State<TeacherAcademicHubScreen>
       case 0:
         return AppColors.primaryBlue;
       case 1:
-        return AppColors.goldenColors;
+        return AppColors.warningOrange;
       case 2:
-        return AppColors.lightRedColor;
+        return AppColors.lightRed;
       default:
         return AppColors.primaryBlue;
     }

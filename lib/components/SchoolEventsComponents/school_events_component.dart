@@ -54,7 +54,7 @@ class SchoolEventsComponent extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: 18,
-                                      color: AppColors.primaryDarkColor,
+                                      color: AppColors.primaryDarkBlue,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -63,7 +63,7 @@ class SchoolEventsComponent extends StatelessWidget {
                               Container(
                                 width: size.width * 0.6,
                                 decoration: const BoxDecoration(
-                                  color: AppColors.primaryTitleColor,
+                                  color: AppColors.primaryBlue,
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(10),
                                     bottomRight: Radius.circular(10),
@@ -76,7 +76,7 @@ class SchoolEventsComponent extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: 15,
-                                      color: AppColors.whiteColor,
+                                      color: AppColors.white,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

@@ -50,7 +50,7 @@ class IndividualEducationPlanComponent extends StatelessWidget {
                             validator: HelperFunction.validator,
                             suffixWidget: const ImageIcon(
                               AssetImage('assets/images/dropdown_icon.png'),
-                              color: AppColors.primaryDarkColor,
+                              color: AppColors.primaryDarkBlue,
                             ),
                           ),
                           SizedBox(height: size.height * 0.01),
@@ -62,7 +62,7 @@ class IndividualEducationPlanComponent extends StatelessWidget {
                             validator: HelperFunction.validator,
                             suffixWidget: const ImageIcon(
                               AssetImage('assets/images/dropdown_icon.png'),
-                              color: AppColors.primaryDarkColor,
+                              color: AppColors.primaryDarkBlue,
                             ),
                           ),
                         ],

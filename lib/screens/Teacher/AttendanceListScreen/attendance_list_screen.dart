@@ -9,6 +9,7 @@ import 'package:tcs_app/provider/MarkAttendance/mark_attendance_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 
 import 'dart:async';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class AttendanceListScreen extends StatefulWidget {
   const AttendanceListScreen({super.key});
@@ -43,7 +44,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'MARK ATTENDANCE'),
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: AppColors.grey50,
       body: FutureBuilder(
         future: _studentListService,
         builder: (context, snapshot) {
@@ -60,9 +61,9 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                       vertical: 12,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+                      border: Border.all(color: AppColors.grey500.withValues(alpha: 0.2)),
                     ),
                     child: Row(
                       children: [
@@ -70,7 +71,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                           width: 42,
                           height: 42,
                           decoration: BoxDecoration(
-                            color: Colors.grey.withValues(alpha: 0.2),
+                            color: AppColors.grey500.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
@@ -82,13 +83,13 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                               Container(
                                 height: 12,
                                 width: 120,
-                                color: Colors.grey.withValues(alpha: 0.2),
+                                color: AppColors.grey500.withValues(alpha: 0.2),
                               ),
                               const SizedBox(height: 8),
                               Container(
                                 height: 10,
                                 width: 80,
-                                color: Colors.grey.withValues(alpha: 0.2),
+                                color: AppColors.grey500.withValues(alpha: 0.2),
                               ),
                             ],
                           ),
@@ -102,7 +103,7 @@ class AttendanceListScreenState extends State<AttendanceListScreen> {
                               height: 36,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.grey.withValues(alpha: 0.2),
+                                color: AppColors.grey500.withValues(alpha: 0.2),
                               ),
                             ),
                           ),

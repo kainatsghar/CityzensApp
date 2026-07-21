@@ -162,7 +162,7 @@ class CircularProvider with ChangeNotifier {
           );
           showSnackBar(
             'Circular Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);
@@ -205,7 +205,7 @@ class CircularProvider with ChangeNotifier {
           );
           showSnackBar(
             'Circular Updated Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);
@@ -231,7 +231,7 @@ class CircularProvider with ChangeNotifier {
         await loadTeacherCircular();
         showSnackBar(
           'Circular Deleted Successfully',
-          color: AppColors.successGreenColor,
+          color: AppColors.successGreen,
         );
       } else {
         showSnackBar(response.message);

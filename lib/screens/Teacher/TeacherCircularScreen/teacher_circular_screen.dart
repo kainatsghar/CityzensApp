@@ -59,7 +59,7 @@ class _TeacherCircularScreenState extends State<TeacherCircularScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => AppNavigation.navigateTo(AppNavRoutes.addCircularRoute),
         backgroundColor: AppColors.primaryColor,
-        child: const Icon(Icons.add, color: AppColors.whiteColor),
+        child: const Icon(Icons.add, color: AppColors.white),
       ),
     );
   }

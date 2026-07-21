@@ -129,7 +129,7 @@ class CustomUserImage extends StatelessWidget {
                     color: AppColors.primaryColor,
                     child: Icon(
                       Icons.camera_alt,
-                      color: AppColors.whiteColor,
+                      color: AppColors.white,
                       size: (imageSize ?? size.width * 0.32) / 7.5,
                     ),
                   ),
@@ -144,7 +144,7 @@ class CustomUserImage extends StatelessWidget {
 
   Widget _buildProfileAvatar(bool solvedIsMale) {
     return Card(
-      color: AppColors.purpleColor,
+      color: AppColors.purple,
       shape: const CircleBorder(),
       child: Padding(
         padding: const EdgeInsets.only(top: 8, bottom: 2),

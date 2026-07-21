@@ -23,7 +23,7 @@ class ImagePickerBottomSheet extends StatelessWidget {
                 contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
                 title: const Text(
                   'Camera',
-                  style: TextStyle(color: AppColors.blackColor, fontSize: 16),
+                  style: TextStyle(color: AppColors.black, fontSize: 16),
                 ),
                 trailing: const Icon(Icons.camera),
               ),
@@ -34,7 +34,7 @@ class ImagePickerBottomSheet extends StatelessWidget {
                 contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
                 title: const Text(
                   'Gallery',
-                  style: TextStyle(color: AppColors.blackColor, fontSize: 16),
+                  style: TextStyle(color: AppColors.black, fontSize: 16),
                 ),
                 trailing: const Icon(Icons.image),
               ),

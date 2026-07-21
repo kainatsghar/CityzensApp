@@ -39,12 +39,12 @@ class CustomTabBar extends StatelessWidget {
           centerTitle: true,
           elevation: 0,
           surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.whiteColor,
+          backgroundColor: AppColors.white,
           title: Text(
             appBarTitle ?? '',
             style: const TextStyle(
               fontSize: 18.0,
-              color: AppColors.primaryTitleColor,
+              color: AppColors.primaryBlue,
               fontWeight: FontWeight.w800,
               letterSpacing: 0.3,
             ),
@@ -82,7 +82,7 @@ class CustomTabBar extends StatelessWidget {
                 splashFactory: NoSplash.splashFactory,
                 overlayColor: WidgetStateProperty.all(Colors.transparent),
                 // ── Selected Tab ──
-                labelColor: AppColors.whiteColor,
+                labelColor: AppColors.white,
                 labelStyle: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 13,

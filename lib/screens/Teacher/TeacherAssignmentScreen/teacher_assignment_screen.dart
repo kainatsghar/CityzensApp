@@ -61,7 +61,7 @@ class _TeacherAssignmentScreenState extends State<TeacherAssignmentScreen> {
         onPressed: () =>
             AppNavigation.navigateTo(AppNavRoutes.addAssignmentRoute),
         backgroundColor: AppColors.primaryColor,
-        child: const Icon(Icons.add, color: AppColors.whiteColor),
+        child: const Icon(Icons.add, color: AppColors.white),
       ),
     );
   }

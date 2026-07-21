@@ -50,7 +50,7 @@ class _AttendanceShimmerState extends State<AttendanceShimmer>
                   width: 100,
                   margin: const EdgeInsets.only(right: 12),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
@@ -66,7 +66,7 @@ class _AttendanceShimmerState extends State<AttendanceShimmer>
               height: 250,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
@@ -80,7 +80,7 @@ class _AttendanceShimmerState extends State<AttendanceShimmer>
               height: 350,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
             ),

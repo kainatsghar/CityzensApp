@@ -14,7 +14,7 @@ class CustomListTile extends StatelessWidget {
         title,
         textAlign: TextAlign.center,
         style: const TextStyle(
-          color: AppColors.whiteColor,
+          color: AppColors.white,
           fontSize: 16.0,
           fontWeight: FontWeight.w600,
         ),

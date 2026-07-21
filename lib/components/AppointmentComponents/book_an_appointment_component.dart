@@ -55,7 +55,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 16,
                                               color:
-                                                  AppColors.primaryTitleColor,
+                                                  AppColors.primaryBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -74,12 +74,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                             //height: size.height * 0.04,
                                             width: size.width * 0.8,
                                             child: Card(
-                                              color: const Color.fromARGB(
-                                                255,
-                                                235,
-                                                234,
-                                                234,
-                                              ),
+                                              color: AppColors.grey,
                                               child: Center(
                                                 child: Text(
                                                   responseData
@@ -87,12 +82,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                                           .fullName ??
                                                       '',
                                                   style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      83,
-                                                      83,
-                                                      83,
-                                                    ),
+                                                    color: AppColors.charcoal,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16,
                                                   ),
@@ -125,7 +115,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color:
-                                                    AppColors.primaryTitleColor,
+                                                    AppColors.primaryBlue,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -143,12 +133,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                             SizedBox(
                                               width: size.width * 0.8,
                                               child: Card(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  235,
-                                                  234,
-                                                  234,
-                                                ),
+                                                color: AppColors.grey,
                                                 child: Center(
                                                   child: Text(
                                                     responseData
@@ -156,12 +141,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                                         .studentId
                                                         .toString(),
                                                     style: const TextStyle(
-                                                      color: Color.fromARGB(
-                                                        255,
-                                                        83,
-                                                        83,
-                                                        83,
-                                                      ),
+                                                      color: AppColors.charcoal,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 16,
@@ -195,7 +175,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color:
-                                                    AppColors.primaryTitleColor,
+                                                    AppColors.primaryBlue,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -213,12 +193,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                             SizedBox(
                                               width: size.width * 0.8,
                                               child: Card(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  235,
-                                                  234,
-                                                  234,
-                                                ),
+                                                color: AppColors.grey,
                                                 child: Center(
                                                   child: Text(
                                                     responseData
@@ -226,12 +201,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                                             .className ??
                                                         '',
                                                     style: const TextStyle(
-                                                      color: Color.fromARGB(
-                                                        255,
-                                                        83,
-                                                        83,
-                                                        83,
-                                                      ),
+                                                      color: AppColors.charcoal,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 16,
@@ -329,7 +299,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                         color:
                                             value.selectedTeacherType ==
                                                 appointmentType
-                                            ? AppColors.primaryDarkColor
+                                            ? AppColors.primaryDarkBlue
                                             : AppColors.secondaryColor,
                                         child: Align(
                                           alignment: Alignment.center,
@@ -343,8 +313,8 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                               color:
                                                   value.selectedTeacherType ==
                                                       appointmentType
-                                                  ? AppColors.whiteColor
-                                                  : AppColors.primaryDarkColor,
+                                                  ? AppColors.white
+                                                  : AppColors.primaryDarkBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -391,7 +361,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                       'DAY',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: AppColors.primaryDarkColor,
+                                        color: AppColors.primaryDarkBlue,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -399,7 +369,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                       'TIME',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: AppColors.primaryDarkColor,
+                                        color: AppColors.primaryDarkBlue,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -470,7 +440,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                                 color:
                                                     value.selectedDate ==
                                                         appointmentDay
-                                                    ? AppColors.primaryDarkColor
+                                                    ? AppColors.primaryDarkBlue
                                                     : AppColors.secondaryColor,
                                                 child: Align(
                                                   alignment: Alignment.center,
@@ -481,9 +451,8 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                                       color:
                                                           value.selectedDate ==
                                                               appointmentDay
-                                                          ? AppColors.whiteColor
-                                                          : AppColors
-                                                                .primaryDarkColor,
+                                                          ? AppColors.white
+                                                          : AppColors.primaryDarkBlue,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -524,8 +493,8 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                                 color:
                                                     value.selectedTime ==
                                                         appointmenttimeSlot
-                                                    ? AppColors.primaryDarkColor
-                                                    : AppColors.whiteColor,
+                                                    ? AppColors.primaryDarkBlue
+                                                    : AppColors.white,
                                                 child: Align(
                                                   alignment: Alignment.center,
                                                   child: Text(
@@ -538,9 +507,8 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                                       color:
                                                           value.selectedTime ==
                                                               appointmenttimeSlot
-                                                          ? AppColors.whiteColor
-                                                          : AppColors
-                                                                .blackColor,
+                                                          ? AppColors.white
+                                                          : AppColors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -636,7 +604,7 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                         color:
                                             value.selectedReason ==
                                                 appointmentReason
-                                            ? AppColors.primaryDarkColor
+                                            ? AppColors.primaryDarkBlue
                                             : AppColors.secondaryColor,
                                         child: Align(
                                           alignment: Alignment.center,
@@ -650,8 +618,8 @@ class BookAnAppointmentComponent extends StatelessWidget {
                                               color:
                                                   value.selectedReason ==
                                                       appointmentReason
-                                                  ? AppColors.whiteColor
-                                                  : AppColors.primaryDarkColor,
+                                                  ? AppColors.white
+                                                  : AppColors.primaryDarkBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),

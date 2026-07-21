@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class CustomPercentageBar extends StatelessWidget {
   final double barWidth;
@@ -20,12 +21,12 @@ class CustomPercentageBar extends StatelessWidget {
       lineHeight: barHeight,
       percent: barValue == '-' ? 0.0 : double.parse(barValue) * 0.01,
       progressColor: barValue == '-'
-          ? Colors.grey
+          ? AppColors.grey500
           : double.parse(barValue) * 0.01 < 0.3
-          ? Colors.red
+          ? AppColors.materialRed
           : double.parse(barValue) * 0.01 < 0.5
-          ? Colors.orangeAccent
-          : Colors.green,
+          ? AppColors.orangeAccent
+          : AppColors.materialGreen,
     );
   }
 }

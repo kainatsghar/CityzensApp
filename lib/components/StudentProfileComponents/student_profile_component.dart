@@ -87,7 +87,7 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
               builder: (context, opacity, _) {
                 return SliverAppBar(
                   expandedHeight: 320,
-                  backgroundColor: AppColors.whiteColor.withValues(
+                  backgroundColor: AppColors.white.withValues(
                     alpha: opacity.clamp(0.0, 0.98),
                   ),
                   surfaceTintColor: Colors.transparent,
@@ -182,7 +182,7 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
                               ),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: AppColors.goldenColors.withValues(
+                                color: AppColors.warningOrange.withValues(
                                   alpha: 0.3,
                                 ),
                               ),
@@ -302,7 +302,7 @@ class _StudentProfileComponentState extends State<StudentProfileComponent> {
                   //       child: const Text(
                   //         'SAVE CHANGES',
                   //         style: TextStyle(
-                  //           color: AppColors.whiteColor,
+                  //           color: AppColors.white,
                   //           fontWeight: FontWeight.w900,
                   //           fontSize: 16,
                   //           letterSpacing: 1.0,
@@ -415,7 +415,7 @@ class _FieldItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(

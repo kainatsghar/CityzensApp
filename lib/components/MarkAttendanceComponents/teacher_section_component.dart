@@ -64,8 +64,8 @@ class TeacherSectionComponent extends StatelessWidget {
                                         data: Theme.of(context).copyWith(
                                           colorScheme: const ColorScheme.light(
                                             primary: AppColors.primaryBlue,
-                                            onPrimary: Colors.white,
-                                            onSurface: AppColors.primaryDarkColor,
+                                            onPrimary: AppColors.white,
+                                            onSurface: AppColors.primaryDarkBlue,
                                           ),
                                         ),
                                         child: child!,
@@ -106,7 +106,7 @@ class TeacherSectionComponent extends StatelessWidget {
                         const Text(
                           'Select Section',
                           style: TextStyle(
-                            color: AppColors.primaryDarkColor,
+                            color: AppColors.primaryDarkBlue,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -142,7 +142,7 @@ class TeacherSectionComponent extends StatelessWidget {
                               const Text(
                                 'Select Subject',
                                 style: TextStyle(
-                                  color: AppColors.primaryDarkColor,
+                                  color: AppColors.primaryDarkBlue,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -174,7 +174,7 @@ class TeacherSectionComponent extends StatelessWidget {
                               //   validator: HelperFunction.validator,
                               //   suffixWidget: const ImageIcon(
                               //     AssetImage('assets/images/dropdown_icon.png'),
-                              //     color: AppColors.whiteColor,
+                              //     color: AppColors.white,
                               //   ),
                               // ),
                               // Visibility(
@@ -190,7 +190,7 @@ class TeacherSectionComponent extends StatelessWidget {
                               //         validator: HelperFunction.validator,
                               //         suffixWidget: const ImageIcon(
                               //           AssetImage('assets/images/dropdown_icon.png'),
-                              //           color: AppColors.whiteColor,
+                              //           color: AppColors.white,
                               //         ),
                               //       ),
                               //     ],

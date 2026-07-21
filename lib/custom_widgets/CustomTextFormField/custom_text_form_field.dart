@@ -70,20 +70,20 @@ class CustomTextFormField extends StatelessWidget {
         letterSpacing: 0.2,
       ),
       decoration: InputDecoration(
-        fillColor: AppColors.whiteColor,
+        fillColor: AppColors.white,
         filled: true,
-        focusColor: AppColors.whiteColor,
+        focusColor: AppColors.white,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: AppColors.whiteColor),
+          borderSide: const BorderSide(color: AppColors.white),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: AppColors.whiteColor),
+          borderSide: const BorderSide(color: AppColors.white),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: AppColors.whiteColor),
+          borderSide: const BorderSide(color: AppColors.white),
         ),
         isDense: isDense,
         enabled: isEnable,
@@ -111,7 +111,7 @@ class CustomTextFormField extends StatelessWidget {
                     bottomLeft: Radius.circular(8.0),
                   ),
                 ),
-                child: Icon(prefixIcon, color: AppColors.whiteColor),
+                child: Icon(prefixIcon, color: AppColors.white),
               )
             : null,
         hintText: hintText,

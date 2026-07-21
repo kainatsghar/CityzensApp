@@ -60,7 +60,7 @@ class TeacherProfileCard extends StatelessWidget {
                       height: 150,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withValues(alpha: 0.05),
+                        color: AppColors.white.withValues(alpha: 0.05),
                       ),
                     ),
                   ),
@@ -74,7 +74,7 @@ class TeacherProfileCard extends StatelessWidget {
                         shape: BoxShape.circle,
                         gradient: LinearGradient(
                           colors: [
-                            Colors.white.withValues(alpha: 0.1),
+                            AppColors.white.withValues(alpha: 0.1),
                             Colors.transparent,
                           ],
                           begin: Alignment.topCenter,
@@ -91,7 +91,7 @@ class TeacherProfileCard extends StatelessWidget {
                       height: 80,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.goldenYellow.withValues(alpha: 0.1),
+                        color: AppColors.secondaryColor.withValues(alpha: 0.1),
                       ),
                     ),
                   ),
@@ -108,7 +108,7 @@ class TeacherProfileCard extends StatelessWidget {
                             // Avatar Section
                             _buildAvatar(
                               profile.employeeCode ?? '',
-                              AppColors.goldenYellow, // Premium Gold
+                              AppColors.secondaryColor, // Premium Gold
                             ),
                             const SizedBox(width: 20),
 
@@ -125,7 +125,7 @@ class TeacherProfileCard extends StatelessWidget {
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w900,
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       letterSpacing: 0.5,
                                     ),
                                     maxLines: 2,
@@ -136,14 +136,14 @@ class TeacherProfileCard extends StatelessWidget {
                                   const SizedBox(height: 14),
                                   _buildBranchInfo(
                                     profile.branch ?? '',
-                                    Colors.white.withValues(alpha: 0.9),
+                                    AppColors.white.withValues(alpha: 0.9),
                                   ),
                                 ],
                               ),
                             ),
                             Icon(
                               Icons.arrow_forward_ios_rounded,
-                              color: Colors.white.withValues(alpha: 0.3),
+                              color: AppColors.white.withValues(alpha: 0.3),
                               size: 16,
                             ),
                           ],
@@ -203,10 +203,10 @@ class TeacherProfileCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.15),
+        color: AppColors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.3),
+          color: AppColors.white.withValues(alpha: 0.3),
           width: 0.5,
         ),
       ),
@@ -215,7 +215,7 @@ class TeacherProfileCard extends StatelessWidget {
         children: [
           const Icon(
             Icons.verified_rounded,
-            color: AppColors.goldenYellow,
+            color: AppColors.secondaryColor,
             size: 12,
           ),
           const SizedBox(width: 6),
@@ -225,7 +225,7 @@ class TeacherProfileCard extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w800,
-                color: Colors.white,
+                color: AppColors.white,
                 letterSpacing: 1.0,
               ),
               maxLines: 1,

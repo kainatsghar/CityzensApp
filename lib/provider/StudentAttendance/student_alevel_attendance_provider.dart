@@ -117,7 +117,7 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
         Event(
           title: 'Attendance',
           attendance: 'Present',
-          color: AppColors.successGreenColor,
+          color: AppColors.successGreen,
           dateTime: DateTime.parse(data.attnDate!),
           studentId: localDataProvider.studentId,
           studentName: localDataProvider.userData!.info!.name,
@@ -132,7 +132,7 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
         Event(
           title: 'Attendance',
           attendance: 'Absent',
-          color: AppColors.valuesRedColors,
+          color: AppColors.errorRed,
           dateTime: DateTime.parse(data.attnDate!),
           studentId: localDataProvider.studentId,
           studentName: localDataProvider.userData!.name,
@@ -147,7 +147,7 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
         Event(
           title: 'Attendance',
           attendance: 'Leave',
-          color: Colors.amber.withAlpha(230),
+          color: AppColors.amber.withAlpha(230),
           dateTime: DateTime.parse(data.attnDate!),
           studentId: localDataProvider.studentId,
           studentName: localDataProvider.userData!.name,
@@ -214,17 +214,17 @@ class StudentALevelAttendanceProvider with ChangeNotifier {
       AttendanceGraph(
         'Present',
         presentDates.where((e) => e.attnTypeId == 1).toList().length,
-        Colors.green,
+        AppColors.materialGreen,
       ),
       AttendanceGraph(
         'Absent',
         absentDates.where((e) => e.attnTypeId == 2).toList().length,
-        Colors.red,
+        AppColors.materialRed,
       ),
       AttendanceGraph(
         'Leave',
         leaveDates.where((e) => e.attnTypeId == 3).toList().length,
-        Colors.amber,
+        AppColors.amber,
       ),
     ];
   }

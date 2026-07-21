@@ -81,7 +81,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
     _bgGradientColor =
         ColorTween(
           begin: AppColors.primaryDarkBlue,
-          end: const Color(0xFF1A237E),
+          end: AppColors.indigoDeep,
         ).animate(
           CurvedAnimation(parent: _ambientController, curve: Curves.easeInOut),
         );
@@ -126,7 +126,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
               // Optimized modular particles
               ParticleBackground(
                 animation: _ambientController,
-                particleColor: AppColors.goldenYellow,
+                particleColor: AppColors.secondaryColor,
               ),
 
               // Isolated foreground content
@@ -141,7 +141,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
                           scale: _logoScale,
                           child: LogoWidget(
                             size: MediaQuery.sizeOf(context).height * 0.28,
-                            glowColor: AppColors.goldenYellow,
+                            glowColor: AppColors.secondaryColor,
                           ),
                         ),
                       ),
@@ -151,7 +151,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
                         child: const Text(
                           'W E L C O M E',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.white,
                             fontSize: 22,
                             fontWeight: FontWeight.w300,
                             letterSpacing: 8.0,
@@ -175,7 +175,7 @@ class SplashScreenUIState extends State<SplashScreenUI>
                     "v${AppConstants.appVersion}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.4),
+                      color: AppColors.white.withValues(alpha: 0.4),
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                       letterSpacing: 1.5,

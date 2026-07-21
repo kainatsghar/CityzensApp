@@ -59,7 +59,7 @@ class _TeacherDiaryScreenState extends State<TeacherDiaryScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => AppNavigation.navigateTo(AppNavRoutes.addDiaryRoute),
         backgroundColor: AppColors.primaryColor,
-        child: const Icon(Icons.add, color: AppColors.whiteColor),
+        child: const Icon(Icons.add, color: AppColors.white),
       ),
     );
   }

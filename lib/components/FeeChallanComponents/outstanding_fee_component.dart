@@ -163,7 +163,7 @@ class OutstandingFeeComponent extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                color: Colors.grey.shade700,
+                color: AppColors.grey700,
                 height: 1.4,
               ),
             ),

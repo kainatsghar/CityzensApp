@@ -332,7 +332,7 @@ class TimeTableProvider with ChangeNotifier {
           );
           showSnackBar(
             'TimeTable Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);

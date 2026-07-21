@@ -301,7 +301,7 @@ class ClassTestResultProvider with ChangeNotifier {
             );
             showSnackBar(
               'All Marks Added Successfully',
-              color: AppColors.successGreenColor,
+              color: AppColors.successGreen,
             );
           } else {
             showSnackBar(response.message);

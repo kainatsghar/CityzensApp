@@ -124,7 +124,7 @@ class AcademicTermComponent extends StatelessWidget {
                             validator: HelperFunction.validator,
                             suffixWidget: const ImageIcon(
                               AssetImage('assets/images/dropdown_icon.png'),
-                              color: AppColors.primaryDarkColor,
+                              color: AppColors.primaryDarkBlue,
                             ),
                           ),
                           SizedBox(height: size.height * 0.01),
@@ -136,7 +136,7 @@ class AcademicTermComponent extends StatelessWidget {
                             validator: HelperFunction.validator,
                             suffixWidget: const ImageIcon(
                               AssetImage('assets/images/dropdown_icon.png'),
-                              color: AppColors.primaryDarkColor,
+                              color: AppColors.primaryDarkBlue,
                             ),
                           ),
                         ],
@@ -159,7 +159,7 @@ class AcademicTermComponent extends StatelessWidget {
                                 const Text(
                                   'CLICK TO VIEW RESULT',
                                   style: TextStyle(
-                                    color: Colors.blue,
+                                    color: AppColors.materialBlue,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

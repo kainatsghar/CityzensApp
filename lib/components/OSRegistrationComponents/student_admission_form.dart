@@ -23,7 +23,7 @@ class StudentAdmissionForm extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black54,
+                    color: AppColors.black54,
                   ),
                 ),
               ),
@@ -60,7 +60,7 @@ class StudentAdmissionForm extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+                  color: AppColors.black54,
                 ),
               ),
             ),
@@ -85,7 +85,7 @@ class StudentAdmissionForm extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+                  color: AppColors.black54,
                 ),
               ),
             ),
@@ -107,7 +107,7 @@ class StudentAdmissionForm extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: RichText(
                 text: const TextSpan(
-                  style: TextStyle(fontSize: 16.0, color: Colors.black),
+                  style: TextStyle(fontSize: 16.0, color: AppColors.black),
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Registration Fee Payable: Rs 600-750.',
@@ -132,7 +132,7 @@ class StudentAdmissionForm extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+                  color: AppColors.black54,
                 ),
               ),
             ),

@@ -30,7 +30,7 @@ class CustomDropdownMenu extends StatelessWidget {
       width: width,
       height: 35,
       decoration: BoxDecoration(
-        color: AppColors.blackColor,
+        color: AppColors.black,
         border: Border.all(width: 0.2),
         borderRadius: BorderRadius.circular(3),
       ),

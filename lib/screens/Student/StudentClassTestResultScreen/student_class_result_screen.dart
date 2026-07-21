@@ -156,7 +156,7 @@ class _MultiTestSubjectCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -284,7 +284,7 @@ class _MultiTestSubjectCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w900,
-                color: Colors.black12,
+                color: AppColors.black12,
               ),
             ),
         ],

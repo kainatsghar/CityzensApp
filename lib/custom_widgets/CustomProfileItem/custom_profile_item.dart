@@ -41,7 +41,7 @@ class CustomProfileItem extends StatelessWidget {
               '$title',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: AppColors.primaryTitleColor,
+                color: AppColors.primaryBlue,
                 fontSize: MediaQueryUtil.getResponsiveFontSize(14),
               ),
               textAlign: TextAlign.center,
@@ -51,7 +51,7 @@ class CustomProfileItem extends StatelessWidget {
               HelperFunction.noNullStringText(value),
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black54,
+                color: AppColors.black54,
                 fontSize: MediaQueryUtil.getResponsiveFontSize(12),
               ),
               maxLines: maxLines ?? 1,

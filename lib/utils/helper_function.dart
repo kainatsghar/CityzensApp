@@ -20,13 +20,13 @@ class HelperFunction {
     Options(
       title: 'Present',
       isSelected: true,
-      color: AppColors.successGreenColor,
+      color: AppColors.successGreen,
       value: 1,
     ),
     Options(
       title: 'Absent',
       isSelected: false,
-      color: AppColors.valuesRedColors,
+      color: AppColors.errorRed,
       value: 2,
     ),
     Options(
@@ -38,7 +38,7 @@ class HelperFunction {
     Options(
       title: 'Unreconciled',
       isSelected: false,
-      color: Colors.grey,
+      color: AppColors.grey500,
       value: 35,
     ),
   ];

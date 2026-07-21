@@ -10,17 +10,17 @@ class StudentSubjectsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         title: const Text(
           'My Subjects',
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: AppColors.primaryBlue,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: AppColors.white),
         elevation: 0,
       ),
       body: Consumer<StudentDashboardProvider>(
@@ -39,7 +39,7 @@ class StudentSubjectsScreen extends StatelessWidget {
                 'No subjects or teachers assigned yet.',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.grey,
+                  color: AppColors.grey500,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -108,7 +108,7 @@ class _SubjectCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.6),
+                  color: AppColors.white.withValues(alpha: 0.6),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(

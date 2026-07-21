@@ -123,7 +123,7 @@ class AppointmentProvider with ChangeNotifier {
           );
           showSnackBar(
             'Appointment Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);

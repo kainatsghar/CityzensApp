@@ -71,17 +71,17 @@ class CustomTestResultFormField extends StatelessWidget {
         color: AppColors.secondaryColor,
       ),
       decoration: InputDecoration(
-        fillColor: AppColors.whiteColor,
+        fillColor: AppColors.white,
         filled: true,
-        focusColor: AppColors.whiteColor,
+        focusColor: AppColors.white,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: AppColors.whiteColor),
+          borderSide: const BorderSide(color: AppColors.white),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
           borderSide: const BorderSide(
-            color: Color.fromARGB(255, 201, 201, 201),
+            color: AppColors.lightGrey,
             width: 1.5,
           ),
         ),
@@ -118,7 +118,7 @@ class CustomTestResultFormField extends StatelessWidget {
                     bottomLeft: Radius.circular(8.0),
                   ),
                 ),
-                child: Icon(prefixIcon, color: AppColors.whiteColor),
+                child: Icon(prefixIcon, color: AppColors.white),
               )
             : null,
         hintText: hintText,

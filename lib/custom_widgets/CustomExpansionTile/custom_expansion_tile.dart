@@ -27,13 +27,13 @@ class CustomExpansionTile extends StatelessWidget {
           title: Text(
             title,
             style: const TextStyle(
-              color: AppColors.primaryTitleColor,
+              color: AppColors.primaryBlue,
               fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
           ),
-          iconColor: AppColors.primaryTitleColor,
-          collapsedIconColor: AppColors.primaryTitleColor,
+          iconColor: AppColors.primaryBlue,
+          collapsedIconColor: AppColors.primaryBlue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6.0),
           ),
@@ -48,7 +48,7 @@ class CustomExpansionTile extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       child: Text(
                         detailMsg!,
-                        style: const TextStyle(color: Colors.black),
+                        style: const TextStyle(color: AppColors.black),
                       ),
                     ),
                   ),

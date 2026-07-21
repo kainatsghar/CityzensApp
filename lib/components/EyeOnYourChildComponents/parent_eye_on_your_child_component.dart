@@ -64,7 +64,7 @@ class _ParentEyeOnYourChildComponentState
                                         'UPDATE',
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: AppColors.blackColor,
+                                          color: AppColors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -78,19 +78,14 @@ class _ParentEyeOnYourChildComponentState
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(0),
                                     ),
-                                    color: const Color.fromARGB(
-                                      255,
-                                      220,
-                                      220,
-                                      220,
-                                    ),
+                                    color: AppColors.grey300,
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Text(
                                         formattedDate,
                                         style: const TextStyle(
                                           fontSize: 14,
-                                          color: AppColors.blackColor,
+                                          color: AppColors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

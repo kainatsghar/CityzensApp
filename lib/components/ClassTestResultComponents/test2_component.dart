@@ -56,7 +56,7 @@ class Test2Component extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                   ),
                   // padding: const EdgeInsets.all(6),
                   child: Column(
@@ -68,7 +68,7 @@ class Test2Component extends StatelessWidget {
                             decoration: const BoxDecoration(
                               border: Border(
                                 right: BorderSide(
-                                  color: AppColors.whiteColor,
+                                  color: AppColors.white,
                                   width: 0,
                                 ),
                               ),
@@ -77,7 +77,7 @@ class Test2Component extends StatelessWidget {
                               'STUDENTS',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.primaryTitleColor,
+                                color: AppColors.primaryBlue,
                                 fontSize: 18,
                                 letterSpacing: 2,
                               ),
@@ -87,14 +87,14 @@ class Test2Component extends StatelessWidget {
                             width: (size.width - 32) / 2,
                             decoration: const BoxDecoration(
                               border: Border(
-                                left: BorderSide(color: Colors.grey, width: 1),
+                                left: BorderSide(color: AppColors.grey500, width: 1),
                               ),
                             ),
                             child: const Text(
                               'OBTAINED MARKS',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.primaryTitleColor,
+                                color: AppColors.primaryBlue,
                                 fontSize: 18,
                                 letterSpacing: 1.5,
                               ),
@@ -111,7 +111,7 @@ class Test2Component extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   right: BorderSide(
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                     width: 0,
                                   ),
                                 ),
@@ -120,7 +120,7 @@ class Test2Component extends StatelessWidget {
                                 e.studentName!.toUpperCase(),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.blackColor,
+                                  color: AppColors.black,
                                   fontSize: 14,
                                   letterSpacing: 1,
                                 ),
@@ -131,7 +131,7 @@ class Test2Component extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   left: BorderSide(
-                                    color: Colors.grey,
+                                    color: AppColors.grey500,
                                     width: 1,
                                   ),
                                 ),

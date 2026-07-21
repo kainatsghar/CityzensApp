@@ -32,7 +32,7 @@ class SingleReceiptItem extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: AppColors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -136,7 +136,7 @@ class SingleReceiptItem extends StatelessWidget {
                                   record.amount ?? 0,
                                 ),
                                 style: const TextStyle(
-                                  color: AppColors.primaryDarkColor,
+                                  color: AppColors.primaryDarkBlue,
                                   fontWeight: FontWeight.w900,
                                   fontSize: 17,
                                 ),
@@ -182,14 +182,14 @@ class SingleReceiptItem extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
                   letterSpacing: 0.5,
-                  color: AppColors.primaryDarkColor,
+                  color: AppColors.primaryDarkBlue,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 'Transaction Successful',
                 style: TextStyle(
-                  color: Colors.grey.shade500,
+                  color: AppColors.grey500,
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                 ),

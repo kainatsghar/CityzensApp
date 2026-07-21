@@ -78,7 +78,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
           // 2. Performance-Isolated Particles
           ParticleBackground(
             animation: _particleController,
-            particleColor: AppColors.goldenYellow,
+            particleColor: AppColors.secondaryColor,
           ),
 
           // 3. Modular Content
@@ -122,9 +122,9 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
         bottom: 24,
       ),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.05),
+        color: AppColors.white.withValues(alpha: 0.05),
         border: Border(
-          bottom: BorderSide(color: Colors.white.withValues(alpha: 0.1), width: 1.0),
+          bottom: BorderSide(color: AppColors.white.withValues(alpha: 0.1), width: 1.0),
         ),
       ),
       child: Column(
@@ -143,7 +143,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
                   : localData.userData?.name ?? '',
             ),
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.white,
               fontSize: 18,
               fontWeight: FontWeight.w700,
             ),
@@ -156,7 +156,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
                 ? 'CNIC No: ${localData.userData?.userName ?? ''}'
                 : 'ERP No: ${localData.userData?.userName ?? ''}',
             style: TextStyle(
-              color: AppColors.goldenYellow.withValues(alpha: 0.9),
+              color: AppColors.secondaryColor.withValues(alpha: 0.9),
               fontSize: 13,
               fontWeight: FontWeight.w500,
               letterSpacing: 0.5,
@@ -221,7 +221,7 @@ class _NavigationalDrawerState extends State<NavigationalDrawer>
               'App Version: ${AppConstants.appVersion}',
               style: TextStyle(
                 fontSize: 12.0,
-                color: Colors.white.withValues(alpha: 0.4),
+                color: AppColors.white.withValues(alpha: 0.4),
                 fontWeight: FontWeight.w500,
                 letterSpacing: 1.2,
               ),
@@ -299,10 +299,10 @@ class _DrawerTile extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.05),
+            color: AppColors.white.withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.1),
+              color: AppColors.white.withValues(alpha: 0.1),
               width: 1.0,
             ),
           ),
@@ -311,8 +311,8 @@ class _DrawerTile extends StatelessWidget {
               Icon(
                 icon,
                 color: isDestructive
-                    ? Colors.redAccent.withValues(alpha: 0.8)
-                    : AppColors.goldenYellow,
+                    ? AppColors.redAccent.withValues(alpha: 0.8)
+                    : AppColors.secondaryColor,
                 size: 22,
               ),
               const SizedBox(width: 16),
@@ -320,7 +320,7 @@ class _DrawerTile extends StatelessWidget {
                 child: Text(
                   title,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.5,
@@ -329,7 +329,7 @@ class _DrawerTile extends StatelessWidget {
               ),
               Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.white.withValues(alpha: 0.2),
+                color: AppColors.white.withValues(alpha: 0.2),
                 size: 14,
               ),
             ],

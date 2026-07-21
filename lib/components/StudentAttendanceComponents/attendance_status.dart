@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class AttendanceStatus extends StatelessWidget {
   final Color? backgroundColor;
@@ -15,10 +16,10 @@ class AttendanceStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: backgroundColor ?? Colors.white,
+      backgroundColor: backgroundColor ?? AppColors.white,
       child: Text(
         day ?? '',
-        style: TextStyle(color: textColor ?? Colors.black),
+        style: TextStyle(color: textColor ?? AppColors.black),
       ),
     );
   }

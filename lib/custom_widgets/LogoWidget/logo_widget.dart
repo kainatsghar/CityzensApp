@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:tcs_app/gen/assets.gen.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 /// A performance-optimized school logo widget with internal animation management.
 /// 
@@ -14,7 +15,7 @@ class LogoWidget extends StatefulWidget {
   const LogoWidget({
     super.key,
     this.size = 220,
-    this.glowColor = const Color(0xFFF3CD50),
+    this.glowColor = AppColors.secondaryColor,
   });
 
   @override

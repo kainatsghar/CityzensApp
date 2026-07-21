@@ -14,7 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     this.actions,
     this.title = '',
-    this.backgroundColor = AppColors.whiteColor,
+    this.backgroundColor = AppColors.white,
     this.appBarHeight = 56.0,
     this.onBackPressed,
   });
@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: const TextStyle(
           fontSize: 18.0,
-          color: AppColors.primaryTitleColor,
+          color: AppColors.primaryBlue,
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -43,7 +43,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Platform.isAndroid
                     ? Icons.arrow_back
                     : Icons.arrow_back_ios_new,
-                color: AppColors.primaryTitleColor,
+                color: AppColors.primaryBlue,
               ),
               onPressed: onBackPressed,
             ),

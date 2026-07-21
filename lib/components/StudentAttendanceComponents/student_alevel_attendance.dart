@@ -17,13 +17,13 @@ class StudentAttendance extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             gradient: const LinearGradient(
-              colors: [AppColors.primaryColor, AppColors.primaryDarkColor],
+              colors: [AppColors.primaryColor, AppColors.primaryDarkBlue],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryDarkColor.withValues(alpha: 0.25),
+                color: AppColors.primaryDarkBlue.withValues(alpha: 0.25),
                 blurRadius: 16,
                 offset: const Offset(0, 6),
               ),
@@ -39,17 +39,17 @@ class StudentAttendance extends StatelessWidget {
                   formatButtonVisible: false,
                   leftChevronIcon: Icon(
                     Icons.chevron_left_rounded,
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                     size: 28,
                   ),
                   rightChevronIcon: Icon(
                     Icons.chevron_right_rounded,
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                     size: 28,
                   ),
                   titleCentered: true,
                   titleTextStyle: TextStyle(
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                     fontSize: 17.0,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.3,
@@ -61,12 +61,12 @@ class StudentAttendance extends StatelessWidget {
                 lastDay: DateTime.now(),
                 daysOfWeekStyle: const DaysOfWeekStyle(
                   weekdayStyle: TextStyle(
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
                   ),
                   weekendStyle: TextStyle(
-                    color: AppColors.goldenColors,
+                    color: AppColors.warningOrange,
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
                   ),
@@ -74,15 +74,15 @@ class StudentAttendance extends StatelessWidget {
                 calendarStyle: const CalendarStyle(
                   isTodayHighlighted: true,
                   defaultTextStyle: TextStyle(
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                     fontSize: 14,
                   ),
                   weekendTextStyle: TextStyle(
-                    color: AppColors.goldenColors,
+                    color: AppColors.warningOrange,
                     fontSize: 14,
                   ),
                   selectedTextStyle: TextStyle(
-                    color: AppColors.primaryDarkColor,
+                    color: AppColors.primaryDarkBlue,
                     fontWeight: FontWeight.w700,
                   ),
                   selectedDecoration: BoxDecoration(
@@ -90,11 +90,11 @@ class StudentAttendance extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   todayDecoration: BoxDecoration(
-                    color: Colors.white24,
+                    color: AppColors.white24,
                     shape: BoxShape.circle,
                   ),
                   todayTextStyle: TextStyle(
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                     fontWeight: FontWeight.w700,
                   ),
                   outsideDaysVisible: false,

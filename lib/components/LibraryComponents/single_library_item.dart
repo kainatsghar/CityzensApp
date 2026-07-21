@@ -46,7 +46,7 @@ class SingleLibraryItem extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
+              color: AppColors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -162,7 +162,7 @@ class SingleLibraryItem extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
                   letterSpacing: 0.5,
-                  color: AppColors.primaryDarkColor,
+                  color: AppColors.primaryDarkBlue,
                 ),
               ),
               const SizedBox(height: 2),
@@ -204,12 +204,12 @@ class SingleLibraryItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: hasFine
             ? AppColors.errorRed.withValues(alpha: 0.05)
-            : Colors.grey.withValues(alpha: 0.04),
+            : AppColors.grey500.withValues(alpha: 0.04),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: hasFine
               ? AppColors.errorRed.withValues(alpha: 0.1)
-              : Colors.grey.withValues(alpha: 0.08),
+              : AppColors.grey500.withValues(alpha: 0.08),
         ),
       ),
       child: Row(
@@ -220,7 +220,7 @@ class SingleLibraryItem extends StatelessWidget {
               Icon(
                 Icons.account_balance_wallet_rounded,
                 size: 14,
-                color: hasFine ? AppColors.errorRed : Colors.grey.shade600,
+                color: hasFine ? AppColors.errorRed : AppColors.grey600,
               ),
               const SizedBox(width: 8),
               Text(
@@ -229,7 +229,7 @@ class SingleLibraryItem extends StatelessWidget {
                   fontWeight: FontWeight.w900,
                   fontSize: 11,
                   letterSpacing: 0.5,
-                  color: hasFine ? AppColors.errorRed : Colors.grey.shade700,
+                  color: hasFine ? AppColors.errorRed : AppColors.grey700,
                 ),
               ),
             ],
@@ -239,7 +239,7 @@ class SingleLibraryItem extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w900,
               fontSize: 14,
-              color: hasFine ? AppColors.errorRed : Colors.grey.shade800,
+              color: hasFine ? AppColors.errorRed : AppColors.grey800,
             ),
           ),
         ],

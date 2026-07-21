@@ -68,7 +68,7 @@ class _TeacherProfileComponentState extends State<TeacherProfileComponent> {
               builder: (context, opacity, _) {
                 return SliverAppBar(
                   expandedHeight: 320,
-                  backgroundColor: AppColors.whiteColor.withValues(
+                  backgroundColor: AppColors.white.withValues(
                     alpha: opacity.clamp(0.0, 0.98),
                   ),
                   surfaceTintColor: Colors.transparent,
@@ -158,12 +158,12 @@ class _TeacherProfileComponentState extends State<TeacherProfileComponent> {
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.goldenColors.withValues(
+                              color: AppColors.warningOrange.withValues(
                                 alpha: 0.15,
                               ),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: AppColors.goldenColors.withValues(
+                                color: AppColors.warningOrange.withValues(
                                   alpha: 0.3,
                                 ),
                               ),
@@ -173,7 +173,7 @@ class _TeacherProfileComponentState extends State<TeacherProfileComponent> {
                                 profile.designation,
                               ).toUpperCase(),
                               style: const TextStyle(
-                                color: AppColors.goldenColors,
+                                color: AppColors.warningOrange,
                                 fontWeight: FontWeight.w900,
                                 fontSize: 11.0,
                                 letterSpacing: 1.0,

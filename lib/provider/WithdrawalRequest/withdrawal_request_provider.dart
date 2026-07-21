@@ -88,7 +88,7 @@ class WithdrawalRequestProvider with ChangeNotifier {
     } else {
       showSnackBar(
         'Maximum of 3 reasons allowed!',
-        color: AppColors.lightRedColor,
+        color: AppColors.lightRed,
       );
     }
     notifyListeners();
@@ -172,7 +172,7 @@ class WithdrawalRequestProvider with ChangeNotifier {
           await loadWithdrawal();
           showSnackBar(
             'Withdrawal Response Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);
@@ -231,7 +231,7 @@ class WithdrawalRequestProvider with ChangeNotifier {
                   const Text(
                     'If you have read the above terms and conditions, and acknowledge them, please click Confirm to proceed.',
                     style: TextStyle(
-                      color: AppColors.primaryTitleColor,
+                      color: AppColors.primaryBlue,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -249,7 +249,7 @@ class WithdrawalRequestProvider with ChangeNotifier {
                 child: Text(
                   'This is just a request and not an application to form.',
                   style: TextStyle(
-                    color: AppColors.blackColor,
+                    color: AppColors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

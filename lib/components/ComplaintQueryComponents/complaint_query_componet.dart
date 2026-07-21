@@ -168,7 +168,7 @@ class _ComplaintQueryComponentsState extends State<ComplaintQueryComponents> {
                                         onTap: () => value.setTypeValue(option),
                                         child: Card(
                                           color: isSelected
-                                              ? AppColors.primaryDarkColor
+                                              ? AppColors.primaryDarkBlue
                                               : AppColors.secondaryColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
@@ -183,9 +183,8 @@ class _ComplaintQueryComponentsState extends State<ComplaintQueryComponents> {
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: isSelected
-                                                    ? Colors.white
-                                                    : AppColors
-                                                          .primaryTitleColor,
+                                                    ? AppColors.white
+                                                    : AppColors.primaryBlue,
                                                 fontSize: 14,
                                               ),
                                             ),
@@ -215,7 +214,7 @@ class _ComplaintQueryComponentsState extends State<ComplaintQueryComponents> {
                                       ),
                                       child: const Icon(
                                         Icons.category,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.white,
                                       ),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(
@@ -223,7 +222,7 @@ class _ComplaintQueryComponentsState extends State<ComplaintQueryComponents> {
                                       vertical: 4,
                                     ),
                                     filled: true,
-                                    fillColor: Colors.white,
+                                    fillColor: AppColors.white,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                       borderSide: BorderSide.none,
@@ -269,7 +268,7 @@ class _ComplaintQueryComponentsState extends State<ComplaintQueryComponents> {
                                       ),
                                       child: const Icon(
                                         Icons.list,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.white,
                                       ),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(
@@ -277,7 +276,7 @@ class _ComplaintQueryComponentsState extends State<ComplaintQueryComponents> {
                                       vertical: 4,
                                     ),
                                     filled: true,
-                                    fillColor: Colors.white,
+                                    fillColor: AppColors.white,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                       borderSide: BorderSide.none,

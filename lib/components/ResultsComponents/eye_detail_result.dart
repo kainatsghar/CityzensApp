@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/custom_widgets/CustomExpansionTile/custom_expansion_tile.dart';
 import 'package:tcs_app/provider/Results/results_provider.dart';
+import 'package:tcs_app/utils/app_colors.dart';
 
 class EyeDetailResult extends StatelessWidget {
   final int index;
@@ -26,7 +27,7 @@ class EyeDetailResult extends StatelessWidget {
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
                   child: Table(
-                    border: TableBorder.all(width: 1.0, color: Colors.black),
+                    border: TableBorder.all(width: 1.0, color: AppColors.black),
                     children: [
                       TableRow(
                         children: [
@@ -66,7 +67,7 @@ class EyeDetailResult extends StatelessWidget {
                                 Icons.check,
                                 color:
                                     value.eyeResult[index].details[i].key1 == 1
-                                    ? Colors.green
+                                    ? AppColors.materialGreen
                                     : Colors.transparent,
                               ),
                             ),
@@ -75,7 +76,7 @@ class EyeDetailResult extends StatelessWidget {
                             child: Icon(
                               Icons.check,
                               color: value.eyeResult[index].details[i].key2 == 1
-                                  ? Colors.green[300]
+                                  ? AppColors.green300
                                   : Colors.transparent,
                             ),
                           ),
@@ -83,7 +84,7 @@ class EyeDetailResult extends StatelessWidget {
                             child: Icon(
                               Icons.check,
                               color: value.eyeResult[index].details[i].key3 == 1
-                                  ? Colors.amber
+                                  ? AppColors.amber
                                   : Colors.transparent,
                             ),
                           ),
@@ -93,7 +94,7 @@ class EyeDetailResult extends StatelessWidget {
                                 Icons.check,
                                 color:
                                     value.eyeResult[index].details[i].key4 == 1
-                                    ? Colors.red
+                                    ? AppColors.materialRed
                                     : Colors.transparent,
                               ),
                             ),

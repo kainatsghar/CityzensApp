@@ -77,8 +77,8 @@ class StudentSelectorBar extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.0,
                                 color: isSelected
-                                    ? AppColors.whiteColor
-                                    : AppColors.primaryTitleColor,
+                                    ? AppColors.white
+                                    : AppColors.primaryBlue,
                               ),
                             ),
                             Text(
@@ -86,7 +86,7 @@ class StudentSelectorBar extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 10.0,
                                 color: isSelected
-                                    ? AppColors.whiteColor
+                                    ? AppColors.white
                                     : AppColors.secondaryColor,
                               ),
                             ),

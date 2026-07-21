@@ -139,7 +139,7 @@ class MarkUnverifiedProvider with ChangeNotifier {
           );
           showSnackBar(
             'Unverified Student Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);

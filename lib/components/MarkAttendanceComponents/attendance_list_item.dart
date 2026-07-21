@@ -42,18 +42,18 @@ class AttendanceListItem extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 10),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
-              color: isUnmarkedPast ? Colors.grey.shade50 : Colors.white,
+              color: isUnmarkedPast ? AppColors.grey50 : AppColors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: isUnmarkedPast
-                    ? Colors.grey.shade300
+                    ? AppColors.grey300
                     : AppColors.primaryBlue.withValues(alpha: 0.06),
               ),
               boxShadow: isUnmarkedPast
                   ? []
                   : [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.025),
+                        color: AppColors.black.withValues(alpha: 0.025),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -92,7 +92,7 @@ class AttendanceListItem extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.primaryDarkColor,
+                          color: AppColors.primaryDarkBlue,
                           letterSpacing: 0.2,
                         ),
                       ),
@@ -109,7 +109,7 @@ class AttendanceListItem extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w500,
-                              color: Colors.grey.shade500,
+                              color: AppColors.grey500,
                             ),
                           ),
                         ),
@@ -132,7 +132,7 @@ class AttendanceListItem extends StatelessWidget {
                         student: student,
                         title: attendanceOptions[i].title!.characters.first,
                         color: isUnmarkedPast
-                            ? Colors.grey
+                            ? AppColors.grey500
                             : attendanceOptions[i].color!,
                         onTap: () {
                           if (!isViewOnly) {

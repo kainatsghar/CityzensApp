@@ -76,7 +76,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                           //   onTap: () => value.userTypeBottomSheet(),
                           //   suffixWidget: const ImageIcon(
                           //     AssetImage('assets/images/dropdown_icon.png'),
-                          //     color: AppColors.whiteColor,
+                          //     color: AppColors.white,
                           //   ),
                           // ),
                           SizedBox(height: size.height * 0.02),

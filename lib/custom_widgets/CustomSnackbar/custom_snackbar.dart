@@ -8,9 +8,9 @@ dynamic showSnackBar(dynamic message, {Color? color}) =>
         content: Text(
           '$message',
           textAlign: TextAlign.center,
-          style: const TextStyle(color: AppColors.whiteColor),
+          style: const TextStyle(color: AppColors.white),
         ),
-        backgroundColor: color ?? const Color.fromRGBO(245, 104, 123, 1),
+        backgroundColor: color ?? AppColors.softPink,
         duration: const Duration(seconds: 2),
       ),
     );

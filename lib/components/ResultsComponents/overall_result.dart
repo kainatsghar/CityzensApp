@@ -20,7 +20,7 @@ class OverallResult extends StatelessWidget {
           children: [
             Card(
               shape: RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.grey),
+                side: const BorderSide(color: AppColors.grey500),
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Column(
@@ -208,7 +208,7 @@ class OverallResult extends StatelessWidget {
             const SizedBox(height: 5.0),
             Card(
               shape: RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.grey),
+                side: const BorderSide(color: AppColors.grey500),
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Container(

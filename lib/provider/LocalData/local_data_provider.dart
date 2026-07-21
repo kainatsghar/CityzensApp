@@ -70,7 +70,7 @@ class LocalDataProvider with ChangeNotifier {
           gradeId = 0;
           showSnackBar(
             'Please login again. Your data needs to be refreshed.',
-            color: AppColors.primary,
+            color: AppColors.primaryColor,
           );
         }
       }

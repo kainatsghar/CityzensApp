@@ -34,7 +34,7 @@ class CustomTitleValue extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(
-                    color: Colors.grey.shade600,
+                    color: AppColors.grey600,
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
                     letterSpacing: 0.2,
@@ -49,7 +49,7 @@ class CustomTitleValue extends StatelessWidget {
                   enableInteractiveSelection: isSelectionAllowed,
                   textAlign: TextAlign.right,
                   style: TextStyle(
-                    color: AppColors.primaryDarkColor,
+                    color: AppColors.primaryDarkBlue,
                     fontSize: 13,
                     fontWeight: boldValue ? FontWeight.w800 : FontWeight.w600,
                     height: 1.3,
@@ -106,7 +106,7 @@ class CustomTitleValue extends StatelessWidget {
           Divider(
             height: 1,
             thickness: 0.5,
-            color: Colors.grey.withValues(alpha: 0.15),
+            color: AppColors.grey500.withValues(alpha: 0.15),
           ),
       ],
     );

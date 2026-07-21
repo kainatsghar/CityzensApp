@@ -73,7 +73,7 @@ class CreatePasswordScreenState extends State<CreatePasswordScreen> {
                                         value.obscureText
                                             ? Icons.visibility_off
                                             : Icons.visibility,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.white,
                                       ),
                                     ),
                                     validator: value.confirmPasswordValidator,

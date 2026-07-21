@@ -54,7 +54,7 @@ class AboutUsScreenState extends State<AboutUsScreen>
             // 1. Shared Modular Particle Background Layer
             ParticleBackground(
               animation: _particleController,
-              particleColor: AppColors.goldenYellow,
+              particleColor: AppColors.secondaryColor,
             ),
 
             // 2. Main Content with Parallax
@@ -97,7 +97,7 @@ class AboutUsScreenState extends State<AboutUsScreen>
                                   const Text(
                                     'THE CITY SCHOOL',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                       letterSpacing: 2.2,
@@ -106,7 +106,7 @@ class AboutUsScreenState extends State<AboutUsScreen>
                                   Text(
                                     'Since 1978',
                                     style: TextStyle(
-                                      color: AppColors.goldenYellow.withValues(
+                                      color: AppColors.secondaryColor.withValues(
                                         alpha: 0.9,
                                       ),
                                       fontSize: 16,

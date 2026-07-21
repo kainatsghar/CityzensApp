@@ -73,7 +73,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           //   onTap: () => value.userTypeBottomSheet(),
                           //   suffixWidget: const ImageIcon(
                           //     AssetImage('assets/images/dropdown_icon.png'),
-                          //     color: AppColors.whiteColor,
+                          //     color: AppColors.white,
                           //   ),
                           // ),
                           const SizedBox(height: 12),

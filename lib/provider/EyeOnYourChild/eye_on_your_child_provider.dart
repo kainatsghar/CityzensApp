@@ -123,7 +123,7 @@ class EyeOnYourChildProvider with ChangeNotifier {
           );
           showSnackBar(
             'Record Added Successfully',
-            color: AppColors.successGreenColor,
+            color: AppColors.successGreen,
           );
         } else {
           showSnackBar(response.message);

@@ -52,7 +52,7 @@ class CustomTextFormFieldV2 extends StatelessWidget {
       textAlign: TextAlign.center,
       style: const TextStyle(
         fontSize: 14.0,
-        color: AppColors.primaryDarkColor,
+        color: AppColors.primaryDarkBlue,
         fontWeight: FontWeight.bold,
       ),
       inputFormatters: inputFormatter,
@@ -69,10 +69,10 @@ class CustomTextFormFieldV2 extends StatelessWidget {
       decoration: InputDecoration(
         fillColor: AppColors.secondaryColor,
         filled: true,
-        focusColor: AppColors.whiteColor,
+        focusColor: AppColors.white,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: AppColors.whiteColor),
+          borderSide: const BorderSide(color: AppColors.white),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
@@ -108,14 +108,14 @@ class CustomTextFormFieldV2 extends StatelessWidget {
                     bottomLeft: Radius.circular(8.0),
                   ),
                 ),
-                child: Icon(prefixIcon, color: AppColors.whiteColor),
+                child: Icon(prefixIcon, color: AppColors.white),
               )
             : null,
         hintText: hintText,
         labelStyle: const TextStyle(fontSize: 14.0),
         hintStyle: const TextStyle(
           fontSize: 14.0,
-          color: AppColors.primaryDarkColor,
+          color: AppColors.primaryDarkBlue,
           fontWeight: FontWeight.bold,
         ) /*,
             labelText: labelText*/,

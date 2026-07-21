@@ -224,7 +224,7 @@ class _StudentAcademicHubScreenState extends State<StudentAcademicHubScreen>
                 indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
                 padding: const EdgeInsets.all(4),
-                labelColor: Colors.white,
+                labelColor: AppColors.white,
                 unselectedLabelColor: AppColors.primaryBlue,
                 labelStyle: const TextStyle(
                   fontWeight: FontWeight.w800,
