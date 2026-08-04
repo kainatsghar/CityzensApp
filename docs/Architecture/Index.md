@@ -1,97 +1,95 @@
+---
+title: Architecture Overview
+description: Provider-based MVVM architecture for Cityzens Flutter client.
+tags: [cityzens, architecture]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Architecture Overview
 
-## High-Level Architecture
+> Master diagram: [[Home]] · [[Diagrams/Master Architecture|Master Architecture]]
 
-Cityzens follows a **Provider-based MVVM** architecture:
+Cityzens follows **Provider-based MVVM** with a hybrid data layer (static Services everywhere; Repositories for offline/Firestore subsets).
 
-```
-Screens → Components → Custom Widgets
-    ↕           ↕
-Providers (ChangeNotifier)
-    ↕
-Services (Static API calls)
-    ↕
-Models (JSON ↔ Dart)
-    ↕
-ApiBaseHelper (HTTP Client)
-    ↕
-SharedPreferences (Local Persistence)
-```
-
-## Data Flow
+## Layered view
 
 ```mermaid
-graph LR
-    UI["Screen / Component"] -->|reads| P["Provider"]
-    UI -->|calls method| P
-    P -->|calls| S["Service"]
-    S -->|HTTP via| A["ApiBaseHelper"]
-    A -->|response| S
-    S -->|parsed model| P
-    P -->|notifyListeners()| UI
-    P -->|caches| SP["SharedPreferences"]
+graph TB
+  subgraph Presentation
+    S[Screens]
+    C[Components]
+    W[Custom Widgets]
+  end
+  subgraph Logic
+    P[Providers ChangeNotifier]
+  end
+  subgraph Data
+    SV[Static Services]
+    R[Repositories]
+    M[Models]
+  end
+  subgraph Infrastructure
+    A[ApiBaseHelper]
+    SP[SharedPreferences]
+    LC[LocalCacheManager]
+    SS[SecureStorage]
+    FB[Firebase SDKs]
+  end
+  S --> C --> W
+  S --> P
+  C --> P
+  P --> SV
+  P --> R
+  R --> SV
+  R --> FB
+  SV --> A
+  SV --> M
+  P --> SP
+  R --> LC
+  P --> SS
 ```
 
-## Layer Responsibilities
+## Layer responsibilities
 
-### Screens (`lib/screens/`)
-- StatefulWidgets that represent full pages
-- Own the `FutureBuilder` for initial data loading
-- Delegate all state to their Provider
-- Handle lifecycle (`initState`, `dispose`)
+| Layer | Path | Role |
+|---|---|---|
+| Screens | `lib/screens/` | Pages, lifecycle, FutureBuilders |
+| Components | `lib/components/` | Feature sections; `Consumer` |
+| Custom widgets | `lib/custom_widgets/` | Reusable UI primitives |
+| Providers | `lib/provider/` | State + business logic |
+| Services | `lib/services/` | Stateless API wrappers |
+| Repositories | `lib/repositories/` | Cache orchestration / Firestore |
+| Models | `lib/model/` | JSON ↔ Dart |
+| Network | `lib/network/` | HTTP + typed exceptions |
 
-### Components (`lib/components/`)
-- Stateless compositions of custom widgets
-- Consume providers via `Consumer<T>`
-- Represent a logical section of a screen (e.g., attendance calendar, fee card)
+## Navigation
 
-### Custom Widgets (`lib/custom_widgets/`)
-- Pure, reusable UI primitives with no business logic
-- Examples: `CustomAppBar`, `CustomTextFormField`, `CustomAppButton`, `GlassmorphicCard`
-- Form the design system foundation
+- String constants: `AppNavRoutes` (`lib/routes/app_navigation_routes.dart`)
+- Switch mapper: `RouteGenerator` (`lib/routes/route_generator.dart`)
+- Imperative helper: `AppNavigation` with global `navigatorKey`
+- Transitions: Fade 300ms
+- **Not used:** GoRouter, AutoRoute, Navigator 2.0, OS deep links
 
-### Providers (`lib/provider/`)
-- Extend `ChangeNotifier`
-- Hold all mutable state
-- Contain business logic and data transformation
-- Call services and update UI via `notifyListeners()`
-- Registered globally in `app_providers.dart` (30 providers)
+## Architecture pages
 
-### Services (`lib/services/`)
-- Static classes with static methods
-- Pure API call wrappers — no state, no UI logic
-- Parse JSON responses into typed Models
-- Throw typed exceptions on failure
+| Page | Topic |
+|---|---|
+| [[Architecture/Layers\|Layers]] | Presentation / Logic / Data / Network |
+| [[Architecture/State Management\|State Management]] | Provider + `notifyListeners` lifecycle |
+| [[Architecture/Provider Map\|Provider Map]] | 30 registered providers + gaps |
+| [[Architecture/Navigation\|Navigation]] | `RouteGenerator`, `AppNavRoutes`, `AuthWrapper` |
+| [[Architecture/Dependency Injection\|Dependency Injection]] | MultiProvider · static services · singletons |
+| [[Architecture/Repositories\|Repositories]] | All 5 repos + `LocalCacheManager` |
 
-### Models (`lib/model/`)
-- Plain Dart classes with `fromJson()` factory and `toJson()` method
-- Some use `freezed` / `json_serializable` for code generation
-- Represent API request/response schemas
+## Related diagrams
 
-### Network (`lib/network/`)
-- `ApiBaseHelper`: Centralized HTTP client with GET/POST/PUT/PATCH/DELETE
-- `AppExceptions`: Typed exceptions (FetchData, BadRequest, InvalidInput, UnAuthorized)
-- Handles: SocketException, FormatException, TimeoutException
+- [[Diagrams/Master Architecture|Master Architecture]] · [[Diagrams/Startup Flow|Startup Flow]] · [[Diagrams/Notification Flow|Notification Flow]]
+- [[Diagrams/Payment Flow|Payment Flow]] · [[Diagrams/Result Flow|Result Flow]] · [[Diagrams/Theme Flow|Theme Flow]]
+- [[Diagrams/Configuration Flow|Configuration Flow]] · [[Diagrams/Deep Link Flow|Deep Link Flow]]
 
-## Navigation Architecture
+## Related hubs
 
-```mermaid
-graph TD
-    NG["RouteGenerator.generateRoute()"] -->|switch on name| R["60+ named routes"]
-    R --> S["Screen Widget"]
-    AN["AppNavigation"] -->|navigateTo()| NG
-    AN -->|pushReplacementTo()| NG
-    AN -->|pushAndKillAll()| NG
-    AN -->|goBack()| NAV["Navigator"]
-```
-
-- All routes are string constants in `AppNavRoutes`
-- `RouteGenerator` uses a `switch` statement mapping route names → Screen widgets
-- Transitions: `FadeTransition` with 300ms duration
-- Screen arguments passed via `settings.arguments`
-
-## Related Pages
-
-- [[Provider Map]]
-- [[API/Endpoint Reference|Endpoint Reference]]
-- [[Design System/Index|Design System]]
+- [[Home]] · [[API/Index|API]] · [[Firebase/Index|Firebase]] · [[Flutter/Index|Flutter]] · [[Diagrams/Index|Diagrams]]

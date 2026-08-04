@@ -1,3 +1,13 @@
+---
+title: Eye on Your Child Flow
+description: User journey documentation: Eye on Your Child Flow.
+tags: [cityzens, flows]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Eye on Your Child Flow
 
 ## Overview

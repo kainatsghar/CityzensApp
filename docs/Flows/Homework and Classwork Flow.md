@@ -1,3 +1,13 @@
+---
+title: Homework and Classwork Flow
+description: User journey documentation: Homework and Classwork Flow.
+tags: [cityzens, flows]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Homework & Classwork Flow
 
 ## Overview

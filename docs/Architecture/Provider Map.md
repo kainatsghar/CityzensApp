@@ -1,6 +1,18 @@
+---
+title: Provider Map
+description: All 30 MultiProvider registrations, dependency notes, and unregistered/empty provider dirs.
+tags: [cityzens, architecture, provider, registry]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Provider Map
 
-All 30 providers are registered globally in `lib/provider/app_providers.dart` via `MultiProvider`.
+> Back to [[Home]] · [[Architecture/Index|Architecture]] · [[Architecture/State Management|State Management]]
+
+All **30** providers are registered globally in `lib/provider/app_providers.dart` via `MultiProvider` (`lib/main.dart`).
 
 ## Provider Registry
 
@@ -37,6 +49,19 @@ All 30 providers are registered globally in `lib/provider/app_providers.dart` vi
 | 29 | `SplashProvider` | Splash screen logic | Init state |
 | 30 | `StudentDashboardProvider` | Student dashboard + multi-child | `activeChildData`, `switchActiveChild()` |
 
+## Not registered
+
+| Item | Path | Note |
+|---|---|---|
+| `ConnectivityProvider` | `lib/provider/Connectivity/connectivity_provider.dart` | Fully implemented (`connectivity_plus`); **not** listed in `appProviders`. Comments show intended `ChangeNotifierProvider` usage, but the app does not wire it today. |
+
+## Empty provider directories
+
+| Directory | Status |
+|---|---|
+| `lib/provider/IEP/` | **Empty** — no Dart files. IEP UI exists under `lib/screens/Student/IndividualEducationPlan/` without a dedicated provider. |
+| `lib/provider/CircularAnnouncement/` | **Empty** — circular feature uses `CircularProvider` + `lib/services/CircularAnnouncement/` / models instead. |
+
 ## Provider Dependency Graph
 
 ```mermaid
@@ -58,4 +83,6 @@ graph TD
 ## Related Pages
 
 - [[Architecture/Index|Architecture Overview]]
-- [[API/Endpoint Reference|Endpoint Reference]]
+- [[Architecture/State Management|State Management]]
+- [[Architecture/Dependency Injection|DI]]
+- [[API/Index|API Catalog]]

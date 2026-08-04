@@ -1,3 +1,13 @@
+---
+title: Class Test Results Flow
+description: User journey documentation: Class Test Results Flow.
+tags: [cityzens, flows]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Class Test Results Flow
 
 ## Overview

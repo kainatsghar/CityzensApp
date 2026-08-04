@@ -1,3 +1,13 @@
+---
+title: Student Attendance Flow
+description: User journey documentation: Student Attendance Flow.
+tags: [cityzens, flows]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Student Attendance Flow
 
 ## Overview

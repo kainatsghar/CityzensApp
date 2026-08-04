@@ -1,3 +1,13 @@
+---
+title: Authentication Flow
+description: User journey documentation: Authentication Flow.
+tags: [cityzens, flows]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Authentication Flow
 
 ## Overview

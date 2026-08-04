@@ -1,3 +1,13 @@
+---
+title: Term Results Flow
+description: User journey documentation: Term Results Flow.
+tags: [cityzens, flows]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Term Results Flow
 
 ## Overview

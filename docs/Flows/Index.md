@@ -1,6 +1,32 @@
+---
+title: Flows Index
+description: Index of Cityzens user journey documentation for roles and features.
+tags: [cityzens, flows, index]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # User Flow Documentation
 
+> Back to [[Home]] · App version **2.0.0+89** (`pubspec.yaml`)
+
 This section documents the complete user journeys for each role and every major feature in the Cityzens app.
+
+> [!note] Documentation version
+> Flow pages in this folder were refreshed **2026-08-04** against code. Prefer these pages and [[Diagrams/Index|Diagrams]] over stale README journey notes.
+
+---
+
+## Platform / cross-cutting
+
+| Flow | Description |
+|---|---|
+| [[Splash and Startup Flow]] | SplashProvider, promotion gate, AuthWrapper |
+| [[Promotion Flow]] | `GetAllLaunchPromotions`, PromotionScreenUI |
+| [[Notification Flow]] | FCM + `Notifications` API inbox |
+| [[Result PDF Flow]] | PDFResults, AllPDFResults, ResultPdfDownloadService |
 
 ---
 
@@ -40,7 +66,7 @@ This section documents the complete user journeys for each role and every major 
 | [[Timetable Flow]] | Teacher (CRUD), Student (view) | 9×5 grid, subject abbreviations |
 | [[Eye on Your Child Flow]] | Teacher (create), Parent (view) | Activity updates with photos (up to 3), early years |
 | [[Fee and Payment Flow]] | Student/Parent | Outstanding challans, receipts, WebView payment gateway |
-| [[Complaint and Query Flow]] | Student/Parent | Categorized complaints, auto-fill user info, multi-child |
+| [[Complaint and Query Flow]] | Student/Parent | Categorized complaints; save path currently mocked |
 
 ---
 
@@ -63,3 +89,9 @@ graph LR
 3. **Service** makes the HTTP call via `ApiBaseHelper`
 4. Response is parsed into a **Model** and stored in the provider
 5. `notifyListeners()` triggers a UI rebuild
+
+## Related
+
+- [[Features/Index|Feature Status Matrix]]
+- [[Diagrams/Index|Diagrams]]
+- [[Architecture/State Management|State Management]]

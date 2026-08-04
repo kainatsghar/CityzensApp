@@ -1,71 +1,87 @@
+---
+title: Fee and Payment Flow
+description: Outstanding challans and WebView pay; isNewPaymentFlowEnabled hardcoded true.
+tags: [cityzens, flows, fees, payment, webview]
+created: 2026-08-04
+updated: 2026-08-04
+owner: Cityzens Engineering
+status: verified
+---
+
 # Fee & Payment Flow
 
-## Overview
+> Back to [[Home]] · [[Flows/Index|Flows]] · Diagram: [[Diagrams/Payment Flow|Payment Flow]]
 
-Students and parents view outstanding fee challans from the AIMS+ ERP system and make payments via a secure WebView gateway. Receipts for past payments are also displayed.
+Students and parents view outstanding fee challans from AIMS+ ERP and pay via an in-app WebView. Receipts for past payments are also listed.
 
 ## Flow Diagram
 
 ```mermaid
 graph TD
-    A["Dashboard"] --> B["Tap 'Fee'"]
+    A["Dashboard"] --> B["Tap Fee"]
     B --> C["FeeChallanScreen"]
-    C --> D["initState: loadAllData()"]
-    D --> E["Future.wait():<br/>Outstanding + Receipts<br/>(parallel fetch)"]
+    C --> D["loadAllData()"]
+    D --> E["Future.wait Outstanding + Receipts"]
     
-    E -->|Loading| F["isLoading = true"]
-    E -->|Done| G["Two-tab view"]
-    
+    E --> G["Two-tab view"]
     G --> H["Tab 1: Outstanding Challans"]
     G --> I["Tab 2: Payment Receipts"]
     
-    H --> J["List of unpaid challans<br/>(Amount, Due Date, Period)"]
-    J -->|Tap challan| K["ChallanPaymentScreen"]
-    K --> L["WebView: billing.thecityschool.edu.pk"]
-    L --> M["Secure payment gateway"]
-    
-    I --> N["Last 5 payment receipts"]
-    N --> O["View receipt details"]
+    H --> J["Tap challan"]
+    J --> K["ChallanArgs isNewPaymentFlowEnabled: true"]
+    K --> L["ChallanPaymentScreen WebView"]
+    L --> M{"isNewPaymentFlowEnabled?"}
+    M -->|true| N["paymentGatewayNewURL + CNIC/studentId"]
+    M -->|false| O["paymentGatewayURL"]
 ```
 
 ## Data Loading
 
-`FeeChallanProvider.loadAllData()` uses `Future.wait()` to fetch both tabs concurrently:
+`FeeChallanProvider.loadAllData()` uses `Future.wait()`:
 
-```dart
-await Future.wait([
-  loadOutstandingRecords(),  // FeeChallanService.outStandingChallanRequest()
-  loadReceiptRecords(),      // FeeChallanService.challanReceiptRequest()
-]);
-```
+- `loadOutstandingRecords()` → `FeeChallanService.outStandingChallanRequest()`
+- `loadReceiptRecords()` → `FeeChallanService.challanReceiptRequest()`
 
-- `isLoading` flag manages the loading state
-- `loadError` captures any error for display
-- Pull-to-refresh triggers `loadAllData()` again from any tab
+Pull-to-refresh reloads both tabs.
 
-## Payment Gateway
+## Payment flag — hardcoded
 
-| Key | Value |
+Code-verified gap:
+
+| Piece | Status |
 |---|---|
-| **URL** | `https://billing.thecityschool.edu.pk/challan` |
-| **Direct Payment** | `https://billing.thecityschool.edu.pk/directpayment/` |
-| **Implementation** | `webview_flutter` package |
-| **Screen** | `ChallanPaymentScreen` |
-| **Arguments** | `ChallanArgs` passed via route arguments |
+| `outstanding_fee_component.dart` | Passes `isNewPaymentFlowEnabled: true` in `ChallanArgs` |
+| `FeatureConfigRepository` | Reads Firestore `newFeatures` / `newPaymentFlow` |
+| UI pay path | **Does not call** `FeatureConfigRepository` |
+
+Designed Firestore SSOT exists; Pay navigation currently always uses the new URL branch.
+
+## WebView URLs
+
+From `AppConstants` (`lib/utils/app_constants.dart`):
+
+| Constant | URL | When used |
+|---|---|---|
+| `paymentGatewayNewURL` | `https://billing.thecityschool.edu.pk/directpayment/` | Flag true → appended `{fatherCnic}/{studentId}` |
+| `paymentGatewayURL` | `https://billing.thecityschool.edu.pk/challan` | Flag false |
+
+`ChallanPaymentScreen` builds `urlLink` in `initState`, loads via `webview_flutter`, 30s load timeout.
 
 ## Key Files
 
 | File | Purpose |
 |---|---|
-| `provider/FeeChallan/feechallan_provider.dart` | Dual-tab data + loading state |
+| `provider/FeeChallan/feechallan_provider.dart` | Dual-tab data |
 | `screens/Student/Feechallans/fee_challans_screen.dart` | Two-tab screen |
 | `screens/Parent/ChallanPaymentScreen/challan_payment_screen.dart` | WebView payment |
+| `components/FeeChallanComponents/outstanding_fee_component.dart` | Hardcoded flag |
+| `repositories/FeatureConfig/feature_config_repository.dart` | Unused on Pay path |
 | `services/FeeChallan/feechallan_service.dart` | Outstanding + receipt APIs |
-| `model/FeeChallan/outstanding_challan_response.dart` | Outstanding model |
-| `model/FeeChallan/challan_receipts_response.dart` | Receipt model |
-| `routes/challan_args.dart` | Payment screen arguments |
+| `routes/challan_args.dart` | `ChallanArgs` |
 
 ## Related Pages
 
 - [[Student Flow]]
 - [[Parent Flow]]
+- [[Firebase/Firestore|Firestore]]
+- [[Diagrams/Payment Flow|Payment Flow diagram]]

@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "81128468b9718a54",
+        "id": "db1edff1cf4bf355",
         "type": "tabs",
         "children": [
           {
-            "id": "7f565243360a17d1",
+            "id": "3d044f6dff49505c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Flows/Circulars Flow.md",
+                "file": "Home.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Circulars Flow"
+              "title": "Home"
             }
           }
         ]
@@ -183,27 +183,34 @@
       "bases:Create new base": false
     }
   },
-  "active": "7f565243360a17d1",
+  "active": "3d044f6dff49505c",
   "lastOpenFiles": [
-    "Features/Index.md",
-    "Design System/Index.md",
-    "Credentials/Index.md",
-    "Architecture/Provider Map.md",
+    "2026-08-04.md",
+    "Firebase/Messaging.md",
+    "Untitled.canvas",
     "Architecture/Index.md",
+    "Architecture/Dependency Injection.md",
     "API/Index.md",
     "Home.md",
+    "Design System/Index.md",
+    "Features/Index.md",
+    "Flutter/Analytics and Logging.md",
+    "Handover/Vendor Guide.md",
+    "Handover/Index.md",
     "Notes/Index.md",
     "Flows/Complaint and Query Flow.md",
-    "Flows/Class Test Results Flow.md",
-    "Flows/Circulars Flow.md",
+    "Deployment/Release Checklist.md",
+    "Diagrams/Master Architecture.md",
+    "Credentials/Index.md",
+    "Backend/API Client.md",
     "Flows/Authentication Flow.md",
+    "Flows/Circulars Flow.md",
+    "Architecture/Provider Map.md",
+    "Flows/Class Test Results Flow.md",
     "Flows/Timetable Flow.md",
     "Flows/Eye on Your Child Flow.md",
     "Flows/Term Results Flow.md",
     "Flows/Fee and Payment Flow.md",
-    "Flows/Homework and Classwork Flow.md",
-    "Flows/Student Attendance Flow.md",
-    "Flows/Mark Attendance Flow.md",
-    "Credentials/secrets.md"
+    "Flows/Homework and Classwork Flow.md"
   ]
 }
