@@ -188,7 +188,7 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
                   child: FadeIn(
                     child: InkWell(
                       onTap:
-                          (splashProvider.activePromotion!.tapLinkURL == null &&
+                          (splashProvider.activePromotion!.tapLinkURL == null ||
                               splashProvider
                                   .activePromotion!
                                   .tapLinkURL!
@@ -197,14 +197,16 @@ class _PromotionScreenUIState extends State<PromotionScreenUI>
                           : () async {
                               // Track the tap
                               await AdAnalyticsService.logAdTap(
-                                adId: splashProvider.activePromotion!.id.toString(),
+                                adId: splashProvider.activePromotion!.id
+                                    .toString(),
                                 position: AdPosition.launchPage.displayName,
                                 adTitle: splashProvider.activePromotion!.title!,
                               );
 
                               // Track link open
                               await AdAnalyticsService.logAdOpenLink(
-                                adId: splashProvider.activePromotion!.id.toString(),
+                                adId: splashProvider.activePromotion!.id
+                                    .toString(),
                                 position: AdPosition.launchPage.displayName,
                               );
                               HelperFunction.launchURL(

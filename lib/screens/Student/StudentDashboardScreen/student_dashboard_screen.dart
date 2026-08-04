@@ -191,11 +191,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.error_outline,
-            color: AppColors.lightRed,
-            size: 48,
-          ),
+          const Icon(Icons.error_outline, color: AppColors.lightRed, size: 48),
           const SizedBox(height: 16),
           Text(
             error,
@@ -608,7 +604,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
   }
 
   Widget _buildAcademicsNavHub(String gradeId, String localGradeId) {
-    const hiddenResultHubGrades = {'2', '3', '4', '5', '6'};
+    const hiddenResultHubGrades = {
+      '2', '3', '4',
+      // , '5', '6'
+    };
     final bool hideResultHub =
         hiddenResultHubGrades.contains(gradeId) ||
         hiddenResultHubGrades.contains(localGradeId);
@@ -915,7 +914,9 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                 style: TextStyle(
                   color: isDormant
                       ? AppColors.grey400
-                      : (isPrimary ? AppColors.white : AppColors.primaryDarkBlue),
+                      : (isPrimary
+                            ? AppColors.white
+                            : AppColors.primaryDarkBlue),
                   fontWeight: FontWeight.w800,
                   fontSize: 13,
                   letterSpacing: 0.2,

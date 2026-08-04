@@ -172,10 +172,9 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                               builder: (context, opacity, _) {
                                 return SliverAppBar(
                                   expandedHeight: 75,
-                                  backgroundColor: AppColors.white
-                                      .withValues(
-                                        alpha: opacity.clamp(0.0, 0.95),
-                                      ),
+                                  backgroundColor: AppColors.white.withValues(
+                                    alpha: opacity.clamp(0.0, 0.95),
+                                  ),
                                   surfaceTintColor: Colors.transparent,
                                   elevation: 0,
                                   pinned: true,
@@ -467,7 +466,10 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
                     ),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [AppColors.primaryColor, AppColors.primaryDarkBlue],
+                        colors: [
+                          AppColors.primaryColor,
+                          AppColors.primaryDarkBlue,
+                        ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -660,7 +662,10 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
               arguments: 0,
             ),
           ),
-          const Divider(height: 24, color: AppColors.black12), // Neutral divider
+          const Divider(
+            height: 24,
+            color: AppColors.black12,
+          ), // Neutral divider
           _buildAcademicRow(
             title: 'Classwork',
             icon: Icons.assignment_outlined,
@@ -672,7 +677,10 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
               arguments: 1,
             ),
           ),
-          const Divider(height: 24, color: AppColors.black12), // Neutral divider
+          const Divider(
+            height: 24,
+            color: AppColors.black12,
+          ), // Neutral divider
           _buildAcademicRow(
             title: 'Circulars',
             icon: Icons.campaign_outlined,
@@ -772,7 +780,10 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen>
         final gradeId = localValue.userData?.info?.gradeId?.toString() ?? '';
         final localGradeId = localValue.gradeId?.toString() ?? '';
 
-        const hiddenResultHubGrades = {'2', '3', '4', '5', '6'};
+        const hiddenResultHubGrades = {
+          '2', '3', '4',
+          //, '5', '6'
+        };
 
         final bool hideResultHub =
             hiddenResultHubGrades.contains(gradeId) ||
@@ -1022,7 +1033,11 @@ Widget _buildWrapChips<T>({
             mainAxisSize: MainAxisSize.min,
             children: [
               if (isSubject && isSelected) ...[
-                const Icon(Icons.book_rounded, size: 14, color: AppColors.white),
+                const Icon(
+                  Icons.book_rounded,
+                  size: 14,
+                  color: AppColors.white,
+                ),
                 const SizedBox(width: 8),
               ],
               Flexible(

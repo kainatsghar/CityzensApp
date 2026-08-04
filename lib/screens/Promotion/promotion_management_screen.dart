@@ -190,9 +190,7 @@ class _PromotionManagementScreenState extends State<PromotionManagementScreen> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.black.withValues(
-                          alpha: 0.05,
-                        ),
+                        color: AppColors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -208,13 +206,13 @@ class _PromotionManagementScreenState extends State<PromotionManagementScreen> {
                           // Media Preview
                           if (promo.url != null && promo.url!.isNotEmpty)
                             Container(
-                              height: 140,
+                              height: 240,
                               width: double.infinity,
                               color: AppColors.primaryLightBlue,
                               child: promo.promotionType == 'image'
                                   ? CachedNetworkImage(
                                       imageUrl: promo.url!,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                       errorWidget: (context, url, error) =>
                                           const Center(
                                             child: Icon(
@@ -325,10 +323,7 @@ class _PromotionManagementScreenState extends State<PromotionManagementScreen> {
         icon: const Icon(Icons.add, color: AppColors.white),
         label: const Text(
           'Create',
-          style: TextStyle(
-            color: AppColors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );
