@@ -7,6 +7,8 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
+import 'package:tcs_app/provider/TeacherProfile/teacher_profile_provider.dart';
+import 'package:tcs_app/model/TeacherProfile/teacher_profile_response.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/utils/app_constants.dart';
 import 'package:tcs_app/model/MultiChild/multi_child_response.dart';
@@ -75,13 +77,49 @@ class SupportFormProvider with ChangeNotifier {
       emailController.text = localProvider.userData!.info!.fatherEmail ?? "";
       mobileContactController.text = "";
     } else if (userType == "Teacher") {
-      nameController.text = localProvider.userData!.name ?? "";
-      idController.text = '${localProvider.userData!.userName}';
-      campusController.text = localProvider.userData!.info!.centerName ?? "";
-      regionController.text = localProvider.userData!.info!.regionName ?? "";
-      emailController.text = "";
-      mobileContactController.text =
-          localProvider.userData!.info!.fatherEmail ?? "";
+      TeacherProfileResponse? teacherProfile;
+      try {
+        final teacherProfileProvider = Provider.of<TeacherProfileProvider>(
+          AppNavigation.currentContext!,
+          listen: false,
+        );
+        teacherProfile = teacherProfileProvider.profileResponse;
+      } catch (_) {}
+
+      final name = teacherProfile?.teacherName?.isNotEmpty == true
+          ? teacherProfile!.teacherName!
+          : localProvider.userData?.name?.isNotEmpty == true
+              ? localProvider.userData!.name!
+              : localProvider.userData?.info?.name ?? "";
+
+      final id = teacherProfile?.employeeCode?.isNotEmpty == true
+          ? teacherProfile!.employeeCode!
+          : teacherProfile?.cnicNumber?.isNotEmpty == true
+              ? teacherProfile!.cnicNumber!
+              : '${localProvider.userData?.userName ?? ""}';
+
+      final campus = teacherProfile?.branch?.isNotEmpty == true
+          ? teacherProfile!.branch!
+          : localProvider.userData?.info?.centerName ?? "";
+
+      final region = teacherProfile?.region?.isNotEmpty == true
+          ? teacherProfile!.region!
+          : localProvider.userData?.info?.regionName ?? "";
+
+      final email = teacherProfile?.email?.isNotEmpty == true
+          ? teacherProfile!.email!
+          : localProvider.userData?.info?.fatherEmail ?? "";
+
+      final cell = teacherProfile?.employeeCell?.isNotEmpty == true
+          ? teacherProfile!.employeeCell!
+          : "";
+
+      nameController.text = name;
+      idController.text = id;
+      campusController.text = campus;
+      regionController.text = region;
+      emailController.text = email;
+      mobileContactController.text = cell;
     } else if (userType == "Parent") {
       nameController.text = "";
       idController.text = '${localProvider.userData!.userName}';

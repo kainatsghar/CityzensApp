@@ -10,6 +10,7 @@ import 'package:tcs_app/custom_widgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/custom_widgets/ParticleBackground/particle_background.dart';
 import 'package:tcs_app/provider/SupportForm/support_form_provider.dart';
 import 'package:tcs_app/provider/StudentDashboard/student_dashboard_provider.dart';
+import 'package:tcs_app/provider/TeacherProfile/teacher_profile_provider.dart';
 import 'package:tcs_app/provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/routes/app_navigation.dart';
 import 'package:tcs_app/utils/app_colors.dart';
@@ -47,6 +48,23 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
       _provider.initializeUserData();
     }
     _provider.loadDeviceInfo();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      final localData = Provider.of<LocalDataProvider>(context, listen: false);
+      if (localData.userData?.userType == 'Teacher') {
+        final teacherProfileProvider = Provider.of<TeacherProfileProvider>(
+          context,
+          listen: false,
+        );
+        if (teacherProfileProvider.profileResponse == null) {
+          await teacherProfileProvider.loadTeacherProfile();
+          if (mounted) {
+            _provider.initializeUserData();
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -75,8 +93,9 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                     SliverToBoxAdapter(
                       child: Consumer<LocalDataProvider>(
                         builder: (context, localData, _) {
-                          if (localData.userData?.userType == 'Parent') {
-                            return _buildParentHeader(localData);
+                          final userType = localData.userData?.userType;
+                          if (userType == 'Parent' || userType == 'Teacher') {
+                            return _buildUserHeader(localData);
                           }
                           return _buildReusableHeader();
                         },
@@ -214,9 +233,13 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                                         },
                                       ),
                                       if (provider.userType == "Parent" &&
-                                          provider.multiChildResponse?.children !=
+                                          provider
+                                                  .multiChildResponse
+                                                  ?.children !=
                                               null &&
-                                          provider.multiChildResponse!.children!
+                                          provider
+                                              .multiChildResponse!
+                                              .children!
                                               .isNotEmpty) ...[
                                         const SizedBox(height: 24),
                                         _buildSectionTitle('LINKED CHILDREN'),
@@ -408,7 +431,31 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
     );
   }
 
-  Widget _buildParentHeader(LocalDataProvider localData) {
+  Widget _buildUserHeader(LocalDataProvider localData) {
+    final userType = localData.userData?.userType ?? '';
+    final name = localData.userData?.name?.isNotEmpty == true
+        ? localData.userData!.name!
+        : localData.userData?.info?.name?.isNotEmpty == true
+        ? localData.userData!.info!.name!
+        : (userType.isNotEmpty ? userType : 'USER');
+
+    final centerName = localData.userData?.info?.centerName ?? '';
+    final regionName = localData.userData?.info?.regionName ?? '';
+    String subtitle = '';
+    if (centerName.isNotEmpty && regionName.isNotEmpty) {
+      subtitle = '$centerName • $regionName';
+    } else if (centerName.isNotEmpty) {
+      subtitle = centerName;
+    } else if (regionName.isNotEmpty) {
+      subtitle = regionName;
+    }
+
+    final isTeacher = userType == 'Teacher';
+    final badgeTitle = isTeacher ? 'TEACHER FEEDBACK' : 'SHARE FEEDBACK';
+    final iconData = isTeacher
+        ? Icons.school_rounded
+        : Icons.rate_review_rounded;
+
     return FadeInDown(
       duration: const Duration(milliseconds: 600),
       child: Container(
@@ -437,20 +484,16 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                 color: AppColors.white.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.rate_review_rounded,
-                color: AppColors.secondaryColor,
-                size: 32,
-              ),
+              child: Icon(iconData, color: AppColors.secondaryColor, size: 32),
             ),
             const SizedBox(width: 20),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'SHARE FEEDBACK',
-                    style: TextStyle(
+                  Text(
+                    badgeTitle,
+                    style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w900,
                       color: AppColors.secondaryColor,
@@ -459,13 +502,25 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    localData.userData?.name?.toUpperCase() ?? 'PARENT',
+                    name.toUpperCase(),
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.w900,
                       color: AppColors.white,
                     ),
                   ),
+                  if (subtitle.isNotEmpty) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.white.withValues(alpha: 0.8),
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -497,4 +552,3 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
     );
   }
 }
-
