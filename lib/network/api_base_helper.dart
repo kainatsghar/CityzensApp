@@ -34,7 +34,10 @@ class ApiBaseHelper {
   }) async {
     http.Response response;
 
-    final headers = {'Authorization': 'Bearer $token'};
+    final headers = <String, String>{};
+    if (token != null && token.isNotEmpty) {
+      headers['Authorization'] = 'Bearer $token';
+    }
     headers.addAll(AppConstants.appHeaders);
 
     try {

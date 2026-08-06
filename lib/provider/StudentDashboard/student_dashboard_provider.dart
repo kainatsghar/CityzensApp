@@ -86,6 +86,11 @@ class StudentDashboardProvider with ChangeNotifier {
           localDataProvider.setSGradeId(firstChild.classId);
         }
         await initializeForParent(_multiChildResponse!.children!);
+      } else {
+        _isLoading = false;
+        _isFirstChildReady = true;
+        _isAllChildrenReady = true;
+        notifyListeners();
       }
     } catch (e) {
       _loadError = e.toString();
@@ -96,7 +101,15 @@ class StudentDashboardProvider with ChangeNotifier {
 
   Future<void> initializeForParent(List<ChildInfo> children) async {
     final token = localDataProvider.userData?.tokenId;
-    if (token == null || children.isEmpty) return;
+    if (token == null) return;
+
+    if (children.isEmpty) {
+      _isLoading = false;
+      _isFirstChildReady = true;
+      _isAllChildrenReady = true;
+      notifyListeners();
+      return;
+    }
 
     _activeStudentId = localDataProvider.studentId;
     if (_activeStudentId == null || _activeStudentId!.isEmpty) {

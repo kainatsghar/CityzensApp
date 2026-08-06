@@ -95,7 +95,9 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         if (provider.multiChildResponse == null) {
           provider.fetchMultiChildData();
         } else {
-          provider.initializeForParent(provider.multiChildResponse!.children!);
+          provider.initializeForParent(
+            provider.multiChildResponse?.children ?? [],
+          );
         }
       } else {
         provider.initializeForStudent();
@@ -155,6 +157,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                 else if (provider.loadError != null &&
                     !provider.isFirstChildReady)
                   _buildErrorState(provider.loadError!)
+                else if (_isParent &&
+                    (provider.multiChildResponse?.children == null ||
+                        provider.multiChildResponse!.children!.isEmpty))
+                  _buildNoChildrenState(userName, provider)
                 else
                   _buildDashboardContent(
                     localData,
@@ -219,6 +225,149 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
               ),
             ),
             child: const Text('Retry Connection'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNoChildrenState(
+    String userName,
+    StudentDashboardProvider provider,
+  ) {
+    return RefreshIndicator(
+      color: AppColors.primaryBlue,
+      displacement: 80,
+      onRefresh: () async {
+        await provider.fetchMultiChildData();
+      },
+      child: CustomScrollView(
+        controller: _scrollController,
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        slivers: [
+          ValueListenableBuilder<double>(
+            valueListenable: _appBarOpacityNotifier,
+            builder: (context, opacity, _) {
+              return _buildAppBar(
+                userName,
+                isDynamic: true,
+                currentOpacity: opacity,
+              );
+            },
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 32.0,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryBlue.withValues(alpha: 0.08),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.primaryBlue.withValues(alpha: 0.15),
+                        width: 2,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.family_restroom_rounded,
+                      color: AppColors.primaryBlue,
+                      size: 64,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'No Active Students Linked',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.primaryDarkBlue,
+                      letterSpacing: 0.2,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'No active or assigned student records were found for your parent account.\n\nOnly registered students with active enrollment status (Approved/Assigned) are listed here. If your child\'s admission or transfer is pending approval, please contact school administration.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.softGreyText,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  SizedBox(
+                    width: 200,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: provider.isLoading
+                          ? null
+                          : () {
+                              HapticFeedback.lightImpact();
+                              provider.fetchMultiChildData();
+                            },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryBlue,
+                        disabledBackgroundColor: AppColors.primaryBlue
+                            .withValues(alpha: 0.6),
+                        foregroundColor: AppColors.white,
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      child: provider.isLoading
+                          ? const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 18,
+                                  height: 18,
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.white,
+                                    strokeWidth: 2.2,
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  'Refreshing...',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.refresh_rounded, size: 20),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Refresh Data',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

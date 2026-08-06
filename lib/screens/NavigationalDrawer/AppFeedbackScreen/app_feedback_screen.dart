@@ -214,8 +214,10 @@ class AppFeedbackScreenState extends State<AppFeedbackScreen>
                                         },
                                       ),
                                       if (provider.userType == "Parent" &&
-                                          provider.multiChildResponse !=
-                                              null) ...[
+                                          provider.multiChildResponse?.children !=
+                                              null &&
+                                          provider.multiChildResponse!.children!
+                                              .isNotEmpty) ...[
                                         const SizedBox(height: 24),
                                         _buildSectionTitle('LINKED CHILDREN'),
                                         const SizedBox(height: 12),
