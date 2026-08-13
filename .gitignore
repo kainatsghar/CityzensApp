@@ -166,3 +166,6 @@ app.*.symbols
 
 # Secure credentials (NEVER commit)
 docs/Credentials/secrets.md
+# Local tooling
+.venv-docs/
+.pdf_preview/
