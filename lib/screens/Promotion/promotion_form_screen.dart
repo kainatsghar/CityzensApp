@@ -369,7 +369,7 @@ class _PromotionFormScreenState extends State<PromotionFormScreen> {
                             ),
                             // Type dropdown (auto-set on file pick)
                             DropdownButtonFormField<PromotionType>(
-                              value: _promotionType,
+                              initialValue: _promotionType,
                               decoration: InputDecoration(
                                 labelText: 'Type',
                                 filled: true,

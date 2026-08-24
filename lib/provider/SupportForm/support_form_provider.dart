@@ -96,7 +96,7 @@ class SupportFormProvider with ChangeNotifier {
           ? teacherProfile!.employeeCode!
           : teacherProfile?.cnicNumber?.isNotEmpty == true
               ? teacherProfile!.cnicNumber!
-              : '${localProvider.userData?.userName ?? ""}';
+              : localProvider.userData?.userName ?? "";
 
       final campus = teacherProfile?.branch?.isNotEmpty == true
           ? teacherProfile!.branch!
