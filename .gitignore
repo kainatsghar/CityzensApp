@@ -91,6 +91,10 @@ unlinked_spec.ds
 *.jks
 local.properties
 **/.cxx/
+**/android/.kotlin/
+
+# Local JDKs (never commit)
+.jdks/
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
