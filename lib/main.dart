@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tcs_app/Utils/media_query_util.dart';
 
-import 'Provider/app_providers.dart';
+import 'package:tcs_app/citizen/Provider/app_providers.dart';
 import 'Routes/app_navigation.dart';
 import 'Routes/app_navigation_routes.dart';
 import 'Routes/route_generator.dart';
 import 'Screens/SplashScreen/splash_screen_ui.dart';
-import 'Services/InitServices/app_initializer.dart';
+import 'package:tcs_app/citizen/Services/InitServices/app_initializer.dart';
 import 'Utils/app_themes.dart';
 
 // Background FCM handler

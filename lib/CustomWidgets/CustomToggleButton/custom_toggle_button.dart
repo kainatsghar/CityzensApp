@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tcs_app/model/StudentAttendance/student_list_response.dart';
+import 'package:tcs_app/citizen/Model/StudentAttendance/student_list_response.dart';
 
 class CustomToggleButton extends StatelessWidget {
   final Student student;

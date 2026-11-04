@@ -5,15 +5,15 @@ import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
 import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
-import 'package:tcs_app/Provider/Login/login_provider.dart';
+import 'package:tcs_app/citizen/Provider/Login/login_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
-import 'package:tcs_app/Services/Alumni/alumni_login_service.dart';
+import 'package:tcs_app/alumni/Services/alumni_login_service.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/Utils/validators.dart';
 
-import '../../CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
+import 'package:tcs_app/CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/Provider/Splash/splash_provider.dart';
+import 'package:tcs_app/citizen/Provider/Splash/splash_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';

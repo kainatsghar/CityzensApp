@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_bottom_sheet.dart';
-import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/citizen/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 class ImagePickerBottomSheet extends StatelessWidget {

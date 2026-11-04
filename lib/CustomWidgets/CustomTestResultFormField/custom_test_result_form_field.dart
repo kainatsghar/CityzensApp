@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomTestResultFormField extends StatelessWidget {
   final IconData? prefixIcon;

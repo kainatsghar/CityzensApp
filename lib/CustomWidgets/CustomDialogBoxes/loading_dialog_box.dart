@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loading_widget.dart';
-import '../../Routes/app_navigation.dart';
+import 'package:tcs_app/Routes/app_navigation.dart';
 
 class DialogBuilder {
   static Future showLoadingIndicator() => showDialog(

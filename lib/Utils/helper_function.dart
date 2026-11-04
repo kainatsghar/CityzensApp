@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/imagepicker_bottom_sheet.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
-import 'package:tcs_app/model/Options/options.dart';
+import 'package:tcs_app/citizen/Model/Options/options.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelperFunction {

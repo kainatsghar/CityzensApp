@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomDivider extends StatelessWidget {
   final double? horizontalPadding;
