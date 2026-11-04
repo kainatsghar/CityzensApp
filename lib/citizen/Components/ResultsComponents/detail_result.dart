@@ -5,7 +5,7 @@ import 'package:tcs_app/citizen/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
-import 'package:tcs_app/CustomWidgets/CustomSubjectGrade/custom_subject_grade.dart';
+import 'package:tcs_app/citizen/CustomWidgets/CustomSubjectGrade/custom_subject_grade.dart';
 
 class DetailResult extends StatelessWidget {
   final int index;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/citizen/Components/LibraryComponents/single_library_item.dart';
-import 'package:tcs_app/CustomWidgets/CustomStudentInfo/custom_student_info.dart';
+import 'package:tcs_app/citizen/CustomWidgets/CustomStudentInfo/custom_student_info.dart';
 import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/citizen/Provider/Library/library_provider.dart';
 

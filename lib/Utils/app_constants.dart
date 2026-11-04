@@ -1,54 +1,42 @@
+import 'package:tcs_app/citizen/Utils/citizen_constants.dart';
+
 class AppConstants {
-  static String apiBaseURL = "$baseUrl/api/";
-  static String baseUrl = apiTestBaseURL;
-  //   static String baseUrl = apiTestBaseURL;
-  //   static String baseUrl = kDebugMode
-  //       ? apiTestBaseURL
-  //       : apiLiveBaseURL; // Use test URL in debug mode, live URL in release
-
-  //We are using this URL for Firebase Remote Config "apiBaseUrl"
-  // static const String apiLiveBaseURL = "https://app.csn.edu.pk:8090";
-  static const String apiLiveBaseURL = "https://cityzenapi.csn.edu.pk";
-  static const String apiTestBaseURL = "https://testcityzenapi.csn.edu.pk";
-
+  // Common Application Info
   static const String appVersion = '1.13.2';
+  static const String textFontFamily = 'NexaText';
+  static const String appSupportEmail = 'appsupport@csn.edu.pk';
+  static const String userDataKey = 'userData';
 
-  /// Error Messages
+  // Common Header Configuration
+  static const Map<String, String> appHeaders = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  };
+
+  // Common Network & Exception Messages
   static const String exceptionMessage =
       "Something Went Wrong, Please Try Again Later";
-  static const String markAttendanceMessage = "Please Mark Complete Attendance";
   static const String serverExceptionMessage =
       "Server Not Responding, Please Try Again Later";
-  static const String feedExceptionMessage =
-      "Feed Server Not Connected, Please Retry";
   static const String badResponseFormat = 'Bad Response Format';
   static const String slowInternetMsg = 'Slow Internet, Please Try Again';
-
   static const String noInternetMsg =
       'No Internet Connection, Connect Your Internet & Try Again';
   static const String noRecordFound = 'No Record Found';
 
-  /// Other Constants
-  static const String textFontFamily = 'NexaText';
+  // Forwarding Citizen constants for backward compatibility
+  static String get apiBaseURL => CitizenConstants.apiBaseURL;
+  static set apiBaseURL(String v) => CitizenConstants.apiBaseURL = v;
+  static String get baseUrl => CitizenConstants.baseUrl;
+  static set baseUrl(String v) => CitizenConstants.baseUrl = v;
+  static String get apiLiveBaseURL => CitizenConstants.apiLiveBaseURL;
+  static String get apiTestBaseURL => CitizenConstants.apiTestBaseURL;
 
-  /// External Links
-  static const String alumniIOSAppURL =
-      "https://apps.apple.com/us/app/a-cityzen-for-life/id1660765260";
-  static const String alumniAndroidAppURL =
-      "https://play.google.com/store/apps/details?id=com.viion.tcsalumniapp&pli=1";
-  static const String paymentGatewayURL =
-      'https://billing.thecityschool.edu.pk/challan';
+  static const String markAttendanceMessage =
+      CitizenConstants.markAttendanceMessage;
+  static const String feedExceptionMessage =
+      CitizenConstants.feedExceptionMessage;
+  static const String paymentGatewayURL = CitizenConstants.paymentGatewayURL;
   static const String paymentGatewayNewURL =
-      'https://billing.thecityschool.edu.pk/directpayment/';
-
-  /// Support Email
-  static const String appSupportEmail = 'appsupport@csn.edu.pk';
-
-  /// Shared Preferences Keys
-  static const String userDataKey = 'userData';
-
-  static const Map<String, String> appHeaders = {
-    'Content-Type': 'application/json; charset=UTF-8',
-    'Accept': 'application/json',
-  };
+      CitizenConstants.paymentGatewayNewURL;
 }

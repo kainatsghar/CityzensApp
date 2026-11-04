@@ -5,7 +5,7 @@ import 'package:tcs_app/citizen/Model/ClassTestResult/class_test_student_list_re
 import 'package:tcs_app/citizen/Model/ClassTestResult/class_test_student_list_response.dart';
 import 'package:tcs_app/citizen/Model/ClassTestResult/student_test_result_list_request.dart';
 import 'package:tcs_app/citizen/Model/ClassTestResult/student_test_result_list_response.dart';
-import 'package:tcs_app/Network/api_base_helper.dart';
+import 'package:tcs_app/citizen/Network/api_base_helper.dart';
 import 'package:tcs_app/citizen/Model/ResponseMessage/response_message.dart';
 
 class ClassTestResultService {

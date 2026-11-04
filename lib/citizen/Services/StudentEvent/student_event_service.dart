@@ -1,7 +1,7 @@
 import 'package:tcs_app/citizen/Model/SchoolEvents/school_events_request.dart';
 import 'package:tcs_app/citizen/Model/SchoolEvents/school_events_response.dart';
 
-import 'package:tcs_app/Network/api_base_helper.dart';
+import 'package:tcs_app/citizen/Network/api_base_helper.dart';
 
 class StudentEventService {
   static Future<SchoolEeventsResponse> getEventRecords(

@@ -4,19 +4,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tcs_app/alumni/Constants/alumni_constants.dart';
 import 'package:tcs_app/alumni/Model/alumni_user_model.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 
 class AlumniLoginService {
-  static const String baseUrl = 'https://tcsalumni.linkalumniapp.com/';
-  static const String loginEndpoint = 'api/user_login';
-
-  static const String keyIsAlumniLoggedIn = 'is_alumni_logged_in';
-  static const String keyAlumniUserData = 'alumni_user_data';
-  static const String keyAlumniToken = 'token';
-  static const String keyAlumniUserId = 'user_id';
-  static const String keyAlumniLoginStatus = 'loginStatus';
-
   /// Performs Alumni user login against the TCS Alumni backend API
   static Future<AlumniLoginResponse> loginRequest({
     required String email,
@@ -45,7 +37,9 @@ class AlumniLoginService {
         'device_status': 'A',
       };
 
-      final uri = Uri.parse('$baseUrl$loginEndpoint');
+      final uri = Uri.parse(
+        '${AlumniConstants.baseUrl}${AlumniConstants.loginEndpoint}',
+      );
       final request = http.MultipartRequest('POST', uri);
       request.headers.addAll({
         'Accept': 'application/json',
@@ -111,15 +105,18 @@ class AlumniLoginService {
     String password,
   ) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(keyIsAlumniLoggedIn, true);
-    await prefs.setString(keyAlumniLoginStatus, '1');
-    await prefs.setString(keyAlumniUserData, jsonEncode(user.toJson()));
+    await prefs.setBool(AlumniConstants.keyIsAlumniLoggedIn, true);
+    await prefs.setString(AlumniConstants.keyAlumniLoginStatus, '1');
+    await prefs.setString(
+      AlumniConstants.keyAlumniUserData,
+      jsonEncode(user.toJson()),
+    );
 
     if (user.token != null && user.token!.isNotEmpty) {
-      await prefs.setString(keyAlumniToken, user.token!);
+      await prefs.setString(AlumniConstants.keyAlumniToken, user.token!);
     }
     if (user.userId != null) {
-      await prefs.setString(keyAlumniUserId, user.userId!);
+      await prefs.setString(AlumniConstants.keyAlumniUserId, user.userId!);
     }
     if (user.email != null) {
       await prefs.setString('email', user.email!);
@@ -141,17 +138,20 @@ class AlumniLoginService {
   /// Checks whether an Alumni user is currently logged in
   static Future<bool> isAlumniLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
-    final bool isAlumni = prefs.getBool(keyIsAlumniLoggedIn) ?? false;
-    final String? loginStatus = prefs.getString(keyAlumniLoginStatus);
-    final String? token = prefs.getString(keyAlumniToken);
+    final bool isAlumni =
+        prefs.getBool(AlumniConstants.keyIsAlumniLoggedIn) ?? false;
+    final String? loginStatus =
+        prefs.getString(AlumniConstants.keyAlumniLoginStatus);
+    final String? token = prefs.getString(AlumniConstants.keyAlumniToken);
 
-    return isAlumni || (loginStatus == '1' && token != null && token.isNotEmpty);
+    return isAlumni ||
+        (loginStatus == '1' && token != null && token.isNotEmpty);
   }
 
   /// Retrieves the currently stored Alumni user data
   static Future<AlumniUserModel?> getStoredAlumniUser() async {
     final prefs = await SharedPreferences.getInstance();
-    final String? userJson = prefs.getString(keyAlumniUserData);
+    final String? userJson = prefs.getString(AlumniConstants.keyAlumniUserData);
     if (userJson != null && userJson.isNotEmpty) {
       try {
         final decoded = jsonDecode(userJson);
@@ -168,11 +168,11 @@ class AlumniLoginService {
   /// Logs out the Alumni user
   static Future<void> logoutAlumni() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(keyIsAlumniLoggedIn);
-    await prefs.remove(keyAlumniLoginStatus);
-    await prefs.remove(keyAlumniUserData);
-    await prefs.remove(keyAlumniToken);
-    await prefs.remove(keyAlumniUserId);
+    await prefs.remove(AlumniConstants.keyIsAlumniLoggedIn);
+    await prefs.remove(AlumniConstants.keyAlumniLoginStatus);
+    await prefs.remove(AlumniConstants.keyAlumniUserData);
+    await prefs.remove(AlumniConstants.keyAlumniToken);
+    await prefs.remove(AlumniConstants.keyAlumniUserId);
     await prefs.remove('email');
     await prefs.remove('firstName');
     await prefs.remove('lastName');
@@ -180,4 +180,3 @@ class AlumniLoginService {
     await prefs.remove('userImage');
   }
 }
-

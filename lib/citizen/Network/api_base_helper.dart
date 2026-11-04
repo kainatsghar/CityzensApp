@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/citizen/Utils/citizen_constants.dart';
 import 'app_exceptions.dart';
 
 class ApiBaseHelper {
@@ -12,7 +13,7 @@ class ApiBaseHelper {
     http.Response response;
     try {
       response = await http.get(
-        Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
+        Uri.parse('${CitizenConstants.apiBaseURL}$endPoint'),
         headers: AppConstants.appHeaders,
       );
     } on SocketException {
@@ -39,13 +40,13 @@ class ApiBaseHelper {
 
     try {
       if (kDebugMode) {
-        log('Request URL: ${AppConstants.apiBaseURL}$endPoint');
+        log('Request URL: ${CitizenConstants.apiBaseURL}$endPoint');
         log('Request Headers: $headers');
         log('Request Body: ${json.encode(body)}');
       }
 
       response = await http.post(
-        Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
+        Uri.parse('${CitizenConstants.apiBaseURL}$endPoint'),
         headers: AppConstants.appHeaders,
         body: json.encode(body),
       );
@@ -74,7 +75,7 @@ class ApiBaseHelper {
     http.Response response;
     try {
       response = await http.put(
-        Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
+        Uri.parse('${CitizenConstants.apiBaseURL}$endPoint'),
         headers: AppConstants.appHeaders,
         body: jsonEncode(body),
       );
@@ -97,7 +98,7 @@ class ApiBaseHelper {
     http.Response response;
     try {
       response = await http.patch(
-        Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
+        Uri.parse('${CitizenConstants.apiBaseURL}$endPoint'),
         body: jsonEncode(body),
         headers: AppConstants.appHeaders,
       );
@@ -120,7 +121,7 @@ class ApiBaseHelper {
     http.Response response;
     try {
       response = await http.delete(
-        Uri.parse('${AppConstants.apiBaseURL}$endPoint'),
+        Uri.parse('${CitizenConstants.apiBaseURL}$endPoint'),
         headers: AppConstants.appHeaders,
       );
     } on SocketException {

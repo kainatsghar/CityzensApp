@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/citizen/Components/OutstandingFeeComponents/single_challan_item.dart';
 import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/CustomWidgets/CustomStudentInfo/custom_student_info.dart';
+import 'package:tcs_app/citizen/CustomWidgets/CustomStudentInfo/custom_student_info.dart';
 import 'package:tcs_app/CustomWidgets/ShowCustomMessage/show_message_image.dart';
 import 'package:tcs_app/citizen/Provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';

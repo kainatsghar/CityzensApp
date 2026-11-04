@@ -1,6 +1,6 @@
 import 'package:tcs_app/citizen/Model/StudentAttendance/attendance_percentage_response.dart';
 import 'package:tcs_app/citizen/Model/StudentAttendance/student_attendance_request.dart';
-import 'package:tcs_app/Network/api_base_helper.dart';
+import 'package:tcs_app/citizen/Network/api_base_helper.dart';
 
 class AttendancePercentageService {
   static Future<AttendancePercentageResponse> attendancePercentage({required String userName, required String tokenId}) async {

@@ -5,7 +5,7 @@ import 'package:tcs_app/Utils/app_colors.dart';
 
 import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
 import 'package:tcs_app/CustomWidgets/CustomCoverImage/custom_cover_image.dart';
-import 'package:tcs_app/CustomWidgets/CustomTimeTableFormField/custom_timetable_form_field.dart';
+import 'package:tcs_app/citizen/CustomWidgets/CustomTimeTableFormField/custom_timetable_form_field.dart';
 import 'package:tcs_app/citizen/Model/TimeTable/timetable_response.dart';
 import 'package:tcs_app/citizen/Provider/TimeTable/timetable_provider.dart';
 

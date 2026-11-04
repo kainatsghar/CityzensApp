@@ -1,6 +1,6 @@
 import 'package:tcs_app/citizen/Model/AddEyeOnYourChild/add_eye_on_your_child_request.dart';
 import 'package:tcs_app/citizen/Model/AddEyeOnYourChild/add_eye_on_your_child_response.dart';
-import 'package:tcs_app/Network/api_base_helper.dart';
+import 'package:tcs_app/citizen/Network/api_base_helper.dart';
 
 class AddEyeOnYourChildService {
   static Future<AddEyeOnYourChildResponse> saveStudentUpdatesForParent(

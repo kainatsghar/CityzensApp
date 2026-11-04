@@ -8,6 +8,7 @@ import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field
 import 'package:tcs_app/citizen/Provider/Login/login_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
+import 'package:tcs_app/alumni/Constants/alumni_constants.dart';
 import 'package:tcs_app/alumni/Services/alumni_login_service.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
@@ -385,7 +386,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               onTap: () {
                 HelperFunction.launchURL(
-                  'https://tcsalumni.linkalumniapp.com/forgot_password',
+                  AlumniConstants.forgotPasswordUrl,
                 );
               },
             ),
