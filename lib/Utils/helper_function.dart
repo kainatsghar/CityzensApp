@@ -14,6 +14,7 @@ class HelperFunction {
     Options(title: 'Student', value: 1),
     Options(title: 'Parent', value: 2),
     Options(title: 'Teacher', value: 3),
+    Options(title: 'TCS Alumni', value: 4),
   ];
 
   static List<Options> attendanceOptions() => [

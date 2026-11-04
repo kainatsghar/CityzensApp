@@ -22,10 +22,7 @@ class LoginScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
+class _LoginScreenState extends State<LoginScreen> {
   // Alumni Form State
   final _alumniFormKey = GlobalKey<FormState>();
   final TextEditingController _alumniEmailController = TextEditingController();
@@ -42,16 +39,11 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(() {
-      if (mounted) setState(() {});
-    });
     provider.initializeData();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
     _alumniEmailController.dispose();
     _alumniPasswordController.dispose();
     provider.disposeData();
@@ -133,56 +125,12 @@ class _LoginScreenState extends State<LoginScreen>
                       child: Column(
                         children: <Widget>[
                           const CustomLogoCover(),
-                          const SizedBox(height: 14),
+                          SizedBox(height: size.height * 0.03),
 
-                          // Tab Bar for Switching Between Projects
-                          Container(
-                            height: 46,
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryLightBlue,
-                              borderRadius: BorderRadius.circular(24),
-                              border: Border.all(
-                                color: AppColors.primaryTitleColor.withValues(alpha: 0.2),
-                              ),
-                            ),
-                            child: TabBar(
-                              controller: _tabController,
-                              indicator: BoxDecoration(
-                                color: AppColors.primaryTitleColor,
-                                borderRadius: BorderRadius.circular(24),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.primaryTitleColor
-                                        .withValues(alpha: 0.3),
-                                    blurRadius: 6,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              labelColor: Colors.white,
-                              unselectedLabelColor: AppColors.primaryTitleColor,
-                              labelStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                              unselectedLabelStyle: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13,
-                              ),
-                              tabs: const [
-                                Tab(text: "The City School"),
-                                Tab(text: "TCS Alumni"),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(height: size.height * 0.02),
-
-                          // Switch between Citizen & Alumni form based on selected Tab
-                          _tabController.index == 0
-                              ? _buildCitizenLoginForm(value, size)
-                              : _buildAlumniLoginForm(size),
+                          // Switch between Citizen & Alumni form based on selected User Type
+                          value.userTypeController.text == 'TCS Alumni'
+                              ? _buildAlumniLoginForm(value, size)
+                              : _buildCitizenLoginForm(value, size),
 
                           Padding(
                             padding: EdgeInsets.only(
@@ -284,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen>
         ),
         const SizedBox(height: 20),
         CustomAppButton(
-          buttonTitle: 'Login as Citizen',
+          buttonTitle: 'Login',
           onTap: () => value.login(),
         ),
         const SizedBox(height: 16),
@@ -346,7 +294,7 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   /// TCS Alumni Login Form
-  Widget _buildAlumniLoginForm(Size size) {
+  Widget _buildAlumniLoginForm(LoginProvider value, Size size) {
     return Column(
       children: [
         Container(
@@ -362,6 +310,17 @@ class _LoginScreenState extends State<LoginScreen>
             key: _alumniFormKey,
             child: Column(
               children: <Widget>[
+                CustomTextFormField(
+                  controller: value.userTypeController,
+                  hintText: 'User Type',
+                  readOnly: true,
+                  onTap: () => value.userTypeBottomSheet(),
+                  suffixWidget: const ImageIcon(
+                    AssetImage('assets/images/dropdown_icon.png'),
+                    color: AppColors.whiteColor,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 CustomTextFormField(
                   controller: _alumniEmailController,
                   inputType: TextInputType.emailAddress,
