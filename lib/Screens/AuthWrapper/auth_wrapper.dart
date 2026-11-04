@@ -7,10 +7,12 @@ import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Screens/Alumni/alumni_dashboard_screen.dart';
 import 'package:tcs_app/Screens/LoginScreen/login_screen.dart';
 import 'package:tcs_app/Screens/Parent/ParentDashboardScreen/parent_dashboard_screen.dart';
 import 'package:tcs_app/Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
 import 'package:tcs_app/Screens/Teacher/TeacherDashboardScreen/teacher_dashboard_screen.dart';
+import 'package:tcs_app/Services/Alumni/alumni_login_service.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -25,7 +27,6 @@ class _AuthWrapperState extends State<AuthWrapper> {
   @override
   void initState() {
     authDecider();
-
     super.initState();
   }
 
@@ -41,7 +42,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
               return const CustomLoader();
             default:
               if (snapshot.hasData) {
-                return snapshot.data as Widget; //return snapshot.data
+                return snapshot.data as Widget;
               } else {
                 return ShowError(errorText: '${snapshot.error}');
               }
@@ -58,14 +59,26 @@ class _AuthWrapperState extends State<AuthWrapper> {
     );
 
     final userData = await localDataProvider.loadStoredData();
-    return kIsWeb
-        ? (userData.tokenId == null)
-              ? const LoginScreen()
-              : (userData.userType == 'Student')
-              ? const StudentDashboardScreen()
-              : (userData.userType == 'Teacher')
+    final bool isAlumni = await AlumniLoginService.isAlumniLoggedIn();
+
+    Widget targetWidget;
+    if (userData.tokenId != null && (userData.tokenId?.isNotEmpty ?? false)) {
+      // Citizen user is logged in
+      targetWidget = (userData.userType == 'Student')
+          ? const StudentDashboardScreen()
+          : (userData.userType == 'Teacher')
               ? const TeacherDashboardScreen()
-              : const ParentDashboardScreen()
+              : const ParentDashboardScreen();
+    } else if (isAlumni) {
+      // Alumni user is logged in
+      targetWidget = const AlumniDashboardScreen();
+    } else {
+      // Neither user is logged in
+      targetWidget = const LoginScreen();
+    }
+
+    return kIsWeb
+        ? targetWidget
         : UpgradeAlert(
             barrierDismissible: true,
             upgrader: Upgrader(minAppVersion: AppConstants.appVersion),
@@ -75,13 +88,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
                 ? UpgradeDialogStyle.cupertino
                 : UpgradeDialogStyle.material,
             navigatorKey: AppNavigation.navigatorKey,
-            child: (userData.tokenId == null)
-                ? const LoginScreen()
-                : (userData.userType == 'Student')
-                ? const StudentDashboardScreen()
-                : (userData.userType == 'Teacher')
-                ? const TeacherDashboardScreen()
-                : const ParentDashboardScreen(),
+            child: targetWidget,
           );
   }
 }

@@ -56,6 +56,7 @@ class AppNavRoutes {
   static const withdrawalRequestRoute = '/withdrawalRequest';
   static const complaintQueryRoute = '/complaintQuery';
   static const addCircularRoute = '/addCircular';
+  static const alumniDashboardRoute = '/alumniDashboard';
 
   /// Returns true if the given route name matches any of the defined routes
   static bool isRouteAvailable(String routeName) {
@@ -125,6 +126,7 @@ class AppNavRoutes {
       withdrawalRequestRoute,
       complaintQueryRoute,
       addCircularRoute,
+      alumniDashboardRoute,
     };
 
     return allRoutes.any((route) => route == normalizedRoute);

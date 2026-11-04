@@ -47,6 +47,7 @@ import '../Screens/Student/OSRegistrationScreen/os_registration_screen.dart';
 import '../Screens/Student/ResultScreen/academic_term_screen.dart';
 import '../Screens/Student/ResultScreen/results_screen.dart';
 import '../Screens/Student/StudentAttendanceScreen/student_attendance_screen.dart';
+import '../Screens/Alumni/alumni_dashboard_screen.dart';
 import '../Screens/Student/StudentDashboardScreen/student_dashboard_screen.dart';
 import '../Screens/Student/StudentProfileScreen/student_profile_screen.dart';
 import '../Screens/Student/StudentSurveyScreen/student_survey_screen.dart';
@@ -68,6 +69,8 @@ class RouteGenerator {
         return routeScreen(child: const SplashScreenUI());
       case AppNavRoutes.promotionRoute:
         return routeScreen(child: const PromotionScreenUI());
+      case AppNavRoutes.alumniDashboardRoute:
+        return routeScreen(child: const AlumniDashboardScreen());
       case AppNavRoutes.loginRoute:
         return routeScreen(child: const LoginScreen());
       case AppNavRoutes.authWrapperRoute:
