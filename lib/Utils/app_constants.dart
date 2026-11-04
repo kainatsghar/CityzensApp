@@ -1,6 +1,6 @@
 class AppConstants {
   static String apiBaseURL = "$baseUrl/api/";
-  static String baseUrl = apiLiveBaseURL;
+  static String baseUrl = apiTestBaseURL;
   //   static String baseUrl = apiTestBaseURL;
   //   static String baseUrl = kDebugMode
   //       ? apiTestBaseURL
