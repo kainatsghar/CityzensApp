@@ -5,6 +5,7 @@ import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
 import 'package:tcs_app/citizen/Provider/FeeChallan/feechallan_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 
 class OutstandingFeeScreen extends StatefulWidget {
   const OutstandingFeeScreen({super.key});
@@ -17,8 +18,9 @@ class OutstandingFeeScreen extends StatefulWidget {
 
 class OutstandingFeeScreenState extends State<OutstandingFeeScreen> {
   late Future _outstandingFeeService;
-  var provider = Provider.of<FeeChallanProvider>(AppNavigation.currentContext!,
-      listen: false);
+  FeeChallanProvider get provider =>
+      Provider.of<FeeChallanProvider>(AppNavigation.currentContext!,
+          listen: false);
 
   @override
   void initState() {
@@ -29,20 +31,26 @@ class OutstandingFeeScreenState extends State<OutstandingFeeScreen> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        child: FutureBuilder(
-            future: _outstandingFeeService,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return const CustomLoader();
-                default:
-                  if (snapshot.hasData) {
-                    return const OutstandingFeeComponent();
-                  } else {
-                    return ShowError(errorText: '${snapshot.error}');
-                  }
+      color: AppColors.blue,
+      backgroundColor: AppColors.yellow,
+      onRefresh: () => provider.loadOutstandingRecords(),
+      child: FutureBuilder(
+        future: _outstandingFeeService,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const Center(child: CustomLoader());
+            default:
+              if (snapshot.hasData) {
+                return const OutstandingFeeComponent();
+              } else {
+                return Center(
+                  child: ShowError(errorText: '${snapshot.error}'),
+                );
               }
-            }),
-        onRefresh: () => provider.loadOutstandingRecords());
+          }
+        },
+      ),
+    );
   }
 }

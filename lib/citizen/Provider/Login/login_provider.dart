@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-// import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:tcs_app/CustomWidgets/CustomBottomSheets/custom_filter_bottom_sheet.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
@@ -26,6 +25,7 @@ class LoginProvider extends ChangeNotifier {
     text: 'Student',
   );
   MaskedTextController? userNameController;
+
   String? validator(String? text) => userTypeController.text == 'Teacher'
       ? Validators.validator(text)
       : userTypeController.text == 'Parent'
@@ -89,6 +89,15 @@ class LoginProvider extends ChangeNotifier {
     changeUserNameInputField(v);
     notifyListeners();
     AppNavigation.goBack();
+  }
+
+  void selectRole(String role) {
+    final String mapped = (role == 'Alumni' || role == 'TCS Alumni')
+        ? 'TCS Alumni'
+        : role;
+    userTypeController.text = mapped;
+    changeUserNameInputField(mapped);
+    notifyListeners();
   }
 
   void changeUserNameInputField(String v) {

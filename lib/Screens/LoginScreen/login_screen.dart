@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppButton/custom_app_button.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
 import 'package:tcs_app/CustomWidgets/CustomDialogBoxes/loading_dialog_box.dart';
 import 'package:tcs_app/CustomWidgets/CustomSnackbar/custom_snackbar.dart';
-import 'package:tcs_app/CustomWidgets/CustomTextFormField/custom_text_form_field.dart';
 import 'package:tcs_app/citizen/Provider/Login/login_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/alumni/Constants/alumni_constants.dart';
 import 'package:tcs_app/alumni/Services/alumni_login_service.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_themes.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 import 'package:tcs_app/Utils/validators.dart';
-
-import 'package:tcs_app/CustomWidgets/CustomLogoCover/custom_logo_cover.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -29,6 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _alumniEmailController = TextEditingController();
   final TextEditingController _alumniPasswordController =
       TextEditingController();
+  final FocusNode _alumniEmailFocus = FocusNode();
+  final FocusNode _alumniPasswordFocus = FocusNode();
+  final FocusNode _citizenUserFocus = FocusNode();
+  final FocusNode _citizenPasswordFocus = FocusNode();
+
   bool _alumniObscure = true;
   bool _isAlumniLoading = false;
 
@@ -47,6 +48,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _alumniEmailController.dispose();
     _alumniPasswordController.dispose();
+    _alumniEmailFocus.dispose();
+    _alumniPasswordFocus.dispose();
+    _citizenUserFocus.dispose();
+    _citizenPasswordFocus.dispose();
     provider.disposeData();
     super.dispose();
   }
@@ -79,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response.isSuccessful) {
         showSnackBar(
           response.message ?? 'Login Successful! Welcome to TCS Alumni.',
-          color: AppColors.successGreenColor,
+          color: AppColors.green,
         );
         Future.delayed(const Duration(milliseconds: 300), () {
           AppNavigation.pushReplacementTo(
@@ -89,12 +94,12 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         showSnackBar(
           response.message ?? 'Invalid email or password. Please try again.',
-          color: AppColors.errorRed,
+          color: AppColors.red,
         );
       }
     } catch (e) {
       DialogBuilder.hideOpenDialog();
-      showSnackBar('Error: $e', color: AppColors.errorRed);
+      showSnackBar('Error: $e', color: AppColors.red);
     } finally {
       if (mounted) {
         setState(() {
@@ -106,186 +111,288 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.sizeOf(context);
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: const CustomAppBar(title: 'LOGIN'),
+      backgroundColor: AppColors.blue,
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Consumer<LoginProvider>(
-                  builder: (context, value, _) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
+        bottom: false,
+        child: Consumer<LoginProvider>(
+          builder: (context, loginProvider, _) {
+            final String currentRole = loginProvider.userTypeController.text;
+            final bool isAlumni =
+                (currentRole == 'TCS Alumni' || currentRole == 'Alumni');
+
+            return Column(
+              children: [
+                // Top Blue Header with TCS Crest
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 26),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/tcs_logo_white.png',
+                      height: 90,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+
+                // Overlapping White Sheet
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(24),
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0, -2),
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(20, 24, 20, 28),
                       child: Column(
-                        children: <Widget>[
-                          const CustomLogoCover(),
-                          SizedBox(height: size.height * 0.03),
-
-                          // Switch between Citizen & Alumni form based on selected User Type
-                          value.userTypeController.text == 'TCS Alumni'
-                              ? _buildAlumniLoginForm(value, size)
-                              : _buildCitizenLoginForm(value, size),
-
-                          Padding(
-                            padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Header Titles
+                          Text(
+                            'Log in to Cityzens',
+                            style: AppThemes.sora(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.ink,
                             ),
                           ),
+                          const SizedBox(height: 3),
+                          Text(
+                            'Choose who you are',
+                            style: AppThemes.roboto(
+                              fontSize: 13,
+                              color: AppColors.muted,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+
+                          // 2x2 Role Sticker Cards
+                          _buildRoleSelector(loginProvider, currentRole),
+                          const SizedBox(height: 18),
+
+                          // Login Form Fields
+                          isAlumni
+                              ? _buildAlumniForm(context)
+                              : _buildCitizenForm(loginProvider, context),
+
+                          const SizedBox(height: 12),
+
+                          // Forgot Password Link
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: isAlumni
+                                  ? () => HelperFunction.launchURL(
+                                        AlumniConstants.forgotPasswordUrl,
+                                      )
+                                  : () => AppNavigation.navigateTo(
+                                        AppNavRoutes.forgotPasswordRoute,
+                                      ),
+                              borderRadius: BorderRadius.circular(4),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4.0,
+                                  horizontal: 2.0,
+                                ),
+                                child: Text(
+                                  'Forgot password?',
+                                  style: AppThemes.sora(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.blue,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Yellow Log in Button
+                          SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: (isAlumni && _isAlumniLoading)
+                                  ? null
+                                  : () {
+                                      if (isAlumni) {
+                                        _handleAlumniLogin();
+                                      } else {
+                                        loginProvider.login();
+                                      }
+                                    },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.yellow,
+                                foregroundColor: AppColors.ink,
+                                disabledBackgroundColor:
+                                    AppColors.yellow.withValues(alpha: 0.6),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                              ),
+                              child: (isAlumni && _isAlumniLoading)
+                                  ? const SizedBox(
+                                      width: 22,
+                                      height: 22,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.5,
+                                        color: AppColors.ink,
+                                      ),
+                                    )
+                                  : Text(
+                                      isAlumni
+                                          ? 'Log in as Alumni'
+                                          : 'Log in',
+                                      style: AppThemes.sora(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.ink,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Register Footer
+                          Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'New to Cityzens? ',
+                                  style: AppThemes.roboto(
+                                    fontSize: 13,
+                                    color: AppColors.muted,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () => AppNavigation.navigateTo(
+                                    AppNavRoutes.introductionRoute,
+                                  ),
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4,
+                                      vertical: 2,
+                                    ),
+                                    child: Text(
+                                      'Register',
+                                      style: AppThemes.sora(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.blue,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Alumni Information Badge (when Alumni is selected)
+                          if (isAlumni) ...[
+                            const SizedBox(height: 18),
+                            Center(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.blueTint,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(
+                                      Icons.info_outline_rounded,
+                                      size: 16,
+                                      color: AppColors.blue,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'TCS Alumni Network & Portal Access',
+                                      style: AppThemes.roboto(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.blue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ],
                       ),
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  /// Citizen (Student/Teacher/Parent) Login Form
-  Widget _buildCitizenLoginForm(LoginProvider value, Size size) {
+  /// 2x2 Raised Role Sticker Cards Grid
+  Widget _buildRoleSelector(LoginProvider provider, String currentRole) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 25.0,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.secondaryColor,
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Form(
-            key: value.formKey,
-            child: Column(
-              children: <Widget>[
-                CustomTextFormField(
-                  controller: value.userTypeController,
-                  hintText: 'User Type',
-                  readOnly: true,
-                  onTap: () => value.userTypeBottomSheet(),
-                  suffixWidget: const ImageIcon(
-                    AssetImage('assets/images/dropdown_icon.png'),
-                    color: AppColors.whiteColor,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                  controller: value.userNameController,
-                  inputType: TextInputType.number,
-                  inputAction: TextInputAction.next,
-                  labelText: value.userNameLabel,
-                  hintText: value.userNameLabel,
-                  prefixIcon: Icons.person,
-                  validator: value.validator,
-                ),
-                const SizedBox(height: 15),
-                CustomTextFormField(
-                  controller: value.passwordController,
-                  obscureText: value.obscureText,
-                  inputType: TextInputType.text,
-                  hintText: 'Password',
-                  prefixIcon: Icons.lock,
-                  inputAction: TextInputAction.done,
-                  suffixWidget: GestureDetector(
-                    onTap: () => value.showHidePassword(),
-                    child: Icon(
-                      value.obscureText
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: AppColors.whiteColor,
-                    ),
-                  ),
-                  validator: Validators.validator,
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            InkWell(
-              child: const Text(
-                'Forgot your password?',
-                style: TextStyle(
-                  color: AppColors.primaryTitleColor,
-                  decoration: TextDecoration.underline,
-                  decorationColor: AppColors.primaryTitleColor,
-                ),
+          children: [
+            Expanded(
+              child: _buildRoleCard(
+                title: 'Student',
+                icon: Icons.person_rounded,
+                isSelected: currentRole == 'Student',
+                onTap: () => provider.selectRole('Student'),
               ),
-              onTap: () => AppNavigation.navigateTo(
-                AppNavRoutes.forgotPasswordRoute,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildRoleCard(
+                title: 'Parent',
+                icon: Icons.visibility_outlined,
+                isSelected: currentRole == 'Parent',
+                onTap: () => provider.selectRole('Parent'),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 20),
-        CustomAppButton(
-          buttonTitle: 'Login',
-          onTap: () => value.login(),
-        ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         Row(
-          children: const [
+          children: [
             Expanded(
-              child: Divider(
-                color: Colors.black26,
-                thickness: 1,
+              child: _buildRoleCard(
+                title: 'Teacher',
+                icon: Icons.co_present_rounded,
+                isSelected: currentRole == 'Teacher',
+                onTap: () => provider.selectRole('Teacher'),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Text("OR"),
-            ),
+            const SizedBox(width: 12),
             Expanded(
-              child: Divider(
-                color: Colors.black26,
-                thickness: 1,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('New user? '),
-            const SizedBox(height: 8),
-            InkWell(
-              onTap: () => AppNavigation.navigateTo(
-                AppNavRoutes.introductionRoute,
-              ),
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.paleYellow,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Text(
-                  "Register here",
-                  style: TextStyle(
-                    color: AppColors.primaryTitleColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              child: _buildRoleCard(
+                title: 'Alumni',
+                icon: Icons.school_rounded,
+                isSelected:
+                    currentRole == 'TCS Alumni' || currentRole == 'Alumni',
+                onTap: () => provider.selectRole('TCS Alumni'),
               ),
             ),
           ],
@@ -294,133 +401,288 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /// TCS Alumni Login Form
-  Widget _buildAlumniLoginForm(LoginProvider value, Size size) {
-    return Column(
+  /// Individual Raised Sticker Card with Tick Checkmark
+  Widget _buildRoleCard({
+    required String title,
+    required IconData icon,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return Stack(
+      clipBehavior: Clip.none,
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 25.0,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.secondaryColor,
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Form(
-            key: _alumniFormKey,
-            child: Column(
-              children: <Widget>[
-                CustomTextFormField(
-                  controller: value.userTypeController,
-                  hintText: 'User Type',
-                  readOnly: true,
-                  onTap: () => value.userTypeBottomSheet(),
-                  suffixWidget: const ImageIcon(
-                    AssetImage('assets/images/dropdown_icon.png'),
-                    color: AppColors.whiteColor,
-                  ),
+        GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
+            curve: Curves.easeInOut,
+            height: 52,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              color: isSelected ? AppColors.blueTint : Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: isSelected ? AppColors.blue : const Color(0xFFDCDDDD),
+                width: isSelected ? 2.5 : 1.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: isSelected ? AppColors.blue : const Color(0xFFDCDDDD),
+                  offset: const Offset(0, 3.5),
+                  blurRadius: 0,
                 ),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                  controller: _alumniEmailController,
-                  inputType: TextInputType.emailAddress,
-                  inputAction: TextInputAction.next,
-                  labelText: 'Alumni Email',
-                  hintText: 'Enter your registered email',
-                  prefixIcon: Icons.email_rounded,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Email is required';
-                    }
-                    if (!value.contains('@') || !value.contains('.')) {
-                      return 'Enter a valid email address';
-                    }
-                    return null;
-                  },
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 22,
+                  color: isSelected ? AppColors.blue : AppColors.ink,
                 ),
-                const SizedBox(height: 15),
-                CustomTextFormField(
-                  controller: _alumniPasswordController,
-                  obscureText: _alumniObscure,
-                  inputType: TextInputType.text,
-                  hintText: 'Password',
-                  prefixIcon: Icons.lock_rounded,
-                  inputAction: TextInputAction.done,
-                  suffixWidget: GestureDetector(
-                    onTap: _showHideAlumniPassword,
-                    child: Icon(
-                      _alumniObscure
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: AppColors.whiteColor,
-                    ),
+                const SizedBox(width: 8),
+                Text(
+                  title,
+                  style: AppThemes.sora(
+                    fontSize: 13,
+                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                    color: isSelected ? AppColors.blue : AppColors.ink,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Password is required';
-                    }
-                    if (value.length < 4) {
-                      return 'Password must be at least 4 characters';
-                    }
-                    return null;
-                  },
                 ),
               ],
             ),
           ),
         ),
-        const SizedBox(height: 10),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            InkWell(
-              child: const Text(
-                'Forgot Alumni Password?',
-                style: TextStyle(
-                  color: AppColors.primaryTitleColor,
-                  decoration: TextDecoration.underline,
-                  decorationColor: AppColors.primaryTitleColor,
-                ),
+        if (isSelected)
+          Positioned(
+            top: -7,
+            right: -7,
+            child: Container(
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                color: AppColors.blue,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.15),
+                    offset: const Offset(0, 1.5),
+                    blurRadius: 2,
+                  ),
+                ],
               ),
-              onTap: () {
-                HelperFunction.launchURL(
-                  AlumniConstants.forgotPasswordUrl,
-                );
-              },
+              child: const Icon(
+                Icons.check_rounded,
+                size: 13,
+                color: AppColors.yellow,
+              ),
             ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        CustomAppButton(
-          buttonTitle: _isAlumniLoading ? 'Signing in...' : 'Login as Alumni',
-          onTap: _isAlumniLoading ? () {} : _handleAlumniLogin,
-        ),
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-          decoration: BoxDecoration(
-            color: AppColors.primaryLightBlue,
-            borderRadius: BorderRadius.circular(10),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              Icon(Icons.info_outline, size: 16, color: AppColors.primaryTitleColor),
-              SizedBox(width: 8),
-              Text(
-                'TCS Alumni Network & Portal Access',
-                style: TextStyle(
-                  color: AppColors.primaryTitleColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+      ],
+    );
+  }
+
+  /// Citizen Form (Student / Parent / Teacher)
+  Widget _buildCitizenForm(LoginProvider provider, BuildContext context) {
+    final String currentRole = provider.userTypeController.text;
+    String fieldLabel = 'Roll number';
+    String hintText = 'e.g. 194820';
+    IconData icon = Icons.person_outline_rounded;
+    TextInputType keyboardType = TextInputType.number;
+
+    if (currentRole == 'Parent') {
+      fieldLabel = 'Father CNIC number';
+      hintText = '42101-1234567-1';
+      icon = Icons.badge_outlined;
+      keyboardType = TextInputType.number;
+    } else if (currentRole == 'Teacher') {
+      fieldLabel = 'Employee number';
+      hintText = 'e.g. 20417';
+      icon = Icons.badge_outlined;
+      keyboardType = TextInputType.number;
+    }
+
+    return Form(
+      key: provider.formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Identifier Field
+          Text(
+            fieldLabel,
+            style: AppThemes.roboto(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: AppColors.muted,
+            ),
+          ),
+          const SizedBox(height: 6),
+          TextFormField(
+            controller: provider.userNameController,
+            focusNode: _citizenUserFocus,
+            keyboardType: keyboardType,
+            textInputAction: TextInputAction.next,
+            validator: provider.validator,
+            style: AppThemes.roboto(
+              fontSize: 14,
+              color: AppColors.ink,
+              fontWeight: FontWeight.w500,
+            ),
+            decoration: InputDecoration(
+              hintText: hintText,
+              prefixIcon: Icon(icon, color: AppColors.blue, size: 20),
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          // Password Field
+          Text(
+            'Password',
+            style: AppThemes.roboto(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: AppColors.muted,
+            ),
+          ),
+          const SizedBox(height: 6),
+          TextFormField(
+            controller: provider.passwordController,
+            focusNode: _citizenPasswordFocus,
+            obscureText: provider.obscureText,
+            keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.done,
+            validator: Validators.validator,
+            onFieldSubmitted: (_) => provider.login(),
+            style: AppThemes.roboto(
+              fontSize: 14,
+              color: AppColors.ink,
+              fontWeight: FontWeight.w500,
+            ),
+            decoration: InputDecoration(
+              hintText: '••••••••',
+              prefixIcon: const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.blue,
+                size: 20,
+              ),
+              suffixIcon: IconButton(
+                onPressed: () => provider.showHidePassword(),
+                icon: Icon(
+                  provider.obscureText
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  color: AppColors.muted,
+                  size: 20,
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+    );
+  }
+
+  /// Alumni Login Form
+  Widget _buildAlumniForm(BuildContext context) {
+    return Form(
+      key: _alumniFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Alumni Email Field
+          Text(
+            'Alumni Email',
+            style: AppThemes.roboto(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: AppColors.muted,
+            ),
+          ),
+          const SizedBox(height: 6),
+          TextFormField(
+            controller: _alumniEmailController,
+            focusNode: _alumniEmailFocus,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Email is required';
+              }
+              if (!value.contains('@') || !value.contains('.')) {
+                return 'Enter a valid email address';
+              }
+              return null;
+            },
+            style: AppThemes.roboto(
+              fontSize: 14,
+              color: AppColors.ink,
+              fontWeight: FontWeight.w500,
+            ),
+            decoration: const InputDecoration(
+              hintText: 'Enter registered email',
+              prefixIcon: Icon(
+                Icons.mail_outline_rounded,
+                color: AppColors.blue,
+                size: 20,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          // Alumni Password Field
+          Text(
+            'Password',
+            style: AppThemes.roboto(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: AppColors.muted,
+            ),
+          ),
+          const SizedBox(height: 6),
+          TextFormField(
+            controller: _alumniPasswordController,
+            focusNode: _alumniPasswordFocus,
+            obscureText: _alumniObscure,
+            keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.done,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Password is required';
+              }
+              if (value.length < 4) {
+                return 'Password must be at least 4 characters';
+              }
+              return null;
+            },
+            onFieldSubmitted: (_) => _handleAlumniLogin(),
+            style: AppThemes.roboto(
+              fontSize: 14,
+              color: AppColors.ink,
+              fontWeight: FontWeight.w500,
+            ),
+            decoration: InputDecoration(
+              hintText: '••••••••',
+              prefixIcon: const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.blue,
+                size: 20,
+              ),
+              suffixIcon: IconButton(
+                onPressed: _showHideAlumniPassword,
+                icon: Icon(
+                  _alumniObscure
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  color: AppColors.muted,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

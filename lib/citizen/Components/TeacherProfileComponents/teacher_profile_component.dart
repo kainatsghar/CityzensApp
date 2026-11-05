@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:tcs_app/CustomWidgets/CustomUserImage/custom_user_image.dart';
-import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
-import 'package:tcs_app/citizen/Provider/TeacherProfile/teacher_profile_provider.dart';
-import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomProfileItem/custom_profile_item.dart';
+import 'package:tcs_app/CustomWidgets/ShowError/show_error.dart';
+import 'package:tcs_app/citizen/Provider/LocalData/local_data_provider.dart';
+import 'package:tcs_app/citizen/Provider/TeacherProfile/teacher_profile_provider.dart';
+import 'package:tcs_app/citizen/Model/TeacherProfile/teacher_profile_response.dart';
+import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/Utils/app_themes.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 class TeacherProfileComponent extends StatelessWidget {
@@ -13,197 +16,422 @@ class TeacherProfileComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    return SafeArea(
-      child: Consumer<TeacherProfileProvider>(
-        builder: (context, value, _) {
-          return value.profileResponse == null
-              ? const ShowError(errorText: AppConstants.noRecordFound)
-              : SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: size.height * 0.03,
-                      horizontal: 16,
+    return Consumer<TeacherProfileProvider>(
+      builder: (context, value, _) {
+        final TeacherProfileResponse? profile = value.profileResponse;
+        if (profile == null) {
+          return const Center(
+            child: ShowError(errorText: AppConstants.noRecordFound),
+          );
+        }
+
+        final String teacherName = (profile.teacherName != null &&
+                profile.teacherName!.trim().isNotEmpty)
+            ? profile.teacherName!.trim()
+            : 'Faculty Member';
+        final String empCode = profile.employeeCode ?? '—';
+        final String designation = profile.designation ?? '—';
+        final String branch = profile.branch ?? '—';
+
+        return Column(
+          children: [
+            // Blue Header with Hero Profile Photo, Name & Glance Block
+            Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: AppColors.blue,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(26),
+                  bottomRight: Radius.circular(26),
+                ),
+              ),
+              child: SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 18),
+                  child: Column(
+                    children: [
+                      // Top Bar Row (Back button, Title)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                          Text(
+                            'Profile',
+                            style: AppThemes.sora(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 40),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+
+                      // Avatar with yellow & white double ring + yellow camera button
+                      SizedBox(
+                        width: 88,
+                        height: 88,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              width: 88,
+                              height: 88,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.yellow,
+                                  width: 3,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.white.withValues(alpha: 0.18),
+                                    spreadRadius: 3,
+                                  ),
+                                ],
+                              ),
+                              child: ClipOval(
+                                child: Consumer<LocalDataProvider>(
+                                  builder: (context, localData, _) {
+                                    return FutureBuilder(
+                                      future: localData.loadImagePath(empCode),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData &&
+                                            snapshot.data != null &&
+                                            snapshot.data.toString().isNotEmpty) {
+                                          return Image.file(
+                                            File('${snapshot.data}'),
+                                            fit: BoxFit.cover,
+                                            width: 88,
+                                            height: 88,
+                                            errorBuilder: (context, error, stackTrace) =>
+                                                Image.asset(
+                                              'assets/images/profile_avatar_yellow.png',
+                                              fit: BoxFit.cover,
+                                              width: 88,
+                                              height: 88,
+                                            ),
+                                          );
+                                        }
+                                        return Image.asset(
+                                          'assets/images/profile_avatar_yellow.png',
+                                          fit: BoxFit.cover,
+                                          width: 88,
+                                          height: 88,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: -4,
+                              bottom: -2,
+                              child: GestureDetector(
+                                onTap: () =>
+                                    HelperFunction.imagePickerBottomSheet(),
+                                child: Container(
+                                  width: 34,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.yellow,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: AppColors.blue,
+                                      width: 3,
+                                    ),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Color.fromRGBO(15, 52, 102, 0.25),
+                                        blurRadius: 4,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.camera_alt_rounded,
+                                      color: AppColors.blue,
+                                      size: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Teacher Name
+                      Text(
+                        teacherName,
+                        textAlign: TextAlign.center,
+                        style: AppThemes.sora(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+
+                      // 3-Column Glance Block (Emp Code, Designation, Branch)
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.13),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: _buildGlanceCell('EMP CODE', empCode),
+                            ),
+                            Container(
+                              width: 1,
+                              height: 26,
+                              color: Colors.white.withValues(alpha: 0.18),
+                            ),
+                            Expanded(
+                              child: _buildGlanceCell('DESIGNATION', designation),
+                            ),
+                            Container(
+                              width: 1,
+                              height: 26,
+                              color: Colors.white.withValues(alpha: 0.18),
+                            ),
+                            Expanded(
+                              child: _buildGlanceCell('BRANCH', branch),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            // Scrollable Grouped Details (Employment, Personal, Contact)
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(16, 14, 16, 24),
+                child: Column(
+                  children: [
+                    // Employment Group
+                    _buildGroup(
+                      icon: Icons.work_outline_rounded,
+                      title: 'EMPLOYMENT',
+                      fields: [
+                        _ProfileField(
+                          label: 'Branch / Campus',
+                          value: profile.branch ?? '—',
+                        ),
+                        _ProfileField(
+                          label: 'Designation',
+                          value: profile.designation ?? '—',
+                        ),
+                        _ProfileField(
+                          label: 'Region',
+                          value: profile.region ?? '—',
+                        ),
+                        _ProfileField(
+                          label: 'Employee code',
+                          value: profile.employeeCode ?? '—',
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 14),
+
+                    // Personal Group
+                    _buildGroup(
+                      icon: Icons.person_outline_rounded,
+                      title: 'PERSONAL',
+                      fields: [
+                        _ProfileField(
+                          label: 'CNIC number',
+                          value: profile.cnicNumber ?? '—',
+                        ),
+                        _ProfileField(
+                          label: 'City',
+                          value: profile.city ?? '—',
+                        ),
+                        _ProfileField(
+                          label: 'Marital status',
+                          value: profile.maritalStatus ?? '—',
+                        ),
+                        _ProfileField(
+                          label: 'Religion',
+                          value: profile.religion ?? '—',
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+
+                    // Contact Group
+                    _buildGroup(
+                      icon: Icons.phone_outlined,
+                      title: 'CONTACT',
+                      fields: [
+                        _ProfileField(
+                          label: 'Email address',
+                          value: profile.email ?? '—',
+                        ),
+                        _ProfileField(
+                          label: 'Contact number',
+                          value: profile.employeeCell ?? '—',
+                        ),
+                        _ProfileField(
+                          label: 'Official address',
+                          value: profile.address ?? '—',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildGlanceCell(String label, String value) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          label,
+          style: AppThemes.roboto(
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.6,
+            color: Colors.white.withValues(alpha: 0.72),
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          value,
+          style: AppThemes.sora(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGroup({
+    required IconData icon,
+    required String title,
+    required List<_ProfileField> fields,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 2, bottom: 6),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                size: 16,
+                color: AppColors.blue,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                title,
+                style: AppThemes.sora(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.8,
+                  color: AppColors.blue,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.line),
+            boxShadow: const [
+              BoxShadow(
+                color: Color.fromRGBO(15, 52, 102, 0.06),
+                blurRadius: 3,
+                offset: Offset(0, 1),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(fields.length, (index) {
+              final field = fields[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (index > 0)
+                    const Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Color(0xFFEEF1F5),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 9),
                     child: Column(
-                      children: <Widget>[
-                        CustomUserImage(
-                          userId: '${value.profileResponse!.employeeCode}',
-                          disableUploadImage: false,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            HelperFunction.noNullStringText(
-                              '${value.profileResponse!.teacherName}',
-                            ).toUpperCase(),
-                            style: const TextStyle(
-                              color: AppColors.primaryTitleColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
-                            ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          field.label,
+                          style: AppThemes.roboto(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.muted,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: CustomProfileItem(
-                            width: size.width,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(16),
-                            ),
-                            title: 'BRANCH NAME',
-                            value: '${value.profileResponse!.branch}',
+                        const SizedBox(height: 2),
+                        Text(
+                          field.value.isNotEmpty ? field.value : '—',
+                          style: AppThemes.roboto(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.ink,
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Expanded(
-                              child: CustomProfileItem(
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(16),
-                                  topLeft: Radius.circular(16),
-                                ),
-                                title: 'Employee Number',
-                                value: '${value.profileResponse!.employeeCode}',
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                              child: VerticalDivider(
-                                width: 15.0,
-                                color: AppColors.blackColor,
-                                thickness: 1,
-                              ),
-                            ),
-                            Expanded(
-                              child: CustomProfileItem(
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(16),
-                                  topLeft: Radius.circular(16),
-                                ),
-                                title: 'DESIGNATION',
-                                value: '${value.profileResponse!.designation}',
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Expanded(
-                              child: CustomProfileItem(
-                                borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(16),
-                                  bottomLeft: Radius.circular(16),
-                                ),
-                                title: 'MARITAL STATUS',
-                                value:
-                                    value.profileResponse!.maritalStatus == 'M'
-                                    ? 'Married'
-                                    : 'Single',
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                              child: VerticalDivider(
-                                width: 15.0,
-                                color: AppColors.blackColor,
-                                thickness: 1,
-                              ),
-                            ),
-                            Expanded(
-                              child: CustomProfileItem(
-                                borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(16),
-                                  bottomLeft: Radius.circular(16),
-                                ),
-                                title: 'RELIGION',
-                                value: value.profileResponse!.religion,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Expanded(
-                              child: CustomProfileItem(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(16),
-                                ),
-                                title: 'REGION',
-                                value: '${value.profileResponse!.region}',
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                              child: VerticalDivider(
-                                width: 15.0,
-                                color: AppColors.blackColor,
-                                thickness: 1,
-                              ),
-                            ),
-                            Expanded(
-                              child: CustomProfileItem(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(16),
-                                ),
-                                title: 'CITY',
-                                value: value.profileResponse!.city,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5.0),
-                        CustomProfileItem(
-                          width: size.width,
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(16),
-                            topLeft: Radius.circular(16),
-                          ),
-                          title: 'ADDRESS',
-                          value: '${value.profileResponse!.address}',
-                        ),
-                        const SizedBox(height: 5.0),
-                        CustomProfileItem(
-                          width: size.width,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(16),
-                            bottomRight: Radius.circular(16),
-                          ),
-                          title: 'CNIC NUMBER',
-                          value: '${value.profileResponse!.cnicNumber}',
-                        ),
-                        const SizedBox(height: 5.0),
-                        CustomProfileItem(
-                          width: size.width,
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(16),
-                            topLeft: Radius.circular(16),
-                          ),
-                          title: 'EMAIL ADDRESS',
-                          value: '${value.profileResponse!.email}',
-                        ),
-                        const SizedBox(height: 5.0),
-                        CustomProfileItem(
-                          width: size.width,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(16),
-                            bottomRight: Radius.circular(16),
-                          ),
-                          title: 'CONTACT NUMBER',
-                          value: '${value.profileResponse!.employeeCell}',
                         ),
                       ],
                     ),
                   ),
-                );
-        },
-      ),
+                ],
+              );
+            }),
+          ),
+        ),
+      ],
     );
   }
+}
+
+class _ProfileField {
+  final String label;
+  final String value;
+
+  const _ProfileField({required this.label, required this.value});
 }

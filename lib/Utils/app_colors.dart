@@ -1,55 +1,68 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primaryDarkColor = Color.fromRGBO(48, 63, 159, 1.0);
-  static const Color secondaryColor = Color(0xfff3cd50);
-  static const Color blackColor = Colors.black;
-  static const Color purpleColor = Color(0xff4F5FEB);
-  static const Color valuesRedColors = Color(0xffFF2B5F);
-  static const Color goldenColors = Color(0xffFBA95D);
-  static const Color successGreenColor = Color(0xff07CDA5);
-  static const Color lightRedColor = Color(0xffE04D83);
+  // ==========================================
+  // Cityzens 2.0 Design Tokens (from HTML mockup)
+  // ==========================================
+  static const Color blue = Color(0xFF194F90);         // Royal TCS Blue (primary)
+  static const Color blueDeep = Color(0xFF0F3466);     // Dark TCS Blue
+  static const Color blueTint = Color(0xFFE8EFF8);     // Soft blue background tint
+  static const Color yellow = Color(0xFFFFE800);       // TCS Accent Yellow
+  static const Color yellowDeep = Color(0xFFD9C400);   // Dark Yellow (active / hover)
+  static const Color paper = Color(0xFFF3F5F8);        // Scaffold canvas background
+  static const Color card = Color(0xFFFFFFFF);         // Card white surface
+  static const Color ink = Color(0xFF1B2333);          // High-contrast primary text
+  static const Color muted = Color(0xFF586377);        // Secondary/muted text
+  static const Color line = Color(0xFFE1E6ED);         // Borders and dividers
+
+  // Status & Feedback Tokens
+  static const Color green = Color(0xFF2ECC71);        // Success / Present
+  static const Color red = Color(0xFFE74C3C);          // Danger / Absent
+  static const Color leave = Color(0xFFFFC94D);        // Leave / Warning
+
+  // ==========================================
+  // Backward-Compatible Core Brand Colors
+  // ==========================================
+  static const Color primaryColor = blue;              // 0xFF194F90
+  static const Color primaryDarkColor = blueDeep;      // 0xFF0F3466
+  static const Color primaryTitleColor = blue;
+  static const Color secondaryColor = yellow;          // 0xFFFFE800
+  static const Color goldenColors = yellow;
+  static const Color goldenYellow = yellow;
+  static const Color paleYellow = Color(0xFFFFF9D2);
+
+  static const Color primaryBlue = blue;
+  static const Color primaryDarkBlue = blueDeep;
+  static const Color primaryLightBlue = blueTint;
+
+  // ==========================================
+  // Backward-Compatible Neutral & Text Colors
+  // ==========================================
   static const Color whiteColor = Colors.white;
-  static const Color primaryColor = Color(0xff617fff);
-  static const Color primaryTitleColor = Color(0xff485CC7);
-  static const Color greyColor = Color.fromARGB(255, 235, 234, 234);
+  static const Color white = Colors.white;
+  static const Color blackColor = ink;
+  static const Color primaryBlackText = ink;
+  static const Color softGreyText = muted;
+  static const Color ultraLightGrey = paper;
+  static const Color borderGrey = line;
+  static const Color greyColor = Color(0xFFE5E7EB);
+  static const Color grey = Color(0xFFE5E7EB);
 
-  // =========================
-  // Core Brand Colors
-  // =========================
-  static const Color primaryBlue = Color(0xFF485CC7); // primaryTitleColor
-  static const Color primaryDarkBlue = Color(0xFF303F9F); // primaryDarkColor
-  static const Color primaryLightBlue = Color(
-    0xFFE8ECFF,
-  ); // Light tint for backgrounds
+  // ==========================================
+  // Backward-Compatible Status Colors
+  // ==========================================
+  static const Color successGreenColor = green;
+  static const Color successGreen = green;
+  static const Color valuesRedColors = red;
+  static const Color errorRed = red;
+  static const Color lightRedColor = Color(0xFFE04D83);
+  static const Color lightRed = Color(0xFFE04D83);
+  static const Color warningOrange = leave;
 
-  // =========================
-  // Accent Colors
-  // =========================
-  static const Color goldenYellow = Color(0xFFF3CD50); // secondaryColor
-  static const Color paleYellow = Color(0xFFFFF6D2); // soft accent
-
-  // =========================
-  // Neutral Colors
-  // =========================
-  static const Color white = Colors.white; // whiteColor
-  static const Color ultraLightGrey = Color(0xFFF7F7F7); // background
-  static const Color borderGrey = Color(0xFFE5E5E5); // borders
-  static const Color softGreyText = Color(0xFF6F6F6F); // subtext
-  static const Color primaryBlackText = Colors.black; // blackColor
-
-  // =========================
-  // Status Colors
-  // =========================
-  static const Color errorRed = Color(0xFFFF2B5F); // valuesRedColors
-  static const Color warningOrange = Color(0xFFFBA95D); // goldenColors
-  static const Color successGreen = Color(0xFF07CDA5); // successGreenColor
-  static const Color lightRed = Color(0xFFE04D83); // lightRedColor
-
-  // =========================
-  // Other Brand Variants
-  // =========================
-  static const Color purple = Color(0xFF4F5FEB); // purpleColor
-  static const Color primary = Color(0xFF617FFF); // primaryColor
-  static const Color grey = Color(0xFFEBEAEA); // greyColor
+  // ==========================================
+  // Other Variants
+  // ==========================================
+  static const Color purpleColor = Color(0xFF4F5FEB);
+  static const Color purple = Color(0xFF4F5FEB);
+  static const Color primary = blue;
 }

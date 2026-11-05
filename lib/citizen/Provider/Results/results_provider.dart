@@ -96,6 +96,27 @@ class ResultsProvider with ChangeNotifier {
     }
   }
 
+  Future<String?> getPdfUrlFor({
+    required int academicYearId,
+    required int termId,
+  }) async {
+    try {
+      var response = await ResultService.resultsRequest(
+        userName: localDataProvider.studentId,
+        token: localDataProvider.userData!.tokenId!,
+        academicYearId: academicYearId,
+        termId: termId,
+      );
+      final parsed = ResultsResponse.fromJson(response);
+      if (parsed.pdfResultslist != null && parsed.pdfResultslist!.isNotEmpty) {
+        return parsed.pdfResultslist!.first.url;
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   void setResultsResponse(ResultsResponse response) {
     resultsResponse = response;
     //url = response.pdfResultslist![0].url!;

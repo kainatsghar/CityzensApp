@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_themes.dart';
 
 class CustomTabBar extends StatelessWidget {
   final ScrollController? scrollController;
@@ -28,31 +29,41 @@ class CustomTabBar extends StatelessWidget {
           forceElevated: boxIsScrolled,
           centerTitle: true,
           elevation: 0.0,
-          backgroundColor: AppColors.whiteColor,
+          backgroundColor: AppColors.blue,
+          iconTheme: const IconThemeData(color: Colors.white),
           title: Text(
-            appBarTitle!,
-            style: const TextStyle(
+            appBarTitle ?? '',
+            style: AppThemes.sora(
               fontSize: 18.0,
-              color: AppColors.primaryTitleColor,
-              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
             ),
           ),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: SizedBox(
-                height: 48,
-                width: 48,
+                height: 38,
+                width: 38,
                 child: Image.asset('assets/images/tcs_logo.png'),
               ),
             ),
           ],
           bottom: TabBar(
-            labelColor: AppColors.primaryTitleColor,
+            labelColor: AppColors.yellow,
+            unselectedLabelColor: Colors.white.withValues(alpha: 0.72),
+            labelStyle: AppThemes.sora(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+            ),
+            unselectedLabelStyle: AppThemes.sora(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+            ),
             controller: controller,
-            unselectedLabelColor: AppColors.primaryTitleColor,
             tabs: tabs!,
-            indicatorColor: AppColors.secondaryColor,
+            indicatorColor: AppColors.yellow,
+            indicatorWeight: 3,
           ),
         ),
       ],

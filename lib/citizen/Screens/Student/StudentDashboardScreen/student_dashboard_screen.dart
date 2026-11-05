@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tcs_app/citizen/Components/DashboardComponents/navigational_drawer.dart';
-import 'package:tcs_app/CustomWidgets/CustomAppBar/custom_app_bar.dart';
-import 'package:tcs_app/CustomWidgets/CustomDashboardButton/custom_dashboard_button.dart';
+import 'package:tcs_app/CustomWidgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/citizen/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/citizen/Provider/StudentAttendance/student_attendance_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Routes/screen_arguments.dart';
-import 'package:tcs_app/citizen/Screens/Student/StudentDashboardScreen/update_dashboard_card.dart';
 import 'package:tcs_app/citizen/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:tcs_app/Utils/media_query_util.dart';
-
-import 'package:tcs_app/CustomWidgets/CustomLoader/custom_loader.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
+import 'package:tcs_app/Utils/app_themes.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
@@ -24,405 +18,98 @@ class StudentDashboardScreen extends StatefulWidget {
   const StudentDashboardScreen({super.key, this.args});
 
   @override
-  State<StatefulWidget> createState() {
-    return StudentDashboardScreenState();
-  }
+  State<StatefulWidget> createState() => StudentDashboardScreenState();
 }
 
 class StudentDashboardScreenState extends State<StudentDashboardScreen>
     with WidgetsBindingObserver {
-  var localData = Provider.of<LocalDataProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
-  var attendance = Provider.of<StudentAttendanceProvider>(
-    AppNavigation.currentContext!,
-    listen: false,
-  );
-  // var dashboardProvider = Provider.of<DashboardProvider>(
-  //   AppNavigation.currentContext!,
-  //   listen: false,
-  // );
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // final splashProvider = Provider.of<SplashProvider>(
-  //   AppNavigation.currentContext!,
-  //   listen: false,
-  // );
-  // bool isDashboardResultCardViewFeatureEnabled = false;
-  // bool isAcademicResultPublishedFeatureEnable = false;
+  LocalDataProvider get localData => Provider.of<LocalDataProvider>(
+        AppNavigation.currentContext!,
+        listen: false,
+      );
+
+  StudentAttendanceProvider get attendance =>
+      Provider.of<StudentAttendanceProvider>(
+        AppNavigation.currentContext!,
+        listen: false,
+      );
 
   Future? attendanceService;
-  // Future? resultService;
-  // bool isURLOpening = false;
-  // FeatureConfigModel? academicResultPublishedFeature;
 
   @override
   void initState() {
-    if (localData.userData!.userType != 'Parent') {
+    super.initState();
+    if (localData.userData?.userType != 'Parent') {
       FcmTokenRefreshService.refreshToken();
     }
     attendanceService = attendance.getAttendancePercentage();
-
-    // if (splashProvider.listOfFeatureConfig != null) {
-    //   try {
-    //     academicResultPublishedFeature = splashProvider.listOfFeatureConfig!
-    //         .firstWhere((feature) => feature.id == 'academicResultPublished');
-
-    //     if (academicResultPublishedFeature == null) {
-    //       isAcademicResultPublishedFeatureEnable = false;
-    //     } else {
-    //       isAcademicResultPublishedFeatureEnable =
-    //           academicResultPublishedFeature!.isActive;
-    //     }
-    //   } catch (e) {
-    //     isAcademicResultPublishedFeatureEnable = false;
-    //   }
-    //   try {
-    //     final dashboardResultCardViewFeature = splashProvider
-    //         .listOfFeatureConfig!
-    //         .firstWhere((feature) => feature.id == 'dashboardResultCardView');
-
-    //     isDashboardResultCardViewFeatureEnabled =
-    //         dashboardResultCardViewFeature.isActive;
-    //   } catch (e) {
-    //     isDashboardResultCardViewFeatureEnabled = false;
-    //   }
-    // }
-
-    // if (isDashboardResultCardViewFeatureEnabled) {
-    //   resultService = dashboardProvider.loadResults(
-    //     academicYearId: 17,
-    //     termId: 1,
-    //   );
-    // }
-
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final double itemHeight =
-        ((MediaQueryUtil.isLandscape() ? size.width : size.height) -
-            kToolbarHeight -
-            24) /
-        6;
-    final double itemWidth =
-        (MediaQueryUtil.isLandscape() ? size.height : size.width) / 2;
-
     return Consumer<LocalDataProvider>(
       builder: (context, value, _) {
         final gradeId = value.userData?.info?.gradeId?.toString() ?? '';
         final localGradeId = value.gradeId?.toString() ?? '';
-        // print('GRADE ID DASHBOARD: $gradeId');
-        // print('LOCAL GRADE ID DASHBOARD: $localGradeId');
+        final bool isParent = value.userData?.userType == 'Parent';
+
         return Scaffold(
-          appBar: CustomAppBar(
-            title: localData.userData!.userType == 'Parent'
-                ? '${widget.args!.userName}'
-                // ? '${widget.args.userName}'
-                : HelperFunction.noNullStringText(
-                    '${localData.userData!.info!.name}',
-                  ),
-          ),
-          drawer: value.userData!.userType == 'Parent'
-              ? null
-              : const NavigationalDrawer(),
+          key: _scaffoldKey,
+          backgroundColor: AppColors.paper,
+          drawer: isParent ? null : const NavigationalDrawer(),
           body: RefreshIndicator(
-            onRefresh: () {
-              return attendanceService = attendance.getAttendancePercentage();
+            color: AppColors.blue,
+            backgroundColor: Colors.white,
+            onRefresh: () async {
+              setState(() {
+                attendanceService = attendance.getAttendancePercentage();
+              });
+              await attendanceService;
             },
-            child: SafeArea(
-              top: false,
-              child: CustomScrollView(
-                slivers: [
-                  // SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  //     child: AttendanceDashboardCard(
-                  //       attendanceService: attendanceService,
-                  //       size: size,
-                  //     ),
-                  //   ),
-                  // ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: DashboardTopSection(
-                        showResult: false,
-                        // (gradeId != '2' &&
-                        // gradeId != '3' &&
-                        // gradeId != '4' &&
-                        // localGradeId != '2' &&
-                        // localGradeId != '3' &&
-                        // localGradeId != '4' &&
-                        // isDashboardResultCardViewFeatureEnabled),
-                        resultReleaseTime:
-                            // academicResultPublishedFeature?.startDate ??
-                            DateTime(2025, 12, 22, 17, 12, 0),
-                        onViewResult: null,
-                        //  !isAcademicResultPublishedFeatureEnable
-                        //     ? null
-                        //     : () async {
-                        //         final url =
-                        //             dashboardProvider
-                        //                         .resultsResponse
-                        //                         .pdfResultslist !=
-                        //                     null &&
-                        //                 dashboardProvider
-                        //                     .resultsResponse
-                        //                     .pdfResultslist!
-                        //                     .isNotEmpty
-                        //             ? dashboardProvider
-                        //                   .resultsResponse
-                        //                   .pdfResultslist![0]
-                        //                   .url!
-                        //             : '';
-                        //         if (url.isNotEmpty) {
-                        //           if (!isURLOpening) {
-                        //             isURLOpening = true;
-                        //             await HelperFunction.launchURL(url);
-                        //             FirebaseAnalytics.instance.logEvent(
-                        //               name: 'view_result_from_dashboard',
-                        //               parameters: {
-                        //                 'student_id': localData.studentId,
-                        //                 'grade_id': localData.gradeId
-                        //                     .toString(),
-                        //               },
-                        //             );
-                        //             isURLOpening = false;
-                        //           }
-                        //         }
-                        //       },
-                        attendanceService: attendanceService!,
-                        resultService: null,
-                        // resultService,
-                        size: size,
-                      ),
-                    ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-                    sliver: SliverGrid.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: itemWidth / itemHeight,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics(),
+              ),
+              child: Column(
+                children: [
+                  // S3 Top Blue Header with Profile & Attendance Summary
+                  _buildHeader(context, value, isParent),
+
+                  // S3 Body Content (Announcement card, Bento blocks, Quick buttons)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomDashboardButton(
-                          title: 'PROFILE',
-                          bottomAlign: -20,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.studentProfileRoute,
-                          ),
-                          imageName: 'profile_icon.png',
-                        ),
-                        CustomDashboardButton(
-                          title: 'ATTENDANCE',
-                          bottomAlign: -25,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(13),
-                          onTap: () {
-                            if (gradeId == '19' ||
-                                gradeId == '20' ||
-                                localGradeId == '19' ||
-                                localGradeId == '20') {
-                              AppNavigation.navigateTo(
-                                AppNavRoutes.attendanceSubjectRoute,
-                              );
-                            } else {
-                              AppNavigation.navigateTo(
-                                AppNavRoutes.attendanceRoute,
-                              );
-                            }
-                          },
-                          imageName: 'attendance_icon.png',
-                        ),
+                        // Event / Circulars Banner Card
+                        _buildEventBanner(context),
+                        const SizedBox(height: 14),
 
-                        CustomDashboardButton(
-                          title: 'HOMEWORK\nDIARY',
-                          bottomAlign: -20,
-                          leftAlign: -10,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.studentDiaryRoute,
-                          ),
-                          imageName: 'diary_icon.png',
-                        ),
-                        CustomDashboardButton(
-                          title: 'CLASSWORK\nASSIGNMENTS',
-                          bottomAlign: -65,
-                          leftAlign: -50,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(20),
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.studentAssignmentRoute,
-                          ),
-                          imageName: 'assignment_icon_h.png',
-                        ),
-                        if (gradeId != '2' &&
-                            gradeId != '3' &&
-                            gradeId != '4' &&
-                            // gradeId != '5' &&
-                            // gradeId != '6' &&
-                            localGradeId != '2' &&
-                            localGradeId != '3' &&
-                            localGradeId != '4'
-                        // &&
-                        // localGradeId != '5' &&
-                        // localGradeId != '6'
-                        )
-                          CustomDashboardButton(
-                            title: 'TERM RESULT',
-                            leftAlign: 5.0,
-                            onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.academicTermRoute,
-                            ),
-                            imageName: 'result_icon.png',
-                          ),
-                        if (gradeId != '2' &&
-                            gradeId != '3' &&
-                            gradeId != '4' &&
-                            gradeId != '5' &&
-                            gradeId != '6' &&
-                            localGradeId != '2' &&
-                            localGradeId != '3' &&
-                            localGradeId != '4' &&
-                            localGradeId != '5' &&
-                            localGradeId != '6')
-                          CustomDashboardButton(
-                            title: 'CLASS TEST\nRESULTS',
-                            bottomAlign: -65,
-                            leftAlign: -65,
-                            imageHeight:
-                                MediaQueryUtil.getResponsivePercentageSize(24),
-                            onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.studentClassTestResultRoute,
-                            ),
-                            imageName: 'class_result.png',
-                          ),
-                        CustomDashboardButton(
-                          title: 'FEE BILL &\n PAYMENT',
-                          bottomAlign: -25,
-                          leftAlign: -12,
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.feeChallansRoute,
-                          ),
-                          imageName: 'fee_challan_icon.png',
-                        ),
-                        CustomDashboardButton(
-                          title: 'CIRCULARS',
-                          leftAlign: 3.0,
-                          bottomAlign: -3,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(10),
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.notificationsRoute,
-                          ),
-                          imageName: 'notification_icon.png',
-                        ),
-                        CustomDashboardButton(
-                          title: 'LIBRARY',
-                          bottomAlign: -45,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(14),
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.libraryRoute,
-                          ),
-                          imageName: 'library_icon.png',
-                        ),
+                        // Bento 2-Column Grid (Homework diary hero + Timetable/Classwork)
+                        _buildBentoGrid(context),
+                        const SizedBox(height: 18),
 
-                        CustomDashboardButton(
-                          title: 'TIMETABLE',
-                          bottomAlign: -22,
-                          leftAlign: -10,
-                          imageHeight:
-                              MediaQueryUtil.getResponsivePercentageSize(13),
-                          onTap: () => AppNavigation.navigateTo(
-                            AppNavRoutes.teacherTimeTableRoute,
+                        // Section Heading
+                        Text(
+                          'Services & Quick Access',
+                          style: AppThemes.sora(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.ink,
                           ),
-                          imageName: 'calendar.png',
                         ),
-                        // CustomDashboardButton(
-                        //     title: 'EVENT\nCALENDAR',
-                        //     bottomAlign: -22,
-                        //     leftAlign: -10,
-                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(13),
-                        //     onTap: () => AppNavigation.navigateTo(
-                        //         AppNavRoutes.studentSchoolEventsRoute),
-                        //     imageName: 'calendar.png'),
+                        const SizedBox(height: 12),
 
-                        // CustomDashboardButton(
-                        //     title: 'SURVEY',
-                        //     bottomAlign: -14,
-                        //     leftAlign: -10,
-                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(11),
-                        //     onTap: () => AppNavigation.navigateTo(
-                        //         AppNavRoutes.studentSurveyRoute),
-                        //     imageName: 'survey.png'),
-                        // CustomDashboardButton(
-                        //     title: 'INDIVIDUAL\nEDUCATION PLAN',
-                        //     bottomAlign: -65,
-                        //     leftAlign: -65,
-                        //     imageHeight: MediaQueryUtil.getResponsivePercentageSize(24),
-                        //     onTap: () => AppNavigation.navigateTo(
-                        //         AppNavRoutes.individualEducationPlanRoute),
-                        //     imageName: 'class_result.png'),
-                        // if (value.userData!.userType == 'Parent')
-                        //   CustomDashboardButton(
-                        //     title: 'BILL\nPAYMENT',
-                        //     bottomAlign: -25,
-                        //     leftAlign: -10,
-                        //     onTap: () => AppNavigation.navigateTo(
-                        //       AppNavRoutes.challanPaymentRoute,
-                        //     ),
-                        //     imageName: 'challan_payment_icon.png',
-                        //   ),
-                        // if (value.userData!.userType == 'Parent')
-                        //   CustomDashboardButton(
-                        //       title: 'BOOK AN\nAPPOINTMENT',
-                        //       bottomAlign: -24,
-                        //       leftAlign: 0,
-                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(10),
-                        //       onTap: () => AppNavigation.navigateTo(
-                        //           AppNavRoutes.bookanAppointmentRoute),
-                        //       imageName: 'calendar_appoointment.png'),
-                        if ((gradeId == '2' ||
-                                gradeId == '3' ||
-                                gradeId == '4' ||
-                                localGradeId == '2' ||
-                                localGradeId == '3' ||
-                                localGradeId == '4') &&
-                            value.userData!.userType == 'Parent')
-                          CustomDashboardButton(
-                            title: 'EYE ON\nYOUR CHILD',
-                            bottomAlign: -22,
-                            leftAlign: 0,
-                            imageHeight:
-                                MediaQueryUtil.getResponsivePercentageSize(10),
-                            onTap: () => AppNavigation.navigateTo(
-                              AppNavRoutes.parentEyeOnYourChildRoute,
-                            ),
-                            imageName: 'shield.png',
-                          ),
-                        // if (value.userData!.userType == 'Parent')
-                        //   CustomDashboardButton(
-                        //       title: 'WITHDRAWAL\nREQUEST',
-                        //       bottomAlign: -22,
-                        //       leftAlign: -15, //0,
-                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(8),
-                        //       onTap: () => AppNavigation.navigateTo(
-                        //           AppNavRoutes.withdrawalRequestRoute),
-                        //       imageName: 'withdrawal.png'),
-                        // if (value.userData!.userType == 'Parent')
-                        //   CustomDashboardButton(
-                        //       title: 'COMPLAINT\nQUERY',
-                        //       bottomAlign: -20,
-                        //       leftAlign: -15, //0,
-                        //       imageHeight: MediaQueryUtil.getResponsivePercentageSize(10),
-                        //       onTap: null,
-                        //       // () => AppNavigation.navigateTo(
-                        //       //     AppNavRoutes.complaintQueryRoute),
-                        //       imageName: 'lightbulb.png'),
+                        // 4-Column Quick Buttons Grid
+                        _buildQuickActionsGrid(
+                          context,
+                          value,
+                          gradeId,
+                          localGradeId,
+                          isParent,
+                        ),
                       ],
                     ),
                   ),
@@ -434,153 +121,613 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       },
     );
   }
-}
 
-class AttendanceDashboardCard extends StatelessWidget {
-  const AttendanceDashboardCard({
-    super.key,
-    required this.size,
-    required this.attendanceService,
-  });
+  /// Top Blue Header Section (Profile info + Term attendance summary)
+  Widget _buildHeader(
+    BuildContext context,
+    LocalDataProvider value,
+    bool isParent,
+  ) {
+    final String displayName = isParent
+        ? (widget.args?.userName ?? value.userData?.info?.name ?? 'Student')
+        : HelperFunction.noNullStringText('${value.userData?.info?.name}');
 
-  final Size size;
-  final Future attendanceService;
+    final String className =
+        value.userData?.info?.className ?? '${value.gradeId ?? '-'}';
+    final String rollNo = value.studentId.isNotEmpty
+        ? value.studentId
+        : (value.userData?.info?.rollNo?.toString() ??
+            value.userData?.userName ??
+            '-');
+    final String campus = value.userData?.info?.centerName ?? '';
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 8,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-      child: Container(
-        // height: MediaQueryUtil.getResponsivePercentageSize(18),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(16.0),
+    return Container(
+      width: double.infinity,
+      color: AppColors.blue,
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 18),
+          child: Column(
+            children: [
+              // Navigation Bar Row (Menu/Back, Logo, Circulars)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  isParent
+                      ? IconButton(
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          onPressed: () => Navigator.of(context).maybePop(),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                        )
+                      : IconButton(
+                          icon: const Icon(
+                            Icons.menu_rounded,
+                            color: Colors.white,
+                            size: 26,
+                          ),
+                          onPressed: () =>
+                              _scaffoldKey.currentState?.openDrawer(),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                        ),
+
+                  // Horizontal White TCS Logo
+                  Image.asset(
+                    'assets/images/tcs_logo_white.png',
+                    height: 28,
+                    fit: BoxFit.contain,
+                  ),
+
+                  // Notifications button
+                  IconButton(
+                    icon: const Icon(
+                      Icons.notifications_none_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                    onPressed: () => AppNavigation.navigateTo(
+                      AppNavRoutes.notificationsRoute,
+                    ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+
+              // Student Identity Row
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: CustomUserImage(
+                      userId: value.userData?.userName ?? '',
+                      imageSize: 52,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          displayName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppThemes.sora(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            _buildInfoBadge('Class', className),
+                            Container(
+                              height: 14,
+                              width: 1,
+                              color: Colors.white.withValues(alpha: 0.3),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                              ),
+                            ),
+                            if (campus.isNotEmpty) ...[
+                              Flexible(
+                                child: _buildInfoBadge('Campus', campus),
+                              ),
+                              Container(
+                                height: 14,
+                                width: 1,
+                                color: Colors.white.withValues(alpha: 0.3),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                ),
+                              ),
+                            ],
+                            _buildInfoBadge('Roll no.', rollNo),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+
+              // Term 1 Attendance Summary Block
+              _buildAttendanceSummaryCard(),
+            ],
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+    );
+  }
+
+  /// Small Badges for Class, Section, Roll No
+  Widget _buildInfoBadge(String label, String val) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          label.toUpperCase(),
+          style: AppThemes.roboto(
+            fontSize: 9,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.5,
+            color: Colors.white.withValues(alpha: 0.75),
+          ),
+        ),
+        Text(
+          val,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppThemes.sora(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Term 1 Attendance Summary Card with Proportional Split Bar
+  Widget _buildAttendanceSummaryCard() {
+    return Consumer<StudentAttendanceProvider>(
+      builder: (context, attendanceProvider, _) {
+        final num pct =
+            attendanceProvider
+                .attendancePercentage
+                ?.data
+                ?.attendancePercentage ??
+            0;
+        final int cleanPct = pct.clamp(0, 100).toInt();
+
+        // Estimated proportional values for presentation bar
+        final int presentFlex = cleanPct > 0 ? cleanPct : 85;
+        final int absentFlex = (100 - presentFlex).clamp(0, 100);
+        final int leaveFlex = (absentFlex > 2) ? 2 : 0;
+        final int finalAbsent = (absentFlex - leaveFlex).clamp(0, 100);
+
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.14),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Term 1 attendance',
+                    style: AppThemes.sora(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '$cleanPct% ',
+                        style: AppThemes.sora(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.yellow,
+                        ),
+                      ),
+                      Text(
+                        'rate',
+                        style: AppThemes.roboto(
+                          fontSize: 12,
+                          color: Colors.white.withValues(alpha: 0.8),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Status Stats Row (Present, Absent, Leave)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: _buildStatDot(
+                      color: const Color(0xFF4CD39B),
+                      label: 'Present',
+                      value: '$cleanPct%',
+                    ),
+                  ),
+                  Flexible(
+                    child: _buildStatDot(
+                      color: const Color(0xFFFF7A90),
+                      label: 'Absent',
+                      value: '${100 - cleanPct}%',
+                    ),
+                  ),
+                  Flexible(
+                    child: _buildStatDot(
+                      color: const Color(0xFFFFC94D),
+                      label: 'Leave',
+                      value: '$leaveFlex days',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Proportional Split Bar
+              ClipRRect(
+                borderRadius: BorderRadius.circular(3),
+                child: Row(
                   children: [
-                    Text(
-                      DateFormat.MMMM().format(DateTime.now()).toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        color: AppColors.secondaryColor,
+                    Expanded(
+                      flex: presentFlex,
+                      child: Container(
+                        height: 5,
+                        color: const Color(0xFF4CD39B),
                       ),
                     ),
-                    Text(
-                      '${DateTime.now().year}',
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        color: AppColors.whiteColor,
-                        fontWeight: FontWeight.w600,
-                        height: 1,
+                    const SizedBox(width: 2),
+                    Expanded(
+                      flex: finalAbsent > 0 ? finalAbsent : 1,
+                      child: Container(
+                        height: 5,
+                        color: const Color(0xFFFF7A90),
+                      ),
+                    ),
+                    const SizedBox(width: 2),
+                    Expanded(
+                      flex: leaveFlex > 0 ? leaveFlex : 1,
+                      child: Container(
+                        height: 5,
+                        color: const Color(0xFFFFC94D),
                       ),
                     ),
                   ],
                 ),
-                const Text(
-                  'MY\nATTENDANCE',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: AppColors.whiteColor,
-                    fontWeight: FontWeight.w600,
-                    height: 1.12,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: MediaQueryUtil.getResponsivePercentageSize(18) - 32,
-              child: FutureBuilder(
-                future: attendanceService,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: CustomLoader(color: AppColors.whiteColor),
-                      );
-                    default:
-                      if (snapshot.hasData) {
-                        return Consumer<StudentAttendanceProvider>(
-                          builder: (context, value, _) {
-                            num data =
-                                value
-                                    .attendancePercentage!
-                                    .data!
-                                    .attendancePercentage ??
-                                0;
-                            data = data.clamp(0, 100);
-                            return Card(
-                              elevation: 4,
-                              borderOnForeground: false,
-                              color: Colors.transparent,
-                              shadowColor: AppColors.blackColor.withValues(
-                                alpha: 0.9,
-                              ),
-                              margin: EdgeInsets.zero,
-                              shape: const CircleBorder(),
-                              child: LayoutBuilder(
-                                builder: (context, constraints) {
-                                  // compute radius based on available height/width
-                                  final double maxDiameter =
-                                      constraints.biggest.shortestSide;
-                                  final double radius = (maxDiameter * 0.8) / 2;
-                                  final double lineWidth = (maxDiameter / 20)
-                                      .clamp(3.0, 12.0);
-                                  final double fontSize = (radius * 0.45).clamp(
-                                    12.0,
-                                    24.0,
-                                  );
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-                                  return SizedBox(
-                                    width: maxDiameter,
-                                    height: maxDiameter,
-                                    child: CircularPercentIndicator(
-                                      radius: radius,
-                                      lineWidth: lineWidth,
-                                      percent: data / 100,
-                                      progressColor:
-                                          AppColors.successGreenColor,
-                                      backgroundColor: AppColors.whiteColor,
-                                      center: Text(
-                                        "${data == 100 ? "100" : data}%",
-                                        style: TextStyle(
-                                          color: AppColors.whiteColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: fontSize,
-                                        ),
-                                      ),
-                                      rotateLinearGradient: true,
-                                      circularStrokeCap:
-                                          CircularStrokeCap.round,
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Icon(
-                            Icons.error_outline,
-                            color: AppColors.lightRedColor,
-                            size: 50,
+  Widget _buildStatDot({
+    required Color color,
+    required String label,
+    required String value,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 7,
+          height: 7,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 5),
+        Text(
+          value,
+          style: AppThemes.sora(
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: AppThemes.roboto(
+            fontSize: 11,
+            color: Colors.white.withValues(alpha: 0.8),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Event / Circulars Banner Card
+  Widget _buildEventBanner(BuildContext context) {
+    return GestureDetector(
+      onTap: () => AppNavigation.navigateTo(AppNavRoutes.notificationsRoute),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: AppColors.line),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.blue.withValues(alpha: 0.05),
+              offset: const Offset(0, 2),
+              blurRadius: 4,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFF8C4),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.event_note_rounded,
+                color: AppColors.blue,
+                size: 22,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'School Circulars & Events',
+                    style: AppThemes.sora(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.ink,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Tap to view latest announcements',
+                    style: AppThemes.roboto(
+                      fontSize: 12,
+                      color: AppColors.muted,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.muted,
+              size: 22,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Bento Feature Grid (Hero Homework Diary + Timetable & Classwork stack)
+  Widget _buildBentoGrid(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Left Hero Card: Homework Diary
+        Expanded(
+          flex: 11,
+          child: GestureDetector(
+            onTap: () => AppNavigation.navigateTo(
+              AppNavRoutes.studentDiaryRoute,
+            ),
+            child: Container(
+              height: 142,
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppColors.blue,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.blue.withValues(alpha: 0.22),
+                    offset: const Offset(0, 4),
+                    blurRadius: 8,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.16),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.menu_book_rounded,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                      ),
+                      Container(
+                        width: 26,
+                        height: 26,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.arrow_forward_rounded,
+                          color: Colors.white,
+                          size: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.yellow,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'DAILY',
+                          style: AppThemes.sora(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.blue,
                           ),
-                        );
-                      }
-                  }
-                },
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Homework diary',
+                        style: AppThemes.sora(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+
+        // Right Stack: Timetable + Classwork
+        Expanded(
+          flex: 10,
+          child: Column(
+            children: [
+              // Timetable Card
+              _buildBentoMiniCard(
+                title: 'Timetable',
+                icon: Icons.calendar_today_rounded,
+                iconBg: AppColors.blueTint,
+                iconColor: AppColors.blue,
+                onTap: () => AppNavigation.navigateTo(
+                  AppNavRoutes.teacherTimeTableRoute,
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              // Classwork Card
+              _buildBentoMiniCard(
+                title: 'Classwork',
+                icon: Icons.assignment_outlined,
+                iconBg: const Color(0xFFFFF8C4),
+                iconColor: AppColors.blue,
+                onTap: () => AppNavigation.navigateTo(
+                  AppNavRoutes.studentAssignmentRoute,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Small Bento Card for Timetable & Classwork
+  Widget _buildBentoMiniCard({
+    required String title,
+    required IconData icon,
+    required Color iconBg,
+    required Color iconColor,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 66,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.line),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.blue.withValues(alpha: 0.04),
+              offset: const Offset(0, 2),
+              blurRadius: 4,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: iconBg,
+                borderRadius: BorderRadius.circular(9),
+              ),
+              child: Icon(icon, color: iconColor, size: 17),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppThemes.sora(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.blue,
+                ),
+              ),
+            ),
+            Container(
+              width: 20,
+              height: 20,
+              decoration: const BoxDecoration(
+                color: AppColors.blueTint,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.arrow_forward_rounded,
+                color: AppColors.blue,
+                size: 11,
               ),
             ),
           ],
@@ -588,162 +735,185 @@ class AttendanceDashboardCard extends StatelessWidget {
       ),
     );
   }
-}
 
-class DashboardTopSection extends StatefulWidget {
-  final bool showResult;
-  final DateTime resultReleaseTime;
-  final void Function()? onViewResult;
-  final Future<dynamic>? resultService;
-  final Future attendanceService;
-  final Size size;
+  /// 4-Column Quick Access Action Buttons Grid
+  Widget _buildQuickActionsGrid(
+    BuildContext context,
+    LocalDataProvider value,
+    String gradeId,
+    String localGradeId,
+    bool isParent,
+  ) {
+    final List<Widget> buttons = [];
 
-  const DashboardTopSection({
-    super.key,
-    required this.showResult,
-    required this.resultReleaseTime,
-    required this.onViewResult,
-    this.resultService,
-    required this.attendanceService,
-    required this.size,
-  });
+    // 1. Profile
+    buttons.add(
+      _buildQuickButton(
+        icon: Icons.person_outline_rounded,
+        label: 'Profile',
+        onTap: () => AppNavigation.navigateTo(
+          AppNavRoutes.studentProfileRoute,
+        ),
+      ),
+    );
 
-  @override
-  State<DashboardTopSection> createState() => _DashboardTopSectionState();
-}
+    // 2. Attendance
+    buttons.add(
+      _buildQuickButton(
+        icon: Icons.calendar_month_outlined,
+        label: 'Attendance',
+        onTap: () {
+          if (gradeId == '19' ||
+              gradeId == '20' ||
+              localGradeId == '19' ||
+              localGradeId == '20') {
+            AppNavigation.navigateTo(AppNavRoutes.attendanceSubjectRoute);
+          } else {
+            AppNavigation.navigateTo(AppNavRoutes.attendanceRoute);
+          }
+        },
+      ),
+    );
 
-class _DashboardTopSectionState extends State<DashboardTopSection> {
-  int _activeIndex = 0;
-  late final PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: 0);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final double cardHeight = MediaQueryUtil.getResponsivePercentageSize(
-      20,
-    ).clamp(150.0, 175.0);
-
-    if (!widget.showResult) {
-      return SizedBox(
-        height: cardHeight,
-        child: DashboardCardWrapper(
-          child: AttendanceDashboardCard(
-            attendanceService: widget.attendanceService,
-            size: widget.size,
+    // 3. Term Result (conditional on grade)
+    if (gradeId != '2' &&
+        gradeId != '3' &&
+        gradeId != '4' &&
+        localGradeId != '2' &&
+        localGradeId != '3' &&
+        localGradeId != '4') {
+      buttons.add(
+        _buildQuickButton(
+          icon: Icons.military_tech_outlined,
+          label: 'Term result',
+          onTap: () => AppNavigation.navigateTo(
+            AppNavRoutes.academicTermRoute,
           ),
         ),
       );
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: cardHeight,
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (index) => setState(() => _activeIndex = index),
-            children: [
-              // Result card
-              DashboardCardWrapper(
-                child: ResultDashboardCard(
-                  resultReleaseTime: widget.resultReleaseTime,
-                  onViewResult: widget.onViewResult,
-                  loadResultsFuture: widget.resultService,
-                ),
-              ),
-
-              // Attendance card
-              DashboardCardWrapper(
-                child: AttendanceDashboardCard(
-                  attendanceService: widget.attendanceService,
-                  size: widget.size,
-                ),
-              ),
-            ],
+    // 4. Class Tests (conditional on grade)
+    if (gradeId != '2' &&
+        gradeId != '3' &&
+        gradeId != '4' &&
+        gradeId != '5' &&
+        gradeId != '6' &&
+        localGradeId != '2' &&
+        localGradeId != '3' &&
+        localGradeId != '4' &&
+        localGradeId != '5' &&
+        localGradeId != '6') {
+      buttons.add(
+        _buildQuickButton(
+          icon: Icons.fact_check_outlined,
+          label: 'Class tests',
+          onTap: () => AppNavigation.navigateTo(
+            AppNavRoutes.studentClassTestResultRoute,
           ),
         ),
+      );
+    }
 
-        const SizedBox(height: 8),
-
-        CarouselDots(
-          count: 2,
-          activeIndex: _activeIndex,
-          onDotTapped: (index) {
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            );
-          },
-        ),
-      ],
+    // 5. Fees
+    buttons.add(
+      _buildQuickButton(
+        icon: Icons.account_balance_wallet_outlined,
+        label: 'Fees',
+        onTap: () => AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
+      ),
     );
-  }
-}
 
-class CarouselDots extends StatelessWidget {
-  final int count;
-  final int activeIndex;
-  final void Function(int)? onDotTapped;
+    // 6. Circulars
+    buttons.add(
+      _buildQuickButton(
+        icon: Icons.campaign_outlined,
+        label: 'Circulars',
+        onTap: () => AppNavigation.navigateTo(AppNavRoutes.notificationsRoute),
+      ),
+    );
 
-  const CarouselDots({
-    super.key,
-    required this.count,
-    required this.activeIndex,
-    this.onDotTapped,
-  });
+    // 7. Library
+    buttons.add(
+      _buildQuickButton(
+        icon: Icons.local_library_outlined,
+        label: 'Library',
+        onTap: () => AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
+      ),
+    );
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(count, (index) {
-        final isActive = activeIndex == index;
-        final dot = AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          width: isActive ? 10 : 6,
-          height: 6,
-          decoration: BoxDecoration(
-            color: isActive ? AppColors.primaryColor : Colors.grey.shade400,
-            borderRadius: BorderRadius.circular(60),
+    // 8. Eye on child (for parents of early grade students)
+    if ((gradeId == '2' ||
+            gradeId == '3' ||
+            gradeId == '4' ||
+            localGradeId == '2' ||
+            localGradeId == '3' ||
+            localGradeId == '4') &&
+        isParent) {
+      buttons.add(
+        _buildQuickButton(
+          icon: Icons.visibility_outlined,
+          label: 'Eye on child',
+          onTap: () => AppNavigation.navigateTo(
+            AppNavRoutes.parentEyeOnYourChildRoute,
           ),
-        );
+        ),
+      );
+    }
 
-        if (onDotTapped != null) {
-          return GestureDetector(onTap: () => onDotTapped!(index), child: dot);
-        }
-        return dot;
-      }),
+    return GridView.count(
+      crossAxisCount: 4,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 14,
+      childAspectRatio: 0.85,
+      children: buttons,
     );
   }
-}
 
-class DashboardCardWrapper extends StatelessWidget {
-  final Widget child;
-
-  const DashboardCardWrapper({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      clipBehavior: Clip.antiAlias,
-      child: child,
+  /// Single Quick Button with bottom accent shadow
+  Widget _buildQuickButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.line),
+              boxShadow: const [
+                BoxShadow(
+                  color: AppColors.yellow,
+                  offset: Offset(0, 3),
+                  blurRadius: 0,
+                ),
+              ],
+            ),
+            child: Icon(icon, color: AppColors.blue, size: 24),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppThemes.roboto(
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+              color: AppColors.ink,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

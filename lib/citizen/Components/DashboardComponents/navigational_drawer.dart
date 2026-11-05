@@ -1,130 +1,250 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tcs_app/CustomWidgets/CustomListTile/custom_list_tile.dart';
 import 'package:tcs_app/CustomWidgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/citizen/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
+import 'package:tcs_app/Utils/app_themes.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
-
-import 'package:tcs_app/CustomWidgets/CustomDivider/custom_divider.dart';
 
 class NavigationalDrawer extends StatelessWidget {
   const NavigationalDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Consumer<LocalDataProvider>(
-      builder: (context, value, _) => Drawer(
-        child: SingleChildScrollView(
+      builder: (context, value, _) {
+        final String userType = value.userData?.userType ?? 'Student';
+        final String displayName = userType == 'Student'
+            ? HelperFunction.noNullStringText('${value.userData?.info?.name}')
+            : userType == 'Teacher'
+                ? HelperFunction.noNullStringText('${value.userData?.name}')
+                : HelperFunction.noNullStringText('${value.userData?.userName}');
+
+        final String idLabel = userType == 'Student'
+            ? 'Roll no.'
+            : userType == 'Parent'
+                ? 'CNIC no.'
+                : 'Emp no.';
+        final String idValue = userType == 'Student'
+            ? value.studentId.toString()
+            : (value.userData?.userName ?? '');
+
+        return Drawer(
+          backgroundColor: Colors.white,
           child: Column(
-            children: <Widget>[
-              SizedBox(height: size.height * 0.1),
-              CustomUserImage(
-                userId: value.userData!.userName!,
-                imageSize: 110,
-              ),
-              SizedBox(height: size.height * 0.01),
-              Text(
-                value.userData!.userType == 'Student'
-                    ? 'Roll No: ${value.studentId}'
-                    : value.userData!.userType == 'Parent'
-                    ? 'CNIC No: ${value.userData!.userName}'
-                    : 'ERP No: ${value.userData!.userName}',
-                style: const TextStyle(
-                  fontSize: 15.0,
-                  color: AppColors.whiteColor,
-                  fontWeight: FontWeight.w600,
+            children: [
+              // Blue Top Header (S3b Menu Header)
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.fromLTRB(
+                  20,
+                  MediaQuery.paddingOf(context).top + 12,
+                  20,
+                  24,
+                ),
+                decoration: const BoxDecoration(
+                  color: AppColors.blue,
+                ),
+                child: Column(
+                  children: [
+                    // Close button X on top right
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+
+                    // User Photo with white border
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: CustomUserImage(
+                        userId: value.userData?.userName ?? '',
+                        imageSize: 76,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Display Name
+                    Text(
+                      displayName,
+                      textAlign: TextAlign.center,
+                      style: AppThemes.sora(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+
+                    // ID Badge Pill
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.18),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '$idLabel ',
+                            style: AppThemes.roboto(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white.withValues(alpha: 0.75),
+                            ),
+                          ),
+                          Text(
+                            idValue,
+                            style: AppThemes.sora(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: size.height * 0.01),
-              value.userData!.userType == 'Student'
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0,
-                        vertical: 3.0,
-                      ),
-                      child: Text(
-                        HelperFunction.noNullStringText(
-                          '${value.userData!.info!.name}',
-                        ),
-                        style: const TextStyle(
-                          fontSize: 15.0,
-                          color: AppColors.whiteColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    )
-                  : value.userData!.userType == 'Teacher'
-                  ? Text(
-                      HelperFunction.noNullStringText(
-                        '${value.userData!.name}',
-                      ),
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        color: AppColors.whiteColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              SizedBox(height: size.height * 0.01),
-              CustomDivider(
-                horizontalPadding: size.width * 0.05,
-                color: AppColors.whiteColor,
-              ),
-              CustomListTile(
-                title: 'About Us',
-                onTap: () {
-                  Scaffold.of(context).closeDrawer();
-                  AppNavigation.navigateTo(AppNavRoutes.aboutUsRoute);
-                },
-              ),
-              const CustomDivider(),
-              CustomListTile(
-                title: 'App Feedback',
-                onTap: () {
-                  Scaffold.of(context).closeDrawer();
-                  AppNavigation.navigateTo(AppNavRoutes.appFeedbackRoute);
-                },
-              ),
-              const CustomDivider(),
-              value.userData!.userType != 'Teacher'
-                  ? Column(
-                      children: [
-                        CustomListTile(
-                          title: 'Change Password',
-                          onTap: () {
-                            Scaffold.of(context).closeDrawer();
-                            AppNavigation.navigateTo(
-                              AppNavRoutes.changePasswordRoute,
-                            );
-                          },
-                        ),
-                        const CustomDivider(),
-                      ],
-                    )
-                  : const SizedBox.shrink(),
-              CustomListTile(
-                title: 'Logout',
-                onTap: () => value.logout(context),
-              ),
-              SizedBox(height: size.height * 0.05),
 
-              const Text(
-                'App Version: ${AppConstants.appVersion}',
-                style: TextStyle(
-                  fontSize: 12.0,
-                  color: AppColors.whiteColor,
-                  fontWeight: FontWeight.w600,
+              // Drawer List Items
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  children: [
+                    _buildDrawerTile(
+                      icon: Icons.info_outline_rounded,
+                      title: 'About us',
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        AppNavigation.navigateTo(AppNavRoutes.aboutUsRoute);
+                      },
+                    ),
+                    const Divider(
+                      height: 1,
+                      indent: 16,
+                      endIndent: 16,
+                      color: AppColors.line,
+                    ),
+                    _buildDrawerTile(
+                      icon: Icons.feedback_outlined,
+                      title: 'App feedback',
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        AppNavigation.navigateTo(AppNavRoutes.appFeedbackRoute);
+                      },
+                    ),
+                    if (userType != 'Teacher') ...[
+                      const Divider(
+                        height: 1,
+                        indent: 16,
+                        endIndent: 16,
+                        color: AppColors.line,
+                      ),
+                      _buildDrawerTile(
+                        icon: Icons.lock_outline_rounded,
+                        title: 'Change password',
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          AppNavigation.navigateTo(
+                            AppNavRoutes.changePasswordRoute,
+                          );
+                        },
+                      ),
+                    ],
+                    const Divider(
+                      height: 1,
+                      indent: 16,
+                      endIndent: 16,
+                      color: AppColors.line,
+                    ),
+                    _buildDrawerTile(
+                      icon: Icons.logout_rounded,
+                      title: 'Log out',
+                      isDestructive: true,
+                      onTap: () => value.logout(context),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Footer App Version
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, top: 8),
+                child: Text(
+                  'App version ${AppConstants.appVersion}',
+                  style: AppThemes.roboto(
+                    fontSize: 12,
+                    color: AppColors.muted,
+                  ),
                 ),
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  Widget _buildDrawerTile({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+    bool isDestructive = false,
+  }) {
+    final Color itemColor = isDestructive ? AppColors.red : AppColors.ink;
+    final Color iconColor = isDestructive ? AppColors.red : AppColors.blue;
+
+    return ListTile(
+      leading: Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+          color: isDestructive
+              ? AppColors.red.withValues(alpha: 0.1)
+              : AppColors.blueTint,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(icon, color: iconColor, size: 20),
+      ),
+      title: Text(
+        title,
+        style: AppThemes.sora(
+          fontSize: 14,
+          fontWeight: isDestructive ? FontWeight.w700 : FontWeight.w600,
+          color: itemColor,
         ),
       ),
+      trailing: isDestructive
+          ? null
+          : const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.muted,
+              size: 20,
+            ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      onTap: onTap,
     );
   }
 }
