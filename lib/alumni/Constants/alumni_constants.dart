@@ -2,7 +2,7 @@ class AlumniConstants {
   // TCS Alumni Backend Base URLs
   static const String liveBaseUrl = 'https://tcsalumni.linkalumniapp.com/';
   static const String devBaseUrl = 'https://dev.linkalumniapp.com/';
-  static const String baseUrl = liveBaseUrl;
+  static const String baseUrl =devBaseUrl;
 
   // API Endpoints
   static const String loginEndpoint = 'api/user_login';
