@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tcs_app/CustomWidgets/CityzensIcons/cityzens_icons.dart';
 import 'package:tcs_app/CustomWidgets/CustomUserImage/custom_user_image.dart';
 import 'package:tcs_app/citizen/Provider/LocalData/local_data_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
@@ -14,6 +15,8 @@ class NavigationalDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double topPad = MediaQuery.paddingOf(context).top;
+
     return Consumer<LocalDataProvider>(
       builder: (context, value, _) {
         final String userType = value.userData?.userType ?? 'Student';
@@ -33,137 +36,149 @@ class NavigationalDrawer extends StatelessWidget {
             : (value.userData?.userName ?? '');
 
         return Drawer(
+          width: MediaQuery.sizeOf(context).width * 0.76,
           backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(
+              right: Radius.circular(22),
+            ),
+          ),
+          clipBehavior: Clip.antiAlias,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Blue Top Header (S3b Menu Header)
+              // Blue Top Header matching S3b Menu mockup (Left-aligned)
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.fromLTRB(
-                  20,
-                  MediaQuery.paddingOf(context).top + 12,
-                  20,
-                  24,
-                ),
-                decoration: const BoxDecoration(
-                  color: AppColors.blue,
-                ),
-                child: Column(
+                color: AppColors.blue,
+                child: Stack(
                   children: [
-                    // Close button X on top right
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.close_rounded,
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                        onPressed: () => Navigator.of(context).pop(),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        18,
+                        topPad + 18,
+                        18,
+                        18,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-
-                    // User Photo with white border
-                    Container(
-                      padding: const EdgeInsets.all(3),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: CustomUserImage(
-                        userId: value.userData?.userName ?? '',
-                        imageSize: 76,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Display Name
-                    Text(
-                      displayName,
-                      textAlign: TextAlign.center,
-                      style: AppThemes.sora(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-
-                    // ID Badge Pill
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.18),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '$idLabel ',
-                            style: AppThemes.roboto(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white.withValues(alpha: 0.75),
+                          // User Photo with 3px yellow border ring
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: const BoxDecoration(
+                              color: AppColors.yellow,
+                              shape: BoxShape.circle,
+                            ),
+                            child: CustomUserImage(
+                              userId: value.userData?.userName ?? '',
+                              imageSize: 64,
                             ),
                           ),
+                          const SizedBox(height: 10),
+
+                          // Display Name (left-aligned)
                           Text(
-                            idValue,
+                            displayName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: AppThemes.sora(
-                              fontSize: 12,
+                              fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
                           ),
+                          const SizedBox(height: 6),
+
+                          // ID Badge Pill (left-aligned)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.14),
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  '$idLabel  ',
+                                  style: AppThemes.roboto(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white.withValues(alpha: 0.75),
+                                  ),
+                                ),
+                                Text(
+                                  idValue,
+                                  style: AppThemes.sora(
+                                    fontSize: 11.5,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
+                      ),
+                    ),
+
+                    // Circular X Close Button in top-right
+                    Positioned(
+                      top: topPad + 12,
+                      right: 12,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).pop(),
+                          borderRadius: BorderRadius.circular(18),
+                          child: Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.14),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.close_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
 
-              // Drawer List Items
+              // Drawer Menu Items
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
                   children: [
                     _buildDrawerTile(
-                      icon: Icons.info_outline_rounded,
+                      iconType: CityzensIconType.info,
                       title: 'About us',
                       onTap: () {
                         Navigator.of(context).pop();
                         AppNavigation.navigateTo(AppNavRoutes.aboutUsRoute);
                       },
                     ),
-                    const Divider(
-                      height: 1,
-                      indent: 16,
-                      endIndent: 16,
-                      color: AppColors.line,
-                    ),
                     _buildDrawerTile(
-                      icon: Icons.feedback_outlined,
+                      iconType: CityzensIconType.feedback,
                       title: 'App feedback',
                       onTap: () {
                         Navigator.of(context).pop();
                         AppNavigation.navigateTo(AppNavRoutes.appFeedbackRoute);
                       },
                     ),
-                    if (userType != 'Teacher') ...[
-                      const Divider(
-                        height: 1,
-                        indent: 16,
-                        endIndent: 16,
-                        color: AppColors.line,
-                      ),
+                    if (userType != 'Teacher')
                       _buildDrawerTile(
-                        icon: Icons.lock_outline_rounded,
+                        iconType: CityzensIconType.lock,
                         title: 'Change password',
                         onTap: () {
                           Navigator.of(context).pop();
@@ -172,15 +187,22 @@ class NavigationalDrawer extends StatelessWidget {
                           );
                         },
                       ),
-                    ],
-                    const Divider(
-                      height: 1,
-                      indent: 16,
-                      endIndent: 16,
-                      color: AppColors.line,
+
+                    // Single Divider only above Log out
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 6,
+                        horizontal: 6,
+                      ),
+                      child: Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Color(0xFFEEF1F5),
+                      ),
                     ),
+
                     _buildDrawerTile(
-                      icon: Icons.logout_rounded,
+                      iconType: CityzensIconType.logout,
                       title: 'Log out',
                       isDestructive: true,
                       onTap: () => value.logout(context),
@@ -189,14 +211,17 @@ class NavigationalDrawer extends StatelessWidget {
                 ),
               ),
 
-              // Footer App Version
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20, top: 8),
-                child: Text(
-                  'App version ${AppConstants.appVersion}',
-                  style: AppThemes.roboto(
-                    fontSize: 12,
-                    color: AppColors.muted,
+              // Footer App Version (bottom-left aligned)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 26),
+                  child: Text(
+                    'App version ${AppConstants.appVersion}',
+                    style: AppThemes.roboto(
+                      fontSize: 12,
+                      color: AppColors.muted,
+                    ),
                   ),
                 ),
               ),
@@ -208,43 +233,46 @@ class NavigationalDrawer extends StatelessWidget {
   }
 
   Widget _buildDrawerTile({
-    required IconData icon,
+    required CityzensIconType iconType,
     required String title,
     required VoidCallback onTap,
     bool isDestructive = false,
   }) {
-    final Color itemColor = isDestructive ? AppColors.red : AppColors.ink;
-    final Color iconColor = isDestructive ? AppColors.red : AppColors.blue;
-
-    return ListTile(
-      leading: Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          color: isDestructive
-              ? AppColors.red.withValues(alpha: 0.1)
-              : AppColors.blueTint,
-          borderRadius: BorderRadius.circular(10),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+          child: Row(
+            children: [
+              CityzensIcon(
+                type: iconType,
+                size: 26,
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Text(
+                  title,
+                  style: AppThemes.sora(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color:
+                        isDestructive ? const Color(0xFFC42840) : AppColors.ink,
+                  ),
+                ),
+              ),
+              if (!isDestructive)
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: Color(0xFFA0A8B5),
+                  size: 18,
+                ),
+            ],
+          ),
         ),
-        child: Icon(icon, color: iconColor, size: 20),
       ),
-      title: Text(
-        title,
-        style: AppThemes.sora(
-          fontSize: 14,
-          fontWeight: isDestructive ? FontWeight.w700 : FontWeight.w600,
-          color: itemColor,
-        ),
-      ),
-      trailing: isDestructive
-          ? null
-          : const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.muted,
-              size: 20,
-            ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-      onTap: onTap,
     );
   }
 }

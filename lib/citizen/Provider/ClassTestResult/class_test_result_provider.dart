@@ -193,7 +193,11 @@ class ClassTestResultProvider with ChangeNotifier {
 
   void setClassTestStudentsData(ClassTestResultStudentListResponse response) {
     classTestResultStudentResponse = response;
-    totalMarks = classTestResultStudentResponse!.studentList![0].totalMarks!;
+    if (response.studentList != null && response.studentList!.isNotEmpty) {
+      totalMarks = response.studentList![0].totalMarks ?? 0;
+    } else {
+      totalMarks = 0;
+    }
 
     notifyListeners();
   }
@@ -243,9 +247,9 @@ class ClassTestResultProvider with ChangeNotifier {
   Future<void> submitAllMarks() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (formKey.currentState!.validate() &&
-          testFormKey.currentState!.validate()) {
-        //studentMarks.clear();
+      if ((formKey.currentState?.validate() ?? true) &&
+          (testFormKey.currentState?.validate() ?? true)) {
+        studentMarks = [];
 
         if (classTestResultStudentResponse != null &&
             classTestResultStudentResponse!.studentList != null) {

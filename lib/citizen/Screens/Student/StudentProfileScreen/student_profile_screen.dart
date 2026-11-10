@@ -7,6 +7,7 @@ import 'package:tcs_app/citizen/Provider/StudentProfile/student_profile_provider
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_themes.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/cityzens_back_button.dart';
 
 class StudentProfileScreen extends StatefulWidget {
   const StudentProfileScreen({super.key});
@@ -43,27 +44,23 @@ class StudentProfileScreenState extends State<StudentProfileScreen> {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 4, 16, 18),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 18),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                onPressed: () => Navigator.of(context).pop(),
+              CityzensBackButton(
+                size: 40,
+                onTap: () => Navigator.of(context).pop(),
               ),
               Text(
                 'Profile',
                 style: AppThemes.sora(
-                  fontSize: 18,
+                  fontSize: 19,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
               ),
-              const SizedBox(width: 40),
+              const SizedBox(width: 40, height: 40),
             ],
           ),
         ),

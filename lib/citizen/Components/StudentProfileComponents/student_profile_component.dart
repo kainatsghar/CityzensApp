@@ -10,6 +10,8 @@ import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_constants.dart';
 import 'package:tcs_app/Utils/app_themes.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/cityzens_back_button.dart';
+import 'package:tcs_app/CustomWidgets/CityzensIcons/cityzens_icons.dart';
 
 class StudentProfileComponent extends StatelessWidget {
   const StudentProfileComponent({super.key});
@@ -60,33 +62,29 @@ class StudentProfileComponent extends StatelessWidget {
               child: SafeArea(
                 bottom: false,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 18),
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 18),
                   child: Column(
                     children: [
-                      // Top Bar Row (Back button, Title)
+                      // Top Bar Row (Circular Back button, Title)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            onPressed: () => Navigator.of(context).pop(),
+                          CityzensBackButton(
+                            size: 40,
+                            onTap: () => Navigator.of(context).pop(),
                           ),
                           Text(
                             'Profile',
                             style: AppThemes.sora(
-                              fontSize: 18,
+                              fontSize: 19,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(width: 40),
+                          const SizedBox(width: 40, height: 40),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 8),
 
                       // Avatar with yellow & white double ring + yellow camera button
                       SizedBox(
@@ -171,10 +169,12 @@ class StudentProfileComponent extends StatelessWidget {
                                     ],
                                   ),
                                   child: const Center(
-                                    child: Icon(
-                                      Icons.camera_alt_rounded,
-                                      color: AppColors.blue,
-                                      size: 16,
+                                    child: CityzensIcon(
+                                      type: CityzensIconType.camera,
+                                      size: 18,
+                                      primaryColor: AppColors.blue,
+                                      secondaryColor: Colors.white,
+                                      accentColor: AppColors.yellow,
                                     ),
                                   ),
                                 ),
@@ -244,7 +244,7 @@ class StudentProfileComponent extends StatelessWidget {
                   children: [
                     // Academic Group
                     _buildGroup(
-                      icon: Icons.school_outlined,
+                      iconType: CityzensIconType.classIcon,
                       title: 'ACADEMIC',
                       fields: [
                         _ProfileField(
@@ -261,7 +261,7 @@ class StudentProfileComponent extends StatelessWidget {
 
                     // Personal Group
                     _buildGroup(
-                      icon: Icons.person_outline_rounded,
+                      iconType: CityzensIconType.user,
                       title: 'PERSONAL',
                       fields: [
                         _ProfileField(
@@ -283,7 +283,7 @@ class StudentProfileComponent extends StatelessWidget {
 
                     // Contact Group
                     _buildGroup(
-                      icon: Icons.phone_outlined,
+                      iconType: CityzensIconType.phone,
                       title: 'CONTACT',
                       fields: [
                         _ProfileField(
@@ -339,7 +339,7 @@ class StudentProfileComponent extends StatelessWidget {
   }
 
   Widget _buildGroup({
-    required IconData icon,
+    required CityzensIconType iconType,
     required String title,
     required List<_ProfileField> fields,
   }) {
@@ -350,10 +350,9 @@ class StudentProfileComponent extends StatelessWidget {
           padding: const EdgeInsets.only(left: 2, bottom: 6),
           child: Row(
             children: [
-              Icon(
-                icon,
-                size: 16,
-                color: AppColors.blue,
+              CityzensIcon(
+                type: iconType,
+                size: 20,
               ),
               const SizedBox(width: 6),
               Text(

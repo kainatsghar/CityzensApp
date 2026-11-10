@@ -9,6 +9,7 @@ import 'package:tcs_app/Routes/app_navigation_routes.dart';
 import 'package:tcs_app/citizen/Services/FCMTokenRefresh/fcm_token_refresh_service.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_themes.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/cityzens_menu_button.dart';
 
 class TeacherDashboardScreen extends StatefulWidget {
   const TeacherDashboardScreen({super.key});
@@ -77,13 +78,8 @@ class TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            IconButton(
-                              icon: const Icon(
-                                Icons.menu_rounded,
-                                color: Colors.white,
-                                size: 28,
-                              ),
-                              onPressed: () {
+                            CityzensMenuButton(
+                              onTap: () {
                                 _scaffoldKey.currentState?.openDrawer();
                               },
                             ),

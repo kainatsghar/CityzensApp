@@ -8,6 +8,7 @@ import 'package:tcs_app/citizen/Provider/StudentAttendance/student_attendance_pr
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_themes.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/cityzens_back_button.dart';
 
 class StudentAttendanceScreen extends StatefulWidget {
   const StudentAttendanceScreen({super.key});
@@ -56,35 +57,29 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                 child: SafeArea(
                   bottom: false,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 14),
                     child: Column(
                       children: [
-                        // App Bar Row (Back Button, Title)
+                        // App Bar Row (Circular Back Button, Centered Title, Spacer)
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            IconButton(
-                              icon: const Icon(
-                                Icons.arrow_back_ios_new_rounded,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                              onPressed: () => Navigator.of(context).maybePop(),
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
+                            CityzensBackButton(
+                              size: 40,
+                              onTap: () => Navigator.of(context).maybePop(),
                             ),
                             Text(
                               'Attendance',
                               style: AppThemes.sora(
-                                fontSize: 18,
+                                fontSize: 19,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
                             ),
-                            const SizedBox(width: 24),
+                            const SizedBox(width: 40, height: 40),
                           ],
                         ),
-                        const SizedBox(height: 14),
+                        const SizedBox(height: 12),
 
                         // Month Switcher Row (< Month Year >)
                         Row(
@@ -100,10 +95,10 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                                 provider.reloadAttendance(prev);
                               },
                               child: Container(
-                                width: 36,
-                                height: 36,
+                                width: 40,
+                                height: 40,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.16),
+                                  color: Colors.white.withValues(alpha: 0.13),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
@@ -116,7 +111,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                             Text(
                               monthYear,
                               style: AppThemes.sora(
-                                fontSize: 17,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
@@ -131,10 +126,10 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                                 provider.reloadAttendance(next);
                               },
                               child: Container(
-                                width: 36,
-                                height: 36,
+                                width: 40,
+                                height: 40,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.16),
+                                  color: Colors.white.withValues(alpha: 0.13),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
@@ -146,7 +141,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 14),
+                        const SizedBox(height: 12),
 
                         // 3 Summary Stat Badges (Present, Absent, Leave)
                         Row(
@@ -158,7 +153,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                                 color: const Color(0xFF4CD39B),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 6),
                             Expanded(
                               child: _buildSummaryBadge(
                                 count: provider.absentDates.length,
@@ -166,7 +161,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                                 color: const Color(0xFFFF7A90),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 6),
                             Expanded(
                               child: _buildSummaryBadge(
                                 count: provider.leaveDates.length,

@@ -11,6 +11,8 @@ import 'package:tcs_app/citizen/Services/FCMTokenRefresh/fcm_token_refresh_servi
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_themes.dart';
 import 'package:tcs_app/Utils/helper_function.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/cityzens_menu_button.dart';
+import 'package:tcs_app/CustomWidgets/CityzensIcons/cityzens_icons.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   final ScreenArguments? args;
@@ -79,30 +81,19 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
 
                   // S3 Body Content (Announcement card, Bento blocks, Quick buttons)
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Event / Circulars Banner Card
                         _buildEventBanner(context),
-                        const SizedBox(height: 14),
+                        const SizedBox(height: 10),
 
                         // Bento 2-Column Grid (Homework diary hero + Timetable/Classwork)
                         _buildBentoGrid(context),
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 14),
 
-                        // Section Heading
-                        Text(
-                          'Services & Quick Access',
-                          style: AppThemes.sora(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.ink,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-
-                        // 4-Column Quick Buttons Grid
+                        // 4-Column Quick Buttons Grid (No extra heading, matching mockup S3)
                         _buildQuickActionsGrid(
                           context,
                           value,
@@ -147,59 +138,49 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 16, 18),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 14),
           child: Column(
             children: [
-              // Navigation Bar Row (Menu/Back, Logo, Circulars)
+              // Navigation Bar Row (Menu/Back, Centered Horizontal Logo, Spacer)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   isParent
-                      ? IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: Colors.white,
-                            size: 20,
+                      ? SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            onPressed: () => Navigator.of(context).maybePop(),
+                            padding: EdgeInsets.zero,
                           ),
-                          onPressed: () => Navigator.of(context).maybePop(),
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
                         )
-                      : IconButton(
-                          icon: const Icon(
-                            Icons.menu_rounded,
-                            color: Colors.white,
-                            size: 26,
-                          ),
-                          onPressed: () =>
+                      : CityzensMenuButton(
+                          size: 40,
+                          onTap: () =>
                               _scaffoldKey.currentState?.openDrawer(),
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
                         ),
 
-                  // Horizontal White TCS Logo
-                  Image.asset(
-                    'assets/images/tcs_logo_white.png',
-                    height: 28,
-                    fit: BoxFit.contain,
+                  // Horizontal White TCS Logo matching mockup S3
+                  Expanded(
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/logo-horizontal-white.png',
+                        height: 36,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
 
-                  // Notifications button
-                  IconButton(
-                    icon: const Icon(
-                      Icons.notifications_none_rounded,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    onPressed: () => AppNavigation.navigateTo(
-                      AppNavRoutes.notificationsRoute,
-                    ),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                  ),
+                  // Balancing spacer on right so logo sits dead-center
+                  const SizedBox(width: 40, height: 40),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 10),
 
               // Student Identity Row
               Row(
@@ -225,21 +206,21 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppThemes.sora(
-                            fontSize: 18,
+                            fontSize: 19,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 4),
                         Row(
                           children: [
                             _buildInfoBadge('Class', className),
                             Container(
-                              height: 14,
+                              height: 20,
                               width: 1,
-                              color: Colors.white.withValues(alpha: 0.3),
+                              color: Colors.white.withValues(alpha: 0.22),
                               margin: const EdgeInsets.symmetric(
-                                horizontal: 6,
+                                horizontal: 10,
                               ),
                             ),
                             if (campus.isNotEmpty) ...[
@@ -247,11 +228,11 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                                 child: _buildInfoBadge('Campus', campus),
                               ),
                               Container(
-                                height: 14,
+                                height: 20,
                                 width: 1,
-                                color: Colors.white.withValues(alpha: 0.3),
+                                color: Colors.white.withValues(alpha: 0.22),
                                 margin: const EdgeInsets.symmetric(
-                                  horizontal: 6,
+                                  horizontal: 10,
                                 ),
                               ),
                             ],
@@ -263,7 +244,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 12),
 
               // Term 1 Attendance Summary Block
               _buildAttendanceSummaryCard(),
@@ -274,7 +255,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     );
   }
 
-  /// Small Badges for Class, Section, Roll No
+  /// Small Badges for Class, Campus, Roll No
   Widget _buildInfoBadge(String label, String val) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,18 +264,19 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         Text(
           label.toUpperCase(),
           style: AppThemes.roboto(
-            fontSize: 9,
+            fontSize: 9.5,
             fontWeight: FontWeight.w500,
-            letterSpacing: 0.5,
-            color: Colors.white.withValues(alpha: 0.75),
+            letterSpacing: 0.6,
+            color: Colors.white.withValues(alpha: 0.72),
           ),
         ),
+        const SizedBox(height: 1),
         Text(
           val,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppThemes.sora(
-            fontSize: 12,
+            fontSize: 13,
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
@@ -315,7 +297,6 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             0;
         final int cleanPct = pct.clamp(0, 100).toInt();
 
-        // Estimated proportional values for presentation bar
         final int presentFlex = cleanPct > 0 ? cleanPct : 85;
         final int absentFlex = (100 - presentFlex).clamp(0, 100);
         final int leaveFlex = (absentFlex > 2) ? 2 : 0;
@@ -323,10 +304,10 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
 
         return Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(14),
+            color: Colors.white.withValues(alpha: 0.13),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,7 +319,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                     'Term 1 attendance',
                     style: AppThemes.sora(
                       fontSize: 13,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
@@ -347,7 +328,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                       Text(
                         '$cleanPct% ',
                         style: AppThemes.sora(
-                          fontSize: 13,
+                          fontSize: 12.5,
                           fontWeight: FontWeight.w700,
                           color: AppColors.yellow,
                         ),
@@ -356,14 +337,14 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                         'rate',
                         style: AppThemes.roboto(
                           fontSize: 12,
-                          color: Colors.white.withValues(alpha: 0.8),
+                          color: Colors.white.withValues(alpha: 0.86),
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
 
               // Status Stats Row (Present, Absent, Leave)
               Row(
@@ -387,22 +368,22 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                     child: _buildStatDot(
                       color: const Color(0xFFFFC94D),
                       label: 'Leave',
-                      value: '$leaveFlex days',
+                      value: '$leaveFlex',
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
 
               // Proportional Split Bar
               ClipRRect(
-                borderRadius: BorderRadius.circular(3),
+                borderRadius: BorderRadius.circular(2),
                 child: Row(
                   children: [
                     Expanded(
                       flex: presentFlex,
                       child: Container(
-                        height: 5,
+                        height: 4,
                         color: const Color(0xFF4CD39B),
                       ),
                     ),
@@ -410,7 +391,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                     Expanded(
                       flex: finalAbsent > 0 ? finalAbsent : 1,
                       child: Container(
-                        height: 5,
+                        height: 4,
                         color: const Color(0xFFFF7A90),
                       ),
                     ),
@@ -418,7 +399,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                     Expanded(
                       flex: leaveFlex > 0 ? leaveFlex : 1,
                       child: Container(
-                        height: 5,
+                        height: 4,
                         color: const Color(0xFFFFC94D),
                       ),
                     ),
@@ -449,8 +430,8 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         Text(
           value,
           style: AppThemes.sora(
-            fontSize: 13,
-            fontWeight: FontWeight.w700,
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
             color: Colors.white,
           ),
         ),
@@ -458,45 +439,46 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         Text(
           label,
           style: AppThemes.roboto(
-            fontSize: 11,
-            color: Colors.white.withValues(alpha: 0.8),
+            fontSize: 11.5,
+            color: Colors.white.withValues(alpha: 0.86),
           ),
         ),
       ],
     );
   }
 
-  /// Event / Circulars Banner Card
+  /// Event / Circulars Banner Card matching mockup S3
   Widget _buildEventBanner(BuildContext context) {
     return GestureDetector(
       onTap: () => AppNavigation.navigateTo(AppNavRoutes.notificationsRoute),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: AppColors.line),
           boxShadow: [
             BoxShadow(
-              color: AppColors.blue.withValues(alpha: 0.05),
-              offset: const Offset(0, 2),
-              blurRadius: 4,
+              color: AppColors.blueDeep.withValues(alpha: 0.06),
+              offset: const Offset(0, 1),
+              blurRadius: 3,
             ),
           ],
         ),
         child: Row(
           children: [
             Container(
-              width: 38,
-              height: 38,
+              width: 40,
+              height: 40,
               decoration: BoxDecoration(
                 color: const Color(0xFFFFF8C4),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(
-                Icons.event_note_rounded,
-                color: AppColors.blue,
-                size: 22,
+              child: const Center(
+                child: CityzensIcon(
+                  type: CityzensIconType.event,
+                  size: 28,
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -505,14 +487,14 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'School Circulars & Events',
+                    'Circulars & Events',
                     style: AppThemes.sora(
-                      fontSize: 14,
+                      fontSize: 15,
                       fontWeight: FontWeight.w700,
                       color: AppColors.ink,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 1),
                   Text(
                     'Tap to view latest announcements',
                     style: AppThemes.roboto(
@@ -523,10 +505,9 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
                 ],
               ),
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.muted,
-              size: 22,
+            const CityzensIcon(
+              type: CityzensIconType.chevronRight,
+              size: 28,
             ),
           ],
         ),
@@ -534,129 +515,125 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     );
   }
 
-  /// Bento Feature Grid (Hero Homework Diary + Timetable & Classwork stack)
+  /// Bento Feature Grid matching mockup S3 (Homework diary hero + 2-row mini cards)
   Widget _buildBentoGrid(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Left Hero Card: Homework Diary
         Expanded(
-          flex: 11,
+          flex: 108,
           child: GestureDetector(
             onTap: () => AppNavigation.navigateTo(
               AppNavRoutes.studentDiaryRoute,
             ),
-            child: Container(
-              height: 142,
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: AppColors.blue,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.blue.withValues(alpha: 0.22),
-                    offset: const Offset(0, 4),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Container(
+                height: 156,
+                decoration: BoxDecoration(
+                  color: AppColors.blue,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.blue.withValues(alpha: 0.2),
+                      offset: const Offset(0, 2),
+                      blurRadius: 6,
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  children: [
+                    // Subtle concentric decorative arcs matching `.bx.hw::after`
+                    Positioned(
+                      right: -34,
+                      bottom: -34,
+                      child: Container(
+                        width: 110,
+                        height: 110,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.16),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.menu_book_rounded,
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                      ),
-                      Container(
-                        width: 26,
-                        height: 26,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_forward_rounded,
-                          color: Colors.white,
-                          size: 14,
+                          color: Colors.white.withValues(alpha: 0.08),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.white.withValues(alpha: 0.04),
+                              spreadRadius: 18,
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.yellow,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          'DAILY',
-                          style: AppThemes.sora(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.blue,
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const CityzensIcon(
+                                type: CityzensIconType.homework,
+                                size: 48,
+                                primaryColor: Colors.white,
+                                secondaryColor: AppColors.yellow,
+                                accentColor: AppColors.blue,
+                              ),
+                              Container(
+                                width: 22,
+                                height: 22,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.16),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: Colors.white,
+                                  size: 15,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                          Text(
+                            'Homework\ndiary',
+                            style: AppThemes.sora(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              height: 1.25,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 6),
-                      Text(
-                        'Homework diary',
-                        style: AppThemes.sora(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
         const SizedBox(width: 8),
 
-        // Right Stack: Timetable + Classwork
+        // Right Stack: Timetable + Classwork (2-row layout per mockup)
         Expanded(
-          flex: 10,
+          flex: 100,
           child: Column(
             children: [
-              // Timetable Card
               _buildBentoMiniCard(
                 title: 'Timetable',
-                icon: Icons.calendar_today_rounded,
+                iconType: CityzensIconType.timetable,
                 iconBg: AppColors.blueTint,
-                iconColor: AppColors.blue,
                 onTap: () => AppNavigation.navigateTo(
                   AppNavRoutes.teacherTimeTableRoute,
                 ),
               ),
-              const SizedBox(height: 10),
-
-              // Classwork Card
+              const SizedBox(height: 8),
               _buildBentoMiniCard(
                 title: 'Classwork',
-                icon: Icons.assignment_outlined,
+                iconType: CityzensIconType.classwork,
                 iconBg: const Color(0xFFFFF8C4),
-                iconColor: AppColors.blue,
                 onTap: () => AppNavigation.navigateTo(
                   AppNavRoutes.studentAssignmentRoute,
                 ),
@@ -668,66 +645,75 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     );
   }
 
-  /// Small Bento Card for Timetable & Classwork
+  /// 2-Row Small Bento Card for Timetable & Classwork matching `.db .bx`
   Widget _buildBentoMiniCard({
     required String title,
-    required IconData icon,
+    required CityzensIconType iconType,
     required Color iconBg,
-    required Color iconColor,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 66,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        height: 74,
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 9),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppColors.line),
           boxShadow: [
             BoxShadow(
-              color: AppColors.blue.withValues(alpha: 0.04),
-              offset: const Offset(0, 2),
-              blurRadius: 4,
+              color: AppColors.blueDeep.withValues(alpha: 0.06),
+              offset: const Offset(0, 1),
+              blurRadius: 3,
             ),
           ],
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: iconBg,
-                borderRadius: BorderRadius.circular(9),
-              ),
-              child: Icon(icon, color: iconColor, size: 17),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppThemes.sora(
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.blue,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: iconBg,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: CityzensIcon(
+                      type: iconType,
+                      size: 24,
+                    ),
+                  ),
                 ),
-              ),
+                Container(
+                  width: 22,
+                  height: 22,
+                  decoration: const BoxDecoration(
+                    color: AppColors.blueTint,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.blue,
+                    size: 15,
+                  ),
+                ),
+              ],
             ),
-            Container(
-              width: 20,
-              height: 20,
-              decoration: const BoxDecoration(
-                color: AppColors.blueTint,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.arrow_forward_rounded,
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppThemes.sora(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
                 color: AppColors.blue,
-                size: 11,
               ),
             ),
           ],
@@ -736,7 +722,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     );
   }
 
-  /// 4-Column Quick Access Action Buttons Grid
+  /// 4-Column Quick Access Action Buttons Grid matching `.db .more`
   Widget _buildQuickActionsGrid(
     BuildContext context,
     LocalDataProvider value,
@@ -749,7 +735,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     // 1. Profile
     buttons.add(
       _buildQuickButton(
-        icon: Icons.person_outline_rounded,
+        iconType: CityzensIconType.user,
         label: 'Profile',
         onTap: () => AppNavigation.navigateTo(
           AppNavRoutes.studentProfileRoute,
@@ -760,7 +746,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     // 2. Attendance
     buttons.add(
       _buildQuickButton(
-        icon: Icons.calendar_month_outlined,
+        iconType: CityzensIconType.attendance,
         label: 'Attendance',
         onTap: () {
           if (gradeId == '19' ||
@@ -784,7 +770,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         localGradeId != '4') {
       buttons.add(
         _buildQuickButton(
-          icon: Icons.military_tech_outlined,
+          iconType: CityzensIconType.results,
           label: 'Term result',
           onTap: () => AppNavigation.navigateTo(
             AppNavRoutes.academicTermRoute,
@@ -806,7 +792,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         localGradeId != '6') {
       buttons.add(
         _buildQuickButton(
-          icon: Icons.fact_check_outlined,
+          iconType: CityzensIconType.tests,
           label: 'Class tests',
           onTap: () => AppNavigation.navigateTo(
             AppNavRoutes.studentClassTestResultRoute,
@@ -818,7 +804,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     // 5. Fees
     buttons.add(
       _buildQuickButton(
-        icon: Icons.account_balance_wallet_outlined,
+        iconType: CityzensIconType.fees,
         label: 'Fees',
         onTap: () => AppNavigation.navigateTo(AppNavRoutes.feeChallansRoute),
       ),
@@ -827,7 +813,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     // 6. Circulars
     buttons.add(
       _buildQuickButton(
-        icon: Icons.campaign_outlined,
+        iconType: CityzensIconType.circulars,
         label: 'Circulars',
         onTap: () => AppNavigation.navigateTo(AppNavRoutes.notificationsRoute),
       ),
@@ -836,7 +822,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
     // 7. Library
     buttons.add(
       _buildQuickButton(
-        icon: Icons.local_library_outlined,
+        iconType: CityzensIconType.library,
         label: 'Library',
         onTap: () => AppNavigation.navigateTo(AppNavRoutes.libraryRoute),
       ),
@@ -852,7 +838,7 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
         isParent) {
       buttons.add(
         _buildQuickButton(
-          icon: Icons.visibility_outlined,
+          iconType: CityzensIconType.eyeChild,
           label: 'Eye on child',
           onTap: () => AppNavigation.navigateTo(
             AppNavRoutes.parentEyeOnYourChildRoute,
@@ -865,16 +851,16 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
       crossAxisCount: 4,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 14,
-      childAspectRatio: 0.85,
+      crossAxisSpacing: 4,
+      mainAxisSpacing: 8,
+      childAspectRatio: 0.88,
       children: buttons,
     );
   }
 
-  /// Single Quick Button with bottom accent shadow
+  /// Single Quick Button with inset bottom yellow rim matching `.db .mi`
   Widget _buildQuickButton({
-    required IconData icon,
+    required CityzensIconType iconType,
     required String label,
     required VoidCallback onTap,
   }) {
@@ -887,27 +873,39 @@ class StudentDashboardScreenState extends State<StudentDashboardScreen>
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              color: AppColors.yellow,
+              borderRadius: BorderRadius.circular(15),
               border: Border.all(color: AppColors.line),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: AppColors.yellow,
-                  offset: Offset(0, 3),
-                  blurRadius: 0,
+                  color: AppColors.blueDeep.withValues(alpha: 0.06),
+                  offset: const Offset(0, 1),
+                  blurRadius: 3,
                 ),
               ],
             ),
-            child: Icon(icon, color: AppColors.blue, size: 24),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 3),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Center(
+                child: CityzensIcon(
+                  type: iconType,
+                  size: 28,
+                ),
+              ),
+            ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 5),
           Text(
             label,
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppThemes.roboto(
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: FontWeight.w500,
               color: AppColors.ink,
             ),

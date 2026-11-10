@@ -112,6 +112,16 @@ class MarkAttendanceProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void markAllPresent() {
+    final list = studentListResponse.studentList;
+    if (list == null) return;
+    for (final student in list) {
+      student.day = 'P';
+      student.attnTypeId = 1;
+    }
+    notifyListeners();
+  }
+
   void setStudentList(StudentListResponse listResponse) {
     studentListResponse = listResponse;
     saveAttendanceResponse = ResponseMessage();

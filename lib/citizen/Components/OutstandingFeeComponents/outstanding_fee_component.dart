@@ -415,9 +415,19 @@ class OutstandingFeeComponent extends StatelessWidget {
                     // Pay now Button (.pay)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(14, 4, 14, 14),
-                      child: SizedBox(
+                      child: Container(
                         width: double.infinity,
                         height: 46,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: AppColors.blueDeep,
+                              offset: Offset(0, 2),
+                              blurRadius: 0,
+                            ),
+                          ],
+                        ),
                         child: ElevatedButton(
                           onPressed: () {
                             if (info == null) return;
@@ -451,10 +461,10 @@ class OutstandingFeeComponent extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: 6),
                               const Icon(
-                                Icons.arrow_forward_rounded,
-                                size: 18,
+                                Icons.chevron_right_rounded,
+                                size: 20,
                                 color: Colors.white,
                               ),
                             ],
@@ -513,14 +523,17 @@ class OutstandingFeeComponent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            label,
-            style: AppThemes.roboto(
-              fontSize: 12.5,
-              fontWeight: FontWeight.w400,
-              color: AppColors.muted,
+          Flexible(
+            child: Text(
+              label,
+              style: AppThemes.roboto(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w400,
+                color: AppColors.muted,
+              ),
             ),
           ),
+          const SizedBox(width: 10),
           valueWidget,
         ],
       ),
@@ -542,17 +555,17 @@ class OutstandingFeeComponent extends StatelessWidget {
           ),
         );
       },
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(9),
       child: Container(
-        width: 28,
-        height: 28,
+        width: 30,
+        height: 30,
         decoration: BoxDecoration(
           color: AppColors.blueTint,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(9),
         ),
         child: const Icon(
-          Icons.copy_rounded,
-          size: 14,
+          Icons.content_copy_rounded,
+          size: 15,
           color: AppColors.blue,
         ),
       ),

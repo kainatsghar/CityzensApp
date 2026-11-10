@@ -5,6 +5,7 @@ import 'package:tcs_app/citizen/Model/ClassTestResult/student_test_result_list_r
 import 'package:tcs_app/citizen/Provider/ClassTestResult/class_test_result_provider.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_themes.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/cityzens_back_button.dart';
 
 class StudentClassTestResultComponent extends StatelessWidget {
   final VoidCallback onRefresh;
@@ -50,56 +51,30 @@ class StudentClassTestResultComponent extends StatelessWidget {
 
         return Column(
           children: [
-            // S8 Blue Top Header
+            // S8 Blue Top Header (Flat horizontal bottom edge matching screenshot)
             Container(
               width: double.infinity,
-              decoration: const BoxDecoration(
-                color: AppColors.blue,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(26),
-                  bottomRight: Radius.circular(26),
-                ),
-              ),
+              color: AppColors.blue,
               child: SafeArea(
                 bottom: false,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 4, 16, 14),
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        onPressed: () => Navigator.of(context).pop(),
+                      CityzensBackButton(
+                        size: 40,
+                        onTap: () => Navigator.of(context).pop(),
                       ),
                       Text(
                         'Class tests',
                         style: AppThemes.sora(
-                          fontSize: 18,
+                          fontSize: 19,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
                       ),
-                      Container(
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.13),
-                          shape: BoxShape.circle,
-                        ),
-                        child: IconButton(
-                          padding: EdgeInsets.zero,
-                          icon: const Icon(
-                            Icons.refresh_rounded,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          onPressed: onRefresh,
-                        ),
-                      ),
+                      const SizedBox(width: 40, height: 40),
                     ],
                   ),
                 ),

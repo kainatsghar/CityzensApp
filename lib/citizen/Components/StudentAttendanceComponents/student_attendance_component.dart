@@ -25,21 +25,21 @@ class _StudentAttendanceComponentState
       builder: (context, provider, _) {
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
           child: Column(
             children: [
               // Calendar Card (Color-coded cells + Key legend)
               Container(
-                padding: const EdgeInsets.fromLTRB(10, 14, 10, 10),
+                padding: const EdgeInsets.fromLTRB(8, 12, 8, 8),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.line),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.blue.withValues(alpha: 0.05),
-                      offset: const Offset(0, 2),
-                      blurRadius: 4,
+                      color: AppColors.blueDeep.withValues(alpha: 0.06),
+                      offset: const Offset(0, 1),
+                      blurRadius: 3,
                     ),
                   ],
                 ),
@@ -51,6 +51,8 @@ class _StudentAttendanceComponentState
                       focusedDay: provider.selectedDate,
                       currentDay: DateTime.now(),
                       headerVisible: false,
+                      rowHeight: 40,
+                      daysOfWeekHeight: 24,
                       startingDayOfWeek: StartingDayOfWeek.monday,
                       calendarFormat: CalendarFormat.month,
                       selectedDayPredicate: (day) =>
@@ -65,7 +67,10 @@ class _StudentAttendanceComponentState
                       },
                       daysOfWeekStyle: DaysOfWeekStyle(
                         dowTextFormatter: (date, locale) =>
-                            DateFormat.E(locale).format(date).substring(0, 3),
+                            DateFormat.E(locale)
+                                .format(date)
+                                .substring(0, 3)
+                                .toUpperCase(),
                         weekdayStyle: AppThemes.sora(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
@@ -160,6 +165,11 @@ class _StudentAttendanceComponentState
     final bool isWeekend =
         day.weekday == DateTime.saturday || day.weekday == DateTime.sunday;
 
+    final DateTime now = DateTime.now();
+    final DateTime todayMidnight = DateTime(now.year, now.month, now.day);
+    final DateTime cellMidnight = DateTime(day.year, day.month, day.day);
+    final bool isFuture = cellMidnight.isAfter(todayMidnight);
+
     Color bgColor = Colors.transparent;
     Color textColor = AppColors.ink;
 
@@ -174,22 +184,21 @@ class _StudentAttendanceComponentState
         bgColor = const Color(0xFFFDEFD2);
         textColor = const Color(0xFF8A5A00);
       }
+    } else if (isFuture) {
+      textColor = const Color(0xFFC5CCD7);
     } else if (isWeekend) {
       textColor = const Color(0xFFA0A8B5);
-    } else if (day.isAfter(DateTime.now())) {
-      textColor = const Color(0xFFC5CCD7);
     }
 
     return Center(
       child: Container(
         width: 34,
         height: 34,
-        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(11),
           border: isSelected
-              ? Border.all(color: AppColors.blue, width: 2.2)
+              ? Border.all(color: AppColors.blue, width: 2.0)
               : null,
         ),
         child: Stack(
@@ -199,18 +208,20 @@ class _StudentAttendanceComponentState
               '${day.day}',
               style: AppThemes.sora(
                 fontSize: 13,
-                fontWeight: FontWeight.w700,
+                fontWeight: (event != null || !isWeekend && !isFuture)
+                    ? FontWeight.w600
+                    : FontWeight.w500,
                 color: textColor,
               ),
             ),
             if (isToday)
               Positioned(
-                bottom: 2,
+                bottom: 2.5,
                 child: Container(
                   width: 4,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: isSelected ? AppColors.blue : textColor,
+                    color: textColor,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -221,18 +232,22 @@ class _StudentAttendanceComponentState
     );
   }
 
-  /// Day Detail Card
+  /// Day Detail Card matching S4 mockup (`.at .detail`)
   Widget _buildDayDetailCard(StudentAttendanceProvider provider) {
     final Event? event = _findEventForDay(_selectedDay, provider);
     final bool isWeekend = _selectedDay.weekday == DateTime.saturday ||
         _selectedDay.weekday == DateTime.sunday;
+    final DateTime todayMidnight =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    final DateTime selectedMidnight =
+        DateTime(_selectedDay.year, _selectedDay.month, _selectedDay.day);
+    final bool isFuture = selectedMidnight.isAfter(todayMidnight);
 
     Color badgeBg = AppColors.blueTint;
     Color badgeColor = AppColors.blue;
     Color chipBg = AppColors.blueTint;
     Color chipColor = AppColors.blue;
-    String chipText = 'NO RECORD';
-    String subText = 'No attendance recorded';
+    String chipText = 'No record';
 
     if (event != null) {
       if (event.attendance == 'Present') {
@@ -240,43 +255,45 @@ class _StudentAttendanceComponentState
         badgeColor = const Color(0xFF0E8A5F);
         chipBg = const Color(0xFFDDF3EA);
         chipColor = const Color(0xFF0E8A5F);
-        chipText = 'PRESENT';
-        subText = 'Full day attendance marked';
+        chipText = 'Present';
       } else if (event.attendance == 'Absent') {
         badgeBg = const Color(0xFFFBE3E7);
         badgeColor = const Color(0xFFC42840);
         chipBg = const Color(0xFFFBE3E7);
         chipColor = const Color(0xFFC42840);
-        chipText = 'ABSENT';
-        subText = 'Marked absent by school';
+        chipText = 'Absent';
       } else if (event.attendance == 'Leave') {
         badgeBg = const Color(0xFFFDEFD2);
         badgeColor = const Color(0xFF8A5A00);
         chipBg = const Color(0xFFFDEFD2);
         chipColor = const Color(0xFF8A5A00);
-        chipText = 'LEAVE';
-        subText = 'Approved student leave';
+        chipText = 'Leave';
       }
     } else if (isWeekend) {
       badgeBg = AppColors.blueTint;
       badgeColor = AppColors.blue;
       chipBg = AppColors.blueTint;
-      chipColor = AppColors.muted;
-      chipText = 'WEEKEND';
-      subText = 'School holiday (Weekend)';
+      chipColor = AppColors.blue;
+      chipText = 'Weekend';
+    } else if (isFuture) {
+      badgeBg = AppColors.blueTint;
+      badgeColor = AppColors.blue;
+      chipBg = AppColors.blueTint;
+      chipColor = AppColors.blue;
+      chipText = 'Not yet';
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppColors.line),
         boxShadow: [
           BoxShadow(
-            color: AppColors.blue.withValues(alpha: 0.04),
-            offset: const Offset(0, 2),
-            blurRadius: 4,
+            color: AppColors.blueDeep.withValues(alpha: 0.06),
+            offset: const Offset(0, 1),
+            blurRadius: 3,
           ),
         ],
       ),
@@ -284,8 +301,8 @@ class _StudentAttendanceComponentState
         children: [
           // Day number box
           Container(
-            width: 42,
-            height: 42,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
               color: badgeBg,
               borderRadius: BorderRadius.circular(12),
@@ -294,7 +311,7 @@ class _StudentAttendanceComponentState
             child: Text(
               '${_selectedDay.day}',
               style: AppThemes.sora(
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.w800,
                 color: badgeColor,
               ),
@@ -302,37 +319,27 @@ class _StudentAttendanceComponentState
           ),
           const SizedBox(width: 12),
 
-          // Date and description
+          // Single-line full date matching `.at .detail`
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  DateFormat('EEEE, d MMMM yyyy').format(_selectedDay),
-                  style: AppThemes.sora(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.ink,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subText,
-                  style: AppThemes.roboto(
-                    fontSize: 12,
-                    color: AppColors.muted,
-                  ),
-                ),
-              ],
+            child: Text(
+              DateFormat('EEEE, d MMMM').format(_selectedDay),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppThemes.sora(
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+                color: AppColors.ink,
+              ),
             ),
           ),
+          const SizedBox(width: 8),
 
           // Chip
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: chipBg,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(999),
             ),
             child: Text(
               chipText,
@@ -353,11 +360,11 @@ class _StudentAttendanceComponentState
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 9,
-          height: 9,
+          width: 10,
+          height: 10,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(2.5),
+            borderRadius: BorderRadius.circular(3),
           ),
         ),
         const SizedBox(width: 6),

@@ -7,6 +7,7 @@ import 'package:tcs_app/citizen/Provider/Results/results_provider.dart';
 import 'package:tcs_app/Routes/app_navigation.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 import 'package:tcs_app/Utils/app_themes.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/cityzens_back_button.dart';
 
 class AcademicTermScreen extends StatefulWidget {
   const AcademicTermScreen({super.key});
@@ -37,39 +38,29 @@ class AcademicTermScreenState extends State<AcademicTermScreen> {
   Widget _buildStaticHeader(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        color: AppColors.blue,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(26),
-          bottomRight: Radius.circular(26),
-        ),
-      ),
+      color: AppColors.blue,
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 4, 16, 18),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 14),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                onPressed: () => Navigator.of(context).pop(),
+              CityzensBackButton(
+                size: 40,
+                onTap: () => Navigator.of(context).pop(),
               ),
               Text(
                 'Term results',
                 style: AppThemes.sora(
-                  fontSize: 18,
+                  fontSize: 19,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
               ),
               Container(
-                width: 36,
-                height: 36,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.13),
                   shape: BoxShape.circle,

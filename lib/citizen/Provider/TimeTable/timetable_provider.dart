@@ -174,7 +174,7 @@ class TimeTableProvider with ChangeNotifier {
   Future<void> saveTimeTable() async {
     DialogBuilder.showLoadingIndicator();
     try {
-      if (formKey.currentState!.validate()) {
+      if (formKey.currentState?.validate() ?? true) {
         FocusScope.of(AppNavigation.currentContext!).requestFocus(FocusNode());
 
         List<DayListResponse> currentDayLists =

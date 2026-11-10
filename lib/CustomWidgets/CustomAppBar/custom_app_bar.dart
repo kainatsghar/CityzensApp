@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:tcs_app/CustomWidgets/CustomAppBar/cityzens_menu_button.dart';
 import 'package:tcs_app/Utils/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -9,6 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double appBarHeight;
   final Color backgroundColor;
   final void Function()? onBackPressed;
+  final Widget? leading;
 
   const CustomAppBar({
     super.key,
@@ -17,6 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor = AppColors.whiteColor,
     this.appBarHeight = 56.0,
     this.onBackPressed,
+    this.leading,
   });
 
   @override
@@ -41,17 +44,44 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-      leading: onBackPressed == null
-          ? null
-          : IconButton(
-              icon: Icon(
-                Platform.isAndroid
-                    ? Icons.arrow_back
-                    : Icons.arrow_back_ios_new,
-                color: AppColors.primaryTitleColor,
-              ),
-              onPressed: onBackPressed,
-            ),
+      leading: leading ??
+          (onBackPressed != null
+              ? IconButton(
+                  icon: Icon(
+                    Platform.isAndroid
+                        ? Icons.arrow_back
+                        : Icons.arrow_back_ios_new,
+                    color: AppColors.primaryTitleColor,
+                  ),
+                  onPressed: onBackPressed,
+                )
+              : Builder(
+                  builder: (context) {
+                    final hasDrawer =
+                        Scaffold.maybeOf(context)?.hasDrawer ?? false;
+                    if (hasDrawer) {
+                      return Center(
+                        child: CityzensMenuButton(
+                          size: 38.0,
+                          onTap: () => Scaffold.of(context).openDrawer(),
+                        ),
+                      );
+                    }
+                    final canPop = ModalRoute.of(context)?.canPop ?? false;
+                    if (canPop) {
+                      return IconButton(
+                        icon: Icon(
+                          Platform.isAndroid
+                              ? Icons.arrow_back
+                              : Icons.arrow_back_ios_new,
+                          color: AppColors.primaryTitleColor,
+                        ),
+                        onPressed: () => Navigator.of(context).maybePop(),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                )),
       actions:
           actions ??
           [
